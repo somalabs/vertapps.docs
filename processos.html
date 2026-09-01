@@ -1,0 +1,2123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AZZAS — Processos App Plataforma × App Custom</title>
+  <style>
+    :root {
+      --bg: #16140f;
+      --bg2: #1f1c15;
+      --bg3: #272318;
+      --ink: #ece8dd;
+      --ink2: #b7b2a4;
+      --ink3: #827d70;
+      --line: rgba(236, 232, 221, 0.10);
+      --line2: rgba(236, 232, 221, 0.18);
+      --coral: #E8754B;
+      --coral-soft: #F0997B;
+      --coral-dim: rgba(216, 90, 48, 0.14);
+      --teal: #3FC79E;
+      --teal-dim: rgba(29, 158, 117, 0.14);
+      --amber: #E9A23B;
+      --amber-dim: rgba(186, 117, 23, 0.16);
+      --purple: #9b91ec;
+      --purple-dim: rgba(155, 145, 236, 0.14);
+      --blue: #6FAEDC;
+      --blue-dim: rgba(111, 174, 220, 0.14);
+      --pink: #D98BB6;
+      --pink-dim: rgba(217, 139, 182, 0.14);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --max: 1120px;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      color: var(--ink);
+      background:
+        radial-gradient(120% 120% at 80% -10%, #221d14 0%, var(--bg) 55%);
+      min-height: 100vh;
+      line-height: 1.55;
+      font-size: 1.02rem;
+    }
+
+    /* Progress */
+    .progress {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      z-index: 100;
+      background: transparent;
+    }
+    .progress > i {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--coral), var(--amber));
+      box-shadow: 0 0 12px rgba(232, 117, 75, 0.45);
+      transition: width 0.15s linear;
+    }
+
+    .wrap {
+      width: min(100% - 2rem, var(--max));
+      margin: 0 auto;
+      padding: 3.25rem 0 5.5rem;
+    }
+
+    /* Hero */
+    .kicker {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--coral-soft);
+      margin-bottom: 0.85rem;
+    }
+
+    h1 {
+      font-size: clamp(2.1rem, 4.8vw, 3.2rem);
+      font-weight: 650;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      max-width: 16ch;
+      margin-bottom: 0.9rem;
+    }
+
+    .lede {
+      color: var(--ink2);
+      font-size: 1.08rem;
+      max-width: 40rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .chip {
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--line2);
+      color: var(--ink2);
+      background: var(--bg2);
+    }
+
+    .chip.plat { border-color: rgba(111, 174, 220, 0.45); color: var(--blue); background: var(--blue-dim); }
+    .chip.custom { border-color: rgba(233, 162, 59, 0.45); color: var(--amber); background: var(--amber-dim); }
+    .chip.release { border-color: rgba(63, 199, 158, 0.45); color: var(--teal); background: var(--teal-dim); }
+
+    /* Rules */
+    .rules {
+      background: linear-gradient(145deg, var(--bg3), var(--bg2));
+      border: 1px solid var(--line2);
+      border-radius: 18px;
+      padding: 1.5rem 1.45rem;
+      margin-bottom: 2.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rules::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--coral), var(--amber));
+    }
+
+    .rules h2 {
+      font-size: 1.15rem;
+      font-weight: 650;
+      margin-bottom: 1rem;
+      color: var(--ink);
+    }
+
+    .rules ol {
+      padding-left: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .rules li { color: var(--ink2); font-size: 0.98rem; }
+    .rules li strong { color: var(--ink); font-weight: 650; }
+    .rules li::marker { color: var(--coral); font-weight: 700; }
+
+    /* Nav */
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 0.15rem;
+      margin-bottom: 2.75rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .toc a {
+      color: var(--ink3);
+      text-decoration: none;
+      font-size: 0.86rem;
+      font-weight: 500;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      transition: color 0.15s, background 0.15s;
+    }
+
+    .toc a:hover {
+      color: var(--ink);
+      background: var(--bg3);
+    }
+
+    section { margin-bottom: 3rem; scroll-margin-top: 1.5rem; }
+
+    .sec-kicker {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 0.45rem;
+    }
+
+    h2 {
+      font-size: clamp(1.45rem, 2.8vw, 1.85rem);
+      font-weight: 650;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+    }
+
+    .lead {
+      color: var(--ink2);
+      margin-bottom: 1.25rem;
+      max-width: 42rem;
+      font-size: 0.98rem;
+    }
+
+    /* Cards */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+    }
+
+    @media (max-width: 700px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.15rem;
+    }
+
+    .card.plat { border-top: 3px solid var(--blue); }
+    .card.custom { border-top: 3px solid var(--amber); }
+    .card.before { border-top: 3px solid var(--coral); }
+    .card.after { border-top: 3px solid var(--teal); }
+
+    .card .label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .card.plat .label { color: var(--blue); }
+    .card.custom .label { color: var(--amber); }
+    .card.before .label { color: var(--coral); }
+    .card.after .label { color: var(--teal); }
+
+    .card h3 {
+      font-size: 1.05rem;
+      font-weight: 650;
+      margin-bottom: 0.65rem;
+    }
+
+    .card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      color: var(--ink2);
+      font-size: 0.92rem;
+    }
+
+    .card li::before {
+      content: "→ ";
+      color: var(--ink3);
+    }
+
+    /* Architecture */
+    .arch-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 900px) {
+      .arch-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 560px) {
+      .arch-grid { grid-template-columns: 1fr; }
+    }
+
+    .arch-card {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1rem 1.05rem;
+    }
+
+    .arch-card.brand { border-top: 3px solid var(--purple); }
+    .arch-card.core { border-top: 3px solid var(--blue); }
+    .arch-card.ui { border-top: 3px solid var(--teal); }
+    .arch-card.commons { border-top: 3px solid var(--amber); }
+    .arch-card.analytics { border-top: 3px solid var(--pink); }
+    .arch-card.checkout { border-top: 3px solid var(--coral); }
+    .arch-card.cms { border-top: 3px solid #8b9a6b; }
+
+    .arch-card .pkg {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 0.45rem;
+    }
+
+    .arch-card.brand .pkg { color: var(--purple); }
+    .arch-card.core .pkg { color: var(--blue); }
+    .arch-card.ui .pkg { color: var(--teal); }
+    .arch-card.commons .pkg { color: var(--amber); }
+    .arch-card.analytics .pkg { color: var(--pink); }
+    .arch-card.checkout .pkg { color: var(--coral-soft); }
+    .arch-card.cms .pkg { color: #a8b88a; }
+
+    .arch-card p {
+      font-size: 0.88rem;
+      color: var(--ink2);
+      line-height: 1.45;
+    }
+
+    .arch-card .owner {
+      display: inline-block;
+      margin-top: 0.55rem;
+      font-size: 0.68rem;
+      font-weight: 650;
+      letter-spacing: 0.03em;
+      padding: 0.18rem 0.45rem;
+      border-radius: 5px;
+      background: var(--bg3);
+      color: var(--ink3);
+    }
+
+    .layer-flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 0.65rem;
+    }
+
+    .layer-box {
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.4rem 0.65rem;
+      border-radius: 8px;
+      border: 1px solid var(--line2);
+      background: var(--bg3);
+      color: var(--ink2);
+    }
+
+    .layer-arrow {
+      color: var(--ink3);
+      font-size: 0.75rem;
+    }
+
+    .arch-panel {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 1.2rem 1.15rem;
+      margin-bottom: 1rem;
+    }
+
+    .arch-panel h3 {
+      font-size: 0.95rem;
+      font-weight: 650;
+      margin-bottom: 0.35rem;
+    }
+
+    .arch-panel > p {
+      font-size: 0.88rem;
+      color: var(--ink3);
+      margin-bottom: 0.65rem;
+    }
+
+    /* Diagram nav */
+    .diagrams-nav {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.65rem;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 620px) {
+      .diagrams-nav { grid-template-columns: 1fr; }
+    }
+
+    .diagrams-nav a {
+      display: block;
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.95rem 1rem;
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .diagrams-nav a:hover {
+      border-color: rgba(232, 117, 75, 0.45);
+      background: var(--coral-dim);
+    }
+
+    .diagrams-nav a small {
+      display: block;
+      font-weight: 500;
+      font-size: 0.78rem;
+      color: var(--ink3);
+      margin-top: 0.25rem;
+    }
+
+    /* Diagram */
+    .diagram {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 1.35rem 1rem 1.4rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .diagram-title {
+      font-size: 1.05rem;
+      font-weight: 650;
+      text-align: center;
+      margin-bottom: 1.1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .diagram-title span {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--ink3);
+      margin-top: 0.3rem;
+    }
+
+    .fc {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .fc-box {
+      width: min(100%, 360px);
+      text-align: center;
+      padding: 0.7rem 0.95rem;
+      border-radius: 10px;
+      border: 1px solid var(--line2);
+      background: var(--bg3);
+      font-size: 0.9rem;
+      font-weight: 500;
+      line-height: 1.35;
+      color: var(--ink);
+    }
+
+    .fc-box code {
+      font-family: var(--mono);
+      font-size: 0.82em;
+      color: var(--teal);
+    }
+
+    .fc-box small {
+      display: block;
+      margin-top: 0.2rem;
+      font-weight: 400;
+      font-size: 0.78rem;
+      color: var(--ink3);
+    }
+
+    .fc-box.start {
+      background: var(--coral-dim);
+      border-color: rgba(232, 117, 75, 0.4);
+      border-radius: 999px;
+      color: var(--coral-soft);
+    }
+
+    .fc-box.end {
+      background: rgba(236, 232, 221, 0.06);
+      border-color: var(--line2);
+      border-radius: 999px;
+      color: var(--ink2);
+    }
+
+    .fc-box.do {
+      background: var(--blue-dim);
+      border-color: rgba(111, 174, 220, 0.35);
+    }
+
+    .fc-box.owner {
+      background: var(--teal-dim);
+      border-color: rgba(63, 199, 158, 0.35);
+    }
+
+    .fc-box.auto {
+      background: var(--teal-dim);
+      border-color: rgba(63, 199, 158, 0.5);
+      border-style: dashed;
+    }
+
+    .fc-box.brand {
+      background: var(--purple-dim);
+      border-color: rgba(155, 145, 236, 0.35);
+    }
+
+    .fc-box.custom {
+      background: var(--amber-dim);
+      border-color: rgba(233, 162, 59, 0.35);
+    }
+
+    .fc-box.ask {
+      width: min(100%, 320px);
+      background: var(--amber-dim);
+      border-color: rgba(233, 162, 59, 0.5);
+      font-weight: 650;
+    }
+
+    .fc-box.ask::before {
+      content: "?";
+      display: inline-block;
+      width: 1.1rem;
+      height: 1.1rem;
+      line-height: 1.1rem;
+      border-radius: 50%;
+      background: var(--amber);
+      color: #16140f;
+      font-size: 0.72rem;
+      font-weight: 700;
+      margin-right: 0.35rem;
+      vertical-align: middle;
+    }
+
+    .fc-down {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0.12rem 0;
+      color: var(--ink3);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      min-height: 1.55rem;
+    }
+
+    .fc-down::before {
+      content: "";
+      width: 1px;
+      height: 10px;
+      background: var(--line2);
+    }
+
+    .fc-down::after {
+      content: "▾";
+      font-size: 0.7rem;
+      opacity: 0.6;
+      line-height: 1;
+    }
+
+    .fc-fork {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      width: 100%;
+      max-width: 680px;
+    }
+
+    .fc-fork.three {
+      grid-template-columns: 1fr 1fr 1fr;
+      max-width: 760px;
+    }
+
+    @media (max-width: 680px) {
+      .fc-fork, .fc-fork.three { grid-template-columns: 1fr; }
+    }
+
+    .fc-lane {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0.75rem 0.55rem;
+      border: 1px dashed var(--line2);
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.15);
+    }
+
+    .fc-lane .lane-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 0.55rem;
+      padding: 0.18rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    .fc-lane.yes .lane-label { background: var(--teal-dim); color: var(--teal); }
+    .fc-lane.no .lane-label { background: var(--amber-dim); color: var(--amber); }
+    .fc-lane.major .lane-label { background: var(--coral-dim); color: var(--coral); }
+    .fc-lane.minor .lane-label { background: var(--blue-dim); color: var(--blue); }
+    .fc-lane.patch .lane-label { background: var(--teal-dim); color: var(--teal); }
+
+    .fc-lane .fc-box { width: 100%; }
+
+    .fc-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem 1rem;
+      justify-content: center;
+      margin-top: 1.1rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.78rem;
+      color: var(--ink3);
+    }
+
+    .fc-legend i {
+      display: inline-block;
+      width: 0.7rem;
+      height: 0.7rem;
+      border-radius: 3px;
+      margin-right: 0.3rem;
+      vertical-align: -1px;
+      border: 1px solid var(--line2);
+    }
+
+    .l-start i { background: var(--coral-dim); border-radius: 999px; }
+    .l-ask i { background: var(--amber-dim); }
+    .l-do i { background: var(--blue-dim); }
+    .l-auto i { background: var(--teal-dim); border-style: dashed; }
+    .l-end i { background: rgba(236, 232, 221, 0.12); border-radius: 999px; }
+
+    /* Steps */
+    .flow {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--bg2);
+    }
+
+    .flow-step {
+      display: grid;
+      grid-template-columns: 3.25rem 1fr;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .flow-step:last-child { border-bottom: none; }
+
+    .flow-num {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 1.15rem;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--coral);
+      background: var(--coral-dim);
+    }
+
+    .flow-step.plat .flow-num { color: var(--blue); background: var(--blue-dim); }
+    .flow-step.custom .flow-num { color: var(--amber); background: var(--amber-dim); }
+    .flow-step.release .flow-num { color: var(--teal); background: var(--teal-dim); }
+    .flow-step.brand .flow-num { color: var(--purple); background: var(--purple-dim); }
+
+    .flow-body { padding: 1.05rem 1.15rem 1.15rem; }
+
+    .flow-body h3 {
+      font-size: 1rem;
+      font-weight: 650;
+      margin-bottom: 0.25rem;
+    }
+
+    .flow-body p {
+      color: var(--ink2);
+      font-size: 0.92rem;
+    }
+
+    .who-does {
+      display: inline-block;
+      margin-top: 0.55rem;
+      font-size: 0.72rem;
+      font-weight: 650;
+      letter-spacing: 0.02em;
+      padding: 0.22rem 0.55rem;
+      border-radius: 6px;
+      background: var(--teal-dim);
+      color: var(--teal);
+      border: 1px solid rgba(63, 199, 158, 0.25);
+    }
+
+    .who-does.plat { background: var(--blue-dim); color: var(--blue); border-color: rgba(111, 174, 220, 0.25); }
+    .who-does.custom { background: var(--amber-dim); color: var(--amber); border-color: rgba(233, 162, 59, 0.25); }
+    .who-does.brand { background: var(--purple-dim); color: var(--purple); border-color: rgba(155, 145, 236, 0.25); }
+
+    .callout {
+      margin-top: 1rem;
+      padding: 0.95rem 1.1rem;
+      border-radius: 12px;
+      background: var(--amber-dim);
+      border: 1px solid rgba(233, 162, 59, 0.3);
+      font-size: 0.92rem;
+      color: var(--ink2);
+    }
+
+    .callout strong { color: var(--amber); }
+
+    .paths {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin-top: 0.25rem;
+    }
+
+    @media (max-width: 600px) {
+      .paths { grid-template-columns: 1fr; }
+    }
+
+    .path {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.1rem;
+    }
+
+    .path .badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 0.45rem;
+      padding: 0.18rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    .path.yes .badge { background: var(--teal-dim); color: var(--teal); }
+    .path.no .badge { background: var(--amber-dim); color: var(--amber); }
+
+    .path h3 { font-size: 1rem; font-weight: 650; margin-bottom: 0.35rem; }
+    .path p { font-size: 0.92rem; color: var(--ink2); }
+
+    .simple-list {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .simple-list .row {
+      display: grid;
+      grid-template-columns: 11rem 1fr;
+      gap: 0.75rem;
+      padding: 0.95rem 1.1rem;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.94rem;
+    }
+
+    .simple-list .row:last-child { border-bottom: none; }
+    .simple-list .row span:first-child { font-weight: 650; color: var(--ink); }
+    .simple-list .row span:last-child { color: var(--ink2); }
+
+    @media (max-width: 560px) {
+      .simple-list .row { grid-template-columns: 1fr; gap: 0.2rem; }
+    }
+
+    .tests { display: grid; gap: 0.65rem; }
+
+    .test-item {
+      display: grid;
+      grid-template-columns: 8.5rem 1fr;
+      gap: 0.85rem;
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+      align-items: start;
+    }
+
+    @media (max-width: 520px) {
+      .test-item { grid-template-columns: 1fr; }
+    }
+
+    .test-item strong {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--blue);
+    }
+
+    .test-item p { color: var(--ink2); font-size: 0.92rem; }
+
+    .e2e-tools {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.65rem;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 820px) {
+      .e2e-tools { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .e2e-tool {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.9rem 0.85rem;
+      text-align: center;
+    }
+
+    .e2e-tool strong {
+      display: block;
+      font-size: 0.86rem;
+      color: var(--ink);
+      margin-bottom: 0.2rem;
+    }
+
+    .e2e-tool span {
+      font-size: 0.76rem;
+      color: var(--ink3);
+      line-height: 1.35;
+    }
+
+    .example {
+      background: #0e0d0a;
+      color: var(--ink2);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1.1rem 1.15rem;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      line-height: 1.7;
+      margin-top: 1rem;
+      overflow-x: auto;
+    }
+
+    .example .c { color: var(--ink3); }
+    .example .ok { color: var(--teal); }
+
+    code {
+      font-family: var(--mono);
+      font-size: 0.86em;
+      color: var(--teal);
+    }
+
+    /* Attention */
+    .attention {
+      background: var(--bg2);
+      border: 1px solid rgba(232, 117, 75, 0.28);
+      border-radius: 16px;
+      padding: 1.35rem 1.25rem;
+    }
+
+    .attention .sec-kicker { color: var(--coral-soft); }
+
+    .attention-item {
+      display: grid;
+      grid-template-columns: 2.4rem 1fr;
+      gap: 0.75rem;
+      background: var(--bg3);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1rem 1.05rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .attention-item:last-child { margin-bottom: 0; }
+
+    .attention-item .n {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--coral);
+      line-height: 1;
+    }
+
+    .attention-item h3 {
+      font-size: 1rem;
+      font-weight: 650;
+      margin-bottom: 0.3rem;
+    }
+
+    .attention-item p {
+      font-size: 0.92rem;
+      color: var(--ink2);
+    }
+
+    /* Pipeline diagram */
+    .pipeline {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 1.25rem 1rem 1rem;
+      margin-bottom: 1.25rem;
+      overflow-x: auto;
+    }
+
+    .pipeline svg {
+      display: block;
+      width: 100%;
+      min-width: 640px;
+      height: auto;
+    }
+
+    .pipeline-caption {
+      margin-top: 0.85rem;
+      font-size: 0.8rem;
+      color: var(--ink3);
+      text-align: center;
+    }
+
+    /* Footer bar */
+    .foot {
+      margin-top: 2.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.75rem;
+      font-size: 0.8rem;
+      color: var(--ink3);
+    }
+
+    .foot strong { color: var(--ink2); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+
+  <div class="wrap">
+    <p class="kicker">01 · Processos · App Plataforma × App Custom</p>
+    <h1>Como vamos trabalhar</h1>
+    <p class="lede">
+      Guia operacional: ownership das libs, versionamento por tag, automação de release
+      e autonomia das marcas — sem acoplar lib ao ciclo do app.
+    </p>
+    <div class="chips">
+      <span class="chip plat">App Plataforma</span>
+      <span class="chip custom">App Custom</span>
+      <span class="chip release">Release automação</span>
+      <span class="chip">1 branch + tags</span>
+      <span class="chip">Marcas opt-in</span>
+      <span class="chip">Release branch</span>
+      <span class="chip release">Feature flag</span>
+    </div>
+
+    <div class="rules">
+      <h2>Em 30 segundos</h2>
+      <ol>
+        <li>Lib tem <strong>dono</strong>: ele aprova o PR; a <strong>automação</strong> gera tag + changelog.</li>
+        <li>Feature grande? Antes: <strong>call de refinamento</strong> e <strong>1 task por lib</strong>.</li>
+        <li>Lib versiona por <strong>tag</strong> (não por branch develop/homolog).</li>
+        <li>Marca <strong>escolhe</strong> quando atualizar a lib.</li>
+        <li>Custom pode mexer em lib — mas <strong>sempre com o dono</strong>.</li>
+        <li>Toda feature nasce com <strong>feature flag</strong>; sem flag na homolog → revert.</li>
+      </ol>
+    </div>
+
+    <nav class="toc" aria-label="Seções">
+      <a href="#arquitetura">Arquitetura</a>
+      <a href="#fluxogramas">Fluxogramas</a>
+      <a href="#quem">Quem faz o quê</a>
+      <a href="#feature">Nova feature</a>
+      <a href="#custom">Custom na lib</a>
+      <a href="#marca">Marca atualiza</a>
+      <a href="#release-marca">Release da marca</a>
+      <a href="#automacoes-marca">Automações</a>
+      <a href="#git">Git e padrões</a>
+      <a href="#testes-e2e">Testes E2E</a>
+      <a href="#testes">Testes por lib</a>
+      <a href="#atencao">Pontos de atenção</a>
+    </nav>
+
+    <!-- ARQUITETURA -->
+    <section id="arquitetura">
+      <p class="sec-kicker">02 · Arquitetura do app</p>
+      <h2>Como o ecossistema se organiza</h2>
+      <p class="lead">
+        Apps de marca (Farm, Hering, Reserva…) consomem libs compartilhadas.
+        App Plataforma evolui as libs; App Custom entrega no app da marca.
+      </p>
+
+      <div class="pipeline" style="margin-bottom:1.25rem">
+        <svg viewBox="0 0 880 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama de dependências das libs">
+          <!-- app marca -->
+          <rect x="320" y="16" width="240" height="52" rx="10" fill="rgba(155,145,236,.14)" stroke="#9b91ec" stroke-width="2" />
+          <text x="440" y="38" text-anchor="middle" fill="#ece8dd" font-size="13" font-family="ui-monospace,monospace" font-weight="600">app_marca</text>
+          <text x="440" y="56" text-anchor="middle" fill="#b7b2a4" font-size="10" font-family="-apple-system,sans-serif">App Custom · telas da marca</text>
+
+          <line x1="440" y1="68" x2="440" y2="88" stroke="rgba(236,232,221,.25)" stroke-width="2" />
+
+          <!-- commons -->
+          <rect x="320" y="88" width="240" height="52" rx="10" fill="rgba(186,117,23,.16)" stroke="#E9A23B" stroke-width="2" />
+          <text x="440" y="110" text-anchor="middle" fill="#ece8dd" font-size="13" font-family="ui-monospace,monospace" font-weight="600">azzas_app_commons</text>
+          <text x="440" y="128" text-anchor="middle" fill="#b7b2a4" font-size="10" font-family="-apple-system,sans-serif">features · cubits · orquestração</text>
+
+          <line x1="440" y1="140" x2="440" y2="158" stroke="rgba(236,232,221,.25)" stroke-width="2" />
+
+          <!-- libs row -->
+          <rect x="24" y="158" width="150" height="48" rx="8" fill="rgba(111,174,220,.14)" stroke="#6FAEDC" />
+          <text x="99" y="178" text-anchor="middle" fill="#ece8dd" font-size="11" font-family="ui-monospace,monospace">azzas_core</text>
+          <text x="99" y="194" text-anchor="middle" fill="#b7b2a4" font-size="9" font-family="-apple-system,sans-serif">dados · regras</text>
+
+          <rect x="190" y="158" width="150" height="48" rx="8" fill="rgba(29,158,117,.14)" stroke="#3FC79E" />
+          <text x="265" y="178" text-anchor="middle" fill="#ece8dd" font-size="11" font-family="ui-monospace,monospace">azzas_ui</text>
+          <text x="265" y="194" text-anchor="middle" fill="#b7b2a4" font-size="9" font-family="-apple-system,sans-serif">design system</text>
+
+          <rect x="356" y="158" width="150" height="48" rx="8" fill="rgba(217,139,182,.14)" stroke="#D98BB6" />
+          <text x="431" y="178" text-anchor="middle" fill="#ece8dd" font-size="11" font-family="ui-monospace,monospace">azzas_analytics</text>
+          <text x="431" y="194" text-anchor="middle" fill="#b7b2a4" font-size="9" font-family="-apple-system,sans-serif">eventos · CRM</text>
+
+          <rect x="522" y="158" width="150" height="48" rx="8" fill="rgba(216,90,48,.14)" stroke="#E8754B" />
+          <text x="597" y="178" text-anchor="middle" fill="#ece8dd" font-size="11" font-family="ui-monospace,monospace">checkout</text>
+          <text x="597" y="194" text-anchor="middle" fill="#b7b2a4" font-size="9" font-family="-apple-system,sans-serif">checkout · login</text>
+
+          <rect x="688" y="158" width="168" height="48" rx="8" fill="rgba(139,154,107,.18)" stroke="#8b9a6b" />
+          <text x="772" y="178" text-anchor="middle" fill="#ece8dd" font-size="11" font-family="ui-monospace,monospace">azzas_cms</text>
+          <text x="772" y="194" text-anchor="middle" fill="#b7b2a4" font-size="9" font-family="-apple-system,sans-serif">Strapi · CMS</text>
+
+          <line x1="440" y1="158" x2="99" y2="158" stroke="rgba(111,174,220,.35)" stroke-width="1.5" />
+          <line x1="440" y1="158" x2="265" y2="158" stroke="rgba(63,199,158,.35)" stroke-width="1.5" />
+          <line x1="440" y1="158" x2="431" y2="158" stroke="rgba(217,139,182,.35)" stroke-width="1.5" />
+          <line x1="440" y1="158" x2="597" y2="158" stroke="rgba(232,117,75,.35)" stroke-width="1.5" />
+          <line x1="440" y1="158" x2="772" y2="158" stroke="rgba(139,154,107,.35)" stroke-width="1.5" />
+        </svg>
+        <p class="pipeline-caption">De cima para baixo: app da marca → commons → libs de plataforma</p>
+      </div>
+
+      <div class="arch-grid">
+        <article class="arch-card brand">
+          <div class="pkg">app_marca</div>
+          <p>Telas de produto e navegação (PDP, PDC, Home) + configuração e customização da marca.</p>
+          <span class="owner">App Custom</span>
+        </article>
+        <article class="arch-card commons">
+          <div class="pkg">azzas_app_commons</div>
+          <p>Cubits, features do app, orquestração checkout/login, event dispatcher.</p>
+          <span class="owner">App Plataforma</span>
+        </article>
+        <article class="arch-card core">
+          <div class="pkg">azzas_core</div>
+          <p>Repository, use cases, entity/models, services (HTTP, storage, infra).</p>
+          <span class="owner">App Plataforma</span>
+        </article>
+        <article class="arch-card ui">
+          <div class="pkg">azzas_ui</div>
+          <p>Tokens, componentes do design system, templates.</p>
+          <span class="owner">App Plataforma</span>
+        </article>
+        <article class="arch-card analytics">
+          <div class="pkg">azzas_analytics</div>
+          <p>Eventos, integrações CRM (MoEngage, Insider, AppsFlyer, GTM).</p>
+          <span class="owner">App Plataforma</span>
+        </article>
+        <article class="arch-card checkout">
+          <div class="pkg">vertapps_checkout_whitelabel</div>
+          <p>UI/presenter checkout e login, templates whitelabel.</p>
+          <span class="owner">App Plataforma</span>
+        </article>
+        <article class="arch-card cms">
+          <div class="pkg">azzas_cms</div>
+          <p>API Strapi, models CMS, renderização de componentes.</p>
+          <span class="owner">App Plataforma</span>
+        </article>
+      </div>
+
+      <h3 style="font-size:1.05rem;font-weight:650;margin-bottom:0.75rem">Camadas dentro de uma feature</h3>
+
+      <div class="grid-2" style="margin-bottom:1rem">
+        <article class="arch-panel">
+          <h3>Camada de apresentação (UI)</h3>
+          <p>Fluxo típico no design system — feature cross-brand</p>
+          <div class="layer-flow">
+            <span class="layer-box">Template</span>
+            <span class="layer-arrow">→</span>
+            <span class="layer-box">composition_components</span>
+            <span class="layer-arrow">→</span>
+            <span class="layer-box">core_components</span>
+            <span class="layer-arrow">→</span>
+            <span class="layer-box">Tokens</span>
+          </div>
+        </article>
+        <article class="arch-panel">
+          <h3>Camada lógica (dados)</h3>
+          <p>Fluxo típico no core / commons</p>
+          <div class="layer-flow">
+            <span class="layer-box">Cubit</span>
+            <span class="layer-arrow">→</span>
+            <span class="layer-box">UseCase</span>
+            <span class="layer-arrow">→</span>
+            <span class="layer-box">Repository</span>
+            <span class="layer-arrow">→</span>
+            <span class="layer-box">Model</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="callout" style="margin-bottom:0">
+        <strong>Feature nova de plataforma</strong> pode tocar várias libs (core, ui, commons, cms…).
+        Por isso o refinamento quebra em <strong>1 task por lib</strong> — cada uma com owner e versão própria.
+      </div>
+    </section>
+
+    <!-- FLUXOGRAMAS -->
+    <section id="fluxogramas">
+      <p class="sec-kicker">03 · Fluxogramas</p>
+      <h2>Mapas do processo</h2>
+      <p class="lead">Referência rápida ponta a ponta.</p>
+
+      <div class="diagrams-nav">
+        <a href="#fluxo-dev">Desenvolvimento<small>Da demanda até a marca</small></a>
+        <a href="#fluxo-git">Git<small>Branch → PR → main → tag</small></a>
+        <a href="#fluxo-release">Lançamento de versão<small>SemVer + changelog</small></a>
+        <a href="#fluxo-auto">Automação da release<small>Jira → tag → Teams</small></a>
+        <a href="#fluxo-marca-release">Release da marca<small>Flag / revert sem travar</small></a>
+        <a href="#fluxo-auto-commons">Gerar versão commons<small>Release → Codemagic → Teams</small></a>
+        <a href="#fluxo-auto-pos">Pós-release<small>Loja → tag → apagar release</small></a>
+      </div>
+
+      <article class="diagram" id="fluxo-dev">
+        <h3 class="diagram-title">
+          1. Processo de desenvolvimento
+          <span>Do pedido até a marca decidir atualizar (ou não)</span>
+        </h3>
+        <div class="fc">
+          <div class="fc-box start">Chega uma demanda</div>
+          <div class="fc-down"></div>
+          <div class="fc-box ask">É evolução de lib / plataforma?</div>
+          <div class="fc-down"></div>
+          <div class="fc-fork">
+            <div class="fc-lane yes">
+              <span class="lane-label">Sim → App Plataforma</span>
+              <div class="fc-box owner">Call de refinamento técnico</div>
+              <div class="fc-down"></div>
+              <div class="fc-box do">Criar 1 task por lib</div>
+              <div class="fc-down"></div>
+              <div class="fc-box do">Desenvolver + testar</div>
+              <div class="fc-down"></div>
+              <div class="fc-box do">Abrir PR</div>
+              <div class="fc-down"></div>
+              <div class="fc-box owner">Dono aprova o PR</div>
+              <div class="fc-down">merge</div>
+              <div class="fc-box auto">Automação: tag + changelog</div>
+            </div>
+            <div class="fc-lane no">
+              <span class="lane-label">Não → App Custom</span>
+              <div class="fc-box custom">Task no backlog da marca</div>
+              <div class="fc-down"></div>
+              <div class="fc-box custom">Implementar no app</div>
+              <div class="fc-down"></div>
+              <div class="fc-box ask">Precisa alterar lib?</div>
+              <div class="fc-down"></div>
+              <div class="fc-box custom">Alinhar com dono da lib</div>
+              <div class="fc-down"></div>
+              <div class="fc-box owner">Dono aprova o PR</div>
+              <div class="fc-down">merge</div>
+              <div class="fc-box auto">Automação: tag + changelog</div>
+            </div>
+          </div>
+          <div class="fc-down" style="margin-top:0.35rem"></div>
+          <div class="fc-box brand">Marca lê o changelog e decide: atualizar ou não</div>
+          <div class="fc-down"></div>
+          <div class="fc-box end">Se atualizar: PR no app → homolog → prod</div>
+        </div>
+        <div class="fc-legend">
+          <span class="l-start"><i></i>Início / fim</span>
+          <span class="l-ask"><i></i>Decisão</span>
+          <span class="l-do"><i></i>Ação</span>
+          <span class="l-auto"><i></i>Automação</span>
+          <span class="l-end"><i></i>Conclusão</span>
+        </div>
+      </article>
+
+      <article class="diagram" id="fluxo-git">
+        <h3 class="diagram-title">
+          2. Processo Git (libs)
+          <span>Uma branch principal · feature branch · PR · tag</span>
+        </h3>
+        <div class="fc">
+          <div class="fc-box start">main (branch única da lib)</div>
+          <div class="fc-down">começar task</div>
+          <div class="fc-box do">Criar branch<br><code>feat/…</code> ou <code>fix/…</code></div>
+          <div class="fc-down"></div>
+          <div class="fc-box do">Commits no padrão<br><code>feat:</code> · <code>fix:</code> · <code>feat!:</code></div>
+          <div class="fc-down"></div>
+          <div class="fc-box do">Push + abrir Pull Request → main</div>
+          <div class="fc-down">CI</div>
+          <div class="fc-box ask">CI passou? (analyze / testes)</div>
+          <div class="fc-down"></div>
+          <div class="fc-fork">
+            <div class="fc-lane no">
+              <span class="lane-label">Não</span>
+              <div class="fc-box custom">Corrigir na branch e atualizar o PR</div>
+              <div class="fc-down"></div>
+              <div class="fc-box do">Volta para o CI</div>
+            </div>
+            <div class="fc-lane yes">
+              <span class="lane-label">Sim</span>
+              <div class="fc-box owner">Dono da lib revisa e aprova</div>
+              <div class="fc-down"></div>
+              <div class="fc-box owner">Merge na main</div>
+            </div>
+          </div>
+          <div class="fc-down" style="margin-top:0.35rem"></div>
+          <div class="fc-box auto">Automação cria tag <code>vX.Y.Z</code> + GitHub Release</div>
+          <div class="fc-down"></div>
+          <div class="fc-box brand">Marca consome a tag no pubspec<br><code>ref: vX.Y.Z</code></div>
+          <div class="fc-down"></div>
+          <div class="fc-box end">Pronto — main segue; versão fica imutável na tag</div>
+        </div>
+        <div class="fc-legend">
+          <span class="l-start"><i></i>main / fim</span>
+          <span class="l-ask"><i></i>Decisão</span>
+          <span class="l-do"><i></i>Dev</span>
+          <span class="l-auto"><i></i>Automação</span>
+        </div>
+        <div class="callout" style="margin-bottom:0">
+          <strong>Não usar:</strong> develop / homolog como contrato para a marca. O que vale é a <strong>tag</strong>.
+        </div>
+      </article>
+
+      <article class="diagram" id="fluxo-release">
+        <h3 class="diagram-title">
+          3. Lançamento de versão da lib
+          <span>Depois do merge na main — SemVer + changelog</span>
+        </h3>
+        <div class="fc">
+          <div class="fc-box start">PR mergeado na main</div>
+          <div class="fc-down"></div>
+          <div class="fc-box do">Ler tipo do commit / card do Jira</div>
+          <div class="fc-down"></div>
+          <div class="fc-box ask">Qual o impacto da mudança?</div>
+          <div class="fc-down"></div>
+          <div class="fc-fork three">
+            <div class="fc-lane major">
+              <span class="lane-label">Breaking</span>
+              <div class="fc-box">MAJOR<br><code>2.0.0</code></div>
+            </div>
+            <div class="fc-lane minor">
+              <span class="lane-label">Feature</span>
+              <div class="fc-box">MINOR<br><code>1.5.0</code></div>
+            </div>
+            <div class="fc-lane patch">
+              <span class="lane-label">Bugfix</span>
+              <div class="fc-box">PATCH<br><code>1.4.1</code></div>
+            </div>
+          </div>
+          <div class="fc-down" style="margin-top:0.35rem"></div>
+          <div class="fc-box auto">Automação gera changelog<small>a partir da descrição do card no Jira</small></div>
+          <div class="fc-down"></div>
+          <div class="fc-box auto">Automação publica tag <code>vX.Y.Z</code><br>+ GitHub Release</div>
+          <div class="fc-down"></div>
+          <div class="fc-box brand">Avisar marcas (opt-in para atualizar)</div>
+          <div class="fc-down"></div>
+          <div class="fc-box end">Versão da lib publicada — apps não sobem sozinhos</div>
+        </div>
+        <div class="fc-legend">
+          <span class="l-start"><i></i>Início / fim</span>
+          <span class="l-ask"><i></i>Tipo SemVer</span>
+          <span class="l-auto"><i></i>Automação</span>
+        </div>
+      </article>
+
+      <article class="diagram" id="fluxo-auto">
+        <h3 class="diagram-title">
+          4. Automação para gerar versão da lib
+          <span>GitHub Action depois do merge — Jira, tag, Teams</span>
+        </h3>
+        <div class="fc">
+          <div class="fc-box start">PR mergeado para main</div>
+          <div class="fc-down">dispara Action</div>
+          <div class="fc-box auto">Action lê o card do Jira<small>pega as infos da task para montar o changelog</small></div>
+          <div class="fc-down"></div>
+          <div class="fc-box auto">Gera o changelog<br>+ define a versão (SemVer)</div>
+          <div class="fc-down"></div>
+          <div class="fc-box auto">Cria a tag <code>vX.Y.Z</code><br>+ GitHub Release</div>
+          <div class="fc-down"></div>
+          <div class="fc-box auto">Move o card do Jira<br>para <strong>Concluído</strong></div>
+          <div class="fc-down"></div>
+          <div class="fc-box auto">Dispara no Teams<br>“nova versão liberada”</div>
+          <div class="fc-down"></div>
+          <div class="fc-box end">Marcas avisadas — update opt-in</div>
+        </div>
+        <div class="fc-legend">
+          <span class="l-start"><i></i>Gatilho (merge)</span>
+          <span class="l-auto"><i></i>Feito pela Action</span>
+          <span class="l-end"><i></i>Fim</span>
+        </div>
+        <div class="callout" style="margin-bottom:0">
+          <strong>Pré-requisito:</strong> o PR precisa referenciar o card do Jira
+          (chave na branch ou na descrição) para a Action achar a task.
+        </div>
+      </article>
+
+      <!-- 5. RELEASE MARCA / CUSTOM -->
+      <article class="diagram" id="fluxo-marca-release">
+        <h3 class="diagram-title">
+          5. Release da marca (App Custom)
+          <span>Feature flag primeiro · revert só se não houver flag</span>
+        </h3>
+
+        <div class="pipeline">
+          <svg viewBox="0 0 920 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fluxograma main, release, feature flag, tag">
+            <text x="24" y="48" fill="#6FAEDC" font-size="13" font-family="ui-monospace,monospace" font-weight="700">main</text>
+            <line x1="90" y1="44" x2="880" y2="44" stroke="rgba(111,174,220,.45)" stroke-width="3" />
+            <circle cx="130" cy="44" r="7" fill="#6FAEDC" />
+            <circle cx="230" cy="44" r="7" fill="#6FAEDC" />
+            <circle cx="330" cy="44" r="7" fill="#6FAEDC" />
+            <circle cx="840" cy="44" r="7" fill="#6FAEDC" />
+            <text x="100" y="28" fill="#b7b2a4" font-size="11" font-family="-apple-system,sans-serif">feat + feature flag</text>
+            <text x="300" y="28" fill="#b7b2a4" font-size="11" font-family="-apple-system,sans-serif">lote fechado</text>
+            <text x="780" y="28" fill="#b7b2a4" font-size="11" font-family="-apple-system,sans-serif">próximo ciclo</text>
+
+            <path d="M330 44 C330 90, 330 90, 380 110" fill="none" stroke="#E9A23B" stroke-width="2.5" />
+            <text x="24" y="118" fill="#E9A23B" font-size="13" font-family="ui-monospace,monospace" font-weight="700">release/2.0.0</text>
+            <line x1="380" y1="110" x2="700" y2="110" stroke="rgba(233,162,59,.55)" stroke-width="3" />
+
+            <rect x="390" y="88" width="88" height="44" rx="8" fill="rgba(186,117,23,.16)" stroke="#E9A23B" />
+            <text x="434" y="106" text-anchor="middle" fill="#ece8dd" font-size="11" font-family="-apple-system,sans-serif" font-weight="600">criar</text>
+            <text x="434" y="122" text-anchor="middle" fill="#b7b2a4" font-size="10" font-family="ui-monospace,monospace">release</text>
+
+            <rect x="500" y="88" width="88" height="44" rx="8" fill="rgba(155,145,236,.14)" stroke="#9b91ec" />
+            <text x="544" y="114" text-anchor="middle" fill="#ece8dd" font-size="12" font-family="-apple-system,sans-serif" font-weight="600">homolog</text>
+
+            <rect x="610" y="88" width="88" height="44" rx="8" fill="rgba(155,145,236,.14)" stroke="#9b91ec" />
+            <text x="654" y="106" text-anchor="middle" fill="#ece8dd" font-size="11" font-family="-apple-system,sans-serif" font-weight="600">loja</text>
+            <text x="654" y="122" text-anchor="middle" fill="#b7b2a4" font-size="10" font-family="-apple-system,sans-serif">publicar</text>
+
+            <!-- eject paths -->
+            <path d="M544 132 L544 155" fill="none" stroke="#E8754B" stroke-width="1.75" stroke-dasharray="4 3" />
+            <text x="544" y="150" text-anchor="middle" fill="#F0997B" font-size="10" font-family="-apple-system,sans-serif">se falhou</text>
+
+            <rect x="400" y="168" width="150" height="40" rx="8" fill="rgba(29,158,117,.14)" stroke="#3FC79E" />
+            <text x="475" y="185" text-anchor="middle" fill="#ece8dd" font-size="11" font-family="-apple-system,sans-serif" font-weight="600">1º desligar flag</text>
+            <text x="475" y="200" text-anchor="middle" fill="#b7b2a4" font-size="10" font-family="-apple-system,sans-serif">remote · sem rebuild</text>
+
+            <rect x="570" y="168" width="150" height="40" rx="8" fill="rgba(216,90,48,.14)" stroke="#E8754B" />
+            <text x="645" y="185" text-anchor="middle" fill="#ece8dd" font-size="11" font-family="-apple-system,sans-serif" font-weight="600">2º sem flag: revert</text>
+            <text x="645" y="200" text-anchor="middle" fill="#b7b2a4" font-size="10" font-family="-apple-system,sans-serif">só na release</text>
+
+            <path d="M544 155 L475 168" fill="none" stroke="#3FC79E" stroke-width="1.5" />
+            <path d="M544 155 L645 168" fill="none" stroke="#E8754B" stroke-width="1.5" stroke-dasharray="4 3" />
+
+            <path d="M698 110 L760 110 L760 240" fill="none" stroke="#3FC79E" stroke-width="2.5" />
+            <rect x="710" y="240" width="100" height="44" rx="8" fill="rgba(29,158,117,.14)" stroke="#3FC79E" />
+            <text x="760" y="258" text-anchor="middle" fill="#ece8dd" font-size="11" font-family="-apple-system,sans-serif" font-weight="600">tag v2.0.0</text>
+            <text x="760" y="274" text-anchor="middle" fill="#b7b2a4" font-size="10" font-family="-apple-system,sans-serif">+ changelog</text>
+
+            <rect x="830" y="240" width="70" height="44" rx="8" fill="rgba(29,158,117,.14)" stroke="#3FC79E" stroke-dasharray="4 3" />
+            <text x="865" y="258" text-anchor="middle" fill="#ece8dd" font-size="11" font-family="-apple-system,sans-serif" font-weight="600">apagar</text>
+            <text x="865" y="274" text-anchor="middle" fill="#b7b2a4" font-size="10" font-family="ui-monospace,monospace">release</text>
+            <line x1="810" y1="262" x2="830" y2="262" stroke="#3FC79E" stroke-width="2" />
+
+            <text x="24" y="310" fill="#827d70" font-size="11" font-family="-apple-system,sans-serif">Toda feature nasce com feature flag · flag = caminho preferencial · revert = fallback</text>
+          </svg>
+          <p class="pipeline-caption">Azul = <code>main</code> · âmbar = release · teal = flag remota · coral = revert · depois loja → tag → apagar release</p>
+        </div>
+
+        <div class="fc">
+          <div class="fc-box start">1 · Card → <code>feat/iddocard</code><br><small>feature nasce com feature flag</small></div>
+          <div class="fc-down"></div>
+          <div class="fc-box do">2 · PR mergeado em <code>main</code></div>
+          <div class="fc-down">lote fechado</div>
+          <div class="fc-box owner">3 · Criar <code>release/2.0.0</code> a partir de <code>main</code></div>
+          <div class="fc-down"></div>
+          <div class="fc-box brand">4 · Homolog na release</div>
+          <div class="fc-down"></div>
+          <div class="fc-box ask">Task reprovou na homolog?</div>
+          <div class="fc-down"></div>
+          <div class="fc-fork">
+            <div class="fc-lane yes">
+              <span class="lane-label">Sim — tirar do pacote</span>
+              <div class="fc-box ask">Tem feature flag?</div>
+              <div class="fc-down"></div>
+              <div class="fc-box auto">Sim → desligar no remote<br><small>sem rebuild / sem revert</small></div>
+              <div class="fc-down"></div>
+              <div class="fc-box custom">Não → revert na <code>release</code><br><small>fallback</small></div>
+            </div>
+            <div class="fc-lane no">
+              <span class="lane-label">Não</span>
+              <div class="fc-box brand">Segue para a loja</div>
+            </div>
+          </div>
+          <div class="fc-down" style="margin-top:0.35rem"></div>
+          <div class="fc-box brand">5 · Subir app para a loja</div>
+          <div class="fc-down"></div>
+          <div class="fc-box owner">6 · Tag <code>v2.0.0</code> + changelog</div>
+          <div class="fc-down"></div>
+          <div class="fc-box auto">7 · Excluir <code>release/2.0.0</code></div>
+          <div class="fc-down"></div>
+          <div class="fc-box end"><code>main</code> segue · versão pinada na tag</div>
+        </div>
+        <div class="fc-legend">
+          <span class="l-start"><i></i>Início / fim</span>
+          <span class="l-ask"><i></i>Decisão</span>
+          <span class="l-auto"><i></i>Flag remota</span>
+          <span class="l-do"><i></i>Revert (fallback)</span>
+        </div>
+        <div class="callout" style="margin-bottom:0">
+          <strong>Regra:</strong> toda feature nasce com feature flag.
+          Reprovou → <strong>desliga no remote</strong>. Sem flag → <strong>revert na release</strong>.
+        </div>
+      </article>
+
+      <!-- 6. AUTO GERAÇÃO VERSÃO COMMONS -->
+      <article class="diagram" id="fluxo-auto-commons">
+        <h3 class="diagram-title">
+          6. Automação para gerar versão do commons
+          <span>Criar release a partir da main → build + E2E → Teams → Jira</span>
+        </h3>
+        <div class="fc">
+          <div class="fc-box start">Gatilho: gerar versão do commons</div>
+          <div class="fc-down"></div>
+          <div class="fc-box auto">Criar branch <code>release/X.Y.Z</code><br>a partir de <code>main</code></div>
+          <div class="fc-down"></div>
+          <div class="fc-box auto">Codemagic: gerar build<br>+ rodar testes E2E</div>
+          <div class="fc-down"></div>
+          <div class="fc-box auto">Enviar no Teams<br><small>build + resultado dos testes</small></div>
+          <div class="fc-down"></div>
+          <div class="fc-box auto">Mover os cards no Jira</div>
+          <div class="fc-down"></div>
+          <div class="fc-box end">Versão pronta para homolog / validação</div>
+        </div>
+        <div class="fc-legend">
+          <span class="l-start"><i></i>Gatilho</span>
+          <span class="l-auto"><i></i>Automação</span>
+          <span class="l-end"><i></i>Fim</span>
+        </div>
+      </article>
+
+      <!-- 7. AUTO PÓS RELEASE -->
+      <article class="diagram" id="fluxo-auto-pos">
+        <h3 class="diagram-title">
+          7. Automação pós-release
+          <span>Depois que o app está nas lojas</span>
+        </h3>
+        <div class="fc">
+          <div class="fc-box start">App liberado nas lojas</div>
+          <div class="fc-down"></div>
+          <div class="fc-box auto">Criar a tag <code>vX.Y.Z</code></div>
+          <div class="fc-down"></div>
+          <div class="fc-box auto">Criar o changelog da marca</div>
+          <div class="fc-down"></div>
+          <div class="fc-box auto">Excluir a branch <code>release/X.Y.Z</code></div>
+          <div class="fc-down"></div>
+          <div class="fc-box auto">Mover os cards no Jira</div>
+          <div class="fc-down"></div>
+          <div class="fc-box end">Release encerrada · <code>main</code> segue</div>
+        </div>
+        <div class="fc-legend">
+          <span class="l-start"><i></i>Lojas</span>
+          <span class="l-auto"><i></i>Automação</span>
+          <span class="l-end"><i></i>Fim</span>
+        </div>
+        <div class="callout" style="margin-bottom:0">
+          <strong>Encaixa no fluxo da marca:</strong> a automação 6 cobre o início do ciclo (release + build + E2E);
+          a 7 cobre o fechamento depois da loja (tag + changelog + limpeza).
+        </div>
+      </article>
+    </section>
+
+    <!-- QUEM -->
+    <section id="quem">
+      <p class="sec-kicker">04 · Papéis</p>
+      <h2>Quem faz o quê</h2>
+      <p class="lead">Fronteira explícita: App Plataforma × App Custom.</p>
+      <div class="grid-2">
+        <article class="card plat">
+          <div class="label">App Plataforma</div>
+          <h3>Cuida das libs</h3>
+          <ul>
+            <li>Refina e quebra o trabalho por lib</li>
+            <li>Desenvolve e testa nas libs</li>
+            <li>Dono aprova o PR; automação publica a versão</li>
+          </ul>
+        </article>
+        <article class="card custom">
+          <div class="label">App Custom</div>
+          <h3>Cuida das marcas</h3>
+          <ul>
+            <li>Entrega no app da marca</li>
+            <li>Decide se atualiza a lib</li>
+            <li>Se precisar mexer na lib, alinha com o dono</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- FEATURE -->
+    <section id="feature">
+      <p class="sec-kicker">05 · Feature de plataforma</p>
+      <h2>Quando chega uma feature</h2>
+      <p class="lead">Cinco passos, nesta ordem.</p>
+      <div class="flow">
+        <div class="flow-step">
+          <div class="flow-num">1</div>
+          <div class="flow-body">
+            <h3>Call de refinamento técnico</h3>
+            <p>O time define o que vai em cada lib (ui, core, commons…).</p>
+            <span class="who-does">Quem: App Plataforma + donos das libs</span>
+          </div>
+        </div>
+        <div class="flow-step plat">
+          <div class="flow-num">2</div>
+          <div class="flow-body">
+            <h3>Uma task por lib</h3>
+            <p>Cada lib afetada ganha um card no Jira. Sem card = não começa.</p>
+            <span class="who-does plat">Quem: dono / App Plataforma</span>
+          </div>
+        </div>
+        <div class="flow-step plat">
+          <div class="flow-num">3</div>
+          <div class="flow-body">
+            <h3>Desenvolver e testar</h3>
+            <p>Código + testes da lib. Abrir PR com commit padronizado.</p>
+            <span class="who-does plat">Quem: quem pegou a task</span>
+          </div>
+        </div>
+        <div class="flow-step release">
+          <div class="flow-num">4</div>
+          <div class="flow-body">
+            <h3>Dono aprova o PR</h3>
+            <p>Sem aprovação, não tem merge — e sem merge, a automação não roda.</p>
+            <span class="who-does">Quem: dono da lib</span>
+          </div>
+        </div>
+        <div class="flow-step release">
+          <div class="flow-num">5</div>
+          <div class="flow-body">
+            <h3>Automação gera a versão</h3>
+            <p>Action cria tag, changelog (do card Jira), move o card e avisa no Teams.</p>
+            <span class="who-does">Quem: GitHub Action</span>
+          </div>
+        </div>
+      </div>
+      <div class="callout">
+        <strong>Importante:</strong> subir versão da lib <em>não</em> sobe versão da marca.
+        A marca atualiza depois, se quiser.
+      </div>
+    </section>
+
+    <!-- CUSTOM -->
+    <section id="custom">
+      <p class="sec-kicker">06 · Inner-source</p>
+      <h2>Se o App Custom precisa alterar uma lib</h2>
+      <p class="lead">Primeiro: dá para resolver só no app da marca?</p>
+      <div class="paths">
+        <article class="path yes">
+          <span class="badge">Sim</span>
+          <h3>Fica no Custom</h3>
+          <p>Task no backlog da marca. Não mexe na lib.</p>
+        </article>
+        <article class="path no">
+          <span class="badge">Não</span>
+          <h3>Precisa da lib</h3>
+          <p>Cria task na lib e alinha com o dono antes de codar.</p>
+        </article>
+      </div>
+      <div class="flow" style="margin-top:1rem">
+        <div class="flow-step custom">
+          <div class="flow-num">1</div>
+          <div class="flow-body">
+            <h3>Alinhar com o dono da lib</h3>
+            <p>Combinar escopo e quem implementa (Plataforma ou Custom).</p>
+            <span class="who-does custom">Quem: App Custom + dono</span>
+          </div>
+        </div>
+        <div class="flow-step custom">
+          <div class="flow-num">2</div>
+          <div class="flow-body">
+            <h3>Implementar (se Custom for o executor)</h3>
+            <p>Custom faz o código para a Plataforma não virar gargalo — no padrão da lib.</p>
+            <span class="who-does custom">Quem: App Custom</span>
+          </div>
+        </div>
+        <div class="flow-step release">
+          <div class="flow-num">3</div>
+          <div class="flow-body">
+            <h3>Dono aprova → automação libera</h3>
+            <p>O dono aprova o PR. Tag, changelog, Jira e Teams ficam com a Action.</p>
+            <span class="who-does">Quem: dono (approve) + Action (release)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARCA -->
+    <section id="marca">
+      <p class="sec-kicker">07 · Consumo</p>
+      <h2>Como a marca usa a lib nova</h2>
+      <p class="lead">Atualizar é opção — não efeito colateral do path.</p>
+      <div class="flow">
+        <div class="flow-step brand">
+          <div class="flow-num">1</div>
+          <div class="flow-body">
+            <h3>Lib publica uma versão</h3>
+            <p>Exemplo: sai o <code>v1.5.0</code> com changelog no GitHub.</p>
+          </div>
+        </div>
+        <div class="flow-step brand">
+          <div class="flow-num">2</div>
+          <div class="flow-body">
+            <h3>Time da marca lê o changelog</h3>
+            <p>Vale a pena agora? Tem breaking change? Pode esperar.</p>
+          </div>
+        </div>
+        <div class="flow-step brand">
+          <div class="flow-num">3</div>
+          <div class="flow-body">
+            <h3>Se for atualizar: PR só no app</h3>
+            <p>Muda a versão no <code>pubspec</code>, testa e homologa a marca.</p>
+            <span class="who-does brand">Quem: time da marca</span>
+          </div>
+        </div>
+      </div>
+      <div class="example">
+        <span class="c"># No app da marca (pubspec.yaml)</span><br />
+        azzas_core:<br />
+        &nbsp;&nbsp;git:<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;url: …/app.flutterlib.azzascore.frontend.git<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;ref: <span class="ok">v1.5.0</span>&nbsp;&nbsp;<span class="c">← versão escolhida pela marca</span>
+      </div>
+    </section>
+
+    <!-- RELEASE MARCA -->
+    <section id="release-marca">
+      <p class="sec-kicker">08 · Release da marca</p>
+      <h2>Uma branch + release temporária</h2>
+      <p class="lead">
+        Só <code>main</code> + <code>release/X.Y.Z</code> temporária. Toda feature nasce com
+        <strong>feature flag</strong>: se reprovar na homolog, desliga no remote; sem flag, faz revert.
+      </p>
+
+      <div class="pipeline">
+        <svg viewBox="0 0 920 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Desenho do fluxo de release da marca">
+          <text x="24" y="48" fill="#6FAEDC" font-size="13" font-family="ui-monospace,monospace" font-weight="700">main</text>
+          <line x1="90" y1="44" x2="880" y2="44" stroke="rgba(111,174,220,.45)" stroke-width="3" />
+          <circle cx="130" cy="44" r="7" fill="#6FAEDC" />
+          <circle cx="230" cy="44" r="7" fill="#6FAEDC" />
+          <circle cx="330" cy="44" r="7" fill="#6FAEDC" />
+          <circle cx="840" cy="44" r="7" fill="#6FAEDC" />
+          <text x="100" y="28" fill="#b7b2a4" font-size="11" font-family="-apple-system,sans-serif">feat + feature flag</text>
+          <text x="300" y="28" fill="#b7b2a4" font-size="11" font-family="-apple-system,sans-serif">lote fechado</text>
+          <text x="780" y="28" fill="#b7b2a4" font-size="11" font-family="-apple-system,sans-serif">próximo ciclo</text>
+
+          <path d="M330 44 C330 90, 330 90, 380 110" fill="none" stroke="#E9A23B" stroke-width="2.5" />
+          <text x="24" y="118" fill="#E9A23B" font-size="13" font-family="ui-monospace,monospace" font-weight="700">release/2.0.0</text>
+          <line x1="380" y1="110" x2="700" y2="110" stroke="rgba(233,162,59,.55)" stroke-width="3" />
+
+          <rect x="390" y="88" width="88" height="44" rx="8" fill="rgba(186,117,23,.16)" stroke="#E9A23B" />
+          <text x="434" y="106" text-anchor="middle" fill="#ece8dd" font-size="11" font-family="-apple-system,sans-serif" font-weight="600">criar</text>
+          <text x="434" y="122" text-anchor="middle" fill="#b7b2a4" font-size="10" font-family="ui-monospace,monospace">release</text>
+
+          <rect x="500" y="88" width="88" height="44" rx="8" fill="rgba(155,145,236,.14)" stroke="#9b91ec" />
+          <text x="544" y="114" text-anchor="middle" fill="#ece8dd" font-size="12" font-family="-apple-system,sans-serif" font-weight="600">homolog</text>
+
+          <rect x="610" y="88" width="88" height="44" rx="8" fill="rgba(155,145,236,.14)" stroke="#9b91ec" />
+          <text x="654" y="106" text-anchor="middle" fill="#ece8dd" font-size="11" font-family="-apple-system,sans-serif" font-weight="600">loja</text>
+          <text x="654" y="122" text-anchor="middle" fill="#b7b2a4" font-size="10" font-family="-apple-system,sans-serif">publicar</text>
+
+          <path d="M544 132 L544 155" fill="none" stroke="#E8754B" stroke-width="1.75" stroke-dasharray="4 3" />
+          <text x="544" y="150" text-anchor="middle" fill="#F0997B" font-size="10" font-family="-apple-system,sans-serif">se falhou</text>
+
+          <rect x="400" y="168" width="150" height="40" rx="8" fill="rgba(29,158,117,.14)" stroke="#3FC79E" />
+          <text x="475" y="185" text-anchor="middle" fill="#ece8dd" font-size="11" font-family="-apple-system,sans-serif" font-weight="600">1º desligar flag</text>
+          <text x="475" y="200" text-anchor="middle" fill="#b7b2a4" font-size="10" font-family="-apple-system,sans-serif">remote · sem rebuild</text>
+
+          <rect x="570" y="168" width="150" height="40" rx="8" fill="rgba(216,90,48,.14)" stroke="#E8754B" />
+          <text x="645" y="185" text-anchor="middle" fill="#ece8dd" font-size="11" font-family="-apple-system,sans-serif" font-weight="600">2º sem flag: revert</text>
+          <text x="645" y="200" text-anchor="middle" fill="#b7b2a4" font-size="10" font-family="-apple-system,sans-serif">só na release</text>
+
+          <path d="M544 155 L475 168" fill="none" stroke="#3FC79E" stroke-width="1.5" />
+          <path d="M544 155 L645 168" fill="none" stroke="#E8754B" stroke-width="1.5" stroke-dasharray="4 3" />
+
+          <path d="M698 110 L760 110 L760 240" fill="none" stroke="#3FC79E" stroke-width="2.5" />
+          <rect x="710" y="240" width="100" height="44" rx="8" fill="rgba(29,158,117,.14)" stroke="#3FC79E" />
+          <text x="760" y="258" text-anchor="middle" fill="#ece8dd" font-size="11" font-family="-apple-system,sans-serif" font-weight="600">tag v2.0.0</text>
+          <text x="760" y="274" text-anchor="middle" fill="#b7b2a4" font-size="10" font-family="-apple-system,sans-serif">+ changelog</text>
+
+          <rect x="830" y="240" width="70" height="44" rx="8" fill="rgba(29,158,117,.14)" stroke="#3FC79E" stroke-dasharray="4 3" />
+          <text x="865" y="258" text-anchor="middle" fill="#ece8dd" font-size="11" font-family="-apple-system,sans-serif" font-weight="600">apagar</text>
+          <text x="865" y="274" text-anchor="middle" fill="#b7b2a4" font-size="10" font-family="ui-monospace,monospace">release</text>
+          <line x1="810" y1="262" x2="830" y2="262" stroke="#3FC79E" stroke-width="2" />
+
+          <text x="24" y="310" fill="#827d70" font-size="11" font-family="-apple-system,sans-serif">Toda feature nasce com feature flag · flag = caminho preferencial · revert = fallback</text>
+        </svg>
+        <p class="pipeline-caption">Azul = main · âmbar = release · teal = flag remota · coral = revert</p>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:1.25rem">
+        <article class="card before">
+          <div class="label">Antes</div>
+          <h3>develop → homolog → main</h3>
+          <ul>
+            <li>Três linhas longas para sincronizar</li>
+            <li>1 task ruim trava o lote inteiro</li>
+            <li>Homolog = tip de develop</li>
+          </ul>
+        </article>
+        <article class="card after">
+          <div class="label">Depois</div>
+          <h3>main → release → flag / tag</h3>
+          <ul>
+            <li>Feature nasce com feature flag</li>
+            <li>Reprovou → desliga no remote</li>
+            <li>Sem flag → revert na release</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="simple-list" style="margin-bottom:1.25rem">
+        <div class="row">
+          <span>Feature flag</span>
+          <span>Obrigatória em toda feature nova. Preferencial para tirar do pacote na homolog.</span>
+        </div>
+        <div class="row">
+          <span><code>main</code></span>
+          <span>Única branch longa. Features entram via PR.</span>
+        </div>
+        <div class="row">
+          <span><code>release/X.Y.Z</code></span>
+          <span>Temporária: homolog + loja. Revert só se não houver flag. Apaga depois da tag.</span>
+        </div>
+        <div class="row">
+          <span>Tag <code>vX.Y.Z</code></span>
+          <span>O que foi à loja — imutável. Changelog / GitHub Release junto.</span>
+        </div>
+      </div>
+
+      <h3 style="font-size:1.05rem;font-weight:650;margin-bottom:0.75rem">Ciclo completo</h3>
+      <div class="flow">
+        <div class="flow-step custom">
+          <div class="flow-num">1</div>
+          <div class="flow-body">
+            <h3>PR para <code>main</code> com feature flag</h3>
+            <p>Card → <code>feat/iddocard</code>. A feature <strong>já nasce</strong> atrás de uma flag remota.</p>
+          </div>
+        </div>
+        <div class="flow-step release">
+          <div class="flow-num">2</div>
+          <div class="flow-body">
+            <h3>Cortar a release</h3>
+            <p>Lote fechado → criar <code>release/2.0.0</code> a partir de <code>main</code>.</p>
+          </div>
+        </div>
+        <div class="flow-step brand">
+          <div class="flow-num">3</div>
+          <div class="flow-body">
+            <h3>Homolog — se reprovou</h3>
+            <p><strong>1º</strong> desligar a flag no remote (sem rebuild). <strong>2º</strong> se não tiver flag → revert só na release.</p>
+          </div>
+        </div>
+        <div class="flow-step brand">
+          <div class="flow-num">4</div>
+          <div class="flow-body">
+            <h3>Subir para a loja</h3>
+            <p>Publicar a partir do pacote da release (flags desligadas ou reverts aplicados).</p>
+          </div>
+        </div>
+        <div class="flow-step release">
+          <div class="flow-num">5</div>
+          <div class="flow-body">
+            <h3>Tag + changelog</h3>
+            <p>Tag <code>v2.0.0</code> no commit que foi à loja + GitHub Release.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">6</div>
+          <div class="flow-body">
+            <h3>Apagar a <code>release/2.0.0</code></h3>
+            <p><code>main</code> continua; a versão fica na tag. Flag pode ser religada depois, na próxima versão.</p>
+            <span class="who-does">Quem: App Custom / release</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Ordem de eject:</strong> feature flag remota → se não existir, revert na <code>release/*</code>.
+        Nunca reverter em <code>main</code> só para salvar a homolog.
+        Se houve revert na release, não mergear a release de volta em <code>main</code>.
+      </div>
+    </section>
+
+    <!-- AUTOMAÇÕES MARCA / COMMONS -->
+    <section id="automacoes-marca">
+      <p class="sec-kicker">08b · Automações</p>
+      <h2>Duas automações do ciclo de versão</h2>
+      <p class="lead">Uma sobe a versão para validação; a outra fecha depois da loja.</p>
+
+      <div class="grid-2" style="margin-bottom:1.25rem">
+        <article class="card plat">
+          <div class="label">Automação 1</div>
+          <h3>Gerar versão do commons</h3>
+          <ul>
+            <li>Criar release a partir da main</li>
+            <li>Codemagic: build + testes E2E</li>
+            <li>Enviar build e resultados no Teams</li>
+            <li>Mover cards no Jira</li>
+          </ul>
+        </article>
+        <article class="card after">
+          <div class="label">Automação 2</div>
+          <h3>Pós-release</h3>
+          <ul>
+            <li>App já está nas lojas</li>
+            <li>Criar tag</li>
+            <li>Criar changelog da marca</li>
+            <li>Excluir branch de release</li>
+            <li>Mover cards no Jira</li>
+          </ul>
+        </article>
+      </div>
+
+      <h3 style="font-size:1.05rem;font-weight:650;margin-bottom:0.75rem">1 · Gerar versão do commons</h3>
+      <div class="flow" style="margin-bottom:1.25rem">
+        <div class="flow-step release">
+          <div class="flow-num">1</div>
+          <div class="flow-body">
+            <h3>Criar branch de release</h3>
+            <p>A partir de <code>main</code> → <code>release/X.Y.Z</code>.</p>
+          </div>
+        </div>
+        <div class="flow-step release">
+          <div class="flow-num">2</div>
+          <div class="flow-body">
+            <h3>Codemagic: build + E2E</h3>
+            <p>Gera o build e roda os testes end-to-end na release.</p>
+          </div>
+        </div>
+        <div class="flow-step brand">
+          <div class="flow-num">3</div>
+          <div class="flow-body">
+            <h3>Notificar no Teams</h3>
+            <p>Envia o build junto com o resultado dos testes.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">4</div>
+          <div class="flow-body">
+            <h3>Atualizar Jira</h3>
+            <p>Move os cards conforme o status da versão gerada.</p>
+            <span class="who-does">Quem: automação</span>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-size:1.05rem;font-weight:650;margin-bottom:0.75rem">2 · Pós-release</h3>
+      <div class="flow">
+        <div class="flow-step brand">
+          <div class="flow-num">1</div>
+          <div class="flow-body">
+            <h3>App liberado nas lojas</h3>
+            <p>Gatilho: publicação concluída (App Store / Play Store).</p>
+          </div>
+        </div>
+        <div class="flow-step release">
+          <div class="flow-num">2</div>
+          <div class="flow-body">
+            <h3>Criar a tag</h3>
+            <p>Tag <code>vX.Y.Z</code> no commit que foi às lojas.</p>
+          </div>
+        </div>
+        <div class="flow-step release">
+          <div class="flow-num">3</div>
+          <div class="flow-body">
+            <h3>Changelog da marca</h3>
+            <p>Gera o changelog (GitHub Release / artefato da marca).</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">4</div>
+          <div class="flow-body">
+            <h3>Excluir a release</h3>
+            <p>Remove a branch <code>release/X.Y.Z</code> — era temporária.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">5</div>
+          <div class="flow-body">
+            <h3>Mover cards no Jira</h3>
+            <p>Cards da versão vão para o status final (ex.: Concluído / em produção).</p>
+            <span class="who-does">Quem: automação</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GIT -->
+    <section id="git">
+      <p class="sec-kicker">09 · Git</p>
+      <h2>Git e padrões (o básico)</h2>
+      <p class="lead">Menos branches, mais clareza no artefato que a marca consome.</p>
+      <div class="simple-list">
+        <div class="row">
+          <span>Branches (marca)</span>
+          <span>Só <code>main</code> + <code>release/X.Y.Z</code> temporária. Sem develop/homolog longas.</span>
+        </div>
+        <div class="row">
+          <span>Branches nas libs</span>
+          <span>Uma branch principal (ex.: main). Sem depender de develop/homolog.</span>
+        </div>
+        <div class="row">
+          <span>O que a marca usa</span>
+          <span>A tag da versão (v1.4.2), nunca a ponta da branch.</span>
+        </div>
+        <div class="row">
+          <span>Commits</span>
+          <span>Padrão Conventional Commits + skill de commit para o time.</span>
+        </div>
+        <div class="row">
+          <span>Changelog</span>
+          <span>Texto claro, preferencialmente puxado da descrição do card.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTES E2E -->
+    <section id="testes-e2e">
+      <p class="sec-kicker">10 · Qualidade</p>
+      <h2>Testes end-to-end (E2E)</h2>
+      <p class="lead">
+        Cobrir os fluxos principais do app com testes automatizados — reduz regressão
+        e dá confiança na homolog e na subida para a loja.
+      </p>
+
+      <div class="grid-2" style="margin-bottom:1.25rem">
+        <article class="card before">
+          <div class="label">Situação atual</div>
+          <h3>Sem cobertura E2E</h3>
+          <ul>
+            <li>Projeto ainda sem testes end-to-end nos fluxos críticos</li>
+            <li>Alto risco de regressão em releases com muitas tasks</li>
+            <li>Dificuldade de evoluir o app com segurança</li>
+          </ul>
+        </article>
+        <article class="card after">
+          <div class="label">Meta</div>
+          <h3>Estratégia mínima</h3>
+          <ul>
+            <li>Definir casos de teste para fluxos principais</li>
+            <li>Automatizar com Patrol no pipeline de homolog</li>
+            <li>Reportar resultado (Allure + Teams) a cada build</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="e2e-tools">
+        <div class="e2e-tool">
+          <strong>Patrol</strong>
+          <span>Framework E2E Flutter · gera o build de teste</span>
+        </div>
+        <div class="e2e-tool">
+          <strong>Codemagic</strong>
+          <span>Build homolog · emulador iOS</span>
+        </div>
+        <div class="e2e-tool">
+          <strong>Firebase Test Lab</strong>
+          <span>Device físico Android · resultados</span>
+        </div>
+        <div class="e2e-tool">
+          <strong>Allure Report</strong>
+          <span>HTML do resultado · salvo em bucket</span>
+        </div>
+      </div>
+
+      <article class="diagram">
+        <h3 class="diagram-title">
+          Fluxo de desenvolvimento do teste
+          <span>Do case ao PR — antes de entrar no pipeline</span>
+        </h3>
+        <div class="fc">
+          <div class="fc-box start">1 · Escrever o case de teste</div>
+          <div class="fc-down"></div>
+          <div class="fc-box do">2 · Usar a skill para implementar o teste Patrol<br><small>a partir do case</small></div>
+          <div class="fc-down"></div>
+          <div class="fc-box owner">3 · Review + rodar local<br><small>tudo ok → abrir PR para <code>main</code></small></div>
+          <div class="fc-down"></div>
+          <div class="fc-box end">Teste entra no repositório · roda no próximo build de homolog</div>
+        </div>
+        <div class="fc-legend">
+          <span class="l-start"><i></i>Case</span>
+          <span class="l-do"><i></i>Implementação</span>
+          <span class="l-end"><i></i>PR</span>
+        </div>
+      </article>
+
+      <article class="diagram">
+        <h3 class="diagram-title">
+          Pipeline E2E na homolog
+          <span>Disparado no workflow de homolog do Codemagic (release da marca)</span>
+        </h3>
+        <div class="fc">
+          <div class="fc-box start">Build no Codemagic<br><small>workflow de homolog</small></div>
+          <div class="fc-down"></div>
+          <div class="fc-box auto">Script gera o build Patrol</div>
+          <div class="fc-down"></div>
+          <div class="fc-fork">
+            <div class="fc-lane yes">
+              <span class="lane-label">iOS</span>
+              <div class="fc-box auto">Build iOS</div>
+              <div class="fc-down"></div>
+              <div class="fc-box auto">Roda testes no emulador<br>do Codemagic</div>
+            </div>
+            <div class="fc-lane no">
+              <span class="lane-label">Android</span>
+              <div class="fc-box auto">Build Android (APK)</div>
+              <div class="fc-down"></div>
+              <div class="fc-box auto">Envia para Firebase Test Lab<br><small>device físico</small></div>
+            </div>
+          </div>
+          <div class="fc-down" style="margin-top:0.35rem"></div>
+          <div class="fc-box auto">Resultados → Firebase Test Lab</div>
+          <div class="fc-down"></div>
+          <div class="fc-box auto">Allure Report: HTML do resultado<br><small>salvo em bucket</small></div>
+          <div class="fc-down"></div>
+          <div class="fc-box auto">Script captura URLs do report + build<br>→ envia para o Teams</div>
+          <div class="fc-down"></div>
+          <div class="fc-box end">Time valida build e testes antes da homolog</div>
+        </div>
+        <div class="fc-legend">
+          <span class="l-start"><i></i>Build</span>
+          <span class="l-auto"><i></i>Automação</span>
+          <span class="l-end"><i></i>Teams</span>
+        </div>
+        <div class="callout" style="margin-bottom:0">
+          <strong>Encaixa na automação 6:</strong> ao gerar versão do commons, o Codemagic roda build + E2E
+          e manda build + resultado dos testes no Teams antes de mover os cards no Jira.
+          Ver <a href="#fluxo-auto-commons" style="color:var(--teal);text-decoration:none;font-weight:600">fluxo 6 · Gerar versão commons</a>.
+        </div>
+      </article>
+    </section>
+
+    <!-- TESTES -->
+    <section id="testes">
+      <p class="sec-kicker">11 · Qualidade</p>
+      <h2>Testes mínimos por lib</h2>
+      <p class="lead">Sem teste, a task da lib não está pronta.</p>
+      <div class="tests">
+        <div class="test-item">
+          <strong>azzas_ui</strong>
+          <p>Componentes novos ou alterados → widget tests.</p>
+        </div>
+        <div class="test-item">
+          <strong>azzas_core</strong>
+          <p>Repositories e usecases novos → testes unitários.</p>
+        </div>
+        <div class="test-item">
+          <strong>azzas_commons</strong>
+          <p>Cubits e métodos novos → testes unitários.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ATENÇÃO -->
+    <section id="atencao">
+      <div class="attention">
+        <p class="sec-kicker">12 · Atenção</p>
+        <h2>Pontos de atenção</h2>
+        <p class="lead">Obrigatórios para o fluxo funcionar de ponta a ponta.</p>
+        <div class="attention-item">
+          <span class="n">1</span>
+          <div>
+            <h3>Codemagic: parar de clonar as libs</h3>
+            <p>
+              Hoje o script do Codemagic clona os projetos das libs ao lado do app.
+              Com consumo por tag, o build da marca resolve as libs via
+              <code>git</code> + <code>ref</code> no <code>pubspec</code>, sem clone manual dos repositórios irmãos.
+            </p>
+          </div>
+        </div>
+        <div class="attention-item">
+          <span class="n">2</span>
+          <div>
+            <h3>Toda PR nas libs vira tag — sem exceção</h3>
+            <p>
+              Para changelog, Jira, Teams e marcas opt-in funcionarem,
+              <strong>toda PR mergeada nas libs deve gerar uma tag de versão</strong>.
+              Sem tag, a marca não tem artefato fixo para consumir.
+            </p>
+          </div>
+        </div>
+        <div class="attention-item">
+          <span class="n">3</span>
+          <div>
+            <h3>Homolog da marca builda de <code>release/*</code></h3>
+            <p>
+              Não buildar homolog do tip de <code>main</code> durante o ciclo da versão.
+              Sem branch de release temporária, o lote fica preso. Depois da loja: tag + changelog e apagar a release.
+            </p>
+          </div>
+        </div>
+        <div class="attention-item">
+          <span class="n">4</span>
+          <div>
+            <h3>Feature flag obrigatória · revert é fallback</h3>
+            <p>
+              Toda feature nova nasce com feature flag. Se reprovar na homolog:
+              <strong>desligar no remote</strong>. Só se não houver flag → revert na <code>release/*</code>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="foot">
+      <span><strong>AZZAS</strong> · App Plataforma × App Custom · processos de libs</span>
+      <span>Identidade visual alinhada à apresentação da reestruturação</span>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var bar = document.getElementById("bar");
+      function update() {
+        var h = document.documentElement;
+        var max = h.scrollHeight - h.clientHeight;
+        var p = max > 0 ? (h.scrollTop / max) * 100 : 0;
+        bar.style.width = p + "%";
+      }
+      window.addEventListener("scroll", update, { passive: true });
+      window.addEventListener("resize", update);
+      update();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VERTAPPS — Documentação</title>
+  <style>
+    :root {
+      --bg: #16140f;
+      --ink: #ece8dd;
+      --ink2: #b7b2a4;
+      --line: rgba(236, 232, 221, 0.10);
+      --coral: #E8754B;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--sans);
+      color: var(--ink);
+      background: radial-gradient(120% 120% at 80% -10%, #221d14 0%, var(--bg) 55%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    main {
+      max-width: 560px;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+
+    .subtitle {
+      color: var(--ink2);
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    a {
+      display: block;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--ink);
+      text-decoration: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    a:hover {
+      border-color: var(--coral);
+      background: rgba(216, 90, 48, 0.08);
+    }
+
+    a strong {
+      display: block;
+      font-size: 1.05rem;
+      margin-bottom: 0.2rem;
+    }
+
+    a span {
+      color: var(--ink2);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>VERTAPPS</h1>
+    <p class="subtitle">Documentação interna AZZAS</p>
+    <ul>
+      <li>
+        <a href="processos.html">
+          <strong>Processos App Plataforma × App Custom</strong>
+          <span>Fluxos, arquitetura, releases e automações</span>
+        </a>
+      </li>
+    </ul>
+  </main>
+</body>
+</html>
