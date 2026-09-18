@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3. Skill post-brand-release — Skills de Release</title>
+<style>
+:root{
+  --bg:#16140f; --bg2:#1f1c15; --bg3:#272318;
+  --ink:#ece8dd; --ink2:#b7b2a4; --ink3:#827d70;
+  --line:rgba(236,232,221,.10); --line2:rgba(236,232,221,.18);
+  --coral:#E8754B; --coral-soft:#F0997B; --coral-dim:rgba(216,90,48,.14);
+  --teal:#3FC79E; --teal-dim:rgba(29,158,117,.14);
+  --amber:#E9A23B; --amber-dim:rgba(186,117,23,.16);
+  --purple:#9b91ec; --purple-dim:rgba(155,145,236,.14);
+  --blue:#6FAEDC; --blue-dim:rgba(111,174,220,.14);
+  --pink:#D98BB6; --pink-dim:rgba(217,139,182,.14);
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:var(--sans);
+  color:var(--ink);
+  background:radial-gradient(120% 120% at 80% -10%, #221d14 0%, var(--bg) 55%);
+  background-attachment:fixed;
+  line-height:1.65;
+  min-height:100vh;
+  padding-bottom:5.5rem;
+}
+.progress{
+  position:fixed; top:0; left:0; height:3px; z-index:100;
+  background:linear-gradient(90deg, var(--coral), var(--amber));
+  box-shadow:0 0 12px rgba(232,117,75,.45);
+  width:var(--progress, 8%);
+  transition:width .35s ease;
+}
+.wrap{
+  max-width:1120px;
+  margin:0 auto;
+  padding:2.25rem 1.5rem 2rem;
+}
+.kicker{
+  display:inline-block;
+  font-size:.72rem;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--coral-soft);
+  margin:0 0 .85rem;
+}
+h1{
+  font-size:clamp(1.75rem, 3.2vw, 2.55rem);
+  font-weight:650;
+  letter-spacing:-.02em;
+  line-height:1.15;
+  margin:0 0 .85rem;
+  color:var(--ink);
+}
+.lead, .wrap > p:first-of-type{
+  color:var(--ink2);
+  font-size:1.05rem;
+  max-width:62ch;
+}
+h2{
+  margin:2.4rem 0 .9rem;
+  padding-top:1.1rem;
+  border-top:1px solid var(--line);
+  font-size:clamp(1.2rem, 2vw, 1.45rem);
+  color:var(--ink);
+  letter-spacing:-.01em;
+}
+h2:first-of-type{border-top:none; padding-top:0}
+h3{
+  margin:1.7rem 0 .55rem;
+  font-size:1.05rem;
+  color:var(--teal);
+}
+h4{margin:1.25rem 0 .4rem; color:var(--amber); font-size:.95rem}
+p{margin:.55rem 0 1rem; color:var(--ink)}
+li{color:var(--ink); margin:.25rem 0}
+a{color:var(--coral-soft); text-decoration:none; border-bottom:1px solid transparent; transition:border-color .15s, color .15s}
+a:hover{color:var(--coral); border-bottom-color:var(--coral-dim)}
+strong{color:var(--ink); font-weight:650}
+hr{border:none; border-top:1px solid var(--line); margin:2rem 0}
+blockquote{
+  margin:1.1rem 0;
+  padding:.9rem 1.1rem;
+  background:var(--amber-dim);
+  border:1px solid var(--line2);
+  border-left:3px solid var(--amber);
+  border-radius:0 10px 10px 0;
+  color:var(--ink2);
+}
+code{
+  font-family:var(--mono);
+  font-size:.86em;
+  background:var(--bg3);
+  color:var(--teal);
+  padding:.12em .4em;
+  border-radius:5px;
+  border:1px solid var(--line);
+}
+pre{
+  background:var(--bg2);
+  border:1px solid var(--line2);
+  color:var(--ink);
+  padding:1rem 1.15rem;
+  border-radius:12px;
+  overflow-x:auto;
+  margin:1rem 0 1.35rem;
+  box-shadow:inset 0 1px 0 rgba(236,232,221,.04);
+}
+pre code{
+  background:transparent;
+  border:none;
+  color:var(--ink);
+  padding:0;
+  font-size:.84rem;
+  line-height:1.55;
+}
+table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  margin:1rem 0 1.5rem;
+  background:var(--bg2);
+  border:1px solid var(--line2);
+  border-radius:12px;
+  overflow:hidden;
+  font-size:.92rem;
+}
+th, td{
+  padding:.65rem .8rem;
+  text-align:left;
+  vertical-align:top;
+  border-bottom:1px solid var(--line);
+}
+tr:last-child td{border-bottom:none}
+th{
+  background:var(--bg3);
+  color:var(--ink2);
+  font-weight:600;
+  font-size:.78rem;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+td{color:var(--ink)}
+tr:hover td{background:rgba(236,232,221,.03)}
+ul, ol{padding-left:1.25rem}
+.nav-side{
+  display:flex; flex-wrap:wrap; gap:.45rem;
+  margin:0 0 1.75rem;
+  padding:0;
+  list-style:none;
+}
+.nav-side a{
+  display:inline-block;
+  padding:.35rem .75rem;
+  border-radius:999px;
+  border:1px solid var(--line2);
+  background:var(--bg2);
+  color:var(--ink2);
+  font-size:.78rem;
+  letter-spacing:.02em;
+  border-bottom:none;
+  transition:background .15s, border-color .15s, color .15s;
+}
+.nav-side a:hover,
+.nav-side a.active{
+  background:var(--coral-dim);
+  border-color:var(--coral);
+  color:var(--coral-soft);
+}
+.chips{display:flex; flex-wrap:wrap; gap:.45rem; margin:1rem 0 1.25rem}
+.chip{
+  display:inline-flex; align-items:center; gap:.35rem;
+  padding:.3rem .7rem; border-radius:999px;
+  font-size:.75rem; font-weight:600; letter-spacing:.03em;
+  border:1px solid var(--line2); background:var(--bg2); color:var(--ink2);
+}
+.chip.brand{border-color:var(--coral); color:var(--coral-soft); background:var(--coral-dim)}
+.chip.post{border-color:var(--teal); color:var(--teal); background:var(--teal-dim)}
+.chip.flow{border-color:var(--blue); color:var(--blue); background:var(--blue-dim)}
+.chip.warn{border-color:var(--amber); color:var(--amber); background:var(--amber-dim)}
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+  gap:.85rem;
+  margin:1rem 0 1.5rem;
+}
+.card{
+  background:var(--bg2);
+  border:1px solid var(--line2);
+  border-radius:14px;
+  padding:1rem 1.1rem;
+  transition:border-color .15s, transform .15s;
+}
+.card:hover{border-color:var(--line2); transform:translateY(-1px)}
+.card h3{margin:.15rem 0 .45rem; font-size:1rem}
+.card p{margin:0; font-size:.92rem; color:var(--ink2)}
+.card.teal{border-color:rgba(63,199,158,.35); box-shadow:inset 3px 0 0 var(--teal)}
+.card.coral{border-color:rgba(232,117,75,.35); box-shadow:inset 3px 0 0 var(--coral)}
+.card.blue{border-color:rgba(111,174,220,.35); box-shadow:inset 3px 0 0 var(--blue)}
+.card.amber{border-color:rgba(233,162,59,.35); box-shadow:inset 3px 0 0 var(--amber)}
+.pager{
+  display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+  margin-top:2.5rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  font-size:.9rem;
+}
+.pager a{color:var(--ink2); border-bottom:none}
+.pager a:hover{color:var(--coral-soft)}
+.footer{
+  position:fixed; bottom:0; left:0; right:0; z-index:90;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:1rem; flex-wrap:wrap;
+  padding:.65rem 1.25rem;
+  background:rgba(22,20,15,.92);
+  border-top:1px solid var(--line);
+  backdrop-filter:blur(10px);
+  font-size:.78rem; color:var(--ink3);
+}
+.footer .label{letter-spacing:.04em; text-transform:uppercase; font-weight:600}
+.footer .dots{display:flex; gap:.4rem; align-items:center; flex-wrap:wrap; justify-content:center}
+.footer .dot{
+  width:7px; height:7px; border-radius:999px;
+  background:var(--line2); border:none; padding:0; cursor:pointer;
+  transition:width .2s, background .2s, border-radius .2s;
+}
+.footer .dot.active{
+  width:22px; background:var(--coral); border-radius:999px;
+}
+.footer .nav-btns{display:flex; gap:.45rem}
+.footer .nav-btns a{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:34px; height:34px; border-radius:8px;
+  border:1px solid var(--line2); color:var(--ink2); border-bottom:none;
+  background:var(--bg2); font-size:1.1rem; line-height:1;
+}
+.footer .nav-btns a:hover{border-color:var(--coral); color:var(--coral-soft); background:var(--coral-dim)}
+@media (max-width:820px){
+  .footer .dots{display:none}
+  .footer{justify-content:space-between}
+}
+@media (max-width:640px){
+  .wrap{padding:1.5rem 1rem 2rem}
+  table{font-size:.82rem}
+  th, td{padding:.5rem .55rem}
+}
+</style>
+</head>
+<body style="--progress:36.4%">
+<div class="progress" aria-hidden="true"></div>
+<main class="wrap">
+<nav class="nav-side" aria-label="Seções"><a href="../processos.html#automacoes-marca">← Processos</a><a href="index.html">00 · Índice</a><a href="01-visao-geral.html">01 · Visão geral</a><a href="02-brand-release.html">02 · brand-release</a><a href="03-post-brand-release.html" class="active">03 · post-brand-release</a><a href="04-gates.html">04 · Gates</a><a href="05-fluxo-completo.html">05 · Fluxo completo</a><a href="06-comparativo.html">06 · Comparativo</a><a href="07-guia-rapido.html">07 · Guia rápido</a><a href="08-boas-praticas.html">08 · Boas práticas</a><a href="09-referencia-tecnica.html">09 · Referência</a><a href="10-lessons.html">10 · Lessons</a></nav>
+<p class="kicker">03 · post-brand-release</p><h1>3. Skill <code>post-brand-release</code></h1><div class="chips"><span class="chip post">Fechamento · Lojas</span><span class="chip flow">Tag · Release · Changelog</span></div>
+<h2>Objetivo</h2>
+<p>Fechar o ciclo <strong>depois</strong> da aprovação nas lojas: confirmar cards VERTAPP em <strong>Aguardando versão</strong>, gerar changelog, criar tag <code>vX.Y.Z</code> + GitHub Release a partir da <code>release/*</code>, preencher <strong>Versões corrigidas</strong>, mover cards para <strong>Itens concluídos</strong>, perguntar se apaga a branch, enviar o changelog no Teams e gravar learn.</p>
+<h2>Quando utilizar</h2>
+<p><strong>Utilizar quando</strong> o usuário pedir fechar release, pós-release de marca, tag da release, changelog pós-loja ou concluir cards após publish — e as lojas <strong>já aprovaram</strong> (gatilho humano documentado em <code>contracts.md</code>).</p>
+<p><strong>Não utilizar quando:</strong></p>
+<ul>
+<li>ainda estiver abrindo homologação / gerando build → <code>brand-release</code>;</li>
+<li>for release de lib → <code>lib-release</code>;</li>
+<li>for sync homolog → <code>brand-homologation</code>.</li>
+</ul>
+<h2>Pré-requisitos</h2>
+<table>
+<thead>
+<tr>
+<th>Pré-requisito</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Marca</td>
+<td>Usar a do pedido se já nomeada; senão perguntar</td>
+</tr>
+<tr>
+<td>Branch <code>release/*</code> no remoto</td>
+<td>Listada via <code>gh</code> e <strong>escolhida</strong> pelo usuário</td>
+</tr>
+<tr>
+<td>Versão</td>
+<td>Proposta a partir do nome da branch (<code>release/X.Y.Z</code> ou <code>release/vX.Y.Z</code> → versão <code>X.Y.Z</code>)</td>
+</tr>
+<tr>
+<td><code>gh</code> autenticado</td>
+<td>Tag, Release, delete branch</td>
+</tr>
+<tr>
+<td>MCP <code>user-jira</code></td>
+<td>Escopo, fixVersions, transitions</td>
+</tr>
+<tr>
+<td>REST Jira</td>
+<td>Criar versão no projeto se faltar</td>
+</tr>
+<tr>
+<td>Webhook Teams pós-release</td>
+<td>URL em <code>post-brand-release/contracts.md</code> (distinta da do brand-release)</td>
+</tr>
+<tr>
+<td>Ícones</td>
+<td><code>../brand-release/icons/manifest.json</code> → <code>iconUrl</code></td>
+</tr>
+<tr>
+<td>Confirmação dos cards</td>
+<td>Lista em Aguardando versão</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Não especificado / não implementado:</strong></p>
+<ul>
+<li>Verificação automática de aprovação nas lojas (Play Store / App Store);</li>
+<li>Checagem de build Codemagic ou artefactos nesta skill;</li>
+<li>Coleta de evidências de publicação além do changelog + Release GitHub.</li>
+</ul>
+<p>A skill <strong>assume</strong> que o usuário dispara o fluxo após aprovação; não valida disponibilidade nas lojas.</p>
+<h2>Como utilizar</h2>
+<p><strong>Básico</strong></p>
+<pre><code class="language-text">Fechar release da FARM 4.15.0
+</code></pre>
+<p><strong>Completo</strong></p>
+<pre><code class="language-text">Pós-release Animale — lojas aprovaram. Criar tag, changelog, concluir cards e avisar no Teams.
+</code></pre>
+<p><strong>Marca específica</strong></p>
+<pre><code class="language-text">Pós-release de offpremium
+</code></pre>
+<p><strong>Com versão e intenção explícita</strong></p>
+<pre><code class="language-text">Criar tag e concluir cards da release 5.10.0 da Animale
+</code></pre>
+<h2>Informações de entrada</h2>
+<table>
+<thead>
+<tr>
+<th>Entrada</th>
+<th style="text-align: right;">Obrigatória</th>
+<th>Formato</th>
+<th>Exemplo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Marca</td>
+<td style="text-align: right;">Sim</td>
+<td>Nome exato do pedido / Jira</td>
+<td><code>Off Premium</code>, <code>Cris Barros</code></td>
+<td>Se já no prompt, não perguntar de novo</td>
+</tr>
+<tr>
+<td>Branch <code>release/*</code></td>
+<td style="text-align: right;">Sim</td>
+<td>Escolha na lista numerada</td>
+<td><code>release/v10.2.0</code></td>
+<td>Listar remoto antes de digitar</td>
+</tr>
+<tr>
+<td>Versão</td>
+<td style="text-align: right;">Sim (confirmada)</td>
+<td><code>X.Y.Z</code></td>
+<td><code>10.2.0</code></td>
+<td>Tag será <code>v10.2.0</code></td>
+</tr>
+<tr>
+<td>Setup</td>
+<td style="text-align: right;">Não (pergunta)</td>
+<td><code>sim</code> / <code>não</code></td>
+<td><code>não</code></td>
+<td>Smoke <code>gh</code> + Jira</td>
+</tr>
+<tr>
+<td>Confirmação dos cards</td>
+<td style="text-align: right;">Sim</td>
+<td><code>sim</code> / editar</td>
+<td><code>sim</code></td>
+<td>Únicas keys dos passos 2, 4, 5</td>
+</tr>
+<tr>
+<td>Deletar <code>release/*</code></td>
+<td style="text-align: right;">Sim perguntar</td>
+<td><code>sim</code> / <code>não</code></td>
+<td><code>não</code></td>
+<td>Só delete com <code>sim</code> explícito</td>
+</tr>
+</tbody>
+</table>
+<h2>Funcionamento interno</h2>
+<ol>
+<li><strong>Interpretação</strong> — Lê <code>contracts.md</code> + <code>lessons.md</code>. Resolve repo. Lista <code>release/*</code>. Propõe versão. Setup opcional.</li>
+<li><strong>Identificação da release</strong> — Pela <strong>branch escolhida</strong> (não por Codemagic nem lojas). Padrão <code>release/X.Y.Z</code> ou <code>release/vX.Y.Z</code> (Off Premium / Cris Barros).</li>
+<li><strong>Passo 1 — cards</strong> — JQL: <code>status = "Aguardando versão" AND cf[10315] = &lt;Marca&gt;</code> (campo <strong>Marca</strong>, não Marca APP). Confirmação humana.</li>
+<li><strong>Passo 2 — changelog</strong> — Template em <code>changelog-template.md</code>; artefato <code>.cursor/artifacts/&lt;marca&gt;-&lt;versao&gt;-post-release-changelog.md</code>; cards + libs cms/commons/checkout do pubspec da branch; descrições só com base no Jira.</li>
+<li><strong>Passo 3 — tag + Release</strong> — <code>gh release create "vX.Y.Z" --target release/… --notes-file …</code>. Nunca <code>--target</code> main/develop.</li>
+<li><strong>Passo 4 — Versões corrigidas</strong> — Merge de <code>fixVersions</code>; cria versão no projeto se faltar (padrão default <code>X.Y.Z</code>; Off Premium / Cris Barros usam prefixo documentado).</li>
+<li><strong>Passo 5 — mover</strong> — Transition para Itens concluídos (id <code>31</code> em contracts) + comentário com link da Release.</li>
+<li><strong>Passo 6 — delete</strong> — Pergunta; delete só com sim e só se tag/Release ok.</li>
+<li><strong>Passo 7 — Teams</strong> — Mesmo changelog + ícone; HTTP 202 esperado.</li>
+<li><strong>Passo 8 — learn</strong> — Sempre <code>runs/</code>; lessons/contracts se couber.</li>
+</ol>
+<p><strong>Publicação com falha / parcial:</strong></p>
+<ul>
+<li>Parar no passo que falhou; aplicar <code>lessons.md</code> se houver sintoma conhecido.</li>
+<li>Não deletar branch se tag/Release falhou.</li>
+<li>Se Release ok e Teams falhou: reportar HTTP; não inventar retry cego; pode reenviar após corrigir URL.</li>
+<li>Cards sem transição: reportar pendência sem inventar status.</li>
+<li><strong>Não especificado:</strong> rollback automático de tag/Release; reabertura de cards; fluxo dedicado a “loja rejeitou”.</li>
+</ul>
+<h2>Saídas geradas</h2>
+<table>
+<thead>
+<tr>
+<th>Saída</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Artefato MD de changelog</td>
+<td><code>.cursor/artifacts/…-post-release-changelog.md</code></td>
+</tr>
+<tr>
+<td>Tag <code>vX.Y.Z</code> + GitHub Release</td>
+<td>Corpo = changelog</td>
+</tr>
+<tr>
+<td><code>fixVersions</code> nos cards</td>
+<td>Preenchido / merge</td>
+</tr>
+<tr>
+<td>Cards em Itens concluídos</td>
+<td>Keys confirmadas</td>
+</tr>
+<tr>
+<td>Delete opcional de <code>release/*</code></td>
+<td>Com ok</td>
+</tr>
+<tr>
+<td>Adaptive Card Teams (changelog)</td>
+<td>Webhook pós-release</td>
+</tr>
+<tr>
+<td><code>runs/</code> (+ lessons/contracts)</td>
+<td>Sempre / se correção</td>
+</tr>
+</tbody>
+</table>
+<h3>Exemplo de resposta esperada (sucesso)</h3>
+<p>Baseado em <code>runs/2026-09-17-offpremium-10.2.0.md</code>:</p>
+<pre><code class="language-text">Pós-release — Off Premium 10.2.0 — sucesso
+
+- Tag/Release: v10.2.0 — https://github.com/somalabs/app.flutter.off.frontend/releases/tag/v10.2.0
+- Branch origem: release/v10.2.0 (não deletada)
+- 18 cards confirmados → Itens concluídos
+- fixVersions: off premium_v10.2.0
+- Teams: HTTP 202
+- Tempo de execução: (registrado no run)
+- Learn: runs/2026-09-17-offpremium-10.2.0.md
+</code></pre>
+<h2>Erros e solução de problemas</h2>
+<table>
+<thead>
+<tr>
+<th>Problema</th>
+<th>Possível causa</th>
+<th>Como resolver</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JQL vazio para OFF</td>
+<td>Valor <code>OFF</code> em vez de <code>Off Premium</code></td>
+<td>Usar <code>cf[10315] = "Off Premium"</code></td>
+</tr>
+<tr>
+<td><code>get_issue</code> falha</td>
+<td>Instabilidade do tool</td>
+<td>Preferir <code>get_issue_fields</code> (+ pai se filho)</td>
+</tr>
+<tr>
+<td>Tag no commit errado</td>
+<td><code>--target</code> main/develop</td>
+<td>Sempre branch <code>release/*</code> confirmada</td>
+</tr>
+<tr>
+<td>Changelog genérico</td>
+<td>Sem ler Jira</td>
+<td>Analisar título/AC/comentários; frase padrão se insuficiente</td>
+</tr>
+<tr>
+<td>Mensagem Teams no canal errado</td>
+<td>Webhook legado <code>cu/24</code></td>
+<td>Usar URL canônica <code>cu/14</code> em contracts; reenviar</td>
+</tr>
+<tr>
+<td>Versão Jira inventada</td>
+<td>SemVer puro onde o projeto usa prefixo</td>
+<td>Off Premium / Cris Barros: padrão <code>{marca}_vX.Y.Z</code></td>
+</tr>
+<tr>
+<td>Branch apagada cedo</td>
+<td>Delete sem ok / após falha de tag</td>
+<td>Só perguntar após Release ok; só com <code>sim</code></td>
+</tr>
+<tr>
+<td>Repetir erro já documentado</td>
+<td>Ignorar <code>lessons.md</code></td>
+<td>Ler e aplicar correção canônica no passo 0</td>
+</tr>
+</tbody>
+</table>
+<h2>Exemplo completo de execução</h2>
+<p><strong>Prompt</strong></p>
+<pre><code class="language-text">Pós-release de offpremium
+</code></pre>
+<p><strong>Dados</strong></p>
+<ul>
+<li>Marca: Off Premium (não perguntar de novo)</li>
+<li>Lista <code>release/*</code> → usuário escolhe <code>release/v10.2.0</code> → versão <code>10.2.0</code></li>
+<li>Setup: conforme resposta</li>
+</ul>
+<p><strong>Etapas</strong></p>
+<ol>
+<li>Listar/confirmar cards em Aguardando versão.</li>
+<li>Gerar changelog (cards + cms/commons/checkout).</li>
+<li><code>gh release create v10.2.0 --target release/v10.2.0</code>.</li>
+<li>Garantir/preencher <code>off premium_v10.2.0</code> em fixVersions.</li>
+<li>Transicionar para Itens concluídos.</li>
+<li>Perguntar delete da branch.</li>
+<li>POST Teams changelog + ícone.</li>
+<li>Gravar run (+ lessons se houver).</li>
+</ol>
+<p><strong>Confirmações</strong></p>
+<p>Branch, versão, lista de cards, delete da branch; setup opcional.</p>
+<p><strong>Resultado</strong></p>
+<p>Relatório com tag, Release, cards, branch deletada sim/não, Teams HTTP, tempo, pendências, lições.</p>
+<hr />
+
+<div class="pager"><a href="02-brand-release.html">← brand-release</a><a href="04-gates.html">Gates →</a></div>
+</main>
+<footer class="footer">
+  <div class="label"><a href="../index.html" style="color:inherit;border:none">VERTAPPS</a> · <a href="../processos.html" style="color:inherit;border:none">Processos</a> · Skills de Release</div>
+  <div class="dots"><a class="dot" href="index.html" title="Índice" aria-label="Índice"></a><a class="dot" href="01-visao-geral.html" title="Visão geral" aria-label="Visão geral"></a><a class="dot" href="02-brand-release.html" title="brand-release" aria-label="brand-release"></a><a class="dot active" href="03-post-brand-release.html" title="post-brand-release" aria-label="post-brand-release"></a><a class="dot" href="04-gates.html" title="Gates" aria-label="Gates"></a><a class="dot" href="05-fluxo-completo.html" title="Fluxo completo" aria-label="Fluxo completo"></a><a class="dot" href="06-comparativo.html" title="Comparativo" aria-label="Comparativo"></a><a class="dot" href="07-guia-rapido.html" title="Guia rápido" aria-label="Guia rápido"></a><a class="dot" href="08-boas-praticas.html" title="Boas práticas" aria-label="Boas práticas"></a><a class="dot" href="09-referencia-tecnica.html" title="Referência" aria-label="Referência"></a><a class="dot" href="10-lessons.html" title="Lessons" aria-label="Lessons"></a></div>
+  <div class="nav-btns"><a href="02-brand-release.html" aria-label="Anterior">‹</a><a href="04-gates.html" aria-label="Próximo">›</a></div>
+</footer>
+<script>
+(function(){
+  document.addEventListener('keydown', function(e){
+    if(e.target && /input|textarea|select/i.test(e.target.tagName)) return;
+    var prev = '02-brand-release.html';
+    var next = '04-gates.html';
+    if((e.key === 'ArrowRight' || e.key === ' ') && next){ e.preventDefault(); location.href = next; }
+    if(e.key === 'ArrowLeft' && prev){ e.preventDefault(); location.href = prev; }
+  });
+})();
+</script>
+</body>
+</html>

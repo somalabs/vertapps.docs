@@ -962,6 +962,7 @@
       <a href="#marca">Marca atualiza</a>
       <a href="#release-marca">Release da marca</a>
       <a href="#automacoes-marca">Automações</a>
+      <a href="skills-release/index.html">Skills de Release</a>
       <a href="#git">Git e padrões</a>
       <a href="#testes-e2e">Testes E2E</a>
       <a href="#testes">Testes por lib</a>
@@ -1784,19 +1785,46 @@
       <h2>Duas automações do ciclo de versão</h2>
       <p class="lead">Uma sobe a versão para validação; a outra fecha depois da loja.</p>
 
+      <div class="rules" style="margin-bottom:1.5rem">
+        <h2>Documentação operacional das skills</h2>
+        <ol>
+          <li>
+            <strong><a href="skills-release/index.html" style="color:var(--coral-soft)">Skills de Release</a></strong>
+            — guia completo (gates, entradas, saídas, lessons).
+          </li>
+          <li>
+            <strong><a href="skills-release/02-brand-release.html" style="color:var(--coral-soft)">brand-release</a></strong>
+            — abrir homologação: branch <code>release/*</code>, Codemagic, Teams, Jira.
+          </li>
+          <li>
+            <strong><a href="skills-release/03-post-brand-release.html" style="color:var(--coral-soft)">post-brand-release</a></strong>
+            — após aprovação nas lojas: tag, changelog, Versões corrigidas, Itens concluídos.
+          </li>
+          <li>
+            Ver também
+            <a href="skills-release/04-gates.html" style="color:var(--coral-soft)">Gates</a>
+            e
+            <a href="skills-release/10-lessons.html" style="color:var(--coral-soft)">Lessons</a>.
+          </li>
+        </ol>
+      </div>
+
       <div class="grid-2" style="margin-bottom:1.25rem">
         <article class="card plat">
-          <div class="label">Automação 1</div>
-          <h3>Gerar versão do commons</h3>
+          <div class="label">Automação 1 · brand-release</div>
+          <h3>Gerar versão / abrir homologação</h3>
           <ul>
             <li>Criar release a partir da main</li>
             <li>Codemagic: build + testes E2E</li>
             <li>Enviar build e resultados no Teams</li>
             <li>Mover cards no Jira</li>
           </ul>
+          <p style="margin-top:0.75rem;font-size:0.9rem">
+            <a href="skills-release/02-brand-release.html" style="color:var(--teal)">Abrir doc brand-release →</a>
+          </p>
         </article>
         <article class="card after">
-          <div class="label">Automação 2</div>
+          <div class="label">Automação 2 · post-brand-release</div>
           <h3>Pós-release</h3>
           <ul>
             <li>App já está nas lojas</li>
@@ -1805,10 +1833,13 @@
             <li>Excluir branch de release</li>
             <li>Mover cards no Jira</li>
           </ul>
+          <p style="margin-top:0.75rem;font-size:0.9rem">
+            <a href="skills-release/03-post-brand-release.html" style="color:var(--teal)">Abrir doc post-brand-release →</a>
+          </p>
         </article>
       </div>
 
-      <h3 style="font-size:1.05rem;font-weight:650;margin-bottom:0.75rem">1 · Gerar versão do commons</h3>
+      <h3 style="font-size:1.05rem;font-weight:650;margin-bottom:0.75rem">1 · brand-release (abrir homologação)</h3>
       <div class="flow" style="margin-bottom:1.25rem">
         <div class="flow-step release">
           <div class="flow-num">1</div>
@@ -1841,7 +1872,7 @@
         </div>
       </div>
 
-      <h3 style="font-size:1.05rem;font-weight:650;margin-bottom:0.75rem">2 · Pós-release</h3>
+      <h3 style="font-size:1.05rem;font-weight:650;margin-bottom:0.75rem">2 · post-brand-release (após lojas)</h3>
       <div class="flow">
         <div class="flow-step brand">
           <div class="flow-num">1</div>

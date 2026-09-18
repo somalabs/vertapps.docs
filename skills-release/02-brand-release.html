@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2. Skill brand-release — Skills de Release</title>
+<style>
+:root{
+  --bg:#16140f; --bg2:#1f1c15; --bg3:#272318;
+  --ink:#ece8dd; --ink2:#b7b2a4; --ink3:#827d70;
+  --line:rgba(236,232,221,.10); --line2:rgba(236,232,221,.18);
+  --coral:#E8754B; --coral-soft:#F0997B; --coral-dim:rgba(216,90,48,.14);
+  --teal:#3FC79E; --teal-dim:rgba(29,158,117,.14);
+  --amber:#E9A23B; --amber-dim:rgba(186,117,23,.16);
+  --purple:#9b91ec; --purple-dim:rgba(155,145,236,.14);
+  --blue:#6FAEDC; --blue-dim:rgba(111,174,220,.14);
+  --pink:#D98BB6; --pink-dim:rgba(217,139,182,.14);
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:var(--sans);
+  color:var(--ink);
+  background:radial-gradient(120% 120% at 80% -10%, #221d14 0%, var(--bg) 55%);
+  background-attachment:fixed;
+  line-height:1.65;
+  min-height:100vh;
+  padding-bottom:5.5rem;
+}
+.progress{
+  position:fixed; top:0; left:0; height:3px; z-index:100;
+  background:linear-gradient(90deg, var(--coral), var(--amber));
+  box-shadow:0 0 12px rgba(232,117,75,.45);
+  width:var(--progress, 8%);
+  transition:width .35s ease;
+}
+.wrap{
+  max-width:1120px;
+  margin:0 auto;
+  padding:2.25rem 1.5rem 2rem;
+}
+.kicker{
+  display:inline-block;
+  font-size:.72rem;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--coral-soft);
+  margin:0 0 .85rem;
+}
+h1{
+  font-size:clamp(1.75rem, 3.2vw, 2.55rem);
+  font-weight:650;
+  letter-spacing:-.02em;
+  line-height:1.15;
+  margin:0 0 .85rem;
+  color:var(--ink);
+}
+.lead, .wrap > p:first-of-type{
+  color:var(--ink2);
+  font-size:1.05rem;
+  max-width:62ch;
+}
+h2{
+  margin:2.4rem 0 .9rem;
+  padding-top:1.1rem;
+  border-top:1px solid var(--line);
+  font-size:clamp(1.2rem, 2vw, 1.45rem);
+  color:var(--ink);
+  letter-spacing:-.01em;
+}
+h2:first-of-type{border-top:none; padding-top:0}
+h3{
+  margin:1.7rem 0 .55rem;
+  font-size:1.05rem;
+  color:var(--teal);
+}
+h4{margin:1.25rem 0 .4rem; color:var(--amber); font-size:.95rem}
+p{margin:.55rem 0 1rem; color:var(--ink)}
+li{color:var(--ink); margin:.25rem 0}
+a{color:var(--coral-soft); text-decoration:none; border-bottom:1px solid transparent; transition:border-color .15s, color .15s}
+a:hover{color:var(--coral); border-bottom-color:var(--coral-dim)}
+strong{color:var(--ink); font-weight:650}
+hr{border:none; border-top:1px solid var(--line); margin:2rem 0}
+blockquote{
+  margin:1.1rem 0;
+  padding:.9rem 1.1rem;
+  background:var(--amber-dim);
+  border:1px solid var(--line2);
+  border-left:3px solid var(--amber);
+  border-radius:0 10px 10px 0;
+  color:var(--ink2);
+}
+code{
+  font-family:var(--mono);
+  font-size:.86em;
+  background:var(--bg3);
+  color:var(--teal);
+  padding:.12em .4em;
+  border-radius:5px;
+  border:1px solid var(--line);
+}
+pre{
+  background:var(--bg2);
+  border:1px solid var(--line2);
+  color:var(--ink);
+  padding:1rem 1.15rem;
+  border-radius:12px;
+  overflow-x:auto;
+  margin:1rem 0 1.35rem;
+  box-shadow:inset 0 1px 0 rgba(236,232,221,.04);
+}
+pre code{
+  background:transparent;
+  border:none;
+  color:var(--ink);
+  padding:0;
+  font-size:.84rem;
+  line-height:1.55;
+}
+table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  margin:1rem 0 1.5rem;
+  background:var(--bg2);
+  border:1px solid var(--line2);
+  border-radius:12px;
+  overflow:hidden;
+  font-size:.92rem;
+}
+th, td{
+  padding:.65rem .8rem;
+  text-align:left;
+  vertical-align:top;
+  border-bottom:1px solid var(--line);
+}
+tr:last-child td{border-bottom:none}
+th{
+  background:var(--bg3);
+  color:var(--ink2);
+  font-weight:600;
+  font-size:.78rem;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+td{color:var(--ink)}
+tr:hover td{background:rgba(236,232,221,.03)}
+ul, ol{padding-left:1.25rem}
+.nav-side{
+  display:flex; flex-wrap:wrap; gap:.45rem;
+  margin:0 0 1.75rem;
+  padding:0;
+  list-style:none;
+}
+.nav-side a{
+  display:inline-block;
+  padding:.35rem .75rem;
+  border-radius:999px;
+  border:1px solid var(--line2);
+  background:var(--bg2);
+  color:var(--ink2);
+  font-size:.78rem;
+  letter-spacing:.02em;
+  border-bottom:none;
+  transition:background .15s, border-color .15s, color .15s;
+}
+.nav-side a:hover,
+.nav-side a.active{
+  background:var(--coral-dim);
+  border-color:var(--coral);
+  color:var(--coral-soft);
+}
+.chips{display:flex; flex-wrap:wrap; gap:.45rem; margin:1rem 0 1.25rem}
+.chip{
+  display:inline-flex; align-items:center; gap:.35rem;
+  padding:.3rem .7rem; border-radius:999px;
+  font-size:.75rem; font-weight:600; letter-spacing:.03em;
+  border:1px solid var(--line2); background:var(--bg2); color:var(--ink2);
+}
+.chip.brand{border-color:var(--coral); color:var(--coral-soft); background:var(--coral-dim)}
+.chip.post{border-color:var(--teal); color:var(--teal); background:var(--teal-dim)}
+.chip.flow{border-color:var(--blue); color:var(--blue); background:var(--blue-dim)}
+.chip.warn{border-color:var(--amber); color:var(--amber); background:var(--amber-dim)}
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+  gap:.85rem;
+  margin:1rem 0 1.5rem;
+}
+.card{
+  background:var(--bg2);
+  border:1px solid var(--line2);
+  border-radius:14px;
+  padding:1rem 1.1rem;
+  transition:border-color .15s, transform .15s;
+}
+.card:hover{border-color:var(--line2); transform:translateY(-1px)}
+.card h3{margin:.15rem 0 .45rem; font-size:1rem}
+.card p{margin:0; font-size:.92rem; color:var(--ink2)}
+.card.teal{border-color:rgba(63,199,158,.35); box-shadow:inset 3px 0 0 var(--teal)}
+.card.coral{border-color:rgba(232,117,75,.35); box-shadow:inset 3px 0 0 var(--coral)}
+.card.blue{border-color:rgba(111,174,220,.35); box-shadow:inset 3px 0 0 var(--blue)}
+.card.amber{border-color:rgba(233,162,59,.35); box-shadow:inset 3px 0 0 var(--amber)}
+.pager{
+  display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+  margin-top:2.5rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  font-size:.9rem;
+}
+.pager a{color:var(--ink2); border-bottom:none}
+.pager a:hover{color:var(--coral-soft)}
+.footer{
+  position:fixed; bottom:0; left:0; right:0; z-index:90;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:1rem; flex-wrap:wrap;
+  padding:.65rem 1.25rem;
+  background:rgba(22,20,15,.92);
+  border-top:1px solid var(--line);
+  backdrop-filter:blur(10px);
+  font-size:.78rem; color:var(--ink3);
+}
+.footer .label{letter-spacing:.04em; text-transform:uppercase; font-weight:600}
+.footer .dots{display:flex; gap:.4rem; align-items:center; flex-wrap:wrap; justify-content:center}
+.footer .dot{
+  width:7px; height:7px; border-radius:999px;
+  background:var(--line2); border:none; padding:0; cursor:pointer;
+  transition:width .2s, background .2s, border-radius .2s;
+}
+.footer .dot.active{
+  width:22px; background:var(--coral); border-radius:999px;
+}
+.footer .nav-btns{display:flex; gap:.45rem}
+.footer .nav-btns a{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:34px; height:34px; border-radius:8px;
+  border:1px solid var(--line2); color:var(--ink2); border-bottom:none;
+  background:var(--bg2); font-size:1.1rem; line-height:1;
+}
+.footer .nav-btns a:hover{border-color:var(--coral); color:var(--coral-soft); background:var(--coral-dim)}
+@media (max-width:820px){
+  .footer .dots{display:none}
+  .footer{justify-content:space-between}
+}
+@media (max-width:640px){
+  .wrap{padding:1.5rem 1rem 2rem}
+  table{font-size:.82rem}
+  th, td{padding:.5rem .55rem}
+}
+</style>
+</head>
+<body style="--progress:27.3%">
+<div class="progress" aria-hidden="true"></div>
+<main class="wrap">
+<nav class="nav-side" aria-label="Seções"><a href="../processos.html#automacoes-marca">← Processos</a><a href="index.html">00 · Índice</a><a href="01-visao-geral.html">01 · Visão geral</a><a href="02-brand-release.html" class="active">02 · brand-release</a><a href="03-post-brand-release.html">03 · post-brand-release</a><a href="04-gates.html">04 · Gates</a><a href="05-fluxo-completo.html">05 · Fluxo completo</a><a href="06-comparativo.html">06 · Comparativo</a><a href="07-guia-rapido.html">07 · Guia rápido</a><a href="08-boas-praticas.html">08 · Boas práticas</a><a href="09-referencia-tecnica.html">09 · Referência</a><a href="10-lessons.html">10 · Lessons</a></nav>
+<p class="kicker">02 · brand-release</p><h1>2. Skill <code>brand-release</code></h1><div class="chips"><span class="chip brand">Abertura · Homologação</span><span class="chip flow">Codemagic · Jira · Teams</span></div>
+<h2>Objetivo</h2>
+<p>Abrir a release do app de uma marca: validar versão e tags das libs a partir do <code>pubspec.yaml</code> da branch <strong><code>main</code> no GitHub</strong>, abrir PR de bump se necessário (sem mergear), criar/atualizar a branch <code>release/X.Y.Z</code>, disparar build no Codemagic, notificar o Teams, criar a versão no Jira (Não lançado) e mover os cards confirmados para <strong>Em homologação</strong>.</p>
+<h2>Quando utilizar</h2>
+<p><strong>Utilizar quando</strong> o usuário pedir, por exemplo:</p>
+<ul>
+<li>release de marca / gerar versão de release;</li>
+<li>abrir homologação de app;</li>
+<li>Build E2E (ou outro workflow) de release;</li>
+<li>rebuild em homologação (“gerar outro build”, “invalidar e subir de novo”).</li>
+</ul>
+<p><strong>Não utilizar quando:</strong></p>
+<ul>
+<li>a intenção for só sync homolog↔develop → usar <code>brand-homologation</code>;</li>
+<li>a intenção for tag/release de <strong>lib</strong> → usar <code>lib-release</code>;</li>
+<li>as lojas já aprovaram e o objetivo é fechar cards/tag → usar <code>post-brand-release</code>;</li>
+<li>faltar confirmação de marca/versão (a skill <strong>não</strong> deve inferir marca só por arquivo aberto).</li>
+</ul>
+<h2>Pré-requisitos</h2>
+<p>Com base na implementação:</p>
+<table>
+<thead>
+<tr>
+<th>Pré-requisito</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Marca definida pelo usuário</td>
+<td>Não inferir por contexto de arquivo/chat antigo</td>
+</tr>
+<tr>
+<td>Versão confirmada</td>
+<td>Lida de <code>version:</code> no <code>pubspec.yaml</code> da <code>main</code> no GitHub (<code>somalabs/&lt;app-repo&gt;</code>)</td>
+</tr>
+<tr>
+<td><code>gh</code> autenticado</td>
+<td>Necessário para API GitHub / PR / branch (smoke opcional no setup)</td>
+</tr>
+<tr>
+<td>MCP <code>user-jira</code></td>
+<td>Listar e transicionar issues; REST para versões e checklist DT</td>
+</tr>
+<tr>
+<td>MCP <code>user-codemagic</code></td>
+<td><code>list_apps</code>, <code>start_build</code>, <code>wait_for_build</code>; REST para workflows/logs</td>
+</tr>
+<tr>
+<td>Credenciais Codemagic</td>
+<td><code>CODEMAGIC_API_KEY</code> em <code>~/.cursor/mcp.json</code> (para GET <code>/apps</code> e logs) — <strong>não expor no chat</strong></td>
+</tr>
+<tr>
+<td>Credenciais Jira</td>
+<td><code>JIRA_HOST</code> / <code>JIRA_EMAIL</code> / <code>JIRA_API_TOKEN</code> do MCP — <strong>não expor</strong></td>
+</tr>
+<tr>
+<td>Webhook Teams</td>
+<td>URL em <code>brand-release/contracts.md</code> (Power Automate)</td>
+</tr>
+<tr>
+<td>Repo do app</td>
+<td>Mapeado em <code>repositories.md</code> (org <code>somalabs</code>)</td>
+</tr>
+<tr>
+<td>Confirmação humana do escopo</td>
+<td>Lista de keys VERTAPP (+ DT) antes de mover</td>
+</tr>
+<tr>
+<td>Confirmação antes de mutações git</td>
+<td>Criar/FF/push <code>release/*</code>, abrir PR</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Não especificado:</strong> variáveis de ambiente além das do MCP; checklist formal de permissões de GitHub org além do que <code>gh auth status</code> valida.</p>
+<h2>Como utilizar</h2>
+<p>Exemplos de prompts (alinhados ao <code>SKILL.md</code>):</p>
+<p><strong>Básico</strong></p>
+<pre><code class="language-text">Gerar release da FARM
+</code></pre>
+<p><strong>Completo</strong></p>
+<pre><code class="language-text">Abrir release da FARM: confirmar versão da main, checar setup do GitHub/Jira/Codemagic, e seguir o fluxo até Em homologação.
+</code></pre>
+<p><strong>Marca específica</strong></p>
+<pre><code class="language-text">Rodar Build E2E de release da Animale
+</code></pre>
+<p><strong>Com versão, ambiente (workflow) e card/contexto Jira</strong></p>
+<pre><code class="language-text">Abrir release 4.15.0 da FARM com workflow Build E2E. Os cards já estão em Desenvolvimento concluido no VERTAPP.
+</code></pre>
+<p><strong>Rebuild (atalho, já em homologação)</strong></p>
+<pre><code class="language-text">Gerar outro build da FARM
+</code></pre>
+<pre><code class="language-text">Invalidar e subir de novo
+</code></pre>
+<h2>Informações de entrada</h2>
+<table>
+<thead>
+<tr>
+<th>Entrada</th>
+<th style="text-align: right;">Obrigatória</th>
+<th>Formato</th>
+<th>Exemplo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Marca</td>
+<td style="text-align: right;">Sim</td>
+<td>Nome da marca AZZAS</td>
+<td><code>FARM</code>, <code>Off Premium</code>, <code>Animale</code></td>
+<td>Define repo e filtros Jira/Codemagic</td>
+</tr>
+<tr>
+<td>Versão do app</td>
+<td style="text-align: right;">Sim (confirmada)</td>
+<td>SemVer <code>X.Y.Z</code> (sem <code>+build</code> na branch)</td>
+<td><code>4.15.1</code></td>
+<td>Lida da <code>main</code>; usuário confirma</td>
+</tr>
+<tr>
+<td>Setup (smoke)</td>
+<td style="text-align: right;">Não (pergunta)</td>
+<td><code>sim</code> / <code>não</code></td>
+<td><code>não</code></td>
+<td>Se <code>sim</code>: <code>gh</code> + Jira + Codemagic</td>
+</tr>
+<tr>
+<td>Atualizar libs</td>
+<td style="text-align: right;">Sim no passo 3</td>
+<td><code>atualizar</code> / <code>manter</code></td>
+<td><code>manter</code></td>
+<td>Comparação pubspec <code>main</code> × latest tags</td>
+</tr>
+<tr>
+<td>Confirmação do escopo Jira</td>
+<td style="text-align: right;">Sim</td>
+<td><code>sim</code> / editar lista</td>
+<td><code>sim</code></td>
+<td>Keys VERTAPP + DT</td>
+</tr>
+<tr>
+<td>Criar/atualizar <code>release/*</code></td>
+<td style="text-align: right;">Sim antes da mutação</td>
+<td>ok explícito</td>
+<td><code>pode criar</code></td>
+<td>Gate antes de push/FF</td>
+</tr>
+<tr>
+<td>Workflow Codemagic</td>
+<td style="text-align: right;">Sim</td>
+<td>nome ou número da lista</td>
+<td><code>Build E2E</code></td>
+<td>Depois da escolha, <code>start_build</code> imediato</td>
+</tr>
+<tr>
+<td>Cards DT <code>[APP I TODOS]</code></td>
+<td style="text-align: right;">Condicional</td>
+<td>quais itens <strong>não</strong> estão em check</td>
+<td><code>DT-422</code></td>
+<td>Gate humano (API sem check/uncheck confiável)</td>
+</tr>
+</tbody>
+</table>
+<h2>Funcionamento interno</h2>
+<ol>
+<li><strong>Interpretação</strong> — Lê <code>contracts.md</code> e <code>lessons.md</code>. Se a marca não veio no pedido, pergunta. Com a marca, lê <code>version:</code> da <code>main</code> via <code>gh api</code> e pergunta se está correta; pergunta se quer setup.</li>
+<li><strong>Validações</strong> — Versão só da <code>main</code> remota; marca não inferida; lista Jira só após confirmação; mutações git só com ok; workflow sempre por <strong>id hex</strong>.</li>
+<li><strong>Consultas</strong> — <code>pubspec.yaml</code> (<code>ref=main</code>); Jira VERTAPP (<code>cf[11606]</code> = Marca APP) e DT (Deploy + APP); latest tags das libs; cache Codemagic em contracts ou GET <code>/apps/{app_id}</code>.</li>
+<li><strong>Comandos / tools</strong> — <code>gh api</code> / PR; MCP Codemagic <code>start_build</code> + <code>wait_for_build</code>; REST build/logs; POST webhook Teams; REST criar versão VERTAPP; MCP <code>get_transitions</code> / <code>transition_issue</code>.</li>
+<li><strong>Decisões automáticas</strong> — Após build <strong>success</strong>: Teams <code>homologacao</code>, criar versão Jira (se faltar), mover cards, learn. Após escolha do workflow: <code>start_build</code> sem segunda confirmação.</li>
+<li><strong>Confirmações humanas</strong> — Marca (se ausente), versão, setup, escopo, atualizar/manter libs, merge da PR pelo usuário, criar/atualizar branch <code>release/*</code>, escolha do workflow, (exceção) seguir com Cleaning up travado se o usuário autorizar.</li>
+<li><strong>Criado/modificado</strong> — PR de bump (opcional); branch <code>release/X.Y.Z</code>; build Codemagic; mensagem Teams; versão Jira Não lançado; cards em Em homologação; <code>runs/</code> (+ <code>lessons</code>/<code>contracts</code> se houver correção).</li>
+<li><strong>Critério de sucesso</strong> — Build em status terminal <strong>success</strong>; Teams enviado com Android + <strong>iOS</strong> build numbers; versão Jira criada (ou já existente); keys do gate movidas; entry em <code>runs/</code>. Em falha de build: diagnosticar, <strong>não</strong> Teams de sucesso nem Jira de homologação; ir ao learn.</li>
+</ol>
+<p><strong>Atalho rebuild:</strong> não repete passos 0–3 nem 6–7 de versão/cards; só novo build + Teams <code>invalidado</code> + <code>homologacao</code>.</p>
+<h2>Saídas geradas</h2>
+<table>
+<thead>
+<tr>
+<th>Saída</th>
+<th>Quando</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PR de bump de libs → <code>main</code></td>
+<td>Se usuário escolher atualizar</td>
+</tr>
+<tr>
+<td>Branch <code>release/X.Y.Z</code></td>
+<td>Após ok (+ após merge da PR, se houve bump)</td>
+</tr>
+<tr>
+<td>Build Codemagic</td>
+<td>Após escolha do workflow</td>
+</tr>
+<tr>
+<td>Adaptive Card Teams (<code>homologacao</code> / <code>erro</code> / <code>invalidado</code> / <code>homologado</code>)</td>
+<td>Conforme cenário</td>
+</tr>
+<tr>
+<td>Versão Jira VERTAPP <code>{marca}_v…</code> Não lançado</td>
+<td>Após Teams success — <strong>sem</strong> preencher <code>fixVersions</code> nos cards</td>
+</tr>
+<tr>
+<td>Cards em Em homologação</td>
+<td>Keys confirmadas no gate</td>
+</tr>
+<tr>
+<td><code>runs/YYYY-MM-DD-&lt;marca&gt;-&lt;versão&gt;.md</code></td>
+<td>Sempre (passo learn)</td>
+</tr>
+<tr>
+<td>Atualização <code>lessons.md</code> / <code>contracts.md</code></td>
+<td>Se correção confirmada / IDs de API</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Não gera:</strong> tag <code>vX.Y.Z</code>, GitHub Release do app, preenchimento de Versões corrigidas nos cards, publicação nas lojas.</p>
+<h3>Exemplo de resposta esperada (sucesso)</h3>
+<p>Baseado no run real <code>runs/2026-09-17-offpremium-10.3.0.md</code>:</p>
+<pre><code class="language-text">Release — Off Premium 10.3.0 — sucesso
+
+- Branch: release/10.3.0
+- Build: success — https://codemagic.io/app/.../build/...
+  Android Build: 417167 | iOS Build: 98
+- Teams: homologacao — HTTP 202
+- Versão Jira: off premium_v10.3.0 (Não lançado) — sem fill nos cards
+- Cards movidos para EM HOMOLOGAÇÃO: VERTAPP-… (lista)
+- DT: pendência se sem transição
+- Learn: runs/2026-09-17-offpremium-10.3.0.md
+</code></pre>
+<h2>Erros e solução de problemas</h2>
+<table>
+<thead>
+<tr>
+<th>Problema</th>
+<th>Possível causa</th>
+<th>Como resolver</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Workflow "Build E2E" does not exist</code></td>
+<td><code>workflow_id</code> passado como nome da UI</td>
+<td>Usar id hex de contracts ou GET <code>/apps/{app_id}</code></td>
+</tr>
+<tr>
+<td>Contagem JQL ≠ board</td>
+<td>Campo/marca errados ou multi-marca</td>
+<td>Usar <code>cf[11606]</code> (Marca APP); no gate editar lista; board manda</td>
+</tr>
+<tr>
+<td>Cards somem da swimlane após move</td>
+<td>Moveu o pai em vez do card da swimlane</td>
+<td>No gate listar a key visível; passo 7 move só o confirmado</td>
+</tr>
+<tr>
+<td>Build failed sem causa</td>
+<td>Polling parou cedo / sem log</td>
+<td>Repetir <code>wait_for_build</code>; GET build + log da action failed</td>
+</tr>
+<tr>
+<td>Cleaning up travado com artefactos OK</td>
+<td>Etapa finishing do Codemagic</td>
+<td>Com autorização explícita, seguir Teams/Jira com artefactos</td>
+</tr>
+<tr>
+<td>Ícone quebrado no Teams</td>
+<td>WebP Play Store / URL truncada</td>
+<td>Preferir JPEG App Store em <code>icons/manifest.json</code></td>
+</tr>
+<tr>
+<td>Setup Teams falha</td>
+<td>Uso de MCP Teams</td>
+<td>Usar só webhook Power Automate</td>
+</tr>
+<tr>
+<td>Agente mergeou PR</td>
+<td>Violação da regra</td>
+<td>Só abrir PR; usuário faz review/merge</td>
+</tr>
+<tr>
+<td>Versão/libs do checkout local</td>
+<td>Fonte da verdade errada</td>
+<td>Sempre <code>pubspec</code> da <code>main</code> no GitHub</td>
+</tr>
+<tr>
+<td>DT checklist sem checked</td>
+<td>HeroCoders sync off</td>
+<td>Perguntar quais <strong>não</strong> estão em check</td>
+</tr>
+<tr>
+<td>Rebuild reinicia release</td>
+<td>Fluxo tratado como release nova</td>
+<td>Usar atalho (só build + Teams invalidado/homologacao)</td>
+</tr>
+</tbody>
+</table>
+<h2>Exemplo completo de execução</h2>
+<p><strong>Prompt</strong></p>
+<pre><code class="language-text">Gerar release da Off Premium
+</code></pre>
+<p><strong>Dados identificados</strong></p>
+<ul>
+<li>Marca: Off Premium (Jira Marca APP = <code>Off Premium</code>; repo <code>app.flutter.off.frontend</code>)</li>
+<li>Versão proposta: lida da <code>main</code> (ex.: <code>10.3.0</code>)</li>
+<li>Setup: usuário responde <code>não</code> ou <code>sim</code></li>
+</ul>
+<p><strong>Etapas</strong></p>
+<ol>
+<li>Confirmar versão <code>10.3.0</code>.</li>
+<li>Listar VERTAPP (<code>Desenvolvimento concluido</code> + <code>cf[11606] = "Off Premium"</code>) e DT; confirmar lista.</li>
+<li>Comparar tags das libs; manter ou abrir PR → <strong>parar</strong> até merge do usuário.</li>
+<li>Pedir ok → criar <code>release/10.3.0</code>; listar workflows; usuário escolhe <code>Build</code> → <code>start_build</code> → aguardar fim.</li>
+<li>POST Teams <code>homologacao</code> com Android/iOS builds.</li>
+<li>Criar <code>off premium_v10.3.0</code> se não existir.</li>
+<li>Transicionar keys confirmadas (transition id <code>171</code> → Em homologação).</li>
+<li>Gravar <code>runs/</code>.</li>
+</ol>
+<p><strong>Confirmações</strong></p>
+<p>Versão, setup, escopo, libs, branch, workflow; merge da PR se houver.</p>
+<p><strong>Resultado final</strong></p>
+<p>Relatório com marca, versão, branch, PR (se houver), build URL/status, tasks, versão Jira, cards movidos, lições.</p>
+<hr />
+
+<div class="pager"><a href="01-visao-geral.html">← Visão geral</a><a href="03-post-brand-release.html">post-brand-release →</a></div>
+</main>
+<footer class="footer">
+  <div class="label"><a href="../index.html" style="color:inherit;border:none">VERTAPPS</a> · <a href="../processos.html" style="color:inherit;border:none">Processos</a> · Skills de Release</div>
+  <div class="dots"><a class="dot" href="index.html" title="Índice" aria-label="Índice"></a><a class="dot" href="01-visao-geral.html" title="Visão geral" aria-label="Visão geral"></a><a class="dot active" href="02-brand-release.html" title="brand-release" aria-label="brand-release"></a><a class="dot" href="03-post-brand-release.html" title="post-brand-release" aria-label="post-brand-release"></a><a class="dot" href="04-gates.html" title="Gates" aria-label="Gates"></a><a class="dot" href="05-fluxo-completo.html" title="Fluxo completo" aria-label="Fluxo completo"></a><a class="dot" href="06-comparativo.html" title="Comparativo" aria-label="Comparativo"></a><a class="dot" href="07-guia-rapido.html" title="Guia rápido" aria-label="Guia rápido"></a><a class="dot" href="08-boas-praticas.html" title="Boas práticas" aria-label="Boas práticas"></a><a class="dot" href="09-referencia-tecnica.html" title="Referência" aria-label="Referência"></a><a class="dot" href="10-lessons.html" title="Lessons" aria-label="Lessons"></a></div>
+  <div class="nav-btns"><a href="01-visao-geral.html" aria-label="Anterior">‹</a><a href="03-post-brand-release.html" aria-label="Próximo">›</a></div>
+</footer>
+<script>
+(function(){
+  document.addEventListener('keydown', function(e){
+    if(e.target && /input|textarea|select/i.test(e.target.tagName)) return;
+    var prev = '01-visao-geral.html';
+    var next = '03-post-brand-release.html';
+    if((e.key === 'ArrowRight' || e.key === ' ') && next){ e.preventDefault(); location.href = next; }
+    if(e.key === 'ArrowLeft' && prev){ e.preventDefault(); location.href = prev; }
+  });
+})();
+</script>
+</body>
+</html>
