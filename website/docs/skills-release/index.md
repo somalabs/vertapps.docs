@@ -22,8 +22,6 @@ Documentação técnica das skills operacionais de release de apps de marca AZZA
 | 9 | [Referência técnica](09-referencia-tecnica.md) | `09-referencia-tecnica.md` |
 | 10 | [Lessons e memória entre runs](10-lessons.md) | `10-lessons.md` |
 
-Versão HTML legado (diagramas e navegação antiga): [legado/skills-release](pathname:///legado/skills-release/index.html).
-
 ## Caminhos analisados
 
 As skills oficiais hoje estão em `vertapps.skills/` (`npx skills add somalabs/vertapps.skills`). A tabela abaixo é a origem do texto desta seção (pasta `IA/` no core, de onde as skills saíram).

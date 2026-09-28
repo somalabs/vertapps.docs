@@ -1,6 +1,6 @@
 # VERTAPPS Docs
 
-Documentação oficial do time de apps AZZAS. Site em Docusaurus (`website/`), tema visual de `prompt-construcao-apresentacao.md`.
+Documentação oficial do time de apps AZZAS. Site em Docusaurus (`website/`), tema visual da apresentação de reestruturação.
 
 ## Rodar local
 
@@ -25,15 +25,14 @@ npm run serve
 | Pasta | O quê |
 |---|---|
 | `website/docs/` | Páginas oficiais (Markdown/MDX) |
-| `website/src/css/custom.css` | Tokens do tema (coral, teal, amber, fundo quente) |
+| `website/src/css/custom.css` | Tokens do tema |
 | `website/src/components/` | Kicker, Chip, DocCard, barra de progresso |
-| `website/static/legado/` | HTML antigo (processos e skills-release) |
-| `skills-release/md/` | Fonte Markdown original (ainda no root do repo) |
+| `.github/workflows/` | Deploy no GitHub Pages |
 
 Como escrever: `website/docs/padrao/`.
 
 ## Publicar
 
-O workflow `.github/workflows/deploy-docs.yml` gera o site e publica no GitHub Pages (`/vertapps.docs/`).
+Push na `main` dispara `.github/workflows/deploy-docs.yml` → https://somalabs.github.io/vertapps.docs/
 
-HTML na raiz (`index.html`, `processos.html`) permanece como legado até o cutover completo do Pages.
+Backup do HTML antigo: branch `backup/main-pre-docusaurus-2026-09-28`.
