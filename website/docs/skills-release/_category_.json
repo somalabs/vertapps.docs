@@ -1,7 +1,7 @@
 {
   "label": "Skills de Release",
   "position": 4,
-  "collapsed": false,
+  "collapsed": true,
   "link": {
     "type": "doc",
     "id": "skills-release/index"

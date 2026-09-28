@@ -53,7 +53,6 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          editUrl: 'https://github.com/somalabs/vertapps.docs/tree/main/website/',
           showLastUpdateTime: false,
         },
         blog: false,
