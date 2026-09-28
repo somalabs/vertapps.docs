@@ -1,0 +1,28 @@
+---
+sidebar_position: 13
+title: Pontos de atenção
+---
+
+import Kicker from '@site/src/components/Kicker';
+
+<Kicker>12 · Atenção</Kicker>
+
+# Pontos de atenção
+
+Obrigatórios para o fluxo funcionar de ponta a ponta.
+
+### 1 · Codemagic: parar de clonar as libs
+
+Hoje o script do Codemagic clona os projetos das libs ao lado do app. Com consumo por tag, o build da marca resolve as libs via `git` + `ref` no `pubspec`, sem clone manual dos repositórios irmãos.
+
+### 2 · Toda PR nas libs vira tag — sem exceção
+
+Para changelog, Jira, Teams e marcas opt-in funcionarem, **toda PR mergeada nas libs deve gerar uma tag de versão**. Sem tag, a marca não tem artefato fixo para consumir.
+
+### 3 · Homolog da marca builda de `release/*`
+
+Não buildar homolog do tip de `main` durante o ciclo da versão. Sem branch de release temporária, o lote fica preso. Depois da loja: tag + changelog e apagar a release.
+
+### 4 · Feature flag obrigatória · revert é fallback
+
+Toda feature nova nasce com feature flag. Se reprovar na homolog: **desligar no remote**. Só se não houver flag → revert na `release/*`.

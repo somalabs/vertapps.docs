@@ -1,0 +1,152 @@
+---
+sidebar_position: 3
+title: Fluxogramas
+---
+
+import Kicker from '@site/src/components/Kicker';
+
+<Kicker>03 · Fluxogramas</Kicker>
+
+# Mapas do processo
+
+Referência rápida ponta a ponta. Os SVGs originais estão em [legado/processos.html](pathname:///legado/processos.html).
+
+## 1. Processo de desenvolvimento
+
+Do pedido até a marca decidir atualizar (ou não).
+
+```mermaid
+flowchart TD
+  A[Chega uma demanda] --> B{É evolução de lib / plataforma?}
+  B -->|Sim → App Plataforma| C[Call de refinamento técnico]
+  C --> D[Criar 1 task por lib]
+  D --> E[Desenvolver + testar]
+  E --> F[Abrir PR]
+  F --> G[Dono aprova o PR]
+  G --> H[Automação: tag + changelog]
+  B -->|Não → App Custom| I[Task no backlog da marca]
+  I --> J[Implementar no app]
+  J --> K{Precisa alterar lib?}
+  K -->|Sim| L[Alinhar com dono da lib]
+  L --> M[Dono aprova o PR]
+  M --> N[Automação: tag + changelog]
+  K -->|Não| O[Só no app]
+  H --> P[Marca lê o changelog e decide]
+  N --> P
+  O --> P
+  P --> Q[Se atualizar: PR no app → homolog → prod]
+```
+
+## 2. Processo Git (libs)
+
+Uma branch principal · feature branch · PR · tag.
+
+```mermaid
+flowchart TD
+  A[main — branch única da lib] --> B[Criar branch feat/… ou fix/…]
+  B --> C["Commits: feat: · fix: · feat!:"]
+  C --> D[Push + PR → main]
+  D --> E{CI passou?}
+  E -->|Não| F[Corrigir na branch e atualizar o PR]
+  F --> E
+  E -->|Sim| G[Dono da lib revisa e aprova]
+  G --> H[Merge na main]
+  H --> I[Automação: tag vX.Y.Z + GitHub Release]
+  I --> J["Marca consome ref: vX.Y.Z no pubspec"]
+  J --> K[main segue · versão imutável na tag]
+```
+
+:::warning[Não usar]
+develop / homolog como contrato para a marca. O que vale é a **tag**.
+:::
+
+## 3. Lançamento de versão da lib
+
+Depois do merge na main — SemVer + changelog.
+
+```mermaid
+flowchart TD
+  A[PR mergeado na main] --> B[Ler tipo do commit / card do Jira]
+  B --> C{Qual o impacto?}
+  C -->|Breaking| D[MAJOR 2.0.0]
+  C -->|Feature| E[MINOR 1.5.0]
+  C -->|Bugfix| F[PATCH 1.4.1]
+  D --> G[Automação gera changelog do card Jira]
+  E --> G
+  F --> G
+  G --> H[Tag vX.Y.Z + GitHub Release]
+  H --> I[Avisar marcas — opt-in]
+  I --> J[Apps não sobem sozinhos]
+```
+
+## 4. Automação para gerar versão da lib
+
+GitHub Action depois do merge — Jira, tag, Teams.
+
+```mermaid
+flowchart TD
+  A[PR mergeado para main] --> B[Action lê o card do Jira]
+  B --> C[Gera changelog + define SemVer]
+  C --> D[Cria tag vX.Y.Z + GitHub Release]
+  D --> E[Move o card para Concluído]
+  E --> F[Teams: nova versão liberada]
+  F --> G[Marcas avisadas — update opt-in]
+```
+
+:::tip[Pré-requisito]
+O PR precisa referenciar o card do Jira (chave na branch ou na descrição) para a Action achar a task.
+:::
+
+## 5. Release da marca (App Custom)
+
+Feature flag primeiro · revert só se não houver flag.
+
+```mermaid
+flowchart TD
+  A["1 · Card → feat/iddocard<br/>feature nasce com flag"] --> B[2 · PR mergeado em main]
+  B --> C[3 · Criar release/2.0.0 a partir de main]
+  C --> D[4 · Homolog na release]
+  D --> E{Task reprovou?}
+  E -->|Não| F[Segue para a loja]
+  E -->|Sim| G{Tem feature flag?}
+  G -->|Sim| H[Desligar no remote — sem rebuild]
+  G -->|Não| I[Revert na release — fallback]
+  H --> F
+  I --> F
+  F --> J[5 · Subir app para a loja]
+  J --> K[6 · Tag v2.0.0 + changelog]
+  K --> L[7 · Excluir release/2.0.0]
+  L --> M[main segue · versão pinada na tag]
+```
+
+:::danger[Regra]
+Toda feature nasce com feature flag. Reprovou → **desliga no remote**. Sem flag → **revert na release**.
+:::
+
+## 6. Automação para gerar versão do commons
+
+Criar release a partir da main → build + E2E → Teams → Jira.
+
+```mermaid
+flowchart TD
+  A[Gatilho: gerar versão do commons] --> B[Criar branch release/X.Y.Z a partir de main]
+  B --> C[Codemagic: build + testes E2E]
+  C --> D[Teams: build + resultado dos testes]
+  D --> E[Mover os cards no Jira]
+  E --> F[Versão pronta para homolog / validação]
+```
+
+## 7. Automação pós-release
+
+Depois que o app está nas lojas.
+
+```mermaid
+flowchart TD
+  A[App liberado nas lojas] --> B[Criar a tag vX.Y.Z]
+  B --> C[Criar o changelog da marca]
+  C --> D[Excluir a branch release/X.Y.Z]
+  D --> E[Mover os cards no Jira]
+  E --> F[Release encerrada · main segue]
+```
+
+A automação 6 cobre o início do ciclo (release + build + E2E); a 7 cobre o fechamento depois da loja (tag + changelog + limpeza). Detalhe operacional: [Automações](./automacoes.mdx) e [Skills de Release](../skills-release/index.md).

@@ -1,0 +1,22 @@
+---
+sidebar_position: 4
+title: Quem faz o quê
+---
+
+import Kicker from '@site/src/components/Kicker';
+import DocCard, {CardGrid} from '@site/src/components/DocCard';
+
+<Kicker>04 · Papéis</Kicker>
+
+# Quem faz o quê
+
+Fronteira explícita: App Plataforma × App Custom.
+
+<CardGrid>
+  <DocCard title="App Plataforma — cuida das libs" tone="blue">
+    Refina e quebra o trabalho por lib. Desenvolve e testa nas libs. Dono aprova o PR; automação publica a versão.
+  </DocCard>
+  <DocCard title="App Custom — cuida das marcas" tone="amber">
+    Entrega no app da marca. Decide se atualiza a lib. Se precisar mexer na lib, alinha com o dono.
+  </DocCard>
+</CardGrid>

@@ -1,0 +1,20 @@
+---
+sidebar_position: 10
+title: Git e padrões
+---
+
+import Kicker from '@site/src/components/Kicker';
+
+<Kicker>09 · Git</Kicker>
+
+# Git e padrões (o básico)
+
+Menos branches, mais clareza no artefato que a marca consome.
+
+| Tema | Regra |
+|---|---|
+| Branches (marca) | Só `main` + `release/X.Y.Z` temporária. Sem develop/homolog longas. |
+| Branches nas libs | Uma branch principal (ex.: main). Sem depender de develop/homolog. |
+| O que a marca usa | A tag da versão (`v1.4.2`), nunca a ponta da branch. |
+| Commits | Padrão Conventional Commits + skill de commit para o time. |
+| Changelog | Texto claro, preferencialmente puxado da descrição do card. |

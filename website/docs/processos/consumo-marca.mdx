@@ -1,0 +1,34 @@
+---
+sidebar_position: 7
+title: Marca atualiza
+---
+
+import Kicker from '@site/src/components/Kicker';
+
+<Kicker>07 · Consumo</Kicker>
+
+# Como a marca usa a lib nova
+
+Atualizar é opção — não efeito colateral do path.
+
+### 1 · Lib publica uma versão
+
+Exemplo: sai o `v1.5.0` com changelog no GitHub.
+
+### 2 · Time da marca lê o changelog
+
+Vale a pena agora? Tem breaking change? Pode esperar.
+
+### 3 · Se for atualizar: PR só no app
+
+Muda a versão no `pubspec`, testa e homologa a marca.
+
+**Quem:** time da marca
+
+```yaml
+# No app da marca (pubspec.yaml)
+azzas_core:
+  git:
+    url: …/app.flutterlib.azzascore.frontend.git
+    ref: v1.5.0   # ← versão escolhida pela marca
+```

@@ -1,0 +1,73 @@
+---
+sidebar_position: 9
+title: Automações
+---
+
+import Kicker from '@site/src/components/Kicker';
+import DocCard, {CardGrid} from '@site/src/components/DocCard';
+
+<Kicker>08b · Automações</Kicker>
+
+# Duas automações do ciclo de versão
+
+Uma sobe a versão para validação; a outra fecha depois da loja.
+
+## Documentação operacional das skills
+
+1. **[Skills de Release](../skills-release/index.md)** — guia completo (gates, entradas, saídas, lessons).
+2. **[brand-release](../skills-release/02-brand-release.md)** — abrir homologação: branch `release/*`, Codemagic, Teams, Jira.
+3. **[post-brand-release](../skills-release/03-post-brand-release.md)** — após aprovação nas lojas: tag, changelog, Versões corrigidas, Itens concluídos.
+4. Ver também [Gates](../skills-release/04-gates.md) e [Lessons](../skills-release/10-lessons.md).
+
+<CardGrid>
+  <DocCard title="brand-release — abrir homologação" tone="blue">
+    Criar release a partir da main. Codemagic: build + testes E2E. Enviar build e resultados no Teams. Mover cards no Jira.
+  </DocCard>
+  <DocCard title="post-brand-release — pós-release" tone="teal">
+    App já está nas lojas. Criar tag. Criar changelog da marca. Excluir branch de release. Mover cards no Jira.
+  </DocCard>
+</CardGrid>
+
+## 1 · brand-release (abrir homologação)
+
+### 1 · Criar branch de release
+
+A partir de `main` → `release/X.Y.Z`.
+
+### 2 · Codemagic: build + E2E
+
+Gera o build e roda os testes end-to-end na release.
+
+### 3 · Notificar no Teams
+
+Envia o build junto com o resultado dos testes.
+
+### 4 · Atualizar Jira
+
+Move os cards conforme o status da versão gerada.
+
+**Quem:** automação
+
+## 2 · post-brand-release (após lojas)
+
+### 1 · App liberado nas lojas
+
+Gatilho: publicação concluída (App Store / Play Store).
+
+### 2 · Criar a tag
+
+Tag `vX.Y.Z` no commit que foi às lojas.
+
+### 3 · Changelog da marca
+
+Gera o changelog (GitHub Release / artefato da marca).
+
+### 4 · Excluir a release
+
+Remove a branch `release/X.Y.Z` — era temporária.
+
+### 5 · Mover cards no Jira
+
+Cards da versão vão para o status final (ex.: Concluído / em produção).
+
+**Quem:** automação

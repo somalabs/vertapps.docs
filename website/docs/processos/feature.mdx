@@ -1,0 +1,46 @@
+---
+sidebar_position: 5
+title: Nova feature
+---
+
+import Kicker from '@site/src/components/Kicker';
+
+<Kicker>05 · Feature de plataforma</Kicker>
+
+# Quando chega uma feature
+
+Cinco passos, nesta ordem.
+
+### 1 · Call de refinamento técnico
+
+O time define o que vai em cada lib (ui, core, commons…).
+
+**Quem:** App Plataforma + donos das libs
+
+### 2 · Uma task por lib
+
+Cada lib afetada ganha um card no Jira. Sem card = não começa.
+
+**Quem:** dono / App Plataforma
+
+### 3 · Desenvolver e testar
+
+Código + testes da lib. Abrir PR com commit padronizado.
+
+**Quem:** quem pegou a task
+
+### 4 · Dono aprova o PR
+
+Sem aprovação, não tem merge — e sem merge, a automação não roda.
+
+**Quem:** dono da lib
+
+### 5 · Automação gera a versão
+
+Action cria tag, changelog (do card Jira), move o card e avisa no Teams.
+
+**Quem:** GitHub Action
+
+:::warning[Importante]
+Subir versão da lib **não** sobe versão da marca. A marca atualiza depois, se quiser.
+:::

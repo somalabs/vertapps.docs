@@ -1,0 +1,76 @@
+---
+sidebar_position: 8
+title: Release da marca
+---
+
+import Kicker from '@site/src/components/Kicker';
+import DocCard, {CardGrid} from '@site/src/components/DocCard';
+
+<Kicker>08 · Release da marca</Kicker>
+
+# Uma branch + release temporária
+
+Só `main` + `release/X.Y.Z` temporária. Toda feature nasce com **feature flag**: se reprovar na homolog, desliga no remote; sem flag, faz revert.
+
+```text
+main ──●──●──●──────────────────────────────●──►
+              ╲
+               release/2.0.0 ── criar → homolog → loja
+                                  │
+                                  ├─ se falhou: 1º desligar flag (remote)
+                                  └─ 2º sem flag: revert só na release
+                                                       │
+                                                       ▼
+                                              tag v2.0.0 + changelog
+                                                       │
+                                                       ▼
+                                                 apagar release
+```
+
+<CardGrid>
+  <DocCard title="Antes — develop → homolog → main" tone="coral">
+    Três linhas longas para sincronizar. 1 task ruim trava o lote inteiro. Homolog = tip de develop.
+  </DocCard>
+  <DocCard title="Depois — main → release → flag / tag" tone="teal">
+    Feature nasce com feature flag. Reprovou → desliga no remote. Sem flag → revert na release.
+  </DocCard>
+</CardGrid>
+
+| Conceito | Regra |
+|---|---|
+| Feature flag | Obrigatória em toda feature nova. Preferencial para tirar do pacote na homolog. |
+| `main` | Única branch longa. Features entram via PR. |
+| `release/X.Y.Z` | Temporária: homolog + loja. Revert só se não houver flag. Apaga depois da tag. |
+| Tag `vX.Y.Z` | O que foi à loja — imutável. Changelog / GitHub Release junto. |
+
+## Ciclo completo
+
+### 1 · PR para `main` com feature flag
+
+Card → `feat/iddocard`. A feature **já nasce** atrás de uma flag remota.
+
+### 2 · Cortar a release
+
+Lote fechado → criar `release/2.0.0` a partir de `main`.
+
+### 3 · Homolog — se reprovou
+
+**1º** desligar a flag no remote (sem rebuild). **2º** se não tiver flag → revert só na release.
+
+### 4 · Subir para a loja
+
+Publicar a partir do pacote da release (flags desligadas ou reverts aplicados).
+
+### 5 · Tag + changelog
+
+Tag `v2.0.0` no commit que foi à loja + GitHub Release.
+
+### 6 · Apagar a `release/2.0.0`
+
+`main` continua; a versão fica na tag. Flag pode ser religada depois, na próxima versão.
+
+**Quem:** App Custom / release
+
+:::danger[Ordem de eject]
+Feature flag remota → se não existir, revert na `release/*`. Nunca reverter em `main` só para salvar a homolog. Se houve revert na release, não mergear a release de volta em `main`.
+:::

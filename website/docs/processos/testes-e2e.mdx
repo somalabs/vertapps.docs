@@ -1,0 +1,65 @@
+---
+sidebar_position: 11
+title: Testes E2E
+---
+
+import Kicker from '@site/src/components/Kicker';
+import DocCard, {CardGrid} from '@site/src/components/DocCard';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>10 · Qualidade</Kicker>
+
+# Testes end-to-end (E2E)
+
+Cobrir os fluxos principais do app com testes automatizados — reduz regressão e dá confiança na homolog e na subida para a loja.
+
+<CardGrid>
+  <DocCard title="Situação atual — sem cobertura E2E" tone="coral">
+    Projeto ainda sem testes end-to-end nos fluxos críticos. Alto risco de regressão em releases com muitas tasks. Dificuldade de evoluir o app com segurança.
+  </DocCard>
+  <DocCard title="Meta — estratégia mínima" tone="teal">
+    Definir casos de teste para fluxos principais. Automatizar com Patrol no pipeline de homolog. Reportar resultado (Allure + Teams) a cada build.
+  </DocCard>
+</CardGrid>
+
+<Chips>
+  <Chip tone="teal">Patrol — E2E Flutter</Chip>
+  <Chip tone="amber">Codemagic — build homolog · emulador iOS</Chip>
+  <Chip tone="coral">Firebase Test Lab — device Android</Chip>
+  <Chip tone="blue">Allure Report — HTML · bucket</Chip>
+</Chips>
+
+## Fluxo de desenvolvimento do teste
+
+Do case ao PR — antes de entrar no pipeline.
+
+```mermaid
+flowchart TD
+  A[1 · Escrever o case de teste] --> B[2 · Skill implementa o teste Patrol]
+  B --> C[3 · Review + rodar local]
+  C --> D[PR para main]
+  D --> E[Teste roda no próximo build de homolog]
+```
+
+## Pipeline E2E na homolog
+
+Disparado no workflow de homolog do Codemagic (release da marca).
+
+```mermaid
+flowchart TD
+  A[Build no Codemagic — workflow de homolog] --> B[Script gera o build Patrol]
+  B --> C{Plataforma}
+  C -->|iOS| D[Build iOS]
+  D --> E[Roda testes no emulador do Codemagic]
+  C -->|Android| F[Build Android APK]
+  F --> G[Envia para Firebase Test Lab — device físico]
+  E --> H[Resultados → Firebase Test Lab]
+  G --> H
+  H --> I[Allure Report HTML · salvo em bucket]
+  I --> J[Script captura URLs → envia para o Teams]
+  J --> K[Time valida build e testes antes da homolog]
+```
+
+:::tip[Encaixa na automação de versão]
+Ao gerar versão (brand-release / commons), o Codemagic roda build + E2E e manda build + resultado dos testes no Teams antes de mover os cards no Jira. Ver [Fluxogramas · automação 6](./fluxogramas.mdx#6-automação-para-gerar-versão-do-commons) e [Automações](./automacoes.mdx).
+:::

@@ -1,0 +1,74 @@
+---
+sidebar_position: 2
+title: Arquitetura
+---
+
+import Kicker from '@site/src/components/Kicker';
+import DocCard, {CardGrid} from '@site/src/components/DocCard';
+
+<Kicker>02 · Arquitetura do app</Kicker>
+
+# Como o ecossistema se organiza
+
+Apps de marca (Farm, Hering, Reserva…) consomem libs compartilhadas. App Plataforma evolui as libs; App Custom entrega no app da marca.
+
+## Dependências (de cima para baixo)
+
+```text
+app_marca          ← App Custom · telas da marca
+        ↓
+azzas_app_commons  ← features · cubits · orquestração
+        ↓
+┌──────────┬──────────┬────────────────┬──────────┬──────────┐
+│ azzas_core │ azzas_ui │ azzas_analytics │ checkout │ azzas_cms │
+│ dados      │ design   │ eventos · CRM   │ login    │ Strapi    │
+└──────────┴──────────┴────────────────┴──────────┴──────────┘
+```
+
+## Pacotes e ownership
+
+<CardGrid>
+  <DocCard title="app_marca" tone="purple">
+    Telas de produto e navegação (PDP, PDC, Home) + configuração e customização da marca. Dono: App Custom.
+  </DocCard>
+  <DocCard title="azzas_app_commons" tone="amber">
+    Cubits, features do app, orquestração checkout/login, event dispatcher. Dono: App Plataforma.
+  </DocCard>
+  <DocCard title="azzas_core" tone="blue">
+    Repository, use cases, entity/models, services (HTTP, storage, infra). Dono: App Plataforma.
+  </DocCard>
+  <DocCard title="azzas_ui" tone="teal">
+    Tokens, componentes do design system, templates. Dono: App Plataforma.
+  </DocCard>
+  <DocCard title="azzas_analytics" tone="pink">
+    Eventos, integrações CRM (MoEngage, Insider, AppsFlyer, GTM). Dono: App Plataforma.
+  </DocCard>
+  <DocCard title="vertapps_checkout_whitelabel" tone="coral">
+    UI/presenter checkout e login, templates whitelabel. Dono: App Plataforma.
+  </DocCard>
+  <DocCard title="azzas_cms" tone="teal">
+    API Strapi, models CMS, renderização de componentes. Dono: App Plataforma.
+  </DocCard>
+</CardGrid>
+
+## Camadas dentro de uma feature
+
+### Camada de apresentação (UI)
+
+Fluxo típico no design system — feature cross-brand:
+
+```text
+Template → composition_components → core_components → Tokens
+```
+
+### Camada lógica (dados)
+
+Fluxo típico no core / commons:
+
+```text
+Cubit → UseCase → Repository → Model
+```
+
+:::tip[Feature nova de plataforma]
+Pode tocar várias libs (core, ui, commons, cms…). Por isso o refinamento quebra em **1 task por lib** — cada uma com owner e versão própria.
+:::

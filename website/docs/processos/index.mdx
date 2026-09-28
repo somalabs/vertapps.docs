@@ -1,0 +1,52 @@
+---
+sidebar_position: 1
+title: Como vamos trabalhar
+slug: /processos
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>01 · Processos · App Plataforma × App Custom</Kicker>
+
+# Como vamos trabalhar
+
+Guia operacional: ownership das libs, versionamento por tag, automação de release e autonomia das marcas — sem acoplar lib ao ciclo do app.
+
+<Chips>
+  <Chip tone="blue">App Plataforma</Chip>
+  <Chip tone="amber">App Custom</Chip>
+  <Chip tone="teal">Release automação</Chip>
+  <Chip>1 branch + tags</Chip>
+  <Chip>Marcas opt-in</Chip>
+  <Chip>Release branch</Chip>
+  <Chip tone="teal">Feature flag</Chip>
+</Chips>
+
+## Em 30 segundos
+
+1. Lib tem **dono**: ele aprova o PR; a **automação** gera tag + changelog.
+2. Feature grande? Antes: **call de refinamento** e **1 task por lib**.
+3. Lib versiona por **tag** (não por branch develop/homolog).
+4. Marca **escolhe** quando atualizar a lib.
+5. Custom pode mexer em lib — mas **sempre com o dono**.
+6. Toda feature nasce com **feature flag**; sem flag na homolog → revert.
+
+## Índice
+
+| # | Seção | Conteúdo |
+|---|--------|----------|
+| 02 | [Arquitetura](./arquitetura.mdx) | Ecossistema e camadas de uma feature |
+| 03 | [Fluxogramas](./fluxogramas.mdx) | Mapas ponta a ponta (dev, git, release, automações) |
+| 04 | [Quem faz o quê](./papeis.mdx) | App Plataforma × App Custom |
+| 05 | [Nova feature](./feature.mdx) | Refinamento → task por lib → tag |
+| 06 | [Custom na lib](./inner-source.mdx) | Inner-source com aprovação do dono |
+| 07 | [Marca atualiza](./consumo-marca.mdx) | Opt-in via changelog + pubspec |
+| 08 | [Release da marca](./release-marca.mdx) | `main` + `release/*` + feature flag |
+| 08b | [Automações](./automacoes.mdx) | brand-release e post-brand-release |
+| 09 | [Git e padrões](./git.mdx) | Branches, tags, commits, changelog |
+| 10 | [Testes E2E](./testes-e2e.mdx) | Patrol, Codemagic, Firebase, Allure |
+| 11 | [Testes por lib](./testes-libs.mdx) | Mínimo por ui / core / commons |
+| 12 | [Pontos de atenção](./pontos-atencao.mdx) | Obrigatórios para o fluxo fechar |
+
+A versão HTML original (SVGs e navegação antiga) continua em [legado/processos.html](pathname:///legado/processos.html).

@@ -1,0 +1,42 @@
+---
+sidebar_position: 6
+title: Custom na lib
+---
+
+import Kicker from '@site/src/components/Kicker';
+import DocCard, {CardGrid} from '@site/src/components/DocCard';
+
+<Kicker>06 · Inner-source</Kicker>
+
+# Se o App Custom precisa alterar uma lib
+
+Primeiro: dá para resolver só no app da marca?
+
+<CardGrid>
+  <DocCard title="Sim — fica no Custom" tone="teal">
+    Task no backlog da marca. Não mexe na lib.
+  </DocCard>
+  <DocCard title="Não — precisa da lib" tone="coral">
+    Cria task na lib e alinha com o dono antes de codar.
+  </DocCard>
+</CardGrid>
+
+## Quando precisa da lib
+
+### 1 · Alinhar com o dono da lib
+
+Combinar escopo e quem implementa (Plataforma ou Custom).
+
+**Quem:** App Custom + dono
+
+### 2 · Implementar (se Custom for o executor)
+
+Custom faz o código para a Plataforma não virar gargalo — no padrão da lib.
+
+**Quem:** App Custom
+
+### 3 · Dono aprova → automação libera
+
+O dono aprova o PR. Tag, changelog, Jira e Teams ficam com a Action.
+
+**Quem:** dono (approve) + Action (release)
