@@ -1,0 +1,35 @@
+---
+sidebar_position: 68
+title: "Stamp Tag Product"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Componente</Kicker>
+
+# Stamp Tag Product
+
+Este componente tem prioridade sobre a stamp tag. Ou seja, caso o produto tenha a coleção cadastrada na stamp Tag, e tb tenha o id corresponente ao cadastrado na stampTagProduct, então será exibida a tag de stampTagProduct.
+
+<Chips>
+  <Chip tone="coral">Stamp Tag Product</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+:::info[Origem]
+Migrado de [Strapi (CMS)](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718) — **Stamp Tag Product**.
+:::
+
+## Preview
+
+![Stamp Tag Product](/img/strapi/stamp-tag-product/preview.webp)
+
+## Inputs
+
+![Inputs — Stamp Tag Product](/img/strapi/stamp-tag-product/inputs.webp)
+
+| Campo | Descrição |
+|---|---|
+| **products_ids** | ID dos produtos que deve exibir a tag, cada id de produto deve ser separado por ‘;’.Exemplo: “15432; 14965; 52362” |
+

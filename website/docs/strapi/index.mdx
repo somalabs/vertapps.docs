@@ -12,40 +12,47 @@ import DocCard, {CardGrid} from '@site/src/components/DocCard';
 
 # Strapi / CMS
 
-Documentação operacional do CMS das marcas (Strapi). Esta seção está em **migração piloto** a partir do Notion.
+Documentação operacional do CMS das marcas (Strapi), migrada a partir do Notion.
 
 <Chips>
   <Chip tone="teal">soma-bus-strapi</Chip>
-  <Chip tone="amber">Componentes</Chip>
-  <Chip tone="blue">Piloto</Chip>
+  <Chip tone="amber">68 componentes</Chip>
+  <Chip tone="blue">Sem Hering</Chip>
 </Chips>
 
-## O que já está aqui
+## Componentes migrados
+
+Catálogo completo (exceto Hering) na sidebar **Componentes** — comece pela [Tipbar Estática](./componentes/tipbar-estatica.mdx).
 
 <CardGrid>
   <DocCard title="Tipbar Estática" tone="coral">
-    Tipbar estática da Home — inputs do CMS e exemplos.
+    Tipbar estática da Home.
   </DocCard>
   <DocCard title="Tipbar Animada" tone="amber">
-    Tipbar animada da Home — segundo piloto da migração.
+    Tipbar animada da Home.
+  </DocCard>
+  <DocCard title="Spot Product" tone="teal">
+    Spot de produto na Home.
+  </DocCard>
+  <DocCard title="Carousel Banner" tone="blue">
+    Carrossel de banners.
   </DocCard>
 </CardGrid>
+
+:::note[Escopo desta rodada]
+Migrados **todos os componentes da doc oficial** [Strapi (CMS)](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718), **exceto** os de Hering (`HRG *`, `(Hering)`, etc.).
+:::
 
 ## Fonte no Notion
 
 | Página | Uso |
 |---|---|
-| [Strapi (CMS)](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718) | **Fonte oficial** — uso, coleções e documentação dos componentes |
+| [Strapi (CMS)](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718) | **Fonte oficial** — uso, coleções e componentes |
 | [Configurações internas \| Strapi](https://app.notion.com/p/Configura-es-internas-Strapi-188690e9a7e2802296daed3bb072554f) | Setup local, token, criação de componentes/collections |
 | [ENDPOINTS STRAPI](https://app.notion.com/p/ENDPOINTS-STRAPI-cccc18209f7b47a3b59f7559815322a6) | URLs de API por marca |
 
-## Como migrar o próximo componente
+## Como migrar o próximo (ex.: Hering)
 
-1. Buscar o componente em [Strapi (CMS)](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718) (CTRL+F pelo nome do CMS).
-2. Criar `website/docs/strapi/componentes/<slug>.mdx` no padrão da [Tipbar Estática](./componentes/tipbar-estatica.mdx).
-3. Campos: o que é · inputs (obrigatório/opcional) · páginas · exemplos · origem Notion.
-4. Imagens do Notion têm URL assinada e expiram (~1h) — baixar, otimizar em WebP e versionar em `static/img/strapi/<componente>/`.
-
-:::tip[Piloto]
-Nomenclatura e campos seguem a fonte oficial do Notion — sem inventar campo.
-:::
+1. Buscar o componente em [Strapi (CMS)](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718) (CTRL+F).
+2. Criar `website/docs/strapi/componentes/<slug>.mdx` no padrão das tipbars.
+3. Baixar imagens, otimizar em WebP e versionar em `static/img/strapi/<slug>/`.

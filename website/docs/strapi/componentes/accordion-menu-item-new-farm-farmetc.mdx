@@ -1,0 +1,36 @@
+---
+sidebar_position: 11
+title: "Accordion Menu Item New (Farm & FarmETC)"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Componente</Kicker>
+
+# Accordion Menu Item New (Farm & FarmETC)
+
+<Chips>
+  <Chip tone="coral">Accordion Menu Item New (Farm & FarmETC)</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+:::info[Origem]
+Migrado de [Strapi (CMS)](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718) — **Accordion Menu Item New (Farm & FarmETC)**.
+:::
+
+## Preview
+
+![Accordion Menu Item New (Farm & FarmETC)](/img/strapi/accordion-menu-item-new-farm-farmetc/preview.webp)
+
+## Inputs
+
+| Campo | Descrição |
+|---|---|
+| **Está ativa** | ?: Caso false, o componente não é exibido. |
+| **Cor do título** | Cor do título do menu. |
+| **Navegação dinâmica** | Conforme documentação da navegação dinâmica. |
+| **Header image** | Imagem que aparece no header do menu, quando está exibindo a listagem do campo ‘items’. (Não funciona pro MENU ETC) |
+| **Quantidade de selos** | Valor que aparecerá em formato de notificação ao lado do título do item. |
+| **Image URL (como banner)** | Quando preenchido, o componente irá ignorar quase todos os outros campos (exceto navigate_to), e usar esta imagem para renderizar um componente como o Menu Media Content. Está imagem deve ser upada previamente do bucket apropriado, e ser passada apenas a URL. Essa manobra foi necessária para não comprometer a performance do strapi, e também pra contornar a limitação de só ter um tipo de componente |
+

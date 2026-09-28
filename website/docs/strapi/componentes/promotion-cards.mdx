@@ -1,0 +1,39 @@
+---
+sidebar_position: 59
+title: "Promotion Cards"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Componente</Kicker>
+
+# Promotion Cards
+
+Importante: O cadastro das promoções em si, ou seja, valores reais, duração e tudo mais, não é feito pelo Strapi. Esse componente só é responsável pela visualização na Sacola dessas informações. É importante que em ambos cadastros, Strapi e VTEX estejam alinhados para evitar possíveis problemas. Componente de exibição de promoção ativa, mostrando ao usuário quanto falta para ativar determinada promoção. Possuindo um CTA de navegação dinâmica e vários textos informativos.
+
+<Chips>
+  <Chip tone="coral">Promotion Cards</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+:::info[Origem]
+Migrado de [Strapi (CMS)](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718) — **Promotion Cards**.
+:::
+
+## Preview
+
+![Promotion Cards](/img/strapi/promotion-cards/preview.webp)
+
+## Inputs
+
+![Inputs — Promotion Cards](/img/strapi/promotion-cards/inputs.webp)
+
+| Campo | Descrição |
+|---|---|
+| **Icon** | Uma imagem que poderá ser exibida como um ícone, logo ao lado do texto.Id da promoção: O id da promoção criada na VTEX.Título: Um título que aparecerá em destaque no card de promoção.Subtítulo: Um subtítulo, ou descrição, que será exibido logo abaixo do título.Texto de feedback: Um texto informativo que será exibido quando a promoção fora ativada para o usuário, ou seja, quando ele cumprir com os  |
+
+## Exemplos
+
+![Exemplo 1 — Promotion Cards](/img/strapi/promotion-cards/exemplo-1.webp)
+

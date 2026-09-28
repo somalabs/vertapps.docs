@@ -1,0 +1,46 @@
+---
+sidebar_position: 34
+title: "InsiderRecommendedShowcase"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Componente</Kicker>
+
+# InsiderRecommendedShowcase
+
+Componente exibe recomendações de produtos retornados pela Insider
+
+<Chips>
+  <Chip tone="coral">InsiderRecommendedShowcase</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+:::info[Origem]
+Migrado de [Strapi (CMS)](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718) — **InsiderRecommendedShowcase**.
+:::
+
+## Preview
+
+![InsiderRecommendedShowcase](/img/strapi/insiderrecommendedshowcase/preview.webp)
+
+## Inputs
+
+![Inputs — InsiderRecommendedShowcase](/img/strapi/insiderrecommendedshowcase/inputs.webp)
+
+| Campo | Descrição |
+|---|---|
+| **- Algoritmos Baseados em Produto** | *o Purchased Togethero Viewed Togethero Most Valuable Products of the Categoryo New Arrivals of the Categoryo Highest Discounted of the Categoryo Trending Products in the Categoryo Most Popular Items of the Categoryo Top Sellers of the Categoryo Recently Viewed Productso Purchased with Last Purchased* |
+| **Tipo do Algoritmo** | *deve corresponder à classificação do algoritmo usado na campanha. Por exemplo, na imagem anterior, o tipo do algoritmo seria generic para a campanha de ID 1 e product-based para a campanha de ID 3. |
+| **IMPORTANTE** | As campanhas que utilizam algoritmos baseados em produto só podem ser utilizadas na PDP. |
+
+## Páginas
+
+- Home
+- PDP
+
+## Exemplos
+
+![Exemplo 1 — InsiderRecommendedShowcase](/img/strapi/insiderrecommendedshowcase/exemplo-1.webp)
+

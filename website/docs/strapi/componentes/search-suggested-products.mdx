@@ -1,0 +1,34 @@
+---
+sidebar_position: 61
+title: "Search suggested products"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Componente</Kicker>
+
+# Search suggested products
+
+É o componente disponibilizado dentro da coleção Trends de busca. Deve ser cadastrado apenas um dele na coleção (caso tenha mais de um, irá utilizar apenas o primeiro). Permite o cadastro de ids de produtos que irão aparecer como ‘Produtos sugeridos’ na tela de busca. Só irá exibir estes produtos enquanto o usuario não iniciar a digitação de busca. Depois, passara a trazer os resultados da busca do usuario.
+
+<Chips>
+  <Chip tone="coral">Search suggested products</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+:::info[Origem]
+Migrado de [Strapi (CMS)](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718) — **Search suggested products**.
+:::
+
+## Preview
+
+![Search suggested products](/img/strapi/search-suggested-products/preview.webp)
+
+## Inputs
+
+| Campo | Descrição |
+|---|---|
+| **active** | Se estiver ativo exibe inicialmente estes produtos como produtos sugeridos, até o usuario iniciar a digitação de busca. Se estiver false, buscará pelo ultimo termo das buscas recentes, caso o usuário não tenha buscas recentes os produtos sugeridos serão baseados no primeiro termo dos ‘em alta’. |
+| **product_ids** | lista de ids que deverão ser exibidos como produtos sugeridos. os ids dos produtos devem ser separados por ; |
+

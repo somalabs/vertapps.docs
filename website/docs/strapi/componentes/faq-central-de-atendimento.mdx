@@ -1,0 +1,37 @@
+---
+sidebar_position: 31
+title: "FAQ (Central de atendimento)"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Componente</Kicker>
+
+# FAQ (Central de atendimento)
+
+Componente para exibição dos accordions do "Perguntas Frequentes" na tela de Central de Atendimento.
+
+<Chips>
+  <Chip tone="coral">FAQ (Central de atendimento)</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+:::info[Origem]
+Migrado de [Strapi (CMS)](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718) — **FAQ (Central de atendimento)**.
+:::
+
+## Preview
+
+![FAQ (Central de atendimento)](/img/strapi/faq-central-de-atendimento/preview.webp)
+
+## Inputs
+
+![Inputs — FAQ (Central de atendimento)](/img/strapi/faq-central-de-atendimento/inputs.webp)
+
+| Campo | Descrição |
+|---|---|
+| **question** | Preenche o texto que será exibido como título da pergunta (Obrigatório). |
+| **answer** | Preenche o texto de resposta que será exibido ao expandir o accordion (Obrigatório). |
+| **link** | Link de redirecionamento ao clicar na resposta answer (opcional). Deve seguir [o padrão de redirecionamento da navegação dinâmica](https://app.notion.com/p/6738757a9f614279be8257ab50045262?pvs=25). |
+

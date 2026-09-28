@@ -1,0 +1,38 @@
+---
+sidebar_position: 42
+title: "Message cashback pdp (Farm)"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Componente</Kicker>
+
+# Message cashback pdp (Farm)
+
+Componente para exibição de mensagem de cashback na pdp.
+
+<Chips>
+  <Chip tone="coral">Message cashback pdp (Farm)</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+:::info[Origem]
+Migrado de [Strapi (CMS)](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718) — **Message cashback pdp (Farm)**.
+:::
+
+## Preview
+
+![Message cashback pdp (Farm)](/img/strapi/message-cashback-pdp-farm/preview.webp)
+
+## Inputs
+
+![Inputs — Message cashback pdp (Farm)](/img/strapi/message-cashback-pdp-farm/inputs.webp)
+
+| Campo | Descrição |
+|---|---|
+| **Message** | Texto que será exibido na tela (Obrigatório). |
+| **Assignment** | Coleções onde a mensagem não será exibida. Pode ser uma lista, separada por ";” sem espaços entre os itens. Caso não seja cadastrado, a mensagem ficará visível em todas as coleções, exceto aquelas que não são elegíveis para cashback. |
+| **Is_active** | Identifica se a mensagem está ativa ou não (Obrigatório). |
+| **Message_text_color** | Cor do texto da mensagem (Obrigatório). |
+
