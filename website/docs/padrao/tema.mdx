@@ -1,0 +1,112 @@
+---
+sidebar_position: 1
+title: Tema visual
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+import DocCard, {CardGrid} from '@site/src/components/DocCard';
+
+<Kicker>02 · Padrão</Kicker>
+
+# Tema visual
+
+O site usa **exatamente** os tokens de `prompt-construcao-apresentacao.md`: tema escuro quente, sóbrio e executivo. Coral é destaque/ação. Não criar paleta paralela.
+
+## Tokens
+
+```css
+:root {
+  --bg: #16140f;
+  --bg2: #1f1c15;
+  --bg3: #272318;
+  --ink: #ece8dd;
+  --ink2: #b7b2a4;
+  --ink3: #827d70;
+  --line: rgba(236, 232, 221, 0.1);
+  --line2: rgba(236, 232, 221, 0.18);
+  --coral: #e8754b;
+  --coral-soft: #f0997b;
+  --coral-dim: rgba(216, 90, 48, 0.14);
+  --teal: #3fc79e;
+  --teal-dim: rgba(29, 158, 117, 0.14);
+  --amber: #e9a23b;
+  --amber-dim: rgba(186, 117, 23, 0.16);
+  --purple: #9b91ec;
+  --purple-dim: rgba(155, 145, 236, 0.14);
+  --blue: #6faedc;
+  --blue-dim: rgba(111, 174, 220, 0.14);
+  --pink: #d98bb6;
+  --pink-dim: rgba(217, 139, 182, 0.14);
+}
+```
+
+Fundo: `radial-gradient(120% 120% at 80% -10%, #221d14 0%, var(--bg) 55%)`.
+
+Barra de progresso no topo: 3px, gradiente coral→amber, glow suave.
+
+## Cor por frente
+
+Use estas cores nos diagramas e chips para manter consistência:
+
+<Chips>
+  <Chip tone="blue">App Plataforma</Chip>
+  <Chip tone="amber">App Custom</Chip>
+  <Chip tone="teal">Release & Qualidade</Chip>
+  <Chip tone="purple">Reserva</Chip>
+  <Chip tone="pink">Hering</Chip>
+  <Chip tone="coral">Destaque / ação</Chip>
+</Chips>
+
+## Anatomia de uma página
+
+1. **Kicker** — caixa alta, letter-spacing largo (ex.: `04 · Modelo-alvo`).
+2. **Título** — grande, com `clamp()`, sem parágrafo longo em seguida.
+3. **Lead** — uma ou duas frases em tom `--ink2`.
+4. **Chips** — resumo em pílulas com borda da cor do tema.
+5. **Cards** — bloco temático: responsável (teal), não é dono (coral), interface (blue).
+
+<CardGrid>
+  <DocCard title="Responsável por" tone="teal">
+    O que a frente ou a skill de fato faz. Use ✓ quando listar.
+  </DocCard>
+  <DocCard title="Não é dono" tone="coral">
+    Limite explícito. Evita a leitura de que “todo mundo faz tudo”.
+  </DocCard>
+  <DocCard title="Consome / interface" tone="blue">
+    Como outras frentes usam o trabalho. Setas de contrato, não de hierarquia.
+  </DocCard>
+</CardGrid>
+
+## No Markdown / MDX
+
+```mdx
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+import DocCard, {CardGrid} from '@site/src/components/DocCard';
+
+<Kicker>03 · Skills de Release</Kicker>
+
+# brand-release
+
+<Chips>
+  <Chip tone="coral">brand-release</Chip>
+  <Chip tone="teal">homologação</Chip>
+</Chips>
+```
+
+Admonitions do Docusaurus também valem:
+
+```md
+:::tip[Faz]
+O que está no SKILL.md ou no processo publicado.
+:::
+
+:::warning[Não inventar]
+Se o arquivo-fonte não disser, marcar como “Não especificado” ou perguntar.
+:::
+
+:::danger[INTERNO]
+Trechos `<!-- INTERNO -->` não entram em página, nota, tooltip ou diagrama.
+:::
+```

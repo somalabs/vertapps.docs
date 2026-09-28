@@ -1,0 +1,75 @@
+---
+sidebar_position: 2
+title: Como escrever
+---
+
+import Kicker from '@site/src/components/Kicker';
+
+<Kicker>02 · Padrão</Kicker>
+
+# Como escrever e publicar
+
+Este site é o canal oficial. Uma página só entra se o conteúdo for rastreável a um arquivo do time (skill, processo, contrato, card). Não completar lacuna com suposição.
+
+## O que entra
+
+- Processo que o time já usa ou já publicou.
+- Contrato de skill (`SKILL.md`, `contracts.md`, `lessons.md`).
+- Decisão de arquitetura ou de fluxo com dono explícito.
+- Guia operacional (como rodar, o que confirmar, o que não fazer).
+
+## O que não entra
+
+- Trechos marcados `<!-- INTERNO -->` nos Markdown de origem.
+- Métrica, headcount, nome ou regra que não esteja em arquivo-fonte.
+- Paleta, componente ou tom visual fora do [tema](./tema.mdx).
+- Tutorial genérico de ferramenta (Docusaurus, Git, Jira) sem recorte VERTAPPS.
+
+## Nomenclatura
+
+Usar a grafia oficial do time:
+
+| Papel / frente | Grafia |
+|---|---|
+| Engineering Lead | **Engineering Lead (EL)** — distinto de Tech Lead |
+| Tech Lead | **Tech Lead (TL)** — papel real, não unificar com EL |
+| Frentes | App Plataforma · App Custom (pool) · Release & Qualidade · Reserva · Hering |
+| Marcas | Animale, Cris Barros, Farm, Maria Filó, NV, Off, Reserva, Hering |
+
+Skills: `brand-release` e `post-brand-release` (com “t”). Não escrever `pos-brand-release`.
+
+## Tom
+
+- Frases curtas. Lead no topo, não parágrafo de contexto.
+- Fronteiras visíveis: **App Plataforma × App Custom**, **gerenciado × autosserviço**, **Dev Done × Concluído**.
+- Título descreve o objeto (`Gates`, `Fluxo completo`), não o sentimento (`Por que isso é importante`).
+
+## Publicar uma página
+
+1. Criar o arquivo em `website/docs/`, em Markdown ou MDX.
+2. Frontmatter mínimo:
+
+```md
+---
+sidebar_position: 3
+title: Título visível
+---
+```
+
+3. Kicker + título + lead + chips, no mesmo padrão das páginas existentes.
+4. Links internos relativos (`./tema.mdx`, `../skills-release/07-guia-rapido.md`).
+5. Rodar `npm start` em `website/` e revisar sidebar, mobile e dark (único tema).
+6. PR em `somalabs/vertapps.docs` na pasta `website/`.
+
+A sidebar é **autogerada** pela pasta. Ordem = `sidebar_position` ou prefixo numérico no arquivo (`01-`, `02-`).
+
+## Onde colocar
+
+| Tipo | Pasta |
+|---|---|
+| Padrão do site (tema, escrita) | `docs/padrao/` |
+| Processo do time | `docs/` (hoje: `processos.mdx`) ou `docs/processos/` se crescer |
+| Skill operacional | `docs/skills-release/` (e outras `docs/skills-*` no futuro) |
+| HTML legado (diagramas ainda não migrados) | `static/legado/` |
+
+Não publicar documentação de skill só no `SKILL.md`. O `SKILL.md` é o contrato do agente; a página daqui é o que o time lê.

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#16140F"/>
+  <rect width="1200" height="630" fill="url(#g)"/>
+  <defs>
+    <radialGradient id="g" cx="80%" cy="-10%" r="120%">
+      <stop stop-color="#221D14"/>
+      <stop offset="0.55" stop-color="#16140F"/>
+    </radialGradient>
+  </defs>
+  <rect x="72" y="72" width="48" height="48" rx="12" fill="#1F1C15" stroke="rgba(236,232,221,0.18)"/>
+  <path d="M82 84h10.5L96 107.5 99.5 84H110L99.2 120h-6.4L82 84z" fill="#E8754B"/>
+  <text x="140" y="108" fill="#F0997B" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="18" font-weight="600" letter-spacing="4">AZZAS · TIME DE APPS</text>
+  <text x="72" y="220" fill="#ECE8DD" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="72" font-weight="650">VERTAPPS</text>
+  <text x="72" y="280" fill="#B7B2A4" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="28">Documentação oficial do time</text>
+  <rect x="72" y="480" width="240" height="6" rx="3" fill="url(#bar)"/>
+  <defs>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#E8754B"/>
+      <stop offset="1" stop-color="#E9A23B"/>
+    </linearGradient>
+  </defs>
+</svg>

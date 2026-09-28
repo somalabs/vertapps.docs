@@ -1,0 +1,49 @@
+---
+sidebar_position: 1
+title: Início
+slug: /intro
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+import DocCard, {CardGrid} from '@site/src/components/DocCard';
+
+<Kicker>01 · Documentação oficial</Kicker>
+
+# VERTAPPS
+
+Este site é o **padrão de documentação do time de apps AZZAS**. Toda página nova entra aqui, em Markdown/MDX, com o tema visual da apresentação de reestruturação.
+
+<Chips>
+  <Chip tone="blue">App Plataforma</Chip>
+  <Chip tone="amber">App Custom</Chip>
+  <Chip tone="teal">Release & Qualidade</Chip>
+  <Chip tone="purple">Reserva</Chip>
+  <Chip tone="pink">Hering</Chip>
+</Chips>
+
+## Por que este site
+
+Até agora a documentação vivia em HTML avulso. O Docusaurus vira o canal único: busca, sidebar, navegação anterior/próximo, versão no GitHub e o mesmo visual em todas as páginas.
+
+<CardGrid>
+  <DocCard title="Padrão visual e de escrita" tone="coral">
+    Tokens, kicker, chips, cards e regras de conteúdo — o que copiar em toda página nova.
+  </DocCard>
+  <DocCard title="Processos" tone="blue">
+    Como o time trabalha: App Plataforma × App Custom, boards, releases e automações.
+  </DocCard>
+  <DocCard title="Skills de Release" tone="teal">
+    brand-release e post-brand-release: gates, fluxo, guia rápido e lessons.
+  </DocCard>
+</CardGrid>
+
+## Começar
+
+1. [Tema visual](./padrao/tema.mdx) — paleta, tipografia e componentes.
+2. [Como escrever](./padrao/como-escrever.mdx) — o que entra, o que não entra, nomenclatura.
+3. [Como contribuir](./padrao/como-escrever.mdx) — criar um `.mdx` e abrir PR.
+
+## Fonte do tema
+
+O visual (cores, kicker, chips, cards, barra de progresso coral→amber) replica os tokens de `prompt-construcao-apresentacao.md`. Não inventar paleta paralela.

@@ -1,0 +1,137 @@
+.page {
+  min-height: calc(100vh - 60px - 220px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem 4rem;
+}
+
+.wrap {
+  max-width: 640px;
+  width: 100%;
+}
+
+.kicker {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #f0997b;
+  margin: 0 0 0.85rem;
+}
+
+.title {
+  font-size: clamp(2.1rem, 4.8vw, 3.2rem);
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin: 0 0 0.9rem;
+}
+
+.lead {
+  color: #b7b2a4;
+  font-size: 1.08rem;
+  max-width: 40rem;
+  margin: 0 0 1.5rem;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.chip {
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(236, 232, 221, 0.18);
+  color: #b7b2a4;
+  background: #1f1c15;
+}
+
+.chipPlat {
+  border-color: rgba(111, 174, 220, 0.45);
+  color: #6faedc;
+  background: rgba(111, 174, 220, 0.14);
+}
+
+.chipCustom {
+  border-color: rgba(233, 162, 59, 0.45);
+  color: #e9a23b;
+  background: rgba(186, 117, 23, 0.16);
+}
+
+.chipRelease {
+  border-color: rgba(63, 199, 158, 0.45);
+  color: #3fc79e;
+  background: rgba(29, 158, 117, 0.14);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.card {
+  display: block;
+  padding: 1rem 1.25rem;
+  border: 1px solid rgba(236, 232, 221, 0.18);
+  border-radius: 12px;
+  color: #ece8dd;
+  text-decoration: none;
+  background: #1f1c15;
+  box-shadow: inset 3px 0 0 rgba(236, 232, 221, 0.18);
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
+}
+
+.card:hover {
+  text-decoration: none;
+  color: #ece8dd;
+  transform: translateY(-1px);
+}
+
+.cardCoral {
+  box-shadow: inset 3px 0 0 #e8754b;
+}
+
+.cardCoral:hover {
+  border-color: #e8754b;
+  background: rgba(216, 90, 48, 0.08);
+}
+
+.cardBlue {
+  box-shadow: inset 3px 0 0 #6faedc;
+}
+
+.cardBlue:hover {
+  border-color: #6faedc;
+  background: rgba(111, 174, 220, 0.08);
+}
+
+.cardTeal {
+  box-shadow: inset 3px 0 0 #3fc79e;
+}
+
+.cardTeal:hover {
+  border-color: #3fc79e;
+  background: rgba(29, 158, 117, 0.08);
+}
+
+.card strong {
+  display: block;
+  font-size: 1.05rem;
+  margin-bottom: 0.2rem;
+}
+
+.card span {
+  color: #b7b2a4;
+  font-size: 0.9rem;
+}
