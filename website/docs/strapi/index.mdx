@@ -23,8 +23,8 @@ Documentação operacional do CMS das marcas (Strapi). Esta seção está em **m
 ## O que já está aqui
 
 <CardGrid>
-  <DocCard title="STATIC_TIPBAR" tone="coral">
-    Componente de teste da migração — tipbar estática abaixo do header, com CTA e navegação dinâmica.
+  <DocCard title="Tipbar Estática" tone="coral">
+    Componente piloto da migração — tipbar estática da Home, com inputs do CMS e exemplos.
   </DocCard>
 </CardGrid>
 
@@ -32,17 +32,17 @@ Documentação operacional do CMS das marcas (Strapi). Esta seção está em **m
 
 | Página | Uso |
 |---|---|
+| [Strapi (CMS)](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718) | **Fonte oficial** — uso, coleções e documentação dos componentes |
 | [Configurações internas \| Strapi](https://app.notion.com/p/Configura-es-internas-Strapi-188690e9a7e2802296daed3bb072554f) | Setup local, token, criação de componentes/collections |
-| [COMPONENTES (catálogo por marca)](https://app.notion.com/p/FARM-COMPONENTES-PRISMIC-b0ab00b982514e3d808d0e6240c78900) | Inputs e exemplos de cada componente |
 | [ENDPOINTS STRAPI](https://app.notion.com/p/ENDPOINTS-STRAPI-cccc18209f7b47a3b59f7559815322a6) | URLs de API por marca |
 
 ## Como migrar o próximo componente
 
-1. Buscar a seção do componente no Notion (catálogo da marca ou componentes gerais).
-2. Criar `website/docs/strapi/componentes/<slug>.mdx` no padrão do [STATIC_TIPBAR](./componentes/static-tipbar.mdx).
-3. Campos: o que é · inputs (obrigatório/opcional) · páginas onde entra · exemplos · origem Notion.
+1. Buscar o componente em [Strapi (CMS)](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718) (CTRL+F pelo nome do CMS).
+2. Criar `website/docs/strapi/componentes/<slug>.mdx` no padrão da [Tipbar Estática](./componentes/tipbar-estatica.mdx).
+3. Campos: o que é · inputs (obrigatório/opcional) · páginas · exemplos · origem Notion.
 4. Imagens do Notion têm URL assinada e expiram (~1h) — baixar, otimizar em WebP e versionar em `static/img/strapi/<componente>/`.
 
 :::tip[Piloto]
-O objetivo deste primeiro componente é validar o formato. Conteúdo e nomenclatura seguem a fonte do Notion — sem inventar campo.
+Nomenclatura e campos seguem a fonte oficial do Notion — sem inventar campo.
 :::
