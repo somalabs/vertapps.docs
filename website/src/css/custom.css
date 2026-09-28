@@ -431,3 +431,30 @@ body {
   border-color: rgba(217, 139, 182, 0.35);
   box-shadow: inset 3px 0 0 var(--pink);
 }
+
+/* Busca local (@easyops-cn/docusaurus-search-local) */
+.navbar__search-input {
+  background: var(--bg3) !important;
+  border: 1px solid var(--line2) !important;
+  color: var(--ink) !important;
+}
+
+.navbar__search-input::placeholder {
+  color: var(--ink3);
+}
+
+.navbar__search-input:focus {
+  border-color: var(--coral) !important;
+  outline: none;
+}
+
+div[class^='searchBar_'],
+div[class*=' searchBar_'] {
+  --search-local-modal-background: var(--bg2);
+  --search-local-modal-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  --search-local-hit-background: var(--bg3);
+  --search-local-hit-shadow: none;
+  --search-local-hit-color: var(--ink);
+  --search-local-highlight-color: var(--coral);
+}
+
