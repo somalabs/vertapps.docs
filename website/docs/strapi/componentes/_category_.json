@@ -1,0 +1,10 @@
+{
+  "label": "Componentes",
+  "position": 2,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "title": "Componentes CMS",
+    "description": "Documentação operacional dos componentes cadastráveis no CMS (Strapi)."
+  }
+}

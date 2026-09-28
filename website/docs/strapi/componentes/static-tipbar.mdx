@@ -1,0 +1,70 @@
+---
+sidebar_position: 1
+title: STATIC_TIPBAR
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Componente piloto</Kicker>
+
+# STATIC_TIPBAR
+
+Componente para exibir uma tipbar estática abaixo do header principal, com navegação dinâmica para outras telas.
+
+<Chips>
+  <Chip tone="coral">STATIC_TIPBAR</Chip>
+  <Chip tone="amber">Home</Chip>
+  <Chip tone="teal">Tipbar</Chip>
+</Chips>
+
+:::info[Origem]
+Migrado do Notion — catálogo [COMPONENTES FARM](https://app.notion.com/p/FARM-COMPONENTES-PRISMIC-b0ab00b982514e3d808d0e6240c78900) (seção TIPBAR → STATIC_TIPBAR). Imagens da fonte usam URL assinada do Notion e não foram copiadas neste piloto.
+:::
+
+## Inputs
+
+| Campo | Obrigatório | Descrição |
+|---|---|---|
+| **texto da tipbar** | Sim | Texto exibido na tipbar. |
+| **cor do texto** | Sim | Cor do texto da tipbar. |
+| **cor de fundo** | Sim | Cor de fundo da tipbar. |
+| **texto do cta** | Não | Texto do CTA à direita. Se vazio, a tipbar fica como texto sublinhado com ícone para fechar. |
+| **navegar para** | Sim | Caminho de redirecionamento (ver formatos abaixo). |
+
+:::tip[CTA]
+Exemplos com e sem CTA estão na seção [Exemplos](#exemplos) da fonte Notion.
+:::
+
+## Formatos de `navegar para`
+
+| Tipo | Formato do campo |
+|---|---|
+| Webview | `webview/https://www.farmrio.com.br/sustentabilidade/natureza` |
+| Link externo | `external-link/https://www.farmrio.com.br/sustentabilidade/natureza` |
+| LP | `lp/lp-verao-24` |
+| PDP | `pdp/73873` |
+| PDC / PLP | `plp` |
+
+### Quando o destino é PDC
+
+Se `navegar para` for uma PDC, estes campos extras entram:
+
+| Campo | Obrigatório | Descrição |
+|---|---|---|
+| **filtro de categorias** | Não | Caminho no Intelligent Search da VTEX para categoria/coleção. |
+| **filtro de cor** | Não | Spec de filtro de cor na listagem. |
+| **filtro de tamanho** | Não | Spec de filtro de tamanho na listagem. |
+| **palavra-chave de busca** | Não | Filtro por palavra-chave na listagem. |
+| **ordenação da listagem** | Sim | Critério de ordenação dos produtos na PLP. |
+
+## Páginas
+
+- Home
+
+## Exemplos
+
+- **Com CTA** e redirecionamento para uma PLP
+- **Sem CTA** e redirecionamento para uma webview
+
+(Screenshots: ver página Notion original até as imagens serem publicadas em `static/img/strapi/`.)

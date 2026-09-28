@@ -84,6 +84,11 @@ const config: Config = {
           position: 'left',
         },
         {
+          to: '/docs/strapi',
+          label: 'Strapi',
+          position: 'left',
+        },
+        {
           href: 'https://github.com/somalabs/vertapps.docs',
           label: 'GitHub',
           position: 'right',
@@ -106,6 +111,7 @@ const config: Config = {
           items: [
             {label: 'Processos', to: '/docs/processos'},
             {label: 'Skills de Release', to: '/docs/skills-release'},
+            {label: 'Strapi / CMS', to: '/docs/strapi'},
             {label: 'Guia rápido de release', to: '/docs/skills-release/guia-rapido'},
           ],
         },

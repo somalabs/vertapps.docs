@@ -1,0 +1,48 @@
+---
+sidebar_position: 1
+title: Strapi / CMS
+slug: /strapi
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+import DocCard, {CardGrid} from '@site/src/components/DocCard';
+
+<Kicker>CMS · Migração Notion → Docusaurus</Kicker>
+
+# Strapi / CMS
+
+Documentação operacional do CMS das marcas (Strapi). Esta seção está em **migração piloto** a partir do Notion.
+
+<Chips>
+  <Chip tone="teal">soma-bus-strapi</Chip>
+  <Chip tone="amber">Componentes</Chip>
+  <Chip tone="blue">Piloto</Chip>
+</Chips>
+
+## O que já está aqui
+
+<CardGrid>
+  <DocCard title="STATIC_TIPBAR" tone="coral">
+    Componente de teste da migração — tipbar estática abaixo do header, com CTA e navegação dinâmica.
+  </DocCard>
+</CardGrid>
+
+## Fonte no Notion
+
+| Página | Uso |
+|---|---|
+| [Configurações internas \| Strapi](https://app.notion.com/p/Configura-es-internas-Strapi-188690e9a7e2802296daed3bb072554f) | Setup local, token, criação de componentes/collections |
+| [COMPONENTES (catálogo por marca)](https://app.notion.com/p/FARM-COMPONENTES-PRISMIC-b0ab00b982514e3d808d0e6240c78900) | Inputs e exemplos de cada componente |
+| [ENDPOINTS STRAPI](https://app.notion.com/p/ENDPOINTS-STRAPI-cccc18209f7b47a3b59f7559815322a6) | URLs de API por marca |
+
+## Como migrar o próximo componente
+
+1. Buscar a seção do componente no Notion (catálogo da marca ou componentes gerais).
+2. Criar `website/docs/strapi/componentes/<slug>.mdx` no padrão do [STATIC_TIPBAR](./componentes/static-tipbar.mdx).
+3. Campos: o que é · inputs (obrigatório/opcional) · páginas onde entra · exemplos · origem Notion.
+4. Imagens do Notion têm URL assinada e expiram — preferir Figma estável ou capturas no `static/img/strapi/` depois.
+
+:::tip[Piloto]
+O objetivo deste primeiro componente é validar o formato. Conteúdo e nomenclatura seguem a fonte do Notion — sem inventar campo.
+:::

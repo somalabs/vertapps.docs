@@ -1,0 +1,9 @@
+{
+  "label": "Strapi / CMS",
+  "position": 5,
+  "collapsed": false,
+  "link": {
+    "type": "doc",
+    "id": "strapi/index"
+  }
+}
