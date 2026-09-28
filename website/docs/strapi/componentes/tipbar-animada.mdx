@@ -1,0 +1,47 @@
+---
+sidebar_position: 2
+title: Tipbar Animada
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Componente piloto</Kicker>
+
+# Tipbar Animada
+
+Componente de tipbar animada mostrada na Home.
+
+<Chips>
+  <Chip tone="coral">Tipbar Animada</Chip>
+  <Chip tone="amber">Home</Chip>
+  <Chip tone="teal">Tipbar</Chip>
+</Chips>
+
+:::info[Origem]
+Migrado de [Strapi (CMS)](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718) — seção **Documentação dos componentes → Tipbar Animada**. Screenshots em WebP (~35 KB) em `static/img/strapi/tipbar-animada/`.
+:::
+
+## Preview
+
+![Tipbar Animada](/img/strapi/tipbar-animada/preview.webp)
+
+## Inputs
+
+![Campos da Tipbar Animada no Strapi](/img/strapi/tipbar-animada/inputs.webp)
+
+| Campo | Obrigatório | Descrição |
+|---|---|---|
+| **is_active** | Sim | Indica se a tipbar está ativa e deve ser mostrada. |
+| **navigate_to** | Não | URL de navegação ao clicar na tipbar. Segue o padrão de navegação dinâmica da doc Strapi. |
+| **background_color** | Não | Cor de fundo da tipbar. Usado para preencher a appbar do dispositivo quando o header estiver minimizado. |
+
+## Páginas
+
+- Home
+
+## Exemplo
+
+![Exemplo Tipbar Animada — CMS](/img/strapi/tipbar-animada/exemplo-1.webp)
+
+![Exemplo Tipbar Animada — app](/img/strapi/tipbar-animada/exemplo-2.webp)
