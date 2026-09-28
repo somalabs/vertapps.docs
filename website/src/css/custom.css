@@ -158,6 +158,28 @@ body {
   max-width: 52rem;
 }
 
+/* Screenshots CMS / Notion — evita preencher a coluna inteira */
+.theme-doc-markdown img {
+  display: block;
+  max-width: min(100%, 22rem);
+  max-height: 36rem;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  margin: 0.75rem 0 1.25rem;
+  border-radius: 12px;
+  border: 1px solid var(--line2);
+  background: var(--bg2);
+}
+
+/* Tabelas de inputs / prints mais largos */
+.theme-doc-markdown img[alt*='Inputs'],
+.theme-doc-markdown img[alt*='inputs'],
+.theme-doc-markdown img[src*='/inputs.'] {
+  max-width: min(100%, 36rem);
+  max-height: 42rem;
+}
+
 .theme-doc-markdown h1:first-child {
   font-size: clamp(1.75rem, 3.2vw, 2.55rem);
   font-weight: 650;
