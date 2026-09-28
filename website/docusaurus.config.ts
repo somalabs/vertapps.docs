@@ -47,6 +47,8 @@ const config: Config = {
     locales: ['pt-BR'],
   },
 
+  plugins: ['docusaurus-plugin-image-zoom'],
+
   presets: [
     [
       'classic',
@@ -69,6 +71,16 @@ const config: Config = {
       defaultMode: 'dark',
       disableSwitch: true,
       respectPrefersColorScheme: false,
+    },
+    zoom: {
+      selector: '.theme-doc-markdown img',
+      background: {
+        light: 'rgba(22, 20, 15, 0.92)',
+        dark: 'rgba(22, 20, 15, 0.92)',
+      },
+      config: {
+        margin: 24,
+      },
     },
     docs: {
       sidebar: {

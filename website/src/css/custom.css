@@ -170,6 +170,7 @@ body {
   border-radius: 12px;
   border: 1px solid var(--line2);
   background: var(--bg2);
+  cursor: zoom-in;
 }
 
 /* Tabelas de inputs / prints mais largos */
