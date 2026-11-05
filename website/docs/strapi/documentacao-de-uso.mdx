@@ -1,0 +1,185 @@
+---
+sidebar_position: 2
+title: "Documentação de uso"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Guia</Kicker>
+
+# Documentação de uso
+
+<Chips>
+  <Chip tone="teal">Uso</Chip>
+  <Chip tone="blue">CMS</Chip>
+</Chips>
+
+## Coleções
+
+As coleções são usadas para cadastrar os conteúdos do aplicativo, como Home, Menu, Sacola, etc.
+Elas podem ser acessadas através do menu “Gerenciador de conteúdo” à esquerda:
+![documentacao-de-uso-01-a6ccf1066d](/img/strapi/documentacao-de-uso/documentacao-de-uso-01-a6ccf1066d.webp)
+É possível selecionar uma coleção na listagem “Tipos de coleção” à esquerda. Ao selecionar, serão listados os documentos cadastrados para a coleção:
+![documentacao-de-uso-02-e8eae89b00](/img/strapi/documentacao-de-uso/documentacao-de-uso-02-e8eae89b00.webp)
+Na listagem é possível visualizar
+- ID do documento;
+- Data de criação;
+- Data da última atualização;
+- Quem criou;
+- Qual o status do agendamento da publicação;
+- Estado do documento (se está publicado ou em rascunho);
+- Opções de edição (também é possível editar um documento apenas clicando nele), duplicação (caso seja necessário duplicar um documento, é preferível utilizar o botão de duplicação da tela de edição ao invés desse) e exclusão.
+Clicando nas colunas é possível ordenar a listagem. Também é possível filtrar os documentos através do botão de filtros acima da tabela.
+Clicando no botão “Criar novo registro” no campo superior direito é possível adicionar um novo documento à coleção:
+![documentacao-de-uso-03-f86ef1b885](/img/strapi/documentacao-de-uso/documentacao-de-uso-03-f86ef1b885.webp)
+![documentacao-de-uso-04-eafba1bc4f](/img/strapi/documentacao-de-uso/documentacao-de-uso-04-eafba1bc4f.webp)
+Ao criar um documento, devem ser adicionados os componentes que fazem parte desse documento, através do botão “Adicionar componente a components":
+![documentacao-de-uso-05-4e9a67d165](/img/strapi/documentacao-de-uso/documentacao-de-uso-05-4e9a67d165.webp)
+Em um componente criado é possível realizar as seguintes ações pelo menu no canto superior direito:
+- Excluir (ícone de lixeira);
+- Arrastar/Mudar posição (ícone de 6 pontos);
+- Adicionar componente acima (acessível através do ícone de 3 pontos);
+- Adicionar componente abaixo (acessível através do ícone de 3 pontos).
+![documentacao-de-uso-06-ed63c24e01](/img/strapi/documentacao-de-uso/documentacao-de-uso-06-ed63c24e01.webp)
+Ao criar um documento pela primeira vez, ele estará em estado “Rascunho”, ou seja, não está disponível para ser usado no aplicativo. Para disponibilizar o documento, basta acessá-lo e clicar no botão “Publicar” no canto superior direito:
+![documentacao-de-uso-07-c3cbbbcd1a](/img/strapi/documentacao-de-uso/documentacao-de-uso-07-c3cbbbcd1a.webp)
+Para um documento que esteja publicado, é possível despublicá-lo no botão “Despublicar":
+![documentacao-de-uso-08-e7c0e20fd0](/img/strapi/documentacao-de-uso/documentacao-de-uso-08-e7c0e20fd0.webp)
+É interessante notar que enquanto um documento não estiver publicado, ele não precisa estar 100% preenchido, isto é, os campos obrigatórios não precisam estar preenchidos. Os campos são validados apenas quando o documento for publicado.
+
+## Limpando o cache
+![documentacao-de-uso-09-fd0c1ff182](/img/strapi/documentacao-de-uso/documentacao-de-uso-09-fd0c1ff182.webp)
+O Strapi de produção tem um cache de 5 minutos. Isso significa, que, quando uma alteração for realizada, ela só irá refletir no app depois de 5 minutos.
+Caso vocês queiram limpar o cache, vocês poderão utilizar o novo botão "Purge REST Cache".
+
+## Agendando publicações
+
+É possível agendar publicações para uma data específica na tela de edição de documento através da seção “Publisher” no menu à direita:
+![documentacao-de-uso-10-34f8a0f89a](/img/strapi/documentacao-de-uso/documentacao-de-uso-10-34f8a0f89a.webp)
+Nessa seção é possível agendar tanto uma publicação pelo botão “Publish date” quanto uma despublicação pelo botão “Unpublish date".
+Ao clicar em um dos botões, será necessário preencher a data e horário da publicação:
+![documentacao-de-uso-11-5234e2bb3a](/img/strapi/documentacao-de-uso/documentacao-de-uso-11-5234e2bb3a.webp)
+Após preencher data e hora da publicação, clique no botão “Save” para agendar a publicação.
+É possível editar a data e hora de um agendamento pelo botão “Edit”, ou excluí-lo pelo botão “Delete”:
+![documentacao-de-uso-12-b850663b71](/img/strapi/documentacao-de-uso/documentacao-de-uso-12-b850663b71.webp)
+Para o agendamento de publicação funcionar é preciso que o documento esteja no estado “Rascunho” no momento agendado, e para o agendamento de despublicação funcionar é preciso que o documento esteja no estado “Publicado” no momento agendado.
+Para documentos que ficarão disponíveis temporariamente é possível agendar uma publicação e uma despublicação:
+![documentacao-de-uso-13-315b13f489](/img/strapi/documentacao-de-uso/documentacao-de-uso-13-315b13f489.webp)
+Para coleções “únicas”, isto é, coleções que só devem ter um documento ativo (como é o caso da Home, Menu, Sacola, etc), será necessário agendar a publicação do novo documento e a despublicação do documento antigo para o mesmo momento.
+Nesses casos, será necessário duplicar o documento que estiver atualmente publicado pelo botão “Duplicate” na edição de documento:
+![documentacao-de-uso-14-35d20aefbe](/img/strapi/documentacao-de-uso/documentacao-de-uso-14-35d20aefbe.webp)
+No novo documento, fazer as alterações desejadas:
+![documentacao-de-uso-15-e02f00b110](/img/strapi/documentacao-de-uso/documentacao-de-uso-15-e02f00b110.webp)
+Agendar uma data de publicação para o novo documento:
+![documentacao-de-uso-16-0be5dba0e1](/img/strapi/documentacao-de-uso/documentacao-de-uso-16-0be5dba0e1.webp)
+E agendar uma data de despublicação para o documento antigo no mesmo momento que o novo documento será publicado:
+![documentacao-de-uso-17-120bbd375e](/img/strapi/documentacao-de-uso/documentacao-de-uso-17-120bbd375e.webp)
+Na listagem dos documentos é possível ver que os documentos serão publicados/despublicados ao mesmo tempo pela coluna “Agendamento da publicação”:
+![documentacao-de-uso-18-5f4804c461](/img/strapi/documentacao-de-uso/documentacao-de-uso-18-5f4804c461.webp)
+
+## Mudar linguagem da plataforma para Português
+
+Para mudar a linguagem da plataforma para Português basta acessar o menu “Profile” clicando no nome do seu usuário no canto inferior esquerdo:
+![documentacao-de-uso-19-ae0edb7a25](/img/strapi/documentacao-de-uso/documentacao-de-uso-19-ae0edb7a25.webp)
+Na seção “Experience” no lado inferior esquerdo selecionar a linguagem “Português (Brasil)”, e clicar no botão “Save” no canto superior direito:
+![documentacao-de-uso-20-e5fb7d9523](/img/strapi/documentacao-de-uso/documentacao-de-uso-20-e5fb7d9523.webp)
+
+## Acessando ao CMS
+
+Para ter acesso é preciso ter permissão para tal. Caso não consiga acessar, entre em contato com a equipe de desenvolvimento.
+
+### Animale
+
+Animale: [https://cms-animale.somalabs.com.br/admin/](https://cms-animale.somalabs.com.br/admin/)
+
+Animale: [https://cms-animale-homolog.somalabs.com.br/admin/](https://cms-animale-homolog.somalabs.com.br/admin/)
+
+### Farm
+
+Produção: [https://cms-farm.somalabs.com.br/admin/](https://cms-farm.somalabs.com.br/admin/)
+Farm: [https://cms-farm-homolog.somalabs.com.br/admin/](https://cms-farm-homolog.somalabs.com.br/admin/)
+
+### Hering
+
+Produção: [https://cms-hering.somalabs.com.br/admin](https://cms-hering.somalabs.com.br/admin/)/
+
+Hering: [https://cms-hering-homolog.somalabs.com.br/admin](https://cms-hering-homolog.somalabs.com.br/admin)
+
+### Maria Filó
+
+Produção: [https://cms-mf.somalabs.com.br/admin/](https://cms-mf.somalabs.com.br/admin/)
+
+MF: [https://cms-mf-homolog.somalabs.com.br/admin/](https://cms-mf-homolog.somalabs.com.br/admin/)
+
+### NV
+
+Produção: [https://cms-nv.somalabs.com.br/admin/](https://cms-nv.somalabs.com.br/admin/)
+
+Homologação: não acessar até 30/06 [https://cms-nv-homolog.somalabs.com.br/admin/](https://cms-nv-homolog.somalabs.com.br/admin/)
+
+### Off Premium
+
+Produção: [https://cms-off.somalabs.com.br/admin/](https://cms-off.somalabs.com.br/admin/)
+
+OFF: [https://cms-off-homolog.somalabs.com.br/admin](https://cms-off-homolog.somalabs.com.br/admin)
+
+### Cris Barros
+
+## Testando o Strapi
+
+**Para aplicativos na nova arquitetura **é preciso baixar as versões de homologação **(via Testflight (iOS) ou App Tester (android)## . Caso você não tenha acesso, solicite ao time de desenvolvimento.Aplicativos legados (apenas NV e OFF)**:
+Para testar o preenchimento do conteúdo no CMS, disponibilizamos o playground. Esta é uma aplicação que disponibiliza os aplicativos das seis marcas: Animale, Farm, Hering, Maria Filó, NV e OffPremium.
+
+**Acesse o Playground**:
+
+[https://soma_app_playground.codemagic.app](https://soma_app_playground.codemagic.app)
+
+[https://homolog_soma_app_playground.codemagic.app/](https://homolog_soma_app_playground.codemagic.app/#/splash).
+
+:::note
+Homolog  é uma versão limitada dos apps. Esta verão aponta para o ambiente de homologação (testes) das marcas, e por isso tem suas diferenças com o app que está na loja, como por exemplo: menos produtos disponíveis, contas existentes/inexistentes, etc.
+
+:::
+
+Após entrar no link, selecione a marca que deseja acessar.
+O menu superior possui **cinco ações **muito úteis.
+![documentacao-de-uso-21-c99b05504c](/img/strapi/documentacao-de-uso/documentacao-de-uso-21-c99b05504c.webp)
+A primeira delas permite **trocar a marca** sendo acessada.
+O segundo permite **alterar o dispositivo**, possibilitando visualizar como ficaria em um Android ou em um iPhone, e algumas variações de modelos.
+O terceiro, é o mais importante, pois permite mudar o** ambiente do CMS## . Onde há duas opções:Produção:##  é o ambiente consumido pelo aplicativo que está na loja, que reflete nos apps dos usuários.Homologação:** é o ambiente de teste, seu conteúdo não se reflete para os usuários.
+
+:::note
+Lembre-se que são dois CMS diferentes em que são feitos os cadastros de produção e homologação. [Acesse aqui](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718)
+
+:::
+
+O quarto e o quinto, “Reiniciar o app” e “Limpar os dados de cache” podem ser úteis principalmente quando, após alterar/salvar/publicar no CMS, ela não refletir apropriadamente.
+
+:::note
+Atenção, a fim de garantir que as imagens cadastradas no CMS apareçam corretamente no playground, uma solução técnica temporária foi desenvolvida, gerando pequenos efeitos colaterais, que afetaram, por exemplo, a fonte dos textos.
+
+Portanto, não se preocupe com a fonte dos textos, ela está alterada apenas aqui no playground.
+
+:::
+
+:::note
+A “sacola” e a funcionalidade de compras no app não está disponível no playground. Ao tentar acessar a sacola via menu, ou colocar um produto na sacola, acontecem cenários de erros, já previstos.
+
+:::
+
+Estamos trabalhando para melhorar essas inconsistências e deixar essa aplicação mais parecia com o app quanto for possível.
+
+## Lidando com os erros na exibição da imagem no Playground
+
+É possível que as imagens cadastradas no Strapi não sejam exibidas corretamente no Playground web. Esse é uma questão de “terceirização de imagem”, que acontece apenas no Playground. 
+**Para contornar o problema:**
+Primeiro, limpe o cache do seu navegador.
+No navegador do chrome você precisará fazer duas configurações.
+A primeira, acesse as configurações do site, clicando nesse ícone de config ao lado da url.
+
+![documentacao-de-uso-22-cd213fb30e](/img/strapi/documentacao-de-uso/documentacao-de-uso-22-cd213fb30e.webp)
+
+Acesse site settings/configurações do site. e coloque a opção de conteúdo não seguro como permitido.
+![documentacao-de-uso-23-228ad973c1](/img/strapi/documentacao-de-uso/documentacao-de-uso-23-228ad973c1.webp)
+Depois, acesse este [link](https://chromewebstore.google.com/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino) e adicione esta extensão do chrome.

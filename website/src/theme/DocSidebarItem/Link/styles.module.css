@@ -1,0 +1,16 @@
+.menuExternalLink {
+  align-items: center;
+}
+
+.linkLabel {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.45rem;
+  line-height: 1.35;
+  max-width: 100%;
+}
+
+.linkLabelText {
+  min-width: 0;
+}

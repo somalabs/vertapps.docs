@@ -1,0 +1,233 @@
+---
+sidebar_position: 4
+title: "Guia de tamanho das imagens"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Assets</Kicker>
+
+# Guia de tamanho das imagens
+
+<Chips>
+  <Chip tone="amber">Imagens</Chip>
+  <Chip tone="blue">Design</Chip>
+</Chips>
+
+## Regras gerais
+
+- O formato indicado para imagens é .jpg
+- Os campos “image”/”media” dos componentes, aceitam também Gifs.
+- Os vídeos sempre deverão ser informados via URL.
+- O peso maximo das medias video é de 3MB.
+## Contexto
+> Como estimar corretamente o tamanho das imagens que serão publicadas no app, em diferentes cenários e dispositivos.
+
+Considerações: 
+- O app **prioriza a qualidade das imagens**, garantindo a maior resolução possível.
+- **Proporções sempre preservadas** → nada deve distorcer.
+- **Preenchimento total do espaço** → até o limite da resolução original da imagem.
+- **IMPORTANTE: **Se a imagem for **menor do que o necessário** para o dispositivo mais denso, ela ficará pixelada.
+- Dispositivos diferentes tem tamanhos mínimos de imagem diferentes.
+## 🖼 Como o app lida com (algumas*) imagens 
+- **Mantém proporção (aspect ratio)**
+- **Usa todo o espaço disponível** (`BoxFit.cover`)
+- **Considera densidade de pixels (DPR)** para nitidez
+- **Nunca aumenta acima da resolução original** para evitar perda de qualidade
+\* Alguns componentes tem aspectRatio aplicado.
+## 📱 Tamanhos e densidades de referência 
+
+| Dispositivo | Largura lógica (dp) | DPR | Largura física (px) | Altura física (px) |
+| --- | --- | --- | --- | --- |
+| iPhone 14 Pro Max | 430 | 3.0 | 1290 | 2796 |
+| iPhone 13/14 | 390 | 3.0 | 1170 | 2532 |
+| Android comum (FHD) | 411 | 3.0 | 1233 | 2630 |
+| Android pequeno | 360 | 2.5 | 900 | 1600 |
+| iPad Pro 12.9 | 1024 | 2.0 | 2048 | 2732 |
+> Dica: Para garantir qualidade em todos os casos, use sempre o maior DPR e a maior largura lógica como referência.
+## 📐 Fórmula de cálcular 
+```text
+larguraImagemPx = larguraContainerDp × DPRmáximo
+alturaImagemPx  = alturaContainerDp × DPRmáximo
+```
+**Onde:**
+- **larguraContainerDp** = largura do espaço que a imagem vai ocupar no layout.
+- **alturaContainerDp** = altura do espaço no layout (pode ser fixa ou percentual).
+- **DPRmáximo** = densidade de pixels do maior dispositivo que vamos suportar (normalmente **3.0** para smartphones, **2.0** para tablets).
+## 📚 Exemplos do calculo do tamanho da imagem 
+# Exemplo 1 — Banner de tela cheia (40% da altura)
+📱 iPhone 14 Pro Max (430dp largura, 3.0 DPR, altura física 2796px):
+- Largura: `430 × 3 = 1290px`
+- Altura: `2796 × 0.40 = 1118px`
+**✅ Tamanho mínimo:** **1290 × 1118 pixels**
+# Exemplo 2 — Duas imagens lado a lado
+📱 iPhone 14 Pro Max (padding total horizontal = 48dp, altura fixa 450dp):
+- Largura container (dp): `(430 - 48) / 2 = 191dp`
+- Largura container (px): `191 × 3 = 573px`
+- Altura container (px): `450 × 3 = 1350px`
+**✅ Tamanho mínimo:** **573 × 1350 pixels**
+# Exemplo 3 — Banner ocupando 30% da tela
+📱 iPhone 14 Pro Max:
+- Largura: `430 × 3 = 1290px`
+- Altura: `2796 × 0.30 = 838px`
+**✅ Tamanho mínimo:** **1290 × 838 pixels**
+## 💡 Dicas para Designers e POs
+- Sempre exporte **maior** que o tamanho mínimo calculado.
+---
+## Sugestões de tamanho das imagens por componentes 
+
+### Media KIT ETC Product Card
+
+Como o app tenta cobrir todo o espaço disponvel com a imagem, precisamos colocar imagens que tenham uma proporção apropriada.
+
+É importante destacar que diferentes dispositivos tem diferentes tamanhos  de tela, ainda que a proporção do card seja mantida. 
+É valido usar imagens cujas bordas não tenham muitos detalhes, deixando uma margem para possiveis cortes suaves.
+Sugestões de tamanhos de imagens / AspectRatio: 
+✅ 737-1464  ///  0,05 
+
+### Exemplo
+
+### Cadastro no strapi
+
+![guia-tamanho-imagens-01-2207fe29ec](/img/strapi/guia-tamanho-imagens/guia-tamanho-imagens-01-2207fe29ec.webp)
+
+### Como reflete no app
+
+![guia-tamanho-imagens-02-6c7cefc8dc](/img/strapi/guia-tamanho-imagens/guia-tamanho-imagens-02-6c7cefc8dc.webp)
+
+✅ 1080✕1609  /// 0,67
+
+✅ 573✕1137  /// 0,47
+
+✅ 1562✕3383  /// 0,46
+✅ 1080✕2197 ///0,49
+
+### Exemplo
+
+Como aparece no app: (a imagem dupla com fundo azul)
+
+![guia-tamanho-imagens-03-587ddedcbd](/img/strapi/guia-tamanho-imagens/guia-tamanho-imagens-03-587ddedcbd.webp)
+
+**ProductCard / AspectRatio (entendendo mais)
+
+ Exemplo de imagens e quanto seria cortado**
+
+| Imagem original | Aspect ratio (w/h) | O que acontece com `BoxFit.cover` |
+| --- | --- | --- |
+| 1080×1920 (0.56) | \~0.56 | Quase perfeita, corta bem pouco (alturas quase idênticas) |
+| 1000×1000 (1.0) | 1.0 | Corta bastante nas laterais (a imagem é “quadrada”, o container é “esticado”) |
+| 1920×1080 (1.78) | 1.78 | Corta MUITO nas laterais (imagem é panorâmica, container é vertical) |
+| 500×1000 (0.5) | 0.5 | Praticamente nenhuma perda, encaixa quase exato |
+---
+### 🔹 3. Fórmula rápida pra saber o quanto corta
+Se a imagem tem `aspectImage = widthImage / heightImage`,
+e o container tem `aspectContainer = 0.521`:
+- Se `aspectImage > aspectContainer` → corta nas **laterais**
+- Se `aspectImage < aspectContainer` → corta **em cima/baixo**
+Exemplo com `1080x1920`:
+```text
+aspectImage = 1080 / 1920 = 0.562
+aspectContainer = 0.521
+0.562 > 0.521 → leve corte lateral (~7%)
+```
+
+### Media Kit Banner
+
+### Comparando com imagens comuns
+
+| Imagem original | Aspect ratio (w/h) | O que acontece com `BoxFit.cover` neste card |
+| --- | --- | --- |
+| 1080×1920 (0.56) | 0.56 | Container é um pouco mais largo → corta **em cima/baixo** (\~13%) |
+| 1000×1000 (1.0) | 1.0 | Corta **nas laterais** (\~32%) |
+| 1920×1080 (1.78) | 1.78 | Corta MUITO nas laterais (\~60%) |
+| 500×1000 (0.5) | 0.5 | Corta **em cima/baixo** (\~27%) |
+---
+### 🔹 3. Ideal para “mínimo corte”
+Seu container tem **aspectRatio = 0.683**,
+então a imagem ideal deve ter **aspect ratio entre 0.65 e 0.70**
+para preencher 100% do card e cortar o mínimo possível.
+**Exemplos de tamanhos ideais:**
+
+| Largura | Altura | Aspect ratio | Observação |
+| --- | --- | --- | --- |
+| 650 | 950 | 0.684 | perfeito |
+| 1080 | 1580 | 0.683 | perfeito |
+| 720 | 1080 | 0.667 | ótimo |
+| 1000 | 1500 | 0.666 | ótimo |
+### Carousel List (double image)
+
+Como as imagens são empilhadas verticalmente, **cada uma ocupará metade da altura da tela**.
+👉 Então, se a tela total é **1080×1920**, cada imagem deve idealmente ocupar **1080×960**.
+Essa proporção é:
+> 1080 / 960 = 1.125
+Ou seja, a **altura é 0.89× da largura**.
+---
+## 🎯 Recomendação prática para o time de design
+### ✅ Quando for **1 imagem (full screen)**:
+Use:
+- **1080×1920 px** (ou 9:16)
+- Ou, se preferirem a variação atual, **1080×1624 px** também funciona.
+### ✅ Quando for **2 imagens (double media)**:
+Cada imagem deve ter aproximadamente:
+- **1080×960 px**
+*(metade da altura total da tela 1080×1920)*
+### ⚠️ Dicas importantes
+- Mantenham **a mesma largura** (1080px) entre as imagens.
+- As **duas imagens devem ter alturas idênticas**, para se encaixarem perfeitamente.
+- Se quiserem outra proporção de tela (ex: 1080×1624 em vez de 1080×1920), basta dividir a altura por 2:
+- Exemplo: **1080×812 px** cada (metade de 1624).
+
+###  **Exemplos de tamanhos de imagens usados pelas marcas em alguns componentes:**
+
+**## Resumo dos Principais Tamanhos — Home**
+**### Animale**
+| Componente | Tamanho (W x H) | Qtd | Observação |
+| --- | --- | --- | --- |
+| carousel-list | 774 x 1490 | 2 | Banner principal |
+| category-banner | 774 x 1020 | 1 | Cartucho menor |
+| category-banner | 774 x 1215 | 1 | Cartucho maior |
+| my-interests-banner | 774 x 1195 | 1 | Banner meus interesses |
+**### Farm**
+| Componente | Tamanho (W x H) | Qtd | Observação |
+| --- | --- | --- | --- |
+| carousel-list | 1080 x 2337 | 5 | Banner principal (hero) |
+| carousel-list | 1080 x 1609 | 9 | Banner secundário (carrossel) |
+| category-banner | 1080 x 1904 | 1 | Banner categoria destaque |
+| category-banner | 1080 x 1609 | 4 | Banner categoria padrão |
+| category-banner | 1080 x 1600 | 1 | Banner categoria variação |
+| category-banner | 1080 x 356 | 1 | Banner título / primeira compra |
+| category-banner | 1080 x 284 | 1 | Banner título grid |
+| stories | 300 x 300 | 6 | Miniaturas de stories |
+| categories-mosaic | 640 x 906 | 6 | Grid mosaico de categorias |
+**### Cris Barros**
+| Componente | Tamanho (W x H) | Qtd | Observação |
+| --- | --- | --- | --- |
+| media-list | 1080 x 2248 | 1 | Banner principal (hero) |
+| categories-mosaic | 1080 x 1080 | 4 | Grid quadrado de categorias |
+| category-banner | 1080 x 1830 | 1 | Banner categoria destaque |
+| category-banner | 1080 x 1633 | 1 | Banner categoria padrão |
+| show-case-banner-carrousel | 1080 x 1080 | 3 | Carrossel showcase |
+**### Maria Filo**
+| category-banner | 750✕784 | category-banner | 750✕544 | category-banner | 750✕940
+**### MEDIA KIT**
+**### Farm**
+| Componente | Tamanho (W x H) | Qtd | Observação |
+| --- | --- | --- | --- |
+| media-kit-banner | 1080 x 1580 | 6 | Banner principal (full width) |
+| media-kit-banner | 650 x 950 | 7 | Banner secundário (meia largura) |
+| media-kit-banner | 643 x 950 | 1 | Variação pontual (\~650 x 950) |
+**### Maria Filo**
+media-kit 750✕940, 1288✕840, 1488✕1110, 1871✕1229
+**### Login-background**
+FARM: Imagem principal: 830x1440
+Farm: Imagem secundaria: 492x492
+Farm esta com duas imagens em branco mesmo
+ANIMALE: Imagem principal: 90✕156
+ANIMALE: Imagem secundaria: 156✕156
+ANIMALE esta com duas imagens em branco mesmo
+**### PDC HEADER**
+ANIMALE: 800✕332
+**### Banner do acordion menu (coleção conteudo de menu)**
+Animale: 1080✕1190
+MF: 4096✕2372, 2048✕1186, 1548✕896, 1024✕589

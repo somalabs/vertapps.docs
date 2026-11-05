@@ -181,11 +181,55 @@ body {
   max-height: 42rem;
 }
 
-.theme-doc-markdown h1:first-child {
+.theme-doc-markdown h1:first-child,
+.theme-doc-markdown .azzas-doc-title {
   font-size: clamp(1.75rem, 3.2vw, 2.55rem);
   font-weight: 650;
   letter-spacing: -0.02em;
   line-height: 1.15;
+}
+
+.azzas-doc-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem 0.75rem;
+  margin: 0 0 1rem;
+}
+
+.azzas-doc-title .azzas-chip {
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  transform: translateY(0.08em);
+}
+
+/* Marca no item da sidebar */
+.menu__link {
+  align-items: flex-start !important;
+}
+
+.azzas-sidebar-brand {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 1 auto;
+  max-width: 100%;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(233, 162, 59, 0.55);
+  background: var(--amber-dim);
+  color: var(--amber);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  white-space: normal;
+}
+
+.menu__link--active .azzas-sidebar-brand {
+  border-color: rgba(232, 117, 75, 0.65);
+  color: var(--coral-soft);
+  background: var(--coral-dim);
 }
 
 .theme-doc-markdown h2 {

@@ -1,0 +1,790 @@
+---
+sidebar_position: 3
+title: "Coleções"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Coleções</Kicker>
+
+# Coleções
+
+<Chips>
+  <Chip tone="coral">Coleções</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+## Home
+
+Esse documento é utilizado para cadastrar os componentes que serão mostrados na tela inicial do aplicativo.
+Os componentes **são adicionados clicando no botão “Add a component to components”/“Adicionar componente a components”**:
+![colecoes-01-e75a63d07d](/img/strapi/colecoes/colecoes-01-e75a63d07d.webp)
+![colecoes-02-760cf250cc](/img/strapi/colecoes/colecoes-02-760cf250cc.webp)
+
+## Menu
+
+Nota: O menu do aplicativo é dividido em dois documentos: **Menu** e **Conteúdo do Menu. **
+Esse documento é utilizado para cadastrar quais tabs irão compor o menu do aplicativo. Para cadastrar o conteúdo das tabs, veja o documento [**Conteúdo do Menu**](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718)**.**
+Cada tab contém os campos:
+
+# Farm & ETC (exclusivo)
+Novos campos foram adicionados no componente da TAB para o Farm e Farm ETC, sendo eles:
+- Exibir tag ‘novo’: Quando true, exibe a tag
+- Tag: Cadastro de tag que já existia anteriormente no menu, podendo definir o texto, cor do texto, cor de fundo e cor da borda.
+- Badge Count: Deve ser preenchido o número que deve aparecer na badge.
+
+### Exemplo de cadastro no strapi
+
+![colecoes-03-64fdc80072](/img/strapi/colecoes/colecoes-03-64fdc80072.webp)
+
+### Exemplo de como ficam os novos campos no menu:
+
+### Menu Farm (exemplo de badge e tag ‘novo’)
+
+![colecoes-04-75a5b05c33](/img/strapi/colecoes/colecoes-04-75a5b05c33.webp)
+
+### Menu Etc 
+
+![colecoes-05-ba496065c5](/img/strapi/colecoes/colecoes-05-ba496065c5.webp)
+
+Na coleção de Menu também está disponível um novo componente, o Menu Media Content ([documentação](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718)).
+
+- **is_active: **Indica se a tab está ativa, isto é, se ela deve ser exibida. Campo obrigatório.
+- **title: **Título da tab. Campo obrigatório.
+- **title_color: **Cor do título da tab. Campo opcional. Caso não seja informado, o título ficará na cor preta.
+- **content: **Referência ao documento de conteúdo da tab. Campo opcional.
+![colecoes-06-265071856b](/img/strapi/colecoes/colecoes-06-265071856b.webp)
+A tab não será exibida caso:
+- O campo **is_active** esteja marcado como falso;
+- O campo **content** esteja vazio;
+- O documento referenciado no campo **content** não esteja publicado;
+
+- O documento referenciado no campo **content **não tenha componentes. 
+
+## Conteúdo do Menu
+
+Nota: O menu do aplicativo é dividido em dois documentos: **Menu** e **Conteúdo do Menu. **
+Esse documento é utilizado para cadastrar o conteúdo de determinada tab do Menu. Para cadastrar quais tabs irão compor o menu, veja o documento [**Menu**](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718)**.**
+Os componentes **são adicionados clicando no botão “Add a component to components”/“Adicionar componente a components”## :## Farm &FarmETC (exclusivo)**
+
+Novos componentes foram adicionados a coleção de conteúdo de menu. Verifique as documentações:
+
+Menu Media Content ([documentação](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718)).
+Accordion Menu New ([documentação](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718)).
+![colecoes-07-3f071d67a2](/img/strapi/colecoes/colecoes-07-3f071d67a2.webp)
+
+![colecoes-08-8a1830e5b0](/img/strapi/colecoes/colecoes-08-8a1830e5b0.webp)
+![colecoes-09-3ce7f109da](/img/strapi/colecoes/colecoes-09-3ce7f109da.webp)
+
+## Fidelidade (NV / Reserva)
+
+A coleção do fidelidade possui um campo** ‘has_fidelity’**. Esse campo tem o propósito de diferencias as duas telas do fidelidade/prime.
+Uma coleção deve ser cadastrada com ‘has_fidelity’ como true, onde devem ser cadastrados os componentes a serem exibidos na tela do fidelidade para os usuários que já tem conta no fidelidade/prime. Para os usuários que não tem conta no fidelidade, será exibida a coleção que tenha o ‘has_fidelity’ como falso. 
+**Apenas NV:** Outro campo disponível nesta coelçaõ é ‘**show_points_on_bag’, ## ele é responsável por controlar a exibição do componente exibido na sacola que indica quantos pontos o usuário irá ganhar pelos produtos da mochila. Apenas Reserva## : Os componentes de category banner cadastrados na coleção ‘has_fidelity: false’ SEMPRE vão redirecionar pra incluir a assinatura na mochila. E não conforme o cadastro na ‘navegação dinamica’É necessário cadastrar as duas coleções. **
+
+## Busca Vazia
+
+A coleção de busca vazia é composta por dois componentes, **Categories Mosaic **e **Showcase Banner**. Os dois são opcionais e ao ser preenchido devem ser mostrados quando o usuário digita algo que não pode ser encontrado.
+
+### Exemplos
+
+Showcase Banner
+![colecoes-10-b44538f1cc](/img/strapi/colecoes/colecoes-10-b44538f1cc.webp)
+
+Categories mosaic
+![colecoes-11-6ddda8a55b](/img/strapi/colecoes/colecoes-11-6ddda8a55b.webp)
+
+## Media kit
+
+[página relacionada](https://app.notion.com/p/249690e9a7e280869f24d389882c87b2) 
+---
+Coleção utilizada para inserção de componentes de mídia em páginas de categoria/coleção (PDCs). Esses componentes serão inseridos entre os produtos da PDC especificada, e o intervalo entre eles poderá ser configurado.
+
+**Media kit versão ****Farm**
+![colecoes-12-eaab1bfb8b](/img/strapi/colecoes/colecoes-12-eaab1bfb8b.webp)
+**Nome interno: ## Apenas um campo que servirá para identificar mais facilmente esse documento em caso de múltiplosCategoria/Cluster: **Será a categoria ou coleção onde serão inseridos os componentes do Media kit. PRECISA COMEÇAR COM ‘/’. Exemplo: “/productclusterids/123”.
+
+### Componentes
+
+Media Kit Banner
+![colecoes-13-3f53c21454](/img/strapi/colecoes/colecoes-13-3f53c21454.webp)
+**Mostrar antes do produto: ## Em qual posição o banner será mostrado (Campo obrigatório)Tamanho: ## O tamanho desse banner (Campo opcional)Imagem: ## Imagem do banner (Campo obrigatório)Navegação: ## Navegação dinâmica que será realizada ao clique do usuário no banner. Consulte [aqui](/docs/strapi/navegacao-dinamica) para saber mais detalhes. (Campo obrigatório)video_url: ## campo para preencher com o link da vimeo, do video que deve ser exibido. Caso tenha imagem e video cadastrado, prioriza o video.Media kit versão ****NV**
+![colecoes-14-2504bccd90](/img/strapi/colecoes/colecoes-14-2504bccd90.webp)
+**Nome interno: ## Apenas um campo que servirá para identificar mais facilmente esse documento em caso de múltiplos (Campo obrigatório).Categoria/Cluster: ## Será a categoria ou coleção onde serão inseridos os componentes do Media kit. (Campo obrigatório).Densidade da grid: **Escolha aqui em qual densidade da grid de produtos, os componentes do Media kit deverão aparecer (Campo obrigatório).
+
+### Componentes
+
+**Media kit Banner**
+![colecoes-15-058ee9d9e2](/img/strapi/colecoes/colecoes-15-058ee9d9e2.webp)
+**Posição do destaque: ## Escolha aqui a posição do destaque desse banner (Campo requerido).Imagem do banner: ## A imagem do banner (Campo obrigatório).Navegação: ## Navegação dinâmica que será realizada ao clique do usuário no banner. Consulte [aqui](/docs/strapi/navegacao-dinamica) para saber mais detalhes. (Campo obrigatório)Media kit Banner List**
+![colecoes-16-40a40c83bc](/img/strapi/colecoes/colecoes-16-40a40c83bc.webp)
+**Posição do destaque: ## Posição do destaque onde essa lista de banners serão mostrados. (Campo obrigatório)Items: ## A lista de bannersImagem do banner: ## Imagem de um único banner. (Campo obrigatório)Navegação do banner: ## Navegação dinâmica desse banner. Consulte [aqui](/docs/strapi/navegacao-dinamica) para saber mais detalhes. (Campo obrigatório)Media kit Categories Mosaic**
+![colecoes-17-a7f08b3396](/img/strapi/colecoes/colecoes-17-a7f08b3396.webp)
+**Posição do destaque: ## Escolha aqui a posição do destaque desse Categories Mosaic (Campo requerido).Titulo: ## Campo que será o título desse mosaico (Campo opcional).Subtitulo: ## Campo que será o subtitulo do mosaico, aparecendo logo abaixo do titulo (Campo opcional)Call to Action: ## Texto do botão de CTA (Campo opcional).Categoria/Cluster do call to action: ## A categoria/coleção que será mostrada no clique do usuário no CTA. Items:**
+**Imagem: ## Imagem do item desse mosaicoNavegação do item: **Navegação dinâmica desse banner. Consulte [aqui](/docs/strapi/navegacao-dinamica) para saber mais detalhes. (Campo obrigatório)
+
+## Tapume
+
+Esse documento é utilizado para cadastrar uma imagem com redirecionamento que será exibida após splash, bloqueando a navegação para o app.
+
+O tapume tem** duas variações de comportamento**: 
+
+1) Abre o app, exibindo a **image **cadastrada, que ao ser clicada redirecionada o usuário para a **url_redirect** cadastrada.
+2) Abre o app, mas direto para a webview, sem exibir a imagem cadastrada. (o preenchimento da imagem segue sendo obrigatório por questões de segurança)
+
+Os campos a serem preenchidos são:
+
+**url_redirect: ** deve ser preenchida com a url para onde o usuário deve ser redirecionado.
+
+:::note
+Caso o comportamento esperado seja o 1, em que deve ser exibida a imagem cadastrada, que quando clicada executará o redirecionamento, o campo deve ser preenchido apenas com a url.
+Caso o comportamento esperado seja o 2, em que deve abrir direto a url, esse campo deve ser preenchido com o prefixo “webview/*url”.
+
+**Atenção: **neste cenário (2), a webview irá ocupar a tela inteira do app, sem deixar espaço para barra de navegação, etc. (foi desenvolvido direcionado pro joguinho da Farm na blackfriday)*
+
+:::
+
+**image:** que é a imagem a ser exibida. Além disso, é para que o tapume seja exibido, é necessário mudar o campo **active** de false para true:
+![colecoes-18-68c1572af4](/img/strapi/colecoes/colecoes-18-68c1572af4.webp)
+
+O tapume não será exibido caso:
+- **active** está false
+- **url_redirect** está vazio
+- **image** está vazio
+
+:::note
+FARM: O campo max_discount deve carregar o valor maximo do desconto a ser aplicado no joguinho. O valor do campo não reflete no app, mas é consumido pela Luby.
+
+Exemplo: 30%
+
+:::
+
+### Maria Filó
+
+## Combo de promoções
+
+O acesso a essa página se dá via navegação dinâmica. Em algum campo “navigate_to” de um componente, cadastre “/combos”. Ao ser clicado será redirecionado para esta página.
+Referente a página de combos.
+Os filtros disponíveis na página (para filtrar os diferentes tipos de promoções) devem ser cadastrados na Collection no campo “page_filters”.  Pode ser cadastrado mais do que um filtro, desde que separados por **;   **Cada item adicionado será considerado como um tipo de filtro na página. 
+
+Caso nenhum filtro seja cadastrado, não será exibido nada na área de filtros, e serão exibidos todos os componentes cadastrados na collection.
+
+Para definir qual componente corresponde a cada filtro, nos componentes o campo “page_filter” deve ser preenchido igual ao filtro.
+
+Ou seja, se em “page_filters”da collection um dos itens cadastrados for “Progressivo”. Apenas os componentes que tiverem um page_filters cadastrado como “Progressivo” irão aparecer quando o filtro for selecionado.
+Caso um filtro cadastrado não tenha nenhum componente correspondente, ele não será exibido (pois iria ficar vazio).
+
+**Exemplo
+
+Neste exemplo, a parte de baixo corresponde aos ‘page_filters’ da própria coleção, portanto, a página terá três filtros: Todos, só no App e Progressivos. **
+
+A parte superior corresponde aos page_filters do componente. Dois filtros foram cadastrados para este componente: Todos e Só no App.
+
+Portanto, o componente cadastrado irá aparecer quando os filtros “Todos” ou “Só no App” estejam selecionados.
+![colecoes-19-7913752fc7](/img/strapi/colecoes/colecoes-19-7913752fc7.webp)
+
+# Central de atendimento
+Este documento é responsável por gerar os componentes para a tela de "Central de Atendimento" no menu de "Perfil".
+
+Foram criados dois components para essa tela que são os [Cards](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718) e [FAQ](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718).
+
+### Exemplo
+
+![colecoes-20-564f328976](/img/strapi/colecoes/colecoes-20-564f328976.webp)
+![colecoes-21-5085321eb4](/img/strapi/colecoes/colecoes-21-5085321eb4.webp)
+
+## Turbo (Hering)
+
+Esta coleção tem a função de deixar habilitada/desabilitada a funcionalidade do Turbo. Assim como outras collections do strapi, deve ter seu documento publicado para refletir no aplicativo. Caso não haja coleções publicadas, o default será false, ou seja, o turbo não será exibido para os usuários.
+
+Essa collection não controla as opções de entrega.
+
+### Exemplo:
+
+![colecoes-22-d44ba6a97e](/img/strapi/colecoes/colecoes-22-d44ba6a97e.webp)
+
+# Sugestões (Farm)
+Este documento é responsável por gerar os componentes para a tela de "**Sugestões Farm**" uma aba nova dentro de desejos. 
+
+Foram criados dois components para essa tela que são os [Title](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718) e [Cards](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718).
+![colecoes-23-bd385c97e7](/img/strapi/colecoes/colecoes-23-bd385c97e7.webp)
+![colecoes-24-1a9321bdde](/img/strapi/colecoes/colecoes-24-1a9321bdde.webp)
+
+### Exemplo:
+
+![colecoes-25-cc38f45c8f](/img/strapi/colecoes/colecoes-25-cc38f45c8f.webp)
+
+### Envio de push:
+
+**action**: O campo  deve sempre conter o texto **`'suggestions'`## , pois essa string é utilizada para que o aplicativo identifique a ação correspondente à funcionalidade de sugestões.indentifier**: O campo  deve receber o título da sugestão que se deseja direcionar.
+Sem quebras de linha ou caracteres especiais que possam interferir na formatação 
+![colecoes-26-0d0440be52](/img/strapi/colecoes/colecoes-26-0d0440be52.webp)
+
+## Deeplinks
+
+:::note
+Não precisa cadastrar os links antigos nos deeplinks do Strapi
+
+Mas, vai precisar quando migrar pra nova estrutura
+
+:::
+
+- **Tutorial em vídeo**
+
+
+## Onde achar no strapi
+
+- Content manager → Collection Types → Deeplinks
+- A estrutura do componente é essa:
+![colecoes-27-cab7671459](/img/strapi/colecoes/colecoes-27-cab7671459.webp)
+
+## Nomenclaturas básicas
+
+**URL:##  é o link completoExemplos**: 
+https://www.crisbarros.com.br/shop-roupas?productclusterids=1073&tamanho=m&tamanho=pp&facets=productclusterids%2Ctamanho&sort=score_desc&page=1
+https://www.crisbarros.com.br/shop-roupas
+
+**Domínio: ## É o domínio da marcaExemplo**: **www.crisbarros.com.br**
+
+**Path## : É o ‘caminho’ da URL, a parte que vem depois do domínio e antes da query.Exemplo**: https://www.crisbarros.com.br/**shop-roupas## ?productclusterids=1073&tamanho=m&tamanho=pp&facets=productclusterids%2Ctamanho&sort=score_desc&page=1Query## : É o contéudo que vem depois do ‘?’ na url.Exemplo**: https://www.crisbarros.com.br/shop-roupas?**productclusterids=1073&tamanho=m&tamanho=pp&facets=productclusterids%2Ctamanho&sort=score_desc&page=1**
+
+## Regras de atualização deste arquivo (para o usuário)
+
+**Atenção:**
+Esse **cache está desabilitado ## temporariamente. Ou seja, atualmente, toda vez que o usuário abre o app, ele busca os deeplinks do CMS.Lógica de cache NÃO ATIVA:**
+O conteúdo deste documento irá ficar **salvo no dispositivo** do usuário e será atualizado apenas uma vez por dia. 
+
+:::note
+Ficará salvo no dispositivo mesmo, portanto, não mantenha deeplinks não utilizados cadastrados como deeplinks válidos. Um arquivo muito grande pode trazer consequências ao desempenho do aplicativo e do dispositivo do usuário.
+
+:::
+
+Quando o usuário abrir um deeplink, ele irá buscar primeiramente no dispositivo do usuário, onde esse documento deverá ficar salvo. 
+
+Caso encontre as informações no dispositivo, e faz menos de 24 horas que elas foram salvas, ele executará o redirecionamento do deeplink baseado nessas informações.
+Caso façam mais de 24 horas, ou não tenham dados salvos no dispositivo, irá buscar no CMS as informações dos deeplinks, e irá salvar no dispositivo as informações atualizadas.
+Quando o usuário excluir o app, e os dados do app, então, ao abrir instalar e abrir novamente o app, ele irá atualizar os deeplinks \[muito útil para fins de teste\].
+
+## Regras de abertura dos deeplinks
+
+A partir da implementação do deeplink via CMS, todos os links da marca [www.marca.com.br](http://www.marca.com.br) serão interpretados como deeplinks, e irão abrir o aplicativo.
+O controle do direcionamento do usuário dentro do aplicativo será feito através da coleção de Deeplink no CMS, mais especificamente, pelo campo da navegação dinâmica (para deeplink válidos). Likns que o app não sabe como processar/navegar irão redirecionar o usuário para uma webview
+
+## Deeplink raiz “www.marca.com.br”
+
+Esse link não tem um redirecionamento pré definido.
+**Se o link estiver cadastrado no CMS## : Irá abrir o app e redirecionar conforme o o preenchimento do campo da navegação dinâmica.Se o link não estiver cadastrado no CMS: **Vai abrir o aplicativo. Caso ele estivesse fechado, abre na home, caso o app estava aberto em segundo plano, apenas abre o aplicativo, sem redirecionar (nem pra home).
+
+## Cris barros / nova estrutura
+
+Caso o link não esteja cadastrado no CMS irá abrir na home.
+O link pode ser cadastrado no CMS para redirecionamento personalizado.
+
+## Deeplinks válidos | via CMS
+
+[Documentação de preenchimento do componente no CMS](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718)
+[Documentação da nomenclatura](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718) (o que é **URL **e **Path## )IMPORTANTE:**
+O primeiro deeplink cadastrado como válido **SEMPRE **deve ser o deeplink raiz da marca. Sendo possível alterar a navegação dinâmica dele conforme desejado.
+![colecoes-28-3e44cedfad](/img/strapi/colecoes/colecoes-28-3e44cedfad.webp)
+O app tem três regras pra avaliar se o deeplink é valido, e ao menos uma delas precisa ser atendida.
+1. Irá verificar se o deeplink que fez o app abrir, é EXATAMENTE igual a alguma **URL** cadastrado no CMS como deeplink válido.
+
+## Exemplo
+
+O deeplink cadastrado como válido:
+![colecoes-29-1085327f78](/img/strapi/colecoes/colecoes-29-1085327f78.webp)
+Se o link clicado pelo usuário foi: [https://www.farmrio.com.br/novidades](https://www.farmrio.com.br/novidades)
+
+Então, o app irá comparar o link clicado e ver se é exatamente igual a alguma das ‘**URL**’ cadastradas. Se sim, irá redirecionar de acordo com o campo preenchido na ‘Navegação dinâmica’. Nesse caso, irá redirecionar para a listagem de novidades.
+
+1. O **path ## do deeplink está cadastrado como parte da ‘url’ de algum deeplink cadastrado como válido. Caso sim, ele executará o redirecionamento do primeiro que encontrar cadastrado.**Exemplo**
+
+O deeplink cadastrado como válido:**
+
+![colecoes-30-1085327f78](/img/strapi/colecoes/colecoes-30-1085327f78.webp)
+Se o link clicado pelo usuário foi: [https://www.farmrio.com.br/novidades?filter.cores-filtraveis=marrom&filter.productClusterIds=689&sort=discount%3Adesc](https://www.farmrio.com.br/novidades?filter.cores-filtraveis=marrom&filter.productClusterIds=689&sort=discount%3Adesc)
+
+O app irá identificar se o **path** do link, no caso 'novidades', está contido em alguma das urls cadastradas. Nesse caso, ele irá encontrar esse deeplink válido cadastrado, pois a url dele contem “novidades”. E o redirecionamento será conforme o cadastrado na ‘Navegação dinâmica’, seu título e ordenação. Nesse caso, irá redirecionar para a listagem de novidades.
+
+1. O **path **do deeplink está cadastrado como parte da 'navegação dinamica' de algum deeplink cadastrado como válido. Caso sim, ele executará o redirecionamento do primeiro que ele encontrar cadastrado. a
+Atende coleções nomeadas.
+
+## Exemplo
+
+![colecoes-31-fe3203c8a5](/img/strapi/colecoes/colecoes-31-fe3203c8a5.webp)
+ Se o link clicado pelo usuário foi: [https://www.farmrio.com.br/vestidos-longos?filter.productClusterIds=689&filter.tamanho=p](https://www.farmrio.com.br/novidades?filter.productClusterIds=689&filter.tamanho=p)
+
+O app irá buscar se o **path **do "/vestidos-longos" está cadastrado em algumos campos de  ‘Navegações dinamica’ (desconsiderando 'plp') cadastrada como deeplink válido.
+Então, como o campo da navegação dinâmica contém ‘vestido-longo’ então ele será considerado um deeplink válido e será redirecionado de acordo. 
+
+Caso o link **seja considerado válido**, o app se utilizará das informações do CMS para fazer o redirecionamento, conforme o campo cadastrado como ‘Navegação dinâmica’.
+Caso o campo de navegação dinâmica esteja preenchido com o início de ‘plp/’ indicando uma listagem de produtos, a navegação será assim realizada.
+Caso não seja uma plp, o redirecionamento irá acontecer conforme a navegação dinâmica (consultar documentação).
+
+## Deeplinks de PDP
+
+Não é necessário cadastrar todos os produtos no deeplink.
+Os links de compartilhamento de produto (via site, ou no app em ‘compartilhar’) continuarão a funcionar da mesma forma de antes.
+
+É possível cadastrar urls personalizadas para redirecionamento pra Página de Produto, seguindo as regras da navegação dinâmica.
+![colecoes-32-0fe180fd6e](/img/strapi/colecoes/colecoes-32-0fe180fd6e.webp)
+
+## Outras URLS
+
+## Cris Barros
+
+URLs não identificadas no CMS não terão redirecionamento, irá abrir a home do app.
+
+## Animale | Farm | NV | Hering | Maria Filó | Off Premium
+
+O aplicativo irá primeiro procurar identificar o link dentro dos cadastros do CMS, como válido. Caso não identifique, ele seguirá a analise dos deeplinks cadastrados até então. 
+Dessa forma, o redirecionamento segue funcionando normalmente para as telas já cadastradas, e também para as coleções.
+
+## Exemplo:
+
+Se já havia um deeplink cadastrado anteriormente (via tabela):
+**Link## : “www.marca.com.br/vestidos” filterCategoryOrCluster**: “departamento/vestidos” 
+
+Com a implementação do CMS, enquanto esse mesmo link não é cadastrado no CMS, o deeplink continua funcionando como antes, redirecionando para “departamento/vestidos”.
+Quando esse link for cadastrado no CMS, ele irá “sobrescrever” o cadastro antigo, e executará o redirecionamento cadastrado no CMS. Nesse caso, o redirecionamento deixaria de ser de “departamento/vestidos” e seria “productclusterids/145”. 
+
+Permitindo assim a atualização de deeplinks antigos.
+![colecoes-33-b0e0bb4951](/img/strapi/colecoes/colecoes-33-b0e0bb4951.webp)
+
+## Ativar/desativar FARM ETC via deeplink
+
+Sempre que o deeplink executar um redirecionamento válido, ele irá avaliar o campo do navigate_to. Caso esse contenha “etc”, como em: “home_etc”, “menu_etc”, “pdp_etc”, “plp_etc”, ele irá definir o modeEtc como true no app. Do contrário, definirá como false. (Isso para garantir que independente se o usuario já está no etc ou não, quando clicar em um deeplink do etc ele vai colocar o mode etc ativo, e caso seja um deeplink regular, como desativado.
+Apenas quando o redirecionamento for para ‘home_etc’ é que o usuário irá ver a splash do ETC. Para os redirecionamentos de menu, plp e pdp a splash do ETC não será exibida, mas o modo ETC será ativo.
+
+## Página Compre o look (HERING)
+
+Esse documento é utilizado para cadastrar uma lista de cards de Compre o look e media kit (banners). Esses componentes vão ser mostrados na tela numa grid.
+Para acessar essa página é só usar o padrão de [navegação dinâmica](/docs/strapi/navegacao-dinamica), usando o padrão para esta página em específico [Navegação página Compre o look ](https://www.notion.so/gruposoma/NAVEGA-O-DIN-MICA-6738757a9f614279be8257ab50045262?pvs=4#1c8690e9a7e280629c5ce5e837fdff12)
+A página é construída com os dois componentes, o [Full Look Carousel Item](https://www.notion.so/gruposoma/Strapi-8050d90e377246f5b1765cc0828a6718?pvs=4#c747dacb2e554e138a6ad36428041641) e o [MediaKit](https://www.notion.so/gruposoma/Strapi-8050d90e377246f5b1765cc0828a6718?pvs=4#db9035f78319433abd3e72f78a6d591b). A grid segue a lógica de outras Grids no app, a cada 4 linhas aparece um Card maior.
+
+:::note
+ATENÇÃO: O campo “**Mostrar antes do produto” ## do Media Kit não tem nenhuma função nessa página, mas é obrigatório passar qualquer valor porque o componente foi reaproveitado da collection Media Kit. O que muda na configuração da página é a ordem que os componentes são cadastrados. **
+
+:::
+
+![colecoes-34-086fc68a26](/img/strapi/colecoes/colecoes-34-086fc68a26.webp)
+
+## Assistente Virtual IA (HERING)
+
+Esse documento é utilizado para cadastrar os componentes da tela de assistente de IA na Hering.
+Para acessar essa página é só usar o padrão de [navegação dinâmica](/docs/strapi/navegacao-dinamica), usando o padrão para esta página em específico, que é basicamente através da URL **/ai-assistant. **Ou seja, para conseguir acessar essa tela, basta cadastrar um banner ou qualquer outro componente com navegação dinâmica, e passar essa url no campo de navegação, além é claro de cadastrar o documento.
+
+:::note
+ATENÇÃO: Para a tela de assistente IA funcionar corretamente, é necessário que esse componente esteja cadastrado.
+
+:::
+
+**Campos:
+
+Mensagem de boas-vindas: **O texto que irá aparecer em destaque para o usuário enquanto ele não enviou nenhuma mensagem. Para quebras de linhas, utilize o padrão com “\\n”.(Obrigatório).
+![colecoes-35-71ecaa8fde](/img/strapi/colecoes/colecoes-35-71ecaa8fde.webp)
+**Sugestões de perguntas: **Aqui são cadastradas as sugestões de perguntas que aparecerão para o usuário acima do Input de enviar mensagem. (Obrigatório).
+![colecoes-36-1205cf1532](/img/strapi/colecoes/colecoes-36-1205cf1532.webp)
+![colecoes-37-871961869e](/img/strapi/colecoes/colecoes-37-871961869e.webp)
+
+## Filtros Rápidos (HERING)
+
+Esse documento é utilizado para cadastrar filtros rápidos (pequenos botões de filtragem) que aparecerão logo acima dos botões de filtro padrão.
+O cadastro é feito colocando a PDC na qual esses filtros aparecerão, e logo depois inserindo cada componente de filtro um a um.
+**Campos:
+
+Filtro de categoria ou coleção: **A categoria ou coleção que os filtros deverão ser exibidos
+![colecoes-38-410b8c3b22](/img/strapi/colecoes/colecoes-38-410b8c3b22.webp)
+**FIltros: **Aqui são cadastradas os filtros e suas informações. (Obrigatório).
+![colecoes-39-b820fcd229](/img/strapi/colecoes/colecoes-39-b820fcd229.webp)
+**Título: ## O título do filtro, que é exibido ao lado da imagem. Utilize o padrão com “\\n” caso queira quebras de linhas.Categoria ou coleção do Filtro Rápido: ## Qual busca (filtro de categoria ou coleção) deverá ser efetuada quando o usuário clicar no filtro rápido. (Campo obrigatório).Imagem: **A imagem do filtro rápido (Campo obrigatório).
+
+![colecoes-40-385179ddbd](/img/strapi/colecoes/colecoes-40-385179ddbd.webp)
+
+## Order Details
+
+Esta coleção contém os componentes que serão exibidos na tela de detalhes do pedido.
+Um componente por exemplo é o [**Text Warning **](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718)ou **Texto de aviso.**
+
+### Exemplo:
+
+![colecoes-41-c41c595146](/img/strapi/colecoes/colecoes-41-c41c595146.webp)
+
+## Header Geral PDC ETC (Farm ETC)
+
+Essa coleção é onde poderá ser cadastrado um Header mais geral, que será utilizado em **todas** as PDCs do ETC. Caso haja um header cadastrado via Media Kit, o header do Media Kit terá maior prioridade e o geral será ignorado.
+
+Para saber como preencher esse componente, consulte: [Documentação](https://www.notion.so/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718?source=copy_link#21f690e9a7e28095a2a9d68963bd99c5)
+
+### Exemplo:
+
+![colecoes-42-972c99a5bd](/img/strapi/colecoes/colecoes-42-972c99a5bd.webp)
+
+## Feedback não vips (NV)
+
+Essa coleção será utilizada para cadastrar os feedback exibidos aos usuários não VIPs que tentarem acessar conteúdos exclusivos por meio de deeplinks.
+
+## Exemplo
+
+![colecoes-43-1554a12e9a](/img/strapi/colecoes/colecoes-43-1554a12e9a.webp)
+![colecoes-44-1fe54ee056](/img/strapi/colecoes/colecoes-44-1fe54ee056.webp)
+
+## Inputs
+
+**Título: ## Título que será exibido no topo do bottom sheet. Campo obrigatório.Descrição: ## Descrição que aparecerá logo abaixo do título. Campo opcional.Texto do botão: ## Texto exibido no botão localizado abaixo da descrição. Será renderizado apenas se o campo de navegação também estiver preenchido. Campo opcional.Navegação dinâmica: **Define o redirecionamento ao clicar no botão. Deve ser preenchido conforme a documentação de navegação dinâmica.
+
+## Como funciona o fluxo vip?
+
+**O que é?**
+
+O fluxo VIP dá acesso a uma coleção exclusiva de produtos, com preços e condições comerciais próprias, visível apenas para clientes marcados como VIP na base.
+Quem não é VIP não vê essa coleção: ao tentar entrar, recebe um aviso explicando que o acesso é exclusivo — e é justamente esse aviso que se configura pela coleção Non VIP Feedback aqui no Strapi.
+## Por onde o cliente entra?O acesso acontece exclusivamente por link (deeplink). Não existe hoje nenhum botão, menu ou banner fixo no app que leve à coleção VIP — o cliente só chega lá se receber o link.
+
+**Como o link precisa ser?**
+
+Para que o app entenda que aquele link é da coleção VIP, ele precisa carregar o marcador sc=5.
+sc = sales channel (canal de venda). O canal 5 é o canal VIP da NV.
+
+Sem esse marcador, o link é tratado como um link comum: o cliente entra na página normalmente, com preços e condições padrão — sem nenhuma validação de VIP.
+
+Exemplo de link válido:  [https://www.bynv.com.br/exclusive?sc=5](https://www.bynv.com.br/exclusive?sc=5)
+
+⚠️ Atenção: dois cadastros precisam existir para o fluxo funcionar de ponta a ponta:
+O deeplink da coleção exclusiva cadastrado no CMS, apontando para a PDC (página de coleção) desejada, com o sc=5.
+
+O conteúdo da coleção Non VIP Feedback publicado (é o que aparece para quem não é VIP).
+
+Se o deeplink não estiver cadastrado, o cliente VIP não chega na coleção. Se o Non VIP Feedback não estiver publicado, o cliente não-VIP vê um texto padrão genérico.
+**O que acontece em cada cenário:
+
+Situação do cliente   | O que o app faz**
+
+Não está logado	  | Abre a tela de login. Depois de logar, o app continua automaticamente de onde parou — o cliente não precisa clicar no link de novo. Em seguida, cai em um dos cenários abaixo.
+
+Logado e é VIP	   | Entra direto na coleção exclusiva, já com os preços e condições VIP aplicados.
+
+Logado e não é VIP   |   Volta para a home e abre um aviso (bottom sheet) explicando que a coleção é exclusiva. É o conteúdo desta coleção do Strapi.
+
+**Enquanto a sessão VIP está ativa:**
+
+Quando o cliente VIP acessa a coleção, a condição VIP passa a valer para toda a navegação daquela sessão — vitrine, busca, página de produto e checkout mostram os preços e condições VIP, não só dentro da coleção. Essa condição é reavaliada a cada login e é removida no logout: ao sair da conta, o cliente volta a ver os preços normais.
+Checklist antes de disparar uma campanha VIP
+
+O link tem sc=5?
+
+O deeplink da coleção está cadastrado no CMS e aponta para a PDC certa?
+
+A coleção Non VIP Feedback está preenchida e publicada?
+
+## Transmissão Live (MF)
+
+Essa coleção será utilizada para cadastrar o conteúdo da página de uma transmissão. Para acessar essa página no app, basta usar a navegação dinâmica [página relacionada](https://app.notion.com/p/22c690e9a7e28092afc9f5019025db1d).
+
+### Exemplo:
+
+![colecoes-45-56b6140233](/img/strapi/colecoes/colecoes-45-56b6140233.webp)
+![colecoes-46-82cecbd44f](/img/strapi/colecoes/colecoes-46-82cecbd44f.webp)
+
+## Inputs
+
+**Título: ## Título que será exibido no topo da página. Campo opcional, valor padrão é ‘Transmissão’.ID da Live: ## Cadastrar o ID da Live da Vimeo. Campo obrigatório.components: **Tem a opção de cadastrar um banner ou um carrossel de banner. Mesmo componente que existe na Home **Carousel List ** . Campo opcional.
+
+## Trends de busca
+
+Essa coleção é referente o cadastro dos termos mais buscados que fica destacado quando o usuário entra na busca do app. 
+
+O campo “active” controla a exibição do componente Search Trends. Quando ativo, exibe como ‘em alta’ os titulos definidos no componente “Search Trends”, caso desligado, exibe como ‘em alta’ os titulos trazidos pela vtex.
+![colecoes-47-733875de0f](/img/strapi/colecoes/colecoes-47-733875de0f.webp)
+
+### Exemplo no app
+
+![colecoes-48-ce44c1cc35](/img/strapi/colecoes/colecoes-48-ce44c1cc35.webp)
+
+Componente: **Search Trend** e [Search Suggested Products](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718)
+
+## Coleções Menu(Farm e Farm ETC)
+
+Essa coleção será utilizada para cadastrar o conteúdo das Coleções que serão exibidas no menu da Farm e da Farm Etc. Utilizando o componente [menu collections](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718).
+
+### Exemplo:
+
+![colecoes-49-0bea1302cf](/img/strapi/colecoes/colecoes-49-0bea1302cf.webp)
+![colecoes-50-a8eba6e13a](/img/strapi/colecoes/colecoes-50-a8eba6e13a.webp)
+
+### Login Background
+
+O preenchimento desta coleção é obrigatório para as marca que estão na nova estrutura. As imagens cadastradas nesta coleção irão preencher o fundo da tela de login. Caso a coleção não esteja cadastrada, a tela de login ficará toda em branco.
+
+### Dimensões:
+
+Background - 375 X 812
+a imagem que vai por cima - 374 X 218
+
+### HRG Login suggestions
+
+Essa coleção será utilizada para cadastrar o conteúdo da **Tela de Sugestão de Login**, que será exibida após a **splash screen**, caso o usuário não esteja logado. Utilizando o componente [hrg login suggestions item](https://app.notion.com/p/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718)
+
+### Exemplo:
+
+![colecoes-51-0523157609](/img/strapi/colecoes/colecoes-51-0523157609.webp)
+![colecoes-52-cecc192e48](/img/strapi/colecoes/colecoes-52-cecc192e48.webp)
+
+### Force Update Version
+
+![colecoes-53-7ed1df59ca](/img/strapi/colecoes/colecoes-53-7ed1df59ca.webp)
+Esta coleção é responsável pela tela de bloqueio de acesso ao APP para versões bloqueadas ou inferiores a versão mínima estabelecida. Quando esta tela é exibida o usuário não consegue sair dela, e portanto, não consegue navegar no app. Ela tem um botão de “Atualizar agora” que redireciona para a loja correspondente ao Sistema Operacional, na página da marca.
+Os números de versão mínima e bloqueada são cadastrados no Firebase  \> Remote Config \> Feature Flag.
+
+Para que a tela seja exibida para o usuário, ele precisa ter baixado no dispositivo uma versão que esteja bloqueada, ou que seja inferior a mínima, e esta coleção precisa estar publicada e ativa (campo ‘active’ como true).
+Inputs:
+
+active: A tela só é exibida se este campo estiver marcado como true.
+title: O título da página
+description: Texto de descrição da página
+image_background: Imagem de fundo da página (em algumas marcas \[Animale/CB\] a imagem de fundo precisa ser escura, nas outras, clara).
+
+### Exemplo do Strapi preenchido
+
+![colecoes-54-f7f1941751](/img/strapi/colecoes/colecoes-54-f7f1941751.webp)
+
+### Exemplo de como fica no app (figma)
+
+![colecoes-55-8cbe42b91f](/img/strapi/colecoes/colecoes-55-8cbe42b91f.webp)
+
+### Update Version
+
+Esta coleção é responsável pelo bottom sheet de sugestão de atualização do APP para versões inferiores a ultima versão do app. O bottom sheet é exibido na home e pode ser fechado pelo usuário.  Ele tem um botão de “Atualizar agora” que redireciona para a loja correspondente ao Sistema Operacional, na página da marca.
+O número da última versão é cadastrado no Firebase  \> Remote Config \> Feature Flag.
+
+Para que o bottom sheet seja exibida para o usuário, ele precisa ter baixado no dispositivo uma versão que seja inferior a última versão do app. E esta coleção precisa estar publicada e ativa (campo ‘active’ como true).
+Inputs:
+
+active: O bottom sheet só é exibido se este campo estiver marcado como true.
+title: O título do bottom sheet.
+description: Texto de descrição do bottom sheet.
+
+### Exemplo do bottom sheet no app (figma)
+
+![colecoes-56-4a352add0f](/img/strapi/colecoes/colecoes-56-4a352add0f.webp)
+
+### Exemplo do Strapi preenchido
+
+![colecoes-57-7c26e558a6](/img/strapi/colecoes/colecoes-57-7c26e558a6.webp)
+
+## Landing Page
+
+A Landing Page é uma coleção onde a marca pode ter diversas coleções publicas ao mesmo tempo (não apenas uma como acontece na home). Cada coleção publicada corresponde a uma tela a ser exibida no app.
+A coleção é simples, contém todos os componentes do Farm Rio e alguns do Farm Etc que foram comportados pela estrutura de scroll utilizada (a mesma da Farm Rio).
+Para redirecionar o usuário para a uma landing page específica, basta utilizar a [navegação dinâmica](/docs/strapi/navegacao-dinamica). Em resumo o redirecionamento será “landing-page/\{nome da coleção\}”, por exemplo “landing-page/Sustentabilidade”.
+
+### 🎟️ **Ingressos de Eventos**
+
+Esta coleção é responsável por armazenar os ingressos que serão exibidos no aplicativo.
+Ela possui um único componente de **Ingresso**, permitindo o cadastro de uma lista de ingressos.
+> ⚠️ **Importante:**
+Cada ingresso cadastrado deve obrigatoriamente possuir um **identificador único**, que precisa estar previamente registrado no **Master Data**.
+Esse identificador é utilizado para vincular o ingresso ao usuário e permitir sua correta exibição no app.
+
+![colecoes-58-fe98c02647](/img/strapi/colecoes/colecoes-58-fe98c02647.webp)
+
+****Exemplo## :
+
+![colecoes-59-34759ea8a2](/img/strapi/colecoes/colecoes-59-34759ea8a2.webp)
+
+![colecoes-60-00e1e89961](/img/strapi/colecoes/colecoes-60-00e1e89961.webp)
+
+![colecoes-61-38649cde8d](/img/strapi/colecoes/colecoes-61-38649cde8d.webp)
+
+### Pagina Minha Conta (Cris Barros)
+
+Essa coleção será utilizada para cadastrar o conteúdo da **Tela de Conta/Perfil. **Por enquanto tem disponível apenas o componente **Personal Shopper (Cris Barros)** 
+
+### Exemplo:
+
+![colecoes-62-8409bc7703](/img/strapi/colecoes/colecoes-62-8409bc7703.webp)
+
+### Jogo do Tucano (Farm)
+
+# Jogo do Tucano Farm (Farm)
+Coleção responsável por armazenar toda a configuração da campanha de gamificação do tucano no app da Farm.
+O jogo consiste em 4 tucanos escondidos em pontos fixos do app (2 na PDC e 2 na PDP). Ao encontrar todos, o usuário ganha um cupom de desconto, aplicado automaticamente na sacola.
+> ⚠️ Só existe **uma** entry publicada por vez. O app lê sempre a primeira entry publicada desta coleção.
+
+![colecoes-63-d61ad03447](/img/strapi/colecoes/colecoes-63-d61ad03447.webp)
+![colecoes-64-2d8726962f](/img/strapi/colecoes/colecoes-64-2d8726962f.webp)
+### EX PDC:
+![colecoes-65-b6653fa04e](/img/strapi/colecoes/colecoes-65-b6653fa04e.webp)
+![colecoes-66-a9f393ceae](/img/strapi/colecoes/colecoes-66-a9f393ceae.webp)
+![colecoes-67-257c7d17b1](/img/strapi/colecoes/colecoes-67-257c7d17b1.webp)
+### EX PDP:
+![colecoes-68-aca894cbd0](/img/strapi/colecoes/colecoes-68-aca894cbd0.webp)
+![colecoes-69-c50aac5fa2](/img/strapi/colecoes/colecoes-69-c50aac5fa2.webp)
+![colecoes-70-979f015cd2](/img/strapi/colecoes/colecoes-70-979f015cd2.webp)
+## Inputs
+**Ativo (****`active`****):##  liga e desliga a campanha inteira. Quando desmarcado, nenhum tucano aparece no app e o jogo some por completo, sem precisar de deploy. Campo obrigatório.Cupom (****`coupon`****):##  código do cupom aplicado automaticamente quando o usuário encontra o quarto tucano. Campo obrigatório.Título ao encontrar (****`found_title`****):** título do modal exibido quando o usuário encontra um tucano e **ainda faltam##  outros. Campo obrigatório.Subtítulo ao encontrar (****`found_subtitle`****):##  descrição que aparece abaixo do título, no mesmo modal. Campo obrigatório.Título ao completar (****`completed_title`****):** título do modal exibido quando o usuário encontra o **último##  tucano. Campo obrigatório.Subtítulo ao completar (****`completed_subtitle`****):##  descrição que aparece abaixo do título ao completar o jogo. Campo obrigatório.Texto do botão "continuar" (****`keep_searching_button_text`****):##  texto do botão do modal enquanto ainda faltam tucanos. Esse botão apenas fecha o modal — ele não navega para lugar nenhum, tem o mesmo comportamento do "X". Campo obrigatório.Texto do botão de resgate (****`redeem_button_text`****):##  texto do botão do modal quando todos os tucanos foram encontrados. É esse botão que aplica o cupom na sacola. Campo obrigatório.Texto do balão da PDC (****`pdc_tooltip_text`****):** balão de texto exibido ao lado do tucano da PDC. Aparece **somente no ponto ****`pdc_2`## , que é o único cujo posicionamento comporta o balão — os outros três ficam girados, espelhados ou cortados pela borda e o balão sairia torto. Deixe vazio para não exibir balão nenhum. Campo opcional.Pontos (****`spots`****):** lista dos tucanos da campanha, usando o componente **Tucano Spot**. Campo obrigatório, **limitado a 4 itens**.
+## Páginas
+- PDC (Página de Categoria) — 2 tucanos
+- PDP (Página de Produto) — 2 tucanos
+## Como o jogo funciona
+1. O usuário encontra um tucano e toca nele. Abre o modal com o progresso (ex.: 2 de 4).
+2. Enquanto faltam tucanos, o botão apenas fecha o modal.
+3. Ao encontrar o quarto, o botão passa a ser o de resgate e aplica o cupom na sacola.
+4. O progresso fica salvo no aparelho: fechar o app não zera a contagem.
+5. Se a aplicação do cupom falhar (sacola vazia, cupom inválido ou expirado), o modal continua aberto com a mensagem do motivo e **o último tucano continua visível**, para o usuário tentar de novo depois. O jogo só é encerrado quando o desconto realmente entra na sacola.
+## Cuidados ao cadastrar
+**O cupom precisa gerar desconto de verdade.##  O app confere o valor da sacola antes e depois de aplicar. Se o total não mudar, ele entende que o cupom não vale para aquele carrinho, remove o cupom e mostra a mensagem de inválido. Cupons restritos a certos produtos vão falhar quando a sacola não tiver nenhum item elegível — isso é esperado.Não escreva o nome do cupom dentro dos textos.##  O campo de cupom e os textos são independentes: se você escrever "use o cupom XPTO" no subtítulo e depois trocar o campo `coupon`, o texto continua com o nome antigo e o usuário vê um código diferente do que é aplicado.Cada ponto só pode ser cadastrado uma vez.** Se repetir o mesmo `spot_id`, o Strapi bloqueia o salvamento com a mensagem "Cada tucano só pode ser cadastrado uma vez".
+## Exemplo
+
+| Campo | 
+Valor |  |
+
+| Ativo | 
+✅ |  |
+
+| Cupom | 
+`vemproapp` |  |
+
+| Título ao encontrar | 
+Você encontrou um tucano! |  |
+
+| Subtítulo ao encontrar | 
+Encontre quatro escondidos pelo app e ganhe 15% de desconto no cheirinho Farm! |  |
+
+| Título ao completar | 
+Você encontrou todos os tucanos! |  |
+
+| Subtítulo ao completar | 
+Aproveite seu desconto especial! |  |
+
+| Texto do botão "continuar" | 
+Continuar procurando |  |
+
+| Texto do botão de resgate | 
+Aproveitar meu desconto! |  |
+
+| Texto do balão da PDC | 
+Tem cheirinho de novidade! |  |
+
+---
+# Tucano Spot (Farm)
+Componente responsável por armazenar cada um dos tucanos da campanha. Usado exclusivamente dentro da coleção **Jogo do Tucano Farm**.
+Cada tucano ocupa uma posição fixa no app, já definida no código. O que se configura aqui é **em quais telas** aquele tucano aparece.
+## Inputs
+**Ponto (****`spot_id`****):** identifica qual dos 4 tucanos está sendo configurado. O próprio valor já define a tela — `pdc_*` são da PDC e `pdp_*` são da PDP. Campo obrigatório, e não pode repetir entre os pontos.
+
+| Valor | 
+Onde o tucano aparece |  |
+
+| `pdc_1` | 
+Topo da PDC, de cabeça para baixo, saindo de trás da barra superior |  |
+
+| `pdc_2` | 
+No meio da lista de produtos, colado e cortado pela borda direita. É o único que exibe o balão de texto |  |
+
+| `pdp_1` | 
+Na altura da seção "Sobre a peça", espiando pela borda esquerda (só a ponta do bico) |  |
+
+| `pdp_2` | 
+No fim da página do produto, colado e cortado pela borda direita |  |
+
+**Coleção (****`collection`****):** restringe o tucano a uma coleção específica. Campo opcional.
+> ⚠️ Na PDC este campo espera o **ID do cluster**, e não o nome da categoria. Cadastrar `vestidos` **não funciona## ; o valor correto é o número do cluster, por exemplo `1031`. Na PDP a comparação é feita contra as categorias do produto.SKU (****`sku`****):** restringe o tucano a um produto específico. Aceita o ID do produto ou o código de referência. Campo opcional.
+## Regras de exibição
+- **Coleção e SKU vazios:** o tucano aparece em **todas** as telas daquele tipo. É o comportamento padrão.
+- **Só um dos dois preenchido:** o tucano aparece apenas onde aquele valor bate.
+- **Os dois preenchidos:** basta **um** deles bater para o tucano aparecer.
+- A comparação é por "contém" e ignora maiúsculas/minúsculas.
+- Para informar mais de um valor, separe por vírgula.
+## Exemplo
+
+| Ponto | 
+Coleção | 
+SKU | 
+Resultado |  |
+
+| `pdc_1` | 
+*(vazio)* | 
+*(vazio)* | 
+Aparece em qualquer PDC |  |
+
+| `pdc_2` | 
+`1031` | 
+*(vazio)* | 
+Aparece só na PDC de Vestidos |  |
+
+| `pdp_1` | 
+*(vazio)* | 
+`175575` | 
+Aparece só na PDP desse produto |  |
+
+| `pdp_2` | 
+*(vazio)* | 
+*(vazio)* | 
+Aparece em qualquer PDP |  |
+
+### Roleta (Farm)
+
+[Roleta Premiada - Documentação](https://app.notion.com/p/3ca690e9a7e28001a264c79345067c28)
+1. **Visão Geral**
+
+A Roleta Premiada é uma funcionalidade interativa exclusiva do aplicativo da Farm, criada para engajar usuários e incentivar conversões por meio de gamificação. Ao girar a roleta, o usuário ganha prêmios ou descontos.
+
+O grande diferencial técnico desta feature é a aplicação silenciosa do cupom: ao resgatar o prêmio, o código promocional é injetado automaticamente no carrinho (sacola) do usuário, mesmo que ele ainda não tenha selecionado nenhum produto. Após o resgate, ele é redirecionado de forma fluida para uma vitrine estratégica para iniciar suas compras
+
+.
+2. **Jornada do Usuário (User Flow)**
+
+•	Descoberta: O usuário visualiza o acesso à roleta de duas formas:
+
+•	Um Pop-up Animado (GIF) na tela inicial (Home). Esse pop-up possui inteligência de sessão e só é exibido se o usuário for elegível a um novo giro.
+
+•	Um Item fixo no Menu do aplicativo.
+
+•	Interação: Ao clicar, o usuário é direcionado à tela do jogo.
+
+•	Gamificação: O usuário clica no botão para girar, e o aplicativo sorteia um prêmio baseado nas probabilidades matemáticas recebidas do backend.
+
+•	Resgate: Uma tela de celebração aparece com confetes e o botão para aplicar o desconto.
+
+•	Conversão: O cupom é salvo na sessão. O usuário é redirecionado para a tela designada e ao adicionar qualquer item à mochila, o desconto já estará validado.
+
+3. **Configuração dos Pontos de Acesso**
+Para que os pop-ups ou itens de menu direcionem corretamente para a roleta, é preciso cadastrar o componente dinâmico no Strapi com a seguinte regra de redirecionamento:
+
+•	Campo Ação / Rota (navigate_to): Preencher com roleta ou roulette
+
+Prints de exemplo do pop-up e do item de menu cadastrados no painel:
+
+.png%22%2C%22permissionRecord%22%3A%7B%22table%22%3A%22block%22%2C%22id%22%3A%223dd690e9-a7e2-8061-a4e7-df39c7e7f5f6%22%2C%22spaceId%22%3A%22eb42b5a3-0a05-4315-a6a2-6a0599bd6a8f%22%7D%7D)
+.png%22%2C%22permissionRecord%22%3A%7B%22table%22%3A%22block%22%2C%22id%22%3A%223dd690e9-a7e2-806d-b99e-f958a0d01787%22%2C%22spaceId%22%3A%22eb42b5a3-0a05-4315-a6a2-6a0599bd6a8f%22%7D%7D)
+
+1. **Gerenciamento da roleta (Endpoint Strapi)**
+A interface, as regras e as probabilidades são 100% controladas de forma dinâmica via CMS (Endpoint: roulette-wheels-farm).
+
+.png%22%2C%22permissionRecord%22%3A%7B%22table%22%3A%22block%22%2C%22id%22%3A%223dd690e9-a7e2-80dc-8135-dbaf2e2cd6a0%22%2C%22spaceId%22%3A%22eb42b5a3-0a05-4315-a6a2-6a0599bd6a8f%22%7D%7D)
+**
+
+4.1. Configurações Visuais e da Tela**
+Estes campos definem a aparência primária da tela do jogo:
+- **active** (Booleano): Liga ou desliga a funcionalidade no app.
+- **title** (Texto): Título principal do cabeçalho (ex: Gire a roleta e ganhe descontos).
+- **couponsQuantity** (Texto): Informação visual da disponibilidade de cupons (ex: 4, 6).
+- **ctaText** (Texto): Texto do botão de ação antes do giro (ex: Girar a roleta).
+- **ctaBackground** (Cor Hexadecimal): Cor de fundo do botão principal (ex: #FF5733).
+- **backgroundImage** (Imagem, opcional): Imagem de fundo da tela. Se omitida, uma arte nativa do app será assumida automaticamente.
+- **rouletteDecorationColor** (Cor Hexadecimal, opcional): Cor do chassi e borda externa da roleta.
+- **pointerColor** (Cor Hexadecimal, opcional): Cor do pino central que marca a fatia vencedora.
+- **feedbackText** (Texto, opcional): Mensagem de sucesso após o giro. Importante: Use \[...\] como curinga para o desconto. Ex: "Parabéns! Você ganhou \[...\] para usar hoje!". O app substituirá o curinga dinamicamente.
+- **feedbackTextColor##  (Cor Hexadecimal, opcional): Cor da fonte da mensagem de sucesso.4.2. Regras de Negócio**
+- **newSpinIn** (Número): Regra de Cooldown (tempo de espera em horas/dias). Define quanto tempo um usuário logado precisa aguardar para ter direito a girar a roleta de novo.
+- **navigate_to##  (Texto, opcional): A rota de destino para onde o app redireciona o usuário após ele resgatar o cupom (ex: plp/novidades-2).4.3. Configuração dos Prêmios (Fatias da Roleta)**
+A roleta deve conter uma lista repetível (Componentes) representando os pedaços/prêmios. Cada fatia requer os seguintes dados:
+
+.png%22%2C%22permissionRecord%22%3A%7B%22table%22%3A%22block%22%2C%22id%22%3A%223dd690e9-a7e2-8024-b598-fc2278c41599%22%2C%22spaceId%22%3A%22eb42b5a3-0a05-4315-a6a2-6a0599bd6a8f%22%7D%7D)
+- **discount_text** (Texto): O rótulo impresso dentro da fatia (ex: 20% OFF, Frete Grátis). Esse mesmo texto substituirá o \[...\] na mensagem final.
+- **background_discount_text** (Cor Hexadecimal): Cor de fundo exclusiva daquela fatia.
+- **discount_text_color** (Cor Hexadecimal, opcional): Cor da fonte do texto da fatia.
+- **coupon_code** (Texto): O código promocional real ativo na VTEX (ex: FARM20). É o código injetado silenciosamente no carrinho.
+- **probability** (Decimal): O peso estatístico (chance) deste prêmio sair no sorteio. (Ex: 80 representa alta frequência(80%)).

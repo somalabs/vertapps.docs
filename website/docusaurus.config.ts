@@ -34,7 +34,7 @@ const config: Config = {
         indexBlog: false,
         indexPages: true,
         docsRouteBasePath: '/docs',
-        highlightSearchTermsOnTargetPage: true,
+        highlightSearchTermsOnTargetPage: false,
         explicitSearchResultPath: true,
         searchBarShortcutHint: true,
         searchResultLimits: 8,
@@ -125,38 +125,7 @@ const config: Config = {
     },
     footer: {
       style: 'dark',
-      links: [
-        {
-          title: 'Documentação',
-          items: [
-            {label: 'Início', to: '/docs/intro'},
-            {label: 'Padrão visual e de escrita', to: '/docs/padrao/tema'},
-            {label: 'Como contribuir', to: '/docs/padrao/como-escrever'},
-          ],
-        },
-        {
-          title: 'Operação',
-          items: [
-            {label: 'Processos', to: '/docs/processos'},
-            {label: 'Skills de Release', to: '/docs/skills-release'},
-            {label: 'Strapi / CMS', to: '/docs/strapi'},
-            {label: 'Guia rápido de release', to: '/docs/skills-release/guia-rapido'},
-          ],
-        },
-        {
-          title: 'Repos',
-          items: [
-            {
-              label: 'vertapps.docs',
-              href: 'https://github.com/somalabs/vertapps.docs',
-            },
-            {
-              label: 'vertapps.skills',
-              href: 'https://github.com/somalabs/vertapps.skills',
-            },
-          ],
-        },
-      ],
+      links: [],
       copyright: `VERTAPPS · Documentação interna AZZAS · ${new Date().getFullYear()}`,
     },
     prism: {

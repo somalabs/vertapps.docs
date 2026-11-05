@@ -1,0 +1,378 @@
+---
+sidebar_position: 5
+title: "Navegação dinâmica"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+import Details from '@theme/Details';
+
+<Kicker>CMS · Navegação</Kicker>
+
+# Navegação dinâmica
+
+<Chips>
+  <Chip tone="blue">Navegação</Chip>
+  <Chip tone="coral">Deeplink</Chip>
+</Chips>
+
+A navegação dinâmica é uma forma textual de especificar para qual tela o aplicativo deve redirecionar o usuário. Ela pode ser usada, por exemplo, em componentes Prismic, Strapi ou em OneLinks.
+
+<Details summary="Formato">
+
+O cadastro de uma navegação dinâmica deve seguir o seguinte formato:
+
+![Formato da navegação dinâmica](/img/strapi/navegacao-dinamica/navegacao-dinamica-01-46659a3695.webp)
+
+- **Identificador da página:** toda navegação dinâmica deve possuir o identificador da página para a qual o usuário deve ser redirecionado.
+- **Parâmetro principal da página:** algumas páginas possuem um parâmetro principal obrigatório, como PDPs (ID do produto) e PLPs (ID da coleção). Para essas páginas, acrescente uma barra (`/`) após o identificador e, em seguida, o parâmetro.
+- **Parâmetros nomeados:** algumas páginas possuem parâmetros secundários opcionais (ex.: título e ordenação em PLPs). Acrescente `?` após o identificador ou parâmetro principal e informe `nome=valor`. Vários parâmetros nomeados são separados por `&`.
+
+### Exemplos
+
+- **Navegação para wishlist:** `wishlist`
+- **Navegação para PDP do produto 12345:** `pdp/12345`
+- **Navegação para PLP da nova coleção:** `plp/productclusternames/nova-colecao`
+- **Navegação para PLP da nova coleção com título:** `plp/productclusternames/nova-colecao?titulo=Nova Coleção`
+- **Navegação para PLP da nova coleção com título e ordenação:** `plp/productclusternames/nova-colecao?titulo=Nova Coleção&ordenacao=orderByPriceDESC`
+
+<Details summary="Filtros / Ordenação">
+
+:::warning
+Para que o app reflita a **ordenação de produtos feita nas collections da VTEX** (ferramenta de VM do time web), informe o **id da coleção** e **não passe nenhum parâmetro** (filtro, ordenação, etc.).
+
+- **Correto:** `plp/productclusterids/123`
+- **Errado:** `plp/productClusterIds/123?ordenacao=orderByPriceDESC`
+- **Errado:** `plp/productclusternames/novidades`
+:::
+
+<Details summary="Por preço">
+
+É possível filtrar por preço adicionando `/preco/ValorInicial:ValorFinal`.
+
+Exemplos:
+
+- `marca/maria-filo/preco/0:200` — marca Maria Filó, preço de R$ 0 a R$ 200
+- `plp/productclusternames/novidades-app/preco/0:100` — cluster `novidades-app`, preço de R$ 0 a R$ 100
+
+</Details>
+
+<Details summary="Por tamanho">
+
+É possível filtrar por tamanho adicionando `/tamanho/tamanho`.
+
+Exemplos:
+
+- `plp/productclusterids/1253/tamanho/pp` — cluster por id, filtrado por tamanho
+- Valores aceitos: `pp`, `p`, `m`, `g`, `gg`
+- Mais de um tamanho: separar por `/`, ex.: `tamanho/p/m`
+- Com ordenação: `plp/productclusterids/1350/tamanho/p?ordenacao=OrderByReleaseDateDESC`
+
+</Details>
+
+<Details summary="Ordenação">
+
+Documentação VTEX: [como funciona o campo score](https://help.vtex.com/pt/tutorial/como-funciona-o-campo-score--1BUZC0mBYEEIUgeQYAKcae).
+
+**Ordenações suportadas:**
+
+- `orderByReleaseDateDESC`
+- `orderByTopSaleDESC`
+- `orderByPriceDESC`
+- `orderByPriceASC`
+- `orderByBestDiscountDESC`
+- `orderByNameASC`
+- `orderByScoreDESC`
+
+A ordenação por score não é suportada pela VTEX. Prefira navegação por **id** (não por collection/cluster name): ao buscar por id, o default costuma trazer a ordenação manual.
+
+Exemplo: `plp/productclusterids/1998`
+
+**Exemplos de aplicação:**
+
+- `plp/productclusterids/2040?titulo=Os mais vendidos&ordenacao=orderByTopSaleDESC`
+- `plp/productclusterids/1998?ordenacao=orderByPriceDESC`
+
+</Details>
+
+</Details>
+
+</Details>
+
+<Details summary="Páginas suportadas">
+
+<Details summary="Mochila">
+
+Redireciona o usuário para a mochila. Se a mochila estiver na barra inferior, seleciona o item correspondente; caso contrário, abre a página da mochila.
+
+- **Identificador:** `mochila`
+- **Parâmetro principal:** não possui
+- **Parâmetros nomeados:** não possui
+- **Exemplo:** `mochila`
+
+</Details>
+
+<Details summary="Wishlist">
+
+Redireciona o usuário para a wishlist. Se estiver na barra inferior, seleciona o item; caso contrário, abre a página.
+
+- **Identificador:** `wishlist`
+- **Parâmetro principal:** não possui
+- **Parâmetros nomeados:** não possui
+- **Exemplo:** `wishlist`
+
+</Details>
+
+<Details summary="Menu">
+
+Redireciona o usuário para a página de explorar/menu.
+
+- **Identificador:** `menu`
+- **Parâmetro principal:** `/nome` da Tab cadastrada na Collection de menu
+- **Parâmetros nomeados:** não possui
+- **Exemplo:** `menu/produtos`
+
+Observação: se a tab informada não existir, abre a primeira tab.
+
+**Exemplo de cadastro no Strapi**
+
+![Cadastro de menu no Strapi](/img/strapi/navegacao-dinamica/navegacao-dinamica-02-62f56e7214.webp)
+
+</Details>
+
+<Details summary="Search">
+
+Redireciona o usuário para a tela de busca.
+
+- **Identificador:** `search`
+- **Exemplo:** `search`
+
+</Details>
+
+<Details summary="PLP">
+
+Redireciona o usuário para uma PLP.
+
+- **Identificador:** `plp`
+- **Parâmetro principal** (formatos):
+  - `/productclusternames/\{nome-do-cluster\}`
+  - `/productclusterids/\{id-do-cluster\}`
+  - `/departamento/\{nome-da-coleção\}/categoria/\{nome-categoria\}/…`
+  - `\{busca\}`
+- **Parâmetros nomeados:**
+  - `titulo`
+  - `ordenacao` (`orderByReleaseDateDESC`, `orderByTopSaleDESC`, `orderByPriceDESC`, `orderByPriceASC`, `orderByBestDiscountDESC`)
+  - `filtro-de-cores`
+  - `filtro-de-tamanhos`
+  - `filtro-de-categorias`
+  - `filtro-de-preco`
+
+**Exemplos**
+
+- `plp/productclusternames/novidades-app`
+- `plp/productclusterids/1234`
+- `plp/departamento/new-collection`
+- `plp/departamento/new-collection/categoria/vestidos`
+- `plp/productclusternames/golden-sale23?titulo=Golden Sale 2023`
+- `plp/productclusterids/432?ordenacao=orderByPriceDESC`
+- `plp/departamento/loja?titulo=Loja&ordenacao=orderByTopSaleDESC`
+- `plp/departamento/loja?titulo=Loja&ordenacao=orderByTopSaleDESC&filtro-de-cores=azul&filtro-de-tamanhos=m&filtro-de-categorias=camisetas&filtro-de-preco=100-200`
+
+</Details>
+
+<Details summary="PDP">
+
+Redireciona o usuário para a PDP.
+
+- **Identificador:** `pdp`
+- **Parâmetro principal:** ID ou referência do produto
+- **Parâmetros nomeados:** não possui
+- **Exemplos:** `pdp/1234`, `pdp/12.34567-89012`
+
+</Details>
+
+<Details summary="Webview">
+
+Redireciona o usuário para uma Webview.
+
+- **Identificador:** `webview`
+- **Parâmetro principal:** URL a ser mostrada
+- **Exemplo:** `webview/https://www.hering.com.br`
+
+</Details>
+
+<Details summary="Link externo">
+
+Abre um navegador externo.
+
+- **Identificador:** `external-link`
+- **Parâmetro principal:** URL
+- **Exemplo:** `external-link/https://www.animale.com.br`
+
+</Details>
+
+<Details summary="LP customizada (Animale)">
+
+- **Identificador:** `lp`
+- **Parâmetro principal:** ID da LP
+- **Exemplo:** `lp/insider`
+
+</Details>
+
+<Details summary="Ocasião (Animale)">
+
+Redireciona para a tela de ocasião específica.
+
+- **Identificador:** `ocasiao`
+- **Parâmetro principal:** ID da ocasião
+- **Exemplo:** `ocasias/A.2GO`
+
+</Details>
+
+<Details summary="Perfil">
+
+Redireciona para o perfil (barra inferior ou página).
+
+- **Identificador:** `perfil`
+- **Parâmetro principal:** não possui (exceto tabs NV)
+- **Exemplos:** `perfil`
+- **Controle de tabs (NV):**
+  - `perfil/lojas`
+  - `perfil/pedidos`
+  - `perfil/configuracoes`
+
+</Details>
+
+<Details summary="Pedidos">
+
+Listagem de pedidos se logado; se deslogado, tab de perfil.
+
+- **Identificador:** `pedidos`
+
+</Details>
+
+<Details summary="Dados pessoais">
+
+Edição de dados pessoais se logado; se deslogado, tab de perfil.
+
+- **Identificador:** `dados-pessoais`
+
+</Details>
+
+<Details summary="Combos (Hering)">
+
+Tela de combos preenchida via CMS (apenas Hering). Use `/combos`.
+
+![Exemplo combos](/img/strapi/navegacao-dinamica/navegacao-dinamica-03-82082fa89c.webp)
+
+</Details>
+
+<Details summary="Turbo (Hering)">
+
+Tela de endereço do Turbo (apenas Hering). Use `/turbo`.
+
+</Details>
+
+<Details summary="Página Compre o look (Hering)">
+
+Collection Compre o look (apenas Hering). Use `/compre-o-look`.
+
+</Details>
+
+<Details summary="Transmissão Live (MF)">
+
+Collection de transmissão live (apenas Maria Filó). Use `/live`.
+
+</Details>
+
+<Details summary="Carteira/Cashback (Nova arquitetura — CB/Farm)">
+
+Farm/FarmEtc e Cris Barros. Abre a tela de carteira na aba de perfil.
+
+- **Identificador:** `carteira-cashback`
+
+</Details>
+
+<Details summary="Central de notificações (Nova arquitetura/Farm)">
+
+Farm/FarmEtc. Abre a central de notificações na aba de perfil.
+
+- **Identificador:** `central-notificacoes`
+
+</Details>
+
+<Details summary="Menu_ETC (Nova arquitetura/Farm)">
+
+Menu do ETC.
+
+- **Identificador:** `menu_etc`
+- **Parâmetro principal:** `/nome` da Tab
+- **Exemplo:** `menu_etc/produtos`
+
+</Details>
+
+<Details summary="PLP_ETC (Nova arquitetura/Farm)">
+
+PLP do ETC — mesmos formatos da PLP, com identificador `plp_etc`.
+
+**Exemplos**
+
+- `plp_etc/productclusternames/novidades-app`
+- `plp_etc/productclusterids/794`
+- `plp_etc/departamento/new-collection/categoria/vestidos`
+- `plp_etc/productclusterids/432?ordenacao=orderByPriceDESC`
+
+</Details>
+
+<Details summary="PDP_ETC (Nova arquitetura/Farm)">
+
+- **Identificador:** `pdp_etc`
+- **Exemplo:** `pdp_etc/62563`
+
+</Details>
+
+<Details summary="Nossas lojas (Nova arquitetura/Farm)">
+
+- **Identificador:** `our_stores`
+- **Exemplo:** `our_stores`
+
+</Details>
+
+<Details summary="Amigo oculto (Nova arquitetura/Farm)">
+
+- **Exemplo:** `amigo-oculto`
+
+</Details>
+
+<Details summary="Landing Page (Farm e Animale)">
+
+- **Identificador:** `landing-page`
+- **Parâmetro principal:** nome da coleção no Strapi
+- **Formato:** `landing-page/\{Nome da coleção\}`
+- **Exemplo:** `landing-page/Sustentabilidade`
+
+</Details>
+
+<Details summary="Faça você (Reserva)">
+
+- **Identificador:** `faca-vc`
+- **Parâmetro principal:** categoria (`masculino`, `feminino`, `infantil`, `acessorios`)
+- **Exemplo:** `faca-vc/acessorios`
+
+</Details>
+
+<Details summary="Lojas (Nova arquitetura/NV)">
+
+- **Exemplo:** `perfil/lojas`
+
+</Details>
+
+<Details summary="Pedidos (Nova arquitetura/NV)">
+
+- **Exemplo:** `perfil/pedidos`
+
+</Details>
+
+</Details>
+
+Veja também o componente [Deeplink](./componentes/deeplink.mdx).
