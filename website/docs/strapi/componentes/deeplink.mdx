@@ -1,5 +1,5 @@
 ---
-sidebar_position: 29
+sidebar_position: 62
 title: "Deeplink"
 ---
 
@@ -15,27 +15,50 @@ import Chip, {Chips} from '@site/src/components/Chip';
   <Chip tone="teal">CMS</Chip>
 </Chips>
 
+## Input
 
-## Preview
+Cada componente de deeplink cadastrado corresponde a um deeplink do app.
 
-![Deeplink](/img/strapi/deeplink/preview.webp)
+![Deeplink — figura 1](/img/strapi/deeplink/img-01.webp)
 
-## Inputs
+<b>URL</b>: Neste campo deve ser preenchido com o deeplink completo, como será compartilhado. É este link que será comparado com o que o usuário clicou. Se eles forem iguais, executará o redirecionamento definido na navegação dinamica.
 
-![Inputs — Deeplink](/img/strapi/deeplink/inputs.webp)
+“https://www.marca.com.br/novidades”
 
-| Campo | Descrição |
-|---|---|
-| **URL** | Neste campo deve ser preenchido com o deeplink completo, como será compartilhado. É este link que será comparado com o que o usuário clicou. Se eles forem iguais, executará o redirecionamento definido na navegação dinamica. “https://www.marca.com.br/novidades” Esse campo é altamente personalizavel depois do domínio “www.marca.com.br/”. é possivel criar a url que quiser como “www.marca.com.br/pra-v |
-| **Ordenação** | Ordenação dos produtos na navegação. (Caso não definido, segue a ordenação manual da vtex). |
+Esse campo é altamente personalizavel depois do domínio “www.marca.com.br/”. é possivel criar a url que quiser como “www.marca.com.br/pra-voce-maria” ou ““www.marca.com.br/o-melhor-vestido”.
+
+<b>Navegação dinâmica:</b> Este campo é o que define como o usuário será redirecionado ao abrir determinado deeplink. Deve ser preenchido conforme [documentação própria](../navegacao-dinamica.mdx).
+
+<b>Título:</b> Título que aparecerá na tela de listagem de produtos, quando redirecionado.
+
+<b>Ordenação</b>: Ordenação dos produtos na navegação. (Caso não definido, segue a ordenação manual da vtex).
 
 ## Exemplos
 
-![Exemplo 1 — Deeplink](/img/strapi/deeplink/exemplo-1.webp)
+### Deeplink para menu
 
-![Exemplo 2 — Deeplink](/img/strapi/deeplink/exemplo-2.webp)
+Conforme navegação dinamica, é possível redirecionar o usuário para uma tab especifica do menu, basta apenas adicionar ‘/nome da tab’, após “/menu”.<br />Caso o nome da tab fosse “mega promo”, o campo de navegação dinâmica deveria ser preenchido como “/menu/mega promo”.
 
-![Exemplo 3 — Deeplink](/img/strapi/deeplink/exemplo-3.webp)
+![Deeplink — figura 2](/img/strapi/deeplink/img-02.webp)
 
-![Exemplo 4 — Deeplink](/img/strapi/deeplink/exemplo-4.webp)
+### Deeplink da sacola/mochila
 
+![Deeplink — figura 3](/img/strapi/deeplink/img-03.webp)
+
+### Deeplink de wishlist
+
+![Deeplink — figura 4](/img/strapi/deeplink/img-04.webp)
+
+### Deeplink de perfil/conta
+
+![Deeplink — figura 5](/img/strapi/deeplink/img-05.webp)
+
+### Deeplink de PLP (pagina de listagem de produtos/PDC)
+
+![Deeplink — figura 6](/img/strapi/deeplink/img-06.webp)
+
+### Deeplink de produtos
+
+Os links gerados nas PDPs de produto, no botão ‘compartilhar’ também são interpretados como deeplinks. <br />Também podem ser cadastrados deeplinks de produtos específicos, informando seu ID.<br />
+
+![Deeplink — figura 7](/img/strapi/deeplink/img-07.webp)

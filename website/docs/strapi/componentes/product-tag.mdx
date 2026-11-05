@@ -1,5 +1,5 @@
 ---
-sidebar_position: 58
+sidebar_position: 35
 title: "Product Tag"
 ---
 
@@ -17,22 +17,28 @@ Componente Tag de produto mostrada na PDC.
   <Chip tone="teal">CMS</Chip>
 </Chips>
 
-
 ## Preview
 
-![Product Tag](/img/strapi/product-tag/preview.webp)
+![Product Tag — figura 1](/img/strapi/product-tag/img-01.webp)
 
 ## Inputs
 
-![Inputs — Product Tag](/img/strapi/product-tag/inputs.webp)
+![Product Tag — figura 2](/img/strapi/product-tag/img-02.webp)
 
-| Campo | Descrição |
-|---|---|
-| **do produto** | na qual vai aparecer a TAG. Campo obrigatório.Caso seja productClusterID, preencha apenas com o ID da coleção.Caso seja productClusterName, preencha apenas com o nome da coleção |
+<b>orderBy:</b> Ordenação dos produtos na PDC quando usuário clicar na tag a partir da PDP .Campo opcional.
 
-## Exemplos
+<b>title:</b> Texto da Tag. Campo obrigatório.
 
-![Exemplo 1 — Product Tag](/img/strapi/product-tag/exemplo-1.webp)
+<b>background\_color:</b> Cor do fundo da Tag. Campo obrigatório.
 
-![Exemplo 2 — Product Tag](/img/strapi/product-tag/exemplo-2.webp)
+<b>text\_color:</b> Cor do texto da Tag. Campo obrigatório.
 
+<b>border\_color:</b> Cor da borda da Tag. Campo opcional.
+
+<b>filter\_category\_or\_cluster:</b> deve ser inserido o caminho para o Intelligent Search da Vtex. Utilizado para identificar a coleção ou categoria <b>do produto</b> na qual vai aparecer a TAG.  Campo obrigatório.<br />Caso seja productClusterID, preencha apenas com o ID da coleção.<br />Caso seja productClusterName, preencha apenas com o nome da coleção
+
+## Exemplo
+
+![Product Tag — figura 3](/img/strapi/product-tag/img-03.webp)
+
+![Product Tag — figura 4](/img/strapi/product-tag/img-04.webp)

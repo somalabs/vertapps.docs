@@ -1,0 +1,399 @@
+---
+sidebar_position: 2
+title: "Componentes do Fidelidade (NV)"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+import DocTitle from '@site/src/components/DocTitle';
+
+<Kicker>CMS · Componente</Kicker>
+
+<DocTitle brand="NV">Componentes do Fidelidade</DocTitle>
+
+<Chips>
+  <Chip tone="coral">Componentes do Fidelidade</Chip>
+  <Chip tone="amber">NV</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+## Preenchimento dos campos em HTML
+
+### Para fazer o conteúdo em HTML para preencher campos de alta estilização (que tem título, listagem, italicos, no mesmo campo do strapi)
+
+1. Tire um print do figma, ou da formatação que você mesmo fez no word ou outro programa.
+
+2. Coloque esse print no chatgpt e diga “por favor, escreva o conteúdo desta imagem em HTML, considere a cor de texto padrão esta #FFFFFF (sua cor), e a font family em “Fonte da marca”.
+
+3. Aplique o valor gerado por ele no campo do strapi (que consta na documentação ou descrição do componente e que este deve ser preenchido em HTML.
+
+### Exemplo:
+
+#### Texto em HTML
+
+```javascript
+<section lang="pt-BR">
+  <h3 style="color:#474745;">Como realizar o check-in</h3>
+
+  <ol style="color:#474745;">
+    <li>
+      <strong style="color:#474745;">Ative o acesso à câmera:</strong>
+      ao iniciar o check-in pela primeira vez, o app pedirá autorização para usar a câmera do seu celular. Basta permitir o acesso para continuar.
+    </li>
+    <li>
+      <strong style="color:#474745;">Aponte para o QR Code:</strong>
+      com a câmera habilitada, direcione o celular para o QR Code.
+    </li>
+    <li>
+      <strong style="color:#474745;">Pronto, check-in validado!</strong>
+      Assim que o QR Code for reconhecido, validaremos a sua pontuação.
+    </li>
+  </ol>
+
+  <p style="color:#474745;">
+    <em style="color:#474745;">Lembrando que a pontuação pode demorar até 24 horas para cair efetivamente no seu cadastro.</em>
+  </p>
+</section>
+```
+
+#### Exibição no app
+
+![Componentes do Fidelidade (NV) — figura 1](/img/strapi/componentes-nv/fidelidade-nv/img-01.webp)
+
+## User Info - OBRIGATORIO NA TELA DO USUARIO COM CONTA COMO PRIMEIRO ITEM
+
+Componente que é a seção de pontos do usuário no fidelidade. Traz as informações de pontos do usuário, seu nível, quantos pontos para o próximo nível e o nome do próximo nível. Componente não alterável, apenas controlável sua exibição. Não deve ser exibido na tela do fidelidade para usuários que não tem conta.
+
+![Componentes do Fidelidade (NV) — figura 2](/img/strapi/componentes-nv/fidelidade-nv/img-02.webp)
+
+### Inputs
+
+show\_user\_club\_info: Caso true, exibe o componente de seção de informações do usuário, no fidelidade.
+
+levelDescription: Precisa ser implementado o level description para trazer as informações no header do usuario corretamente.
+
+check-in: Componente que, quando cadastrado, exibe o componente de checkin dentro do componente user\_info. Verificar documentação do componente.
+
+### Páginas
+
+Fidelidade - usuários com conta
+
+### Exemplo
+
+![Componentes do Fidelidade (NV) — figura 3](/img/strapi/componentes-nv/fidelidade-nv/img-03.webp)
+
+## Check in
+
+O cadastro deste componente monta tanto um componente de check in dentro do user\_info, como preenche o conteúdo da tela de ‘regras da campanha’.
+
+### Inputs
+
+<b>is\_active</b>: só exibe o componente de check-in quando o valor for true.
+
+<b>reward</b>: Esse valor é exibido na tela de regras da campanha. POREM, ELE NÃO CONTROLA O TOTAL DE PONTOS ADICIONADOS. A definição de pontos por checkin é no barramento. Atualmente (09/25), é 300.
+
+<b>limit\_date</b>: Data limite da campanha de check-in. O componente de check-in só irá aparecer caso a data atual seja anterior a data limite. Valor é exibido na tela de regras da campanha.
+
+<b>title</b>: Título do componente e da página de regras do check in.
+
+<b>subtitle</b>: Subtítulo do componente e da página de regras do check in.
+
+<b>tag\_text</b>: Texto da tag que aparece no componente de check in.
+
+<b>description</b>: Este campo deve ser preenchido em HTML, [ver documentação ](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718#262690e9a7e280c2bb84fdb654cc3949)de instrução.
+
+### Exemplo
+
+#### Cadastro no strapi
+
+![Componentes do Fidelidade (NV) — figura 4](/img/strapi/componentes-nv/fidelidade-nv/img-04.webp)
+
+#### No app
+
+![Componentes do Fidelidade (NV) — figura 5](/img/strapi/componentes-nv/fidelidade-nv/img-05.webp)
+
+Tela de regras da campanha
+
+![Componentes do Fidelidade (NV) — figura 6](/img/strapi/componentes-nv/fidelidade-nv/img-06.webp)
+
+### Página
+
+Fidelidade (usuário com conta)
+
+## Invite
+
+Componente que convida o usuário a entrar no clube, redireciona usuário para login/cadastro.
+
+![Componentes do Fidelidade (NV) — figura 7](/img/strapi/componentes-nv/fidelidade-nv/img-07.webp)
+
+### Inputs
+
+<b>title</b>: Título do convite para entrar no clube (e/ou oferecer cupom de desconto). (Obrigatório)
+
+<b>button\_text</b>: texto escrito no botão que ao ser clicado redireciona para novidades. Caso não seja preenchido o botão não aparecerá.<br /><b>coupon:</b> nome do cupom que será aplicado ao clicar no botão de aplicar cupom.<br /><b>coupon\_button\_text:</b> texto do botão de aplicar cupom.
+
+### Página
+
+Fidelidade - usuário sem conta no fidelidade
+
+### Exemplo
+
+![Componentes do Fidelidade (NV) — figura 8](/img/strapi/componentes-nv/fidelidade-nv/img-08.webp)
+
+![Componentes do Fidelidade (NV) — figura 9](/img/strapi/componentes-nv/fidelidade-nv/img-09.webp)
+
+Caso não seja preenchido o cupom ou texto do botão de aplicar cupom, ele não irá aparecer.<br />
+
+![Componentes do Fidelidade (NV) — figura 10](/img/strapi/componentes-nv/fidelidade-nv/img-10.webp)
+
+## Level Description
+
+Componente que contém título e descrição, e apresenta uma lista dos níveis do fidelidade, ao serem clicados, expandem uma listagem dos benefícios de cada nível.<br />Pode identificar o nível do usuário, baseado em seus pontos.<br />
+
+![Componentes do Fidelidade (NV) — figura 11](/img/strapi/componentes-nv/fidelidade-nv/img-11.webp)
+
+![Componentes do Fidelidade (NV) — figura 12](/img/strapi/componentes-nv/fidelidade-nv/img-12.webp)
+
+### Inputs
+
+<b>levels\_title</b>: Título da área. (Obrigatório)<br />levels\_description: Descrição da área. (Obrigatório)
+
+<b>show\_user\_level</b>: Caso habilitada “Exibir tag”, ao lado dos pontos do nível irá aparecer um tag escrita “seu nível”. Caso desabilitada, a tag não aparece (deve ficar desabilitada no documento da página do fidelidade de usuário deslogado).
+
+<b>center\_content</b>: “Título da área de descrição dos níveis” e “Descrição da area de níveis” podem ficar alinhados a esquerda ou ao centro, conforme definido.
+
+<b>Cor de fundo:</b> Cor ao fundo de todo o componente. (Obrigatório)
+
+<b>level\_name</b>: Nome dado aquele nível. (Obrigatório)
+
+<b>level\_points\_range</b>: Número de pontos em que o nível se inicia, e número de pontos em que ele termina. Deve conter “pts” ou “pontos”, ou nome atribuído ao ponto. (Obrigatório)
+
+<b>level\_list\_benefits:</b> Lista de benefícios do nível correspondente. Campo que deve ser preenchido em HTML. Cada linha do benefício deve estar envolta por uma tag de parágrafo &lt;p>…&lt;/p>, deve conter seu marcador inicial como “ - ”ou “<b>•</b>”. (Obrigatório)
+
+[Ver documentação de preenchimento HTML.](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718#262690e9a7e280c2bb84fdb654cc3949)
+
+<b>level\_list\_experiences:</b> Lista de experiências do nível correspondente. Campo que deve ser preenchido em HTML. Cada linha do benefício deve estar envolta por uma tag de parágrafo &lt;p>…&lt;/p>, deve conter seu marcador inicial como “ - ”ou “<b>•</b>”. (Obrigatório)
+
+### Páginas
+
+Fidelidade usuário com conta no fidelidade
+
+Fidelidade usuário sem conta no fidelidade
+
+### Exemplo
+
+![Componentes do Fidelidade (NV) — figura 13](/img/strapi/componentes-nv/fidelidade-nv/img-13.webp)
+
+![Componentes do Fidelidade (NV) — figura 14](/img/strapi/componentes-nv/fidelidade-nv/img-14.webp)
+
+![Componentes do Fidelidade (NV) — figura 15](/img/strapi/componentes-nv/fidelidade-nv/img-15.webp)
+
+## Benefits
+
+Componente que exibe uma lista horizontal de benefícios do Clube.
+
+![Componentes do Fidelidade (NV) — figura 16](/img/strapi/componentes-nv/fidelidade-nv/img-16.webp)
+
+### Inputs
+
+<b>Title:</b> Texto pequeno do título do benefício. (Obrigatório)
+
+<b>description:</b> Texto pequeno/médio com uma breve descrição de um benefício. (Obrigatório)<br />Cada título precisa de uma descrição.
+
+### Páginas
+
+Fidelidade usuário com conta no fidelidade<br />Fidelidade usuário sem conta no fidelidade
+
+### Exemplo
+
+![Componentes do Fidelidade (NV) — figura 17](/img/strapi/componentes-nv/fidelidade-nv/img-17.webp)
+
+![Componentes do Fidelidade (NV) — figura 18](/img/strapi/componentes-nv/fidelidade-nv/img-18.webp)
+
+## Rate Club
+
+Componente que parece um botão, possui um texto de chamada e ao ser clicado redireciona o usuário.<br />
+
+![Componentes do Fidelidade (NV) — figura 19](/img/strapi/componentes-nv/fidelidade-nv/img-19.webp)
+
+### Inputs
+
+<b>Title</b>: Conteúdo deve ser cadastrado em HTML. <br />Cada trecho de texto deve estar envolto de uma tag \conteudo&lt;br />Para adicionar cor, coloque dentro da tag \ <br />Sendo #000000 o código da cor. (Obrigatório)
+
+<b>navigate\_to:</b> Campo deve ser preenchido conforme navegação dinâmica.
+
+Atenção para o padrão de roteamento, para links externos deve-se usar o “external-link/” antes da url. (Obrigatório)
+
+### Páginas
+
+Fidelidade  - usuário com conta no fidelidade
+
+### Exemplo
+
+![Componentes do Fidelidade (NV) — figura 20](/img/strapi/componentes-nv/fidelidade-nv/img-20.webp)
+
+![Componentes do Fidelidade (NV) — figura 21](/img/strapi/componentes-nv/fidelidade-nv/img-21.webp)
+
+## FAQ
+
+Componente para exibição do FAQ do Clube.
+
+![Componentes do Fidelidade (NV) — figura 22](/img/strapi/componentes-nv/fidelidade-nv/img-22.webp)
+
+### Inputs
+
+<b>title</b>: Título da seção do FAQ. (Obrigatório)
+
+<b>background\_color:</b> Cor de fundo, por trás do FAQ (background color). (Obrigatório)
+
+<b>faq\_question</b>: Item de pergunta do FAQ. (Obrigatório toda pergunta deve conter uma resposta).
+
+<b>faq\_answer</b>: Item de resposta do FAQ. (Obrigatório, toda resposta deve conter uma pergunta).
+
+### Páginas
+
+Fidelidade - usuário com conta no fidelidade<br />Fidelidade - sem conta no fidelidade
+
+### Exemplo
+
+![Componentes do Fidelidade (NV) — figura 23](/img/strapi/componentes-nv/fidelidade-nv/img-23.webp)
+
+![Componentes do Fidelidade (NV) — figura 24](/img/strapi/componentes-nv/fidelidade-nv/img-24.webp)
+
+## Redirect Button
+
+Botão que redireciona o usuário internamente, para categorias e coleções.
+
+![Componentes do Fidelidade (NV) — figura 25](/img/strapi/componentes-nv/fidelidade-nv/img-25.webp)
+
+![Componentes do Fidelidade (NV) — figura 26](/img/strapi/componentes-nv/fidelidade-nv/img-26.webp)
+
+### Inputs
+
+<b>Título de chamada para redirecionamento</b>: Texto curto que pode ser adaptado conforme o redirecionamento. (Obrigatório)
+
+<b>navigate\_to:</b> Campo deve ser preenchido conforme navegação dinâmica.
+
+Atenção para o padrão de roteamento, para paginas de grid de produtos deve-se usar o “plp/” antes do filtro de categoria/coleções. (Obrigatório)
+
+### Páginas
+
+Fidelidade  - usuário com conta no fidelidade
+
+Fidelidade - usuário sem conta no fidelidade
+
+### Exemplo
+
+![Componentes do Fidelidade (NV) — figura 27](/img/strapi/componentes-nv/fidelidade-nv/img-27.webp)
+
+![Componentes do Fidelidade (NV) — figura 28](/img/strapi/componentes-nv/fidelidade-nv/img-28.webp)
+
+![Componentes do Fidelidade (NV) — figura 29](/img/strapi/componentes-nv/fidelidade-nv/img-29.webp)
+
+![Componentes do Fidelidade (NV) — figura 30](/img/strapi/componentes-nv/fidelidade-nv/img-30.webp)
+
+## Club example
+
+Componente que mostra um exemplo pro usuário, ao comprar produtos ganhar pontos.
+
+![Componentes do Fidelidade (NV) — figura 31](/img/strapi/componentes-nv/fidelidade-nv/img-31.webp)
+
+### Páginas
+
+Fidelidade - usuário sem conta no fidelidade
+
+### Inputs
+
+<b>title:</b> Texto de exemplo de compra e ganho de pontos: Frase que aparecerá dentro do bom, abaixo da imagem. (Obrigatório)
+
+<b>purchase\_image</b>: Imagem do produto comprado: Deve ter fundo transparente, ser apenas a peça de roupa. (Obrigatório)
+
+<b>background\_image</b>: Imagem que irá ficar no fundo do componente. (Obrigatório)
+
+### Exemplo
+
+![Componentes do Fidelidade (NV) — figura 32](/img/strapi/componentes-nv/fidelidade-nv/img-32.webp)
+
+![Componentes do Fidelidade (NV) — figura 33](/img/strapi/componentes-nv/fidelidade-nv/img-33.webp)
+
+## How work
+
+Componente que em etapas explica como funciona o fidelidade.
+
+![Componentes do Fidelidade (NV) — figura 34](/img/strapi/componentes-nv/fidelidade-nv/img-34.webp)
+
+### Inputs
+
+<b>title</b>: Título do componente. (Obrigatório)
+
+<b>step\_number</b>: Número do passo, deve ser cadastro em ordem. (Obrigatório)
+
+<b>step\_title</b>: Título do passo correspondente.  (Obrigatório)
+
+<b>step\_description:</b> Texto descrevendo e tapa. (Obrigatório)
+
+<b>redirect\_to\_login:</b>  Se ativado “Redirecionar para o login”, transforma descrição em um hyperlink, e ao ser cuidada, redireciona o usuário pra cadastro/login
+
+### Página
+
+Fidelidade - usuário sem conta no fidelidade
+
+### Exemplo
+
+![Componentes do Fidelidade (NV) — figura 35](/img/strapi/componentes-nv/fidelidade-nv/img-35.webp)
+
+![Componentes do Fidelidade (NV) — figura 36](/img/strapi/componentes-nv/fidelidade-nv/img-36.webp)
+
+## Join Club
+
+Componte que é uma imagem que ao ser clicada redireciona pro login
+
+![Componentes do Fidelidade (NV) — figura 37](/img/strapi/componentes-nv/fidelidade-nv/img-37.webp)
+
+### Inputs
+
+background\_image: a imagem mesmo deve conter o texto escrito nela, e um botão de chamada para fazer cadastro no app/login. Ao clicar na imagem, direciona o usuário para cadastro/login. (Obrigatório)
+
+### Páginas
+
+Fidelidade - usuário sem conta no fidelidade
+
+### Exemplo
+
+![Componentes do Fidelidade (NV) — figura 38](/img/strapi/componentes-nv/fidelidade-nv/img-38.webp)
+
+## Points for register
+
+Esse componente terá dois comportamentos diferentes:<br />Pra quem ja tem o cadastro completo mas nao ganhou pontos por isso.
+
+Quando o usuário clica em "button\_text\_completed\_register" vai executar a adição dos pontos por cadastro. Se der certo, aparece um snackbar de sucesso, e o componente some. Se der errado, sobe ums snackbar de "Algo deu errado, tente novamente".
+
+Para usuários que não tem o cadastro completo no app. Quando o usuário clicar no botão “button\_text\_complete\_register” ele será redirecionado para a tela de Dados Pessoais. Se ele completar todos os dados os pontos por cadastro completo serão adicionados.
+
+![Componentes do Fidelidade (NV) — figura 39](/img/strapi/componentes-nv/fidelidade-nv/img-39.webp)
+
+### Inputs
+
+- Será exibido para usuários que ainda não tem o cadastro completo:
+
+<b>  title\_complete\_register:</b> Título do componente.
+
+<b>  button\_text\_complete\_register:</b> Texto do botão que redireciona pra tela de Dados Pessoais, para que o cadastro seja preenchido.
+
+- Será exibido para usuário com cadastro completo e que não ganharam pontos por isso:
+
+<b>  title\_completed\_register:</b> Título do componente.
+
+<b>  button\_text\_complete\_register:</b> Texto do botão que adiciona pontos por cadastro completo.
+
+### Páginas
+
+Fidelidade - usuário com conta no fidelidade
+
+### Exemplo
+
+![Componentes do Fidelidade (NV) — figura 40](/img/strapi/componentes-nv/fidelidade-nv/img-40.webp)
+
+![Componentes do Fidelidade (NV) — figura 41](/img/strapi/componentes-nv/fidelidade-nv/img-41.webp)
+
+![Componentes do Fidelidade (NV) — figura 42](/img/strapi/componentes-nv/fidelidade-nv/img-42.webp)

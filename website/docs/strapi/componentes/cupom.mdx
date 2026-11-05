@@ -1,0 +1,64 @@
+---
+sidebar_position: 17
+title: "Cupom"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Componente</Kicker>
+
+# Cupom
+
+Disponível apenas para a Animale.
+
+<Chips>
+  <Chip tone="coral">Cupom</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+O cupom só ira aparecer quando não houve relógio ativo para a respectiva página.
+
+Quando não houver “assignment” o cupom irá aparecer em todas as telas, conforme definido em pages.
+
+## Preview
+
+![Cupom — figura 1](/img/strapi/cupom/img-01.webp)
+
+## Inputs
+
+### cupom
+
+<b>is\_active:</b> deverá ser escolhida a opção de ativar ou desativar o reloginho. O reloginho só será exibido caso a opção “true” esteja selecionada. Campo obrigatório. Default “false”.
+
+<b>title</b>: deverá ser inserido o texto que será exibido como titulo, no topo.
+
+<b>subtitle</b>: deverá ser inserido o texto que será exibido ao lado do reloginho.
+
+<b>coupon:</b> deverá ser inserido o cupom que será aplicado na sacola do usuário.
+
+:::tip
+
+Caso o campo “cupom” não seja preenchido, o botão não irá aparecer.<br />Caso tenha um cupom, e esteja aplicado, o texto do botão muda automaticamente.
+
+:::
+
+<b>text\_color:</b> deverá ser inserida a cor dos textos. Campo obrigatório.
+
+<b>background\_color:</b> deverá ser inserida a cor de fundo. Campo obrigatório.
+
+### pages
+
+<b>page:</b> deverá ser escolhida a opção de página dentre as disponíveis para a marca em que o reloginho deverá ser mostrado. Campo obrigatório.
+
+<b>assignment</b>: deverá ser especificado o filtro de página ou coleção em que o reloginho deverá ser mostrado, em caso de mais de uma, estas deverão ser separadas por vírgula ( , ). Se não especificado, aparecerá em todas as páginas correspondentes àquela categoria.
+
+## Páginas
+
+Pode ser exibido nas páginas: Home, PDC, PDP, Menu, Sacola, Whislist, LP.
+
+## Exemplo
+
+![Cupom — figura 2](/img/strapi/cupom/img-02.webp)
+
+![Cupom — figura 3](/img/strapi/cupom/img-03.webp)

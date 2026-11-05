@@ -28,7 +28,7 @@ Considerações:
 - O app **prioriza a qualidade das imagens**, garantindo a maior resolução possível.
 - **Proporções sempre preservadas** → nada deve distorcer.
 - **Preenchimento total do espaço** → até o limite da resolução original da imagem.
-- **IMPORTANTE: **Se a imagem for **menor do que o necessário** para o dispositivo mais denso, ela ficará pixelada.
+- **IMPORTANTE:** Se a imagem for **menor do que o necessário** para o dispositivo mais denso, ela ficará pixelada.
 - Dispositivos diferentes tem tamanhos mínimos de imagem diferentes.
 ## 🖼 Como o app lida com (algumas*) imagens 
 - **Mantém proporção (aspect ratio)**
@@ -56,18 +56,18 @@ alturaImagemPx  = alturaContainerDp × DPRmáximo
 - **alturaContainerDp** = altura do espaço no layout (pode ser fixa ou percentual).
 - **DPRmáximo** = densidade de pixels do maior dispositivo que vamos suportar (normalmente **3.0** para smartphones, **2.0** para tablets).
 ## 📚 Exemplos do calculo do tamanho da imagem 
-# Exemplo 1 — Banner de tela cheia (40% da altura)
+### Exemplo 1 — Banner de tela cheia (40% da altura)
 📱 iPhone 14 Pro Max (430dp largura, 3.0 DPR, altura física 2796px):
 - Largura: `430 × 3 = 1290px`
 - Altura: `2796 × 0.40 = 1118px`
 **✅ Tamanho mínimo:** **1290 × 1118 pixels**
-# Exemplo 2 — Duas imagens lado a lado
+### Exemplo 2 — Duas imagens lado a lado
 📱 iPhone 14 Pro Max (padding total horizontal = 48dp, altura fixa 450dp):
 - Largura container (dp): `(430 - 48) / 2 = 191dp`
 - Largura container (px): `191 × 3 = 573px`
 - Altura container (px): `450 × 3 = 1350px`
 **✅ Tamanho mínimo:** **573 × 1350 pixels**
-# Exemplo 3 — Banner ocupando 30% da tela
+### Exemplo 3 — Banner ocupando 30% da tela
 📱 iPhone 14 Pro Max:
 - Largura: `430 × 3 = 1290px`
 - Altura: `2796 × 0.30 = 838px`
@@ -101,6 +101,7 @@ Sugestões de tamanhos de imagens / AspectRatio:
 ✅ 573✕1137  /// 0,47
 
 ✅ 1562✕3383  /// 0,46
+
 ✅ 1080✕2197 ///0,49
 
 ### Exemplo
@@ -109,9 +110,9 @@ Como aparece no app: (a imagem dupla com fundo azul)
 
 ![guia-tamanho-imagens-03-587ddedcbd](/img/strapi/guia-tamanho-imagens/guia-tamanho-imagens-03-587ddedcbd.webp)
 
-**ProductCard / AspectRatio (entendendo mais)
+#### ProductCard / AspectRatio (entendendo mais)
 
- Exemplo de imagens e quanto seria cortado**
+Exemplo de imagens e quanto seria cortado:
 
 | Imagem original | Aspect ratio (w/h) | O que acontece com `BoxFit.cover` |
 | --- | --- | --- |
@@ -178,17 +179,21 @@ Cada imagem deve ter aproximadamente:
 - Se quiserem outra proporção de tela (ex: 1080×1624 em vez de 1080×1920), basta dividir a altura por 2:
 - Exemplo: **1080×812 px** cada (metade de 1624).
 
-###  **Exemplos de tamanhos de imagens usados pelas marcas em alguns componentes:**
+## Exemplos de tamanhos de imagens usados pelas marcas em alguns componentes
 
-**## Resumo dos Principais Tamanhos — Home**
-**### Animale**
+### Resumo dos principais tamanhos — Home
+
+#### Animale
+
 | Componente | Tamanho (W x H) | Qtd | Observação |
 | --- | --- | --- | --- |
 | carousel-list | 774 x 1490 | 2 | Banner principal |
 | category-banner | 774 x 1020 | 1 | Cartucho menor |
 | category-banner | 774 x 1215 | 1 | Cartucho maior |
 | my-interests-banner | 774 x 1195 | 1 | Banner meus interesses |
-**### Farm**
+
+#### Farm
+
 | Componente | Tamanho (W x H) | Qtd | Observação |
 | --- | --- | --- | --- |
 | carousel-list | 1080 x 2337 | 5 | Banner principal (hero) |
@@ -200,7 +205,9 @@ Cada imagem deve ter aproximadamente:
 | category-banner | 1080 x 284 | 1 | Banner título grid |
 | stories | 300 x 300 | 6 | Miniaturas de stories |
 | categories-mosaic | 640 x 906 | 6 | Grid mosaico de categorias |
-**### Cris Barros**
+
+#### Cris Barros
+
 | Componente | Tamanho (W x H) | Qtd | Observação |
 | --- | --- | --- | --- |
 | media-list | 1080 x 2248 | 1 | Banner principal (hero) |
@@ -208,26 +215,43 @@ Cada imagem deve ter aproximadamente:
 | category-banner | 1080 x 1830 | 1 | Banner categoria destaque |
 | category-banner | 1080 x 1633 | 1 | Banner categoria padrão |
 | show-case-banner-carrousel | 1080 x 1080 | 3 | Carrossel showcase |
-**### Maria Filo**
-| category-banner | 750✕784 | category-banner | 750✕544 | category-banner | 750✕940
-**### MEDIA KIT**
-**### Farm**
+
+#### Maria Filó
+
+| Componente | Tamanho (W x H) |
+| --- | --- |
+| category-banner | 750 x 784 |
+| category-banner | 750 x 544 |
+| category-banner | 750 x 940 |
+
+### Media Kit
+
+#### Farm
+
 | Componente | Tamanho (W x H) | Qtd | Observação |
 | --- | --- | --- | --- |
 | media-kit-banner | 1080 x 1580 | 6 | Banner principal (full width) |
 | media-kit-banner | 650 x 950 | 7 | Banner secundário (meia largura) |
 | media-kit-banner | 643 x 950 | 1 | Variação pontual (\~650 x 950) |
-**### Maria Filo**
-media-kit 750✕940, 1288✕840, 1488✕1110, 1871✕1229
-**### Login-background**
-FARM: Imagem principal: 830x1440
-Farm: Imagem secundaria: 492x492
-Farm esta com duas imagens em branco mesmo
-ANIMALE: Imagem principal: 90✕156
-ANIMALE: Imagem secundaria: 156✕156
-ANIMALE esta com duas imagens em branco mesmo
-**### PDC HEADER**
-ANIMALE: 800✕332
-**### Banner do acordion menu (coleção conteudo de menu)**
-Animale: 1080✕1190
-MF: 4096✕2372, 2048✕1186, 1548✕896, 1024✕589
+
+#### Maria Filó
+
+media-kit: 750✕940, 1288✕840, 1488✕1110, 1871✕1229
+
+### Login-background
+
+- FARM: imagem principal: 830x1440
+- Farm: imagem secundária: 492x492
+- Farm está com duas imagens em branco mesmo
+- ANIMALE: imagem principal: 90✕156
+- ANIMALE: imagem secundária: 156✕156
+- ANIMALE está com duas imagens em branco mesmo
+
+### PDC Header
+
+- ANIMALE: 800✕332
+
+### Banner do accordion menu (coleção Conteúdo do Menu)
+
+- Animale: 1080✕1190
+- MF: 4096✕2372, 2048✕1186, 1548✕896, 1024✕589

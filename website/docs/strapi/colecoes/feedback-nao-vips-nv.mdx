@@ -1,0 +1,52 @@
+---
+sidebar_position: 19
+title: "Feedback não vips (NV)"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+import DocTitle from '@site/src/components/DocTitle';
+
+<Kicker>CMS · Coleção</Kicker>
+
+<DocTitle brand="NV">Feedback não vips</DocTitle>
+
+Essa coleção será utilizada para cadastrar os feedback exibidos aos usuários não VIPs que tentarem acessar conteúdos exclusivos por meio de deeplinks.
+
+<Chips>
+  <Chip tone="coral">Feedback não vips</Chip>
+  <Chip tone="amber">NV</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+## Exemplo
+
+![Feedback não vips (NV) — figura 1](/img/strapi/colecoes/feedback-nao-vips-nv/img-01.webp)
+
+![Feedback não vips (NV) — figura 2](/img/strapi/colecoes/feedback-nao-vips-nv/img-02.webp)
+
+## Inputs
+
+<b>Título:</b> Título que será exibido no topo do bottom sheet. Campo obrigatório.
+
+<b>Descrição:</b> Descrição que aparecerá logo abaixo do título. Campo opcional.
+
+<b>Texto do botão:</b> Texto exibido no botão localizado abaixo da descrição. Será renderizado apenas se o campo de navegação também estiver preenchido. Campo opcional.
+
+<b>Navegação dinâmica:</b> Define o redirecionamento ao clicar no botão. Deve ser preenchido conforme a documentação de navegação dinâmica.
+
+## Como funciona o fluxo vip?
+
+<b>O que é?</b><br />O fluxo VIP dá acesso a uma coleção exclusiva de produtos, com preços e condições comerciais próprias, visível apenas para clientes marcados como VIP na base.
+
+Quem não é VIP não vê essa coleção: ao tentar entrar, recebe um aviso explicando que o acesso é exclusivo — e é justamente esse aviso que se configura pela coleção Non VIP Feedback aqui no Strapi.
+
+<b>Por onde o cliente entra?<br /></b>O acesso acontece exclusivamente por link (deeplink). Não existe hoje nenhum botão, menu ou banner fixo no app que leve à coleção VIP — o cliente só chega lá se receber o link.<br /><br /><b>Como o link precisa ser?</b><br />Para que o app entenda que aquele link é da coleção VIP, ele precisa carregar o marcador sc=5.
+
+sc = sales channel (canal de venda). O canal 5 é o canal VIP da NV.<br />Sem esse marcador, o link é tratado como um link comum: o cliente entra na página normalmente, com preços e condições padrão — sem nenhuma validação de VIP.<br />Exemplo de link válido:  [https://www.bynv.com.br/exclusive?sc=5](https://www.bynv.com.br/exclusive?sc=5)<br /><br />⚠️ Atenção: dois cadastros precisam existir para o fluxo funcionar de ponta a ponta:
+
+O deeplink da coleção exclusiva cadastrado no CMS, apontando para a PDC (página de coleção) desejada, com o sc=5.<br />O conteúdo da coleção Non VIP Feedback publicado (é o que aparece para quem não é VIP).<br />Se o deeplink não estiver cadastrado, o cliente VIP não chega na coleção. Se o Non VIP Feedback não estiver publicado, o cliente não-VIP vê um texto padrão genérico.
+
+<b>O que acontece em cada cenário:<br />Situação do cliente   \| O que o app faz</b><br />Não está logado	  \| Abre a tela de login. Depois de logar, o app continua automaticamente de onde parou — o cliente não precisa clicar no link de novo. Em seguida, cai em um dos cenários abaixo.<br />Logado e é VIP	   \| Entra direto na coleção exclusiva, já com os preços e condições VIP aplicados.<br />Logado e não é VIP   \|   Volta para a home e abre um aviso (bottom sheet) explicando que a coleção é exclusiva. É o conteúdo desta coleção do Strapi.<br /><br /><b>Enquanto a sessão VIP está ativa:</b><br />Quando o cliente VIP acessa a coleção, a condição VIP passa a valer para toda a navegação daquela sessão — vitrine, busca, página de produto e checkout mostram os preços e condições VIP, não só dentro da coleção. Essa condição é reavaliada a cada login e é removida no logout: ao sair da conta, o cliente volta a ver os preços normais.
+
+Checklist antes de disparar uma campanha VIP<br />O link tem sc=5?<br />O deeplink da coleção está cadastrado no CMS e aponta para a PDC certa?<br />A coleção Non VIP Feedback está preenchida e publicada?

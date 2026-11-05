@@ -1,5 +1,5 @@
 ---
-sidebar_position: 64
+sidebar_position: 29
 title: "Showcase List"
 ---
 
@@ -17,18 +17,40 @@ Componente de showcase (vitrine)
   <Chip tone="teal">CMS</Chip>
 </Chips>
 
-
 ## Preview
 
-![Showcase List](/img/strapi/showcase-list/preview.webp)
+![Showcase List — figura 1](/img/strapi/showcase-list/img-01.webp)
 
 ## Inputs
 
-| Campo | Descrição |
-|---|---|
-| **Filtro de cor** | Filtragem por cores da coleção definida no campo ‘filter_category_or_cluster’. Deve ser preechido assim “rosa” ou “azul, vermelho” (separados por vírgula quando tem mais do que um. (Apenas funcional na velha estrutura) |
+<b>title:</b> deve ser inserido o texto que será exibido no título do carrossel. Campo obrigatório.
+
+<b>subtitle:</b> deve ser inserido o texto que será exibido no subtítulo do carrossel. Campo opcional.
+
+<b>call\_to\_action:</b> deve ser inserido o texto que será exibido no CTA geral do carrossel. Campo opcional.
+
+<b>order\_by\_intelligent\_search:</b> deve ser escolhido o critério de ordenação dos produtos na página de produtos para o qual o usuário será redirecionado ao clicar no CTA geral. Campo opcional.
+
+<b>filtre\_category\_or\_cluster:</b> deve ser inserido o caminho para o Intelligent Search da Vtex retornar os produtos de determinada categoria ou coleção (caminho varia de marca para marca). Campo opcional.
+
+:::tip
+
+Pode adicionar quantos itens quiser para compor a lista de showcase. Para adicionar um novo item, clicar no botão <i>“+ Add an entry”</i>
+
+:::
+
+<b>title:</b> deve ser inserido o texto que será exibido no nome da categoria. Campo opcional.
+
+<b>order\_by\_intelligent\_search:</b> deve ser escolhido o critério de ordenação dos produtos no carrossel. Campo obrigatório.
+
+<b>filtre\_category\_or\_cluster:</b> deve ser inserido o caminho para o Intelligent Search da Vtex retornar os produtos de determinada categoria ou coleção (caminho varia de marca para marca). Campo obrigatório.
+
+<b>Filtro de cor</b>: Filtragem por cores da coleção definida no campo ‘filter\_category\_or\_cluster’. Deve ser preechido assim “rosa” ou “azul, vermelho” (separados por vírgula quando tem mais do que um. (Apenas funcional na velha estrutura)
+
+<b>Filtro de tamanho:</b> Filtragem por tamanho da coleção definida no campo ‘filter\_category\_or\_cluster’. Deve ser preechido assim “p” ou “g,gg” (separados por vírgula quando tem mais do que um. (Apenas funcional na velha estrutura)
 
 ## Páginas
 
-- Home
+Home
 
+## Exemplo

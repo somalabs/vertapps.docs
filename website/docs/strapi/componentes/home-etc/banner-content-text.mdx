@@ -1,0 +1,100 @@
+---
+sidebar_position: 4
+title: "Banner Content Text e Banner Content Text Double Media"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Componente</Kicker>
+
+# Banner Content Text e Banner Content Text Double Media
+
+Componente Banner que tem como principal diferencial, suas 4 variações. Para isso ser possível, ele foi divido em dois componentes, sendo eles o <b>Banner Content Text,</b> possuindo 3 variações (overlay, medium padding e large padding) e <b>Banner Content Double Media</b> possuindo a variação restante, que possui suporte a duas mídias.
+
+<Chips>
+  <Chip tone="coral">Banner Content Text e Banner Content Text Double Media</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+## Banner Content Text
+
+### Inputs
+
+<b>Mídia:</b> Upload da imagem exibida no componente. Aceita formatos `.jpg`, ou `.png`. Campo obrigatório.
+
+<b>Título:</b> Será o texto que aparecerá em destaque no componente. Campo obrigatório.
+
+<b>Descrição:</b> Um texto exibido logo abaixo do título. Campo obrigatório.
+
+<b>Cor do texto:</b> A cor que os textos irão ter. Campo opcional.
+
+<b>Navegação dinâmica:</b> Para onde o usuário será levado ao clicar no botão de CTA. Consulte [aqui](../../navegacao-dinamica.mdx) para saber mais detalhes sobre como funciona a navegação dinâmica. (Campo obrigatório).
+
+<b>Cor do overlay:</b> A cor que o overlay irá ter caso a variação do componente seja a <b>overlay</b>. Nas outras variações isso não terá efeito. Campo opcional.
+
+<b>Variação:</b> A variação que o componente irá ter. Isso define o layout principal, consulte os exemplos mais abaixo para saber quais as diferenças. Campo obrigatório.
+
+<b>Texto do CTA:</b> O texto que o botão do CTA irá ter. Campo obrigatório.
+
+### Exemplos
+
+#### Exemplo no strapi
+
+##### Variação overlay
+
+![Banner Content Text e Banner Content Text Double Media — figura 1](/img/strapi/home-etc/banner-content-text/img-01.webp)
+
+##### Variação medium padding
+
+![Banner Content Text e Banner Content Text Double Media — figura 2](/img/strapi/home-etc/banner-content-text/img-02.webp)
+
+##### Variação large padding
+
+![Banner Content Text e Banner Content Text Double Media — figura 3](/img/strapi/home-etc/banner-content-text/img-03.webp)
+
+#### Exemplos no app:
+
+##### Variação overlay:
+
+![Banner Content Text e Banner Content Text Double Media — figura 4](/img/strapi/home-etc/banner-content-text/img-04.webp)
+
+##### Variação medium padding:
+
+![Banner Content Text e Banner Content Text Double Media — figura 5](/img/strapi/home-etc/banner-content-text/img-05.webp)
+
+##### Variação large padding:
+
+![Banner Content Text e Banner Content Text Double Media — figura 6](/img/strapi/home-etc/banner-content-text/img-06.webp)
+
+## Banner Content Text Double Media
+
+### Inputs
+
+<b>Mídia:</b> Upload da imagem exibida no componente. Aceita formatos `.jpg`, ou `.png`. Campo obrigatório.
+
+<b>Título:</b> Será o texto que aparecerá em destaque no componente. Campo obrigatório.
+
+<b>Descrição:</b> Um texto exibido logo abaixo do título. Campo obrigatório.
+
+<b>Navegação dinâmica:</b> Para onde o usuário será levado ao clicar no botão de CTA. Consulte [aqui](../../navegacao-dinamica.mdx) para saber mais detalhes sobre como funciona a navegação dinâmica. (Campo obrigatório).
+
+<b>Texto do CTA:</b> O texto que o botão do CTA irá ter. Campo obrigatório.
+
+<b>Primeira e Segunda imagens:</b>
+
+- Mídia: A imagem a ser utilizada. Campo obrigatório.
+
+- Texto do CTA da mídia: O texto do botão de CTA dessa mídia, aparecerá por cima da imagem. Campo opcional.
+
+- <b>Navegação dinâmica:</b> Para onde o usuário será levado ao clicar no botão de CTA da mídia. Consulte [aqui](../../navegacao-dinamica.mdx) para saber mais detalhes sobre como funciona a navegação dinâmica. (Campo opcional).
+
+### Exemplos
+
+#### Exemplo no strapi
+
+![Banner Content Text e Banner Content Text Double Media — figura 7](/img/strapi/home-etc/banner-content-text/img-07.webp)
+
+#### Exemplos no app:
+
+![Banner Content Text e Banner Content Text Double Media — figura 8](/img/strapi/home-etc/banner-content-text/img-08.webp)

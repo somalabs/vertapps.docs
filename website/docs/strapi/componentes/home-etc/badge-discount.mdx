@@ -1,0 +1,36 @@
+---
+sidebar_position: 6
+title: "Badge Discount"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Componente</Kicker>
+
+# Badge Discount
+
+Componente utilizado para exibir um selo de desconto, com imagem e código de cupom.
+
+<Chips>
+  <Chip tone="coral">Badge Discount</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+## Inputs
+
+<b>media:</b> Upload da imagem exibida no componente. Aceita formatos `.gif`, `.jpg`, ou `.png`. Campo obrigatório.
+
+<b>coupon:</b> Código do cupom que será copiado ao clicar na imagem. Deve conter o valor real do cupom (ex: `etc20`). Opcional<b>.</b>
+
+<b>backgroud:</b> Cor de fundo do componente. Opcional<b>.</b>
+
+## Exemplos
+
+### Exemplo no strapi
+
+![Badge Discount — figura 1](/img/strapi/home-etc/badge-discount/img-01.webp)
+
+### Exemplos no app:
+
+![Badge Discount — figura 2](/img/strapi/home-etc/badge-discount/img-02.webp)

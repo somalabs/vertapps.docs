@@ -1,5 +1,5 @@
 ---
-sidebar_position: 24
+sidebar_position: 34
 title: "Combo/ Carousel Combo Promotion"
 ---
 
@@ -17,32 +17,82 @@ Ambos componentes implementam o mesmo card, sendo que no carousel são cadastrad
   <Chip tone="teal">CMS</Chip>
 </Chips>
 
-
-## Preview
-
-![Combo/ Carousel Combo Promotion](/img/strapi/combo-carousel-combo-promotion/preview.webp)
-
 ## Inputs
 
-![Inputs — Combo/ Carousel Combo Promotion](/img/strapi/combo-carousel-combo-promotion/inputs.webp)
+<b>Title</b>: corresponde ao título do componente. Não obrigatório.
 
-| Campo | Descrição |
-|---|---|
-| **Title** | corresponde ao título do componente. Não obrigatório. |
-| **Description** | descrição do componente. Não obrigatório |
-| **mais de um tipo de filtro, desde que sejam separados por ;** | . O que possibilita a criação de um filtro “Todos” (que deve ser cadastrado na collection, e também em todos os componentes, para que seja criado um filtro Todos que quando clicado exibe todos os componentes). |
+<b>Description</b>: descrição do componente. Não obrigatório
 
-## Páginas
+<b>Filter:</b> 
 
-- Combos
+Este campo é o responsável por vincular um componente as opções de filtros (cadastrados na collection no campo “page\_filters”). Devem ter sua grafia idêntica ao cadastrado na collection.
+
+É possível cadastrar <b>mais de um tipo de filtro, desde que sejam separados por ;</b>. O que possibilita a criação de um filtro “Todos” (que deve ser cadastrado na collection, e também em todos os componentes, para que seja criado um filtro Todos que quando clicado exibe todos os componentes).
+
+:::warning
+
+Caso o campo não seja preenchido ele só irá ficar visível caso o campo “page\_filters” da collection também não tenha nada cadastrado.<br />Caso o page\_filter da colleciton, não tenha nenhum componente associado a ele, ele não ficará visível.
+
+:::
+
+### Combo: (no combo é cadastrado apenas um, e no carrosel múltiplos)
+
+#### Inputs:
+
+<b>Media\_title</b>: Título da imagem (não obrigatória). Aparece por cima da imagem, na parte inferior esquerda.
+
+<b>Media\_title\_text\_color:</b> Define a cord de media\_title. (Deve ser escolhido conforme a cor da imagem, para que o texto fique visivel)
+
+<b>Media</b>: Imagem/gif/video do card (obrigatória).
+
+A única diferença no cadastro dos cards, entre o carrosel e o combo, é a imagem. No carrosel o tamanho da imagem está fixo no código. No combo não. Portanto, a imagem cadastrada no combo card deve ter exatamente o tamanho que deve ocupar (verticalmente) e ser grande horizontalmente para ocupar a tela toda em dispositivos maiores.
+
+<b>Tag</b>: Texto da tag  (não obrigatória). Aparece abaixo da imagem.
+
+<b>card\_content\_title</b>: Título do card. (Não obrigatório, Conteúdo textual do card. Exibido abaixo da tag/trigger do bottom\_sheet.)
+
+<b>card\_content\_description</b>: Texto de descrição do card. Para estilização deste texto, deve ser usado HTML no preenchimento do campo.  [Ver documentação.](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718#262690e9a7e280c2bb84fdb654cc3949)
+
+<b>Coupon:</b> Nome do coupon. (Não obrigatório). Quando preenchido exibe o botão “Aplicar coupon” para o usuário.
+
+<b>bottom\_sheet\_call\_to\_action</b>: Texto que ao ser clicado abre o bottom sheet
+
+<b>bottom\_sheet\_content</b>: Conteúdo que será exibido dentro do bottom sheet. Deve ser preenchido em HTML. [Ver documentação.](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718#262690e9a7e280c2bb84fdb654cc3949)
+
+<b>bottom\_sheet\_button\_text</b>: Texto do botão dentro do bottom sheet.
+
+<b>bottom\_sheet\_button\_navigate\_to</b>: Redirecionamento que acontece ao clicar no botão do bottom sheet.
+
+<b>call\_to\_action</b>: Texto que ao ser clicado executa redirecionamento. Ultimo elemento do card<b>.</b> (Não obrigatório).
+
+<b>call\_to\_action\_navigate\_to</b>: Redirecionamento que acontece ao clicar no call\_to\_action. Deve ser preenchido conforme navegação dinâmica.
 
 ## Exemplos
 
-![Exemplo 1 — Combo/ Carousel Combo Promotion](/img/strapi/combo-carousel-combo-promotion/exemplo-1.webp)
+![Combo/ Carousel Combo Promotion — figura 1](/img/strapi/combo-carousel-combo-promotion/img-01.webp)
 
-![Exemplo 2 — Combo/ Carousel Combo Promotion](/img/strapi/combo-carousel-combo-promotion/exemplo-2.webp)
+Os filtros exibidos no topo da tela correspondem aos filtros cadastrados na collection.
 
-![Exemplo 3 — Combo/ Carousel Combo Promotion](/img/strapi/combo-carousel-combo-promotion/exemplo-3.webp)
+![Combo/ Carousel Combo Promotion — figura 2](/img/strapi/combo-carousel-combo-promotion/img-02.webp)
 
-![Exemplo 4 — Combo/ Carousel Combo Promotion](/img/strapi/combo-carousel-combo-promotion/exemplo-4.webp)
+Cadastro e exibição do bottomsheet:<br />
 
+![Combo/ Carousel Combo Promotion — figura 3](/img/strapi/combo-carousel-combo-promotion/img-03.webp)
+
+![Combo/ Carousel Combo Promotion — figura 4](/img/strapi/combo-carousel-combo-promotion/img-04.webp)
+
+![Combo/ Carousel Combo Promotion — figura 5](/img/strapi/combo-carousel-combo-promotion/img-05.webp)
+
+![Combo/ Carousel Combo Promotion — figura 6](/img/strapi/combo-carousel-combo-promotion/img-06.webp)
+
+Com coupon cadastrado:
+
+![Combo/ Carousel Combo Promotion — figura 7](/img/strapi/combo-carousel-combo-promotion/img-07.webp)
+
+## Página
+
+Combos
+
+<br />As especificações de preenchimento do Card em sí
+
+## Card

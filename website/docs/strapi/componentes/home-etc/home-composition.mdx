@@ -1,0 +1,58 @@
+---
+sidebar_position: 3
+title: "Home Composition"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Componente</Kicker>
+
+# Home Composition
+
+Este componente pode receber o cadastro de até 6 imagens. E irá exibi-las da seguinte forma:<br />1 imagem > tela inteira
+
+<Chips>
+  <Chip tone="coral">Home Composition</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+2 imagens > imagens da vertical<br />3 images > duas em cima e uma embaixo
+
+4 imagens > duas em cima e duas embaixo
+
+5 imagens > três em cima e duas embaixo
+
+6 imagens > três em cima e três embaixo
+
+## Inputs
+
+<b>has\_border</b>: quando true, adiciona uma borda de 1px ao redor da image, na cor n2-pure.
+
+<b>media:</b> Upload da imagem (pode ser .gif, .jpg, ou .png).
+
+<b>navigate\_to:</b> Define o redirecionamento ao clicar na imagem. Deve ser preenchido conforme a documentação da navegação dinamica.
+
+<b>button text:</b> Texto do botão. (O botão só é exibido se este campo for preenchido)
+
+<b>button\_navigate\_to:</b> Define o redirecionamento ao clicar no botão. Deve ser preenchido conforme a documentação da navegação dinamica. (O botão só é exibido se este campo for preenchido)
+
+## Exemplos
+
+### Exemplo no strapi
+
+![Home Composition — figura 1](/img/strapi/home-etc/home-composition/img-01.webp)
+
+### Exemplos no app:
+
+#### 5 imagens
+
+![Home Composition — figura 2](/img/strapi/home-etc/home-composition/img-02.webp)
+
+#### 3 imagens
+
+![Home Composition — figura 3](/img/strapi/home-etc/home-composition/img-03.webp)
+
+#### 1 imagem
+
+![Home Composition — figura 4](/img/strapi/home-etc/home-composition/img-04.webp)

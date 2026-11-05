@@ -1,0 +1,154 @@
+---
+sidebar_position: 44
+title: "Central de Notificações"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Componente</Kicker>
+
+# Central de Notificações
+
+<Chips>
+  <Chip tone="coral">Central de Notificações</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+## Components
+
+### Page Data
+
+O componente Page Data foi criado para adicionar a cor do texto, a cor de fundo e a classificação do usuário que vai receber a notificação.
+
+#### Inputs
+
+<b>client-classification:</b> A classificação do cliente, segmentação para o tipo de usuário que é o destino da notificação, é um campo obrigatório. Caso não seja utilizado, marque a opção "Todos".
+
+<b>alert\_text\_color:</b> A cor do texto que vai aparecer na notificação apresentada na home.
+
+<b>alert\_background\_color:</b> A cor do fundo que vai aparecer na notificação apresentada na home.
+
+#### Exemplo
+
+![Central de Notificações — figura 1](/img/strapi/central-de-notificacoes/img-01.webp)
+
+### Message Banner
+
+Componente Message Banner e mostrado na tela de notificações.
+
+![Central de Notificações — figura 2](/img/strapi/central-de-notificacoes/img-02.webp)
+
+#### Inputs
+
+<b>notification\_banner:</b> inserida a imagem que será apresentada a baixo do componente (opcional)
+
+<b>icon:</b>  inserida a imagem que será apresentada ao lado do componente (opcional).
+
+<b>title:</b> Deve ser inserido o texto que aparecerá em destaque  (obrigatório)
+
+<b>message:</b> Deve ser inserido o texto que ficará abaixo do título, como descrição do componente (obrigatório).
+
+<b>navigate\_to:</b>  Link de redirecionamento ao clicar no botão (opcional).
+
+Deve seguir [o padrão de redirecionamento da navegação dinâmica](../navegacao-dinamica.mdx). <br />Exemplo: “<b>external-link/</b>https://www.bynv.com.br/new-in”
+
+#### Exemplo
+
+![Central de Notificações — figura 3](/img/strapi/central-de-notificacoes/img-03.webp)
+
+### Message Banner - Cluster
+
+Semelhante ao componente <b>Message Banner</b> comum, sua diferença é que esse possui um campo a mais, chamado “clusters”. Sua utilidade é para que seja possível enviar esse componente da Central de Notificações para grupos de clientes específicos.
+
+#### Inputs
+
+<b>message-banner:</b> Deve ser preenchido normalmente conforme [documentação](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718#162617fb45d54c3194d98f02fd7f6c7d)<br /><b>clusters:</b> A filtragem por clusters que o componente terá. Para possíveis dúvidas de como preencher, seguir essa documentação: [Documentação de clusters dinâmicos](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718#c97433c3891e437ba3385cf11d1d402d).
+
+#### Exemplo
+
+Nesse exemplo, a mensagem de notificação só aparecerá para clientes que contenham a categoria “Regatas” nas ultimas compras e que já tenham comprado no app.
+
+![Central de Notificações — figura 4](/img/strapi/central-de-notificacoes/img-04.webp)
+
+![Central de Notificações — figura 5](/img/strapi/central-de-notificacoes/img-05.webp)
+
+### Message
+
+O componente Message é mostrado na tela de notificações sem o campo call\_to\_action não preenchido:
+
+![Central de Notificações — figura 6](/img/strapi/central-de-notificacoes/img-06.webp)
+
+Componente Message com o campo call\_to\_action preenchido:
+
+![Central de Notificações — figura 7](/img/strapi/central-de-notificacoes/img-07.webp)
+
+#### Inputs
+
+<b>icon:</b>  inserida a imagem que será apresentada ao lado do componente (opcional).
+
+<b>title:</b> Deve ser inserido o texto que aparecerá em destaque  (obrigatório)
+
+<b>message:</b> Deve ser inserido o texto que ficará abaixo do título, como descrição do componente (obrigatório).
+
+<b>navigate\_to:</b>  Link de redirecionamento ao clicar no botão (opcional).
+
+Deve seguir [o padrão de redirecionamento da navegação dinâmica](../navegacao-dinamica.mdx). <br />Exemplo: “<b>external-link/</b>https://www.bynv.com.br/new-in”
+
+<b>call\_to\_action:</b> O texto a ser inserido será usado como título do botão. Caso esse campo seja preenchido, ele alterará a estrutura do componente, que passará a ter uma forma diferente (opcional).
+
+#### Exemplo
+
+![Central de Notificações — figura 8](/img/strapi/central-de-notificacoes/img-08.webp)
+
+### Message - Cluster
+
+Semelhante ao componente <b>Message</b> comum, sua diferença é que esse possui um campo a mais, chamado “clusters”. Sua utilidade é para que seja possível enviar esse componente da Central de Notificações para grupos de clientes específicos.
+
+#### Inputs
+
+<b>message:</b> Deve ser preenchido normalmente conforme [documentação](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718#e89f11c210424c4cb800f114375d5d0e)<br /><b>clusters:</b> A filtragem por clusters que o componente terá. Para possíveis dúvidas de como preencher, seguir essa documentação: [Documentação de clusters dinâmicos](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718#c97433c3891e437ba3385cf11d1d402d).
+
+#### Exemplo
+
+Nesse exemplo, a notificação só aparecerá para clientes masculinos.
+
+![Central de Notificações — figura 9](/img/strapi/central-de-notificacoes/img-09.webp)
+
+### Expanded Notification Message (Farm)
+
+O componente Expanded Notification Message é um componente parecido com o MessageBanner, sua diferença é que ele poderá receber um cupom. Esse cupom poderá ser aplicado automaticamente na exibição dessa notificação na <b>Home</b> do usuário. Poderá também receber alguns textos customizados a mais, conforme exemplos abaixo.<br /><br />Exibição de um Expanded Notification Message na <b>Central de Notificações</b>
+
+![Central de Notificações — figura 10](/img/strapi/central-de-notificacoes/img-10.webp)
+
+<br />Exibição de uma notificação na Home, com a exibição de um Bottom Sheet com o conteúdo da notificação
+
+![Central de Notificações — figura 11](/img/strapi/central-de-notificacoes/img-11.webp)
+
+![Central de Notificações — figura 12](/img/strapi/central-de-notificacoes/img-12.webp)
+
+Bottom Sheet sem a imagem cadastrada
+
+![Central de Notificações — figura 13](/img/strapi/central-de-notificacoes/img-13.webp)
+
+#### Inputs
+
+<b>Título:</b> Deve ser inserido o texto que aparecerá em destaque  (obrigatório)
+
+<b>Mensagem:</b> Deve ser inserido o texto que ficará abaixo do título, como descrição do componente.
+
+<b>Conteúdo de texto:</b> Constituído de títulos e descrições. Exibido logo após a mensagem e exibido apenas na bottom sheet.
+
+<b>Navegação dinâmica:</b>  Link de redirecionamento ao clicar no botão CTA. (obrigatório)
+
+Deve seguir [o padrão de redirecionamento da navegação dinâmica](../navegacao-dinamica.mdx).
+
+<b>Call to Action:</b> O texto a ser inserido será usado como título do botão (obrigatório).
+
+<b>Banner (Imagem):</b> Imagem a ser renderizada na bottom sheet e também na Central de Notificações.
+
+<b>Cupom:</b> Cupom a ser aplicado. O botão de aplicar somente será renderizado caso esse campo seja preenchido, al
+
+#### Exemplo
+
+![Central de Notificações — figura 14](/img/strapi/central-de-notificacoes/img-14.webp)

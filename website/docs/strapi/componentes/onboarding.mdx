@@ -1,5 +1,5 @@
 ---
-sidebar_position: 49
+sidebar_position: 48
 title: "Onboarding"
 ---
 
@@ -15,32 +15,134 @@ import Chip, {Chips} from '@site/src/components/Chip';
   <Chip tone="teal">CMS</Chip>
 </Chips>
 
+## step
 
-## Preview
+Passo de onboarding, pode ser ativado para que solicite a permissão de localização ao clicar em “Avançar”.
 
-![Onboarding](/img/strapi/onboarding/preview.webp)
+### INPUTS
 
-## Inputs
+<b>Título</b>: Título central. (Obrigatória)
 
-![Inputs — Onboarding](/img/strapi/onboarding/inputs.webp)
+<b>Descrição</b>: Texto descritivo curto abaixo do título. (Obrigatória)
 
-| Campo | Descrição |
-|---|---|
-| **Título** | Título central. (Obrigatória) |
-| **Descrição** | Texto descritivo curto abaixo do título. (Obrigatória) |
-| **Imagem de fundo** | Imagem de fundo do passo do onboarding, também pode ser vídeo (Obrigatória). Imagem deve ser grande, para ocupar a tela inteira. |
+<b>Imagem de fundo</b>: Imagem de fundo do passo do onboarding, também pode ser vídeo (Obrigatória). Imagem deve ser grande, para ocupar a tela inteira.
 
-## Páginas
+<b>Imagem complementar</b>: Imagem que aparece no centro, por cima da imagem de fundo. (Obrigatória)
 
-- Onboarding
+<b>Imagem complementar desliza para o centro da tela</b>: A imagem pode ser estática, ou pode aparecer com uma animação, deslizando da direta para o centro da tela.
 
-## Exemplos
+<b>Solicitar permissão de localização:</b> caso ativado, ao usuário clicar em “avançar” neste passo do onboarding, é executada a solicitação da permissão de localização do dispositivo do usuário.
 
-![Exemplo 1 — Onboarding](/img/strapi/onboarding/exemplo-1.webp)
+### PÁGINAS
 
-![Exemplo 2 — Onboarding](/img/strapi/onboarding/exemplo-2.webp)
+Onboarding
 
-![Exemplo 3 — Onboarding](/img/strapi/onboarding/exemplo-3.webp)
+### EXEMPLO
 
-![Exemplo 4 — Onboarding](/img/strapi/onboarding/exemplo-4.webp)
+![Onboarding — figura 1](/img/strapi/onboarding/img-01.webp)
 
+![Onboarding — figura 2](/img/strapi/onboarding/img-02.webp)
+
+![Onboarding — figura 3](/img/strapi/onboarding/img-03.webp)
+
+## step_notification
+
+Um passo do onboarding, que, quando o usuário clica em avançar, dispara uma solicitação de notificação (ou não já que pode ser desabilitada).
+
+### INPUTS
+
+<b>Título</b>: Título central. (Obrigatória)
+
+<b>Descrição</b>: Texto descritivo curto abaixo do título. (Obrigatória)
+
+<b>Imagem de fundo</b>: Imagem de fundo do passo do onboarding, também pode ser vídeo (Obrigatória).  Imagem deve ser grande, para ocupar a tela inteira.
+
+<b>Imagem complementar</b>: Imagem que aparece no centro, por cima da imagem de fundo. (Obrigatória)
+
+<b>Imagem complementar desliza para o centro da tela</b>: A imagem pode ser estática, ou pode aparecer com uma animação, deslizando da direta para o centro da tela.
+
+<b>Solicitar permissão de notificação:</b> caso ativado, ao usuário clicar em “avançar” neste passo do onboarding, é executada a solicitação da permissão de notificação do dispositivo do usuário.
+
+### PÁGINAS
+
+Onboarding
+
+### EXEMPLO
+
+![Onboarding — figura 4](/img/strapi/onboarding/img-04.webp)
+
+![Onboarding — figura 5](/img/strapi/onboarding/img-05.webp)
+
+![Onboarding — figura 6](/img/strapi/onboarding/img-06.webp)
+
+## search_step
+
+Este componente representa um exemplo de busca no aplicativo, em uma animação um “exemplo de pesquisa” aparece em um input, em seguida uma animação de loading. Abaixo do input são exibidas as  categorias de busca, e por fim desaparece.
+
+### INPUTS
+
+<b>Título</b>: Título central. (Obrigatória)
+
+<b>Descrição</b>: Texto descritivo curto abaixo do título. (Obrigatória)
+
+<b>Imagem de fundo</b>: Imagem de fundo do passo do onboarding, também pode ser vídeo (Obrigatória).  Imagem deve ser grande, para ocupar a tela inteira.
+
+<b>Exemplo de pesquisa</b>: Deve ser complementado com um exemplo de pesquisa no aplicativo, como “Vestido midi”, “Calça”. (Obrigatório).
+
+<b>Categoria de busca</b>: Refere-se a categorias de busca disponíveis no app. Aparece abaixo do input, como “Lojas NV”.
+
+### PÁGINAS
+
+Onboarding
+
+### EXEMPLO
+
+![Onboarding — figura 7](/img/strapi/onboarding/img-07.webp)
+
+![Onboarding — figura 8](/img/strapi/onboarding/img-08.webp)
+
+![Onboarding — figura 9](/img/strapi/onboarding/img-09.webp)
+
+## tracking_step (NV)
+
+Um passo do onboarding, onde só poderá ser exibido em dispositivos iOS. Ele é responsável por exibir o opt-in padrão do iOS de permissão de rastreio. Poderá conter dois botões, um de permitir e outro de continuar sem.
+
+### INPUTS
+
+<b>Cor de fundo</b>: A cor de fundo desse passo do onboarding. (Obrigatório)
+
+<b>Conteúdo:</b> O texto que será o conteúdo desse passo do onboarding. (Obrigatório e repetível).
+
+<b>Título:</b> O título do conteúdo em texto.<br /><b>Descrição:</b> A descrição desse conteúdo. Dica: Podemos realizar normalmente quebras de linha no texto.
+
+### PÁGINAS
+
+Onboarding
+
+### EXEMPLO
+
+![Onboarding — figura 10](/img/strapi/onboarding/img-10.webp)
+
+![Onboarding — figura 11](/img/strapi/onboarding/img-11.webp)
+
+![Onboarding — figura 12](/img/strapi/onboarding/img-12.webp)
+
+## tracking_step_default (Hering)
+
+### Inputs
+
+<b>Título</b>: Título central. (Obrigatória)
+
+<b>Descrição</b>: Texto descritivo curto abaixo do título. (Obrigatória)
+
+<b>Imagem de fundo</b>: Imagem de fundo do passo do onboarding, também pode ser vídeo (Obrigatória).  Imagem deve ser grande, para ocupar a tela inteira.
+
+<b>Solicitar permissão de tracking:</b> Aparece apenas no IOs. Caso ativado, ao usuário clicar em “continuar” neste passo do onboarding, é executada a solicitação de tracking do IOS.
+
+### Página
+
+Onboarding
+
+### Exemplo
+
+![Onboarding — figura 13](/img/strapi/onboarding/img-13.webp)

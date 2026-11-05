@@ -1,0 +1,583 @@
+---
+sidebar_position: 85
+title: "Stories de produtos (NV)"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+import DocTitle from '@site/src/components/DocTitle';
+
+<Kicker>CMS · Componente</Kicker>
+
+<DocTitle brand="NV">Stories de produtos</DocTitle>
+
+Thumbnail flutuante que passa produtos como <i>stories</i> e abre em tela cheia. É cadastrado <b>uma vez</b> no Strapi e aparece na <b>Home, na PDC e na PDP</b> do app.
+
+<Chips>
+  <Chip tone="coral">Stories de produtos</Chip>
+  <Chip tone="amber">NV</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+:::note
+
+<b>Resumo rápido</b>
+
+- <b>Onde cadastrar:</b> Strapi → coleção <b>Stories NV</b> (uma única entrada, publicada).
+
+- <b>O que o app faz:</b> busca os primeiros produtos da PDC informada e mostra um story por produto, com capa opcional no início.
+
+- <b>Quem aparece onde:</b> chaves `show_on_home`, `show_on_pdc` e `show_on_pdp` na própria entrada.
+
+- <b>Desligar tudo:</b> `active = false` no grupo <b>stories</b>.
+
+- <b>Marca:</b> NV (os demais apps de marca ainda não usam).
+
+:::
+
+| Item | Valor |
+
+| --- | --- |
+
+| Card | VERTAPP-5602 — Componente - Stories |
+
+| Marca | NV |
+
+| Dispositivos | App (mobile). Web/desktop não fazem parte desta entrega |
+
+| Design | Figma — <i>Telas e Fluxos \| APP \| NV</i> (nó `2670:5129`), design por Caetano Reginato |
+
+| Repositórios | `soma-bus-strapi`, `azzas_ui`, `azzas_app_commons`, `azzas_cms`, `app.flutter.nv.frontend` |
+
+---
+
+### 1. Visão geral
+
+#### 1.1 O que é
+
+Um componente que fica no canto inferior direito da tela, mostrando a foto de um produto de cada vez, no estilo dos <i>stories</i>. O usuário pode:
+
+- <b>arrastar</b> o thumbnail para qualquer lugar da tela;
+
+- <b>tocar</b> nele para abrir em <b>tela cheia</b>, onde os stories passam sozinhos e o usuário navega por toque ou setas;
+
+- <b>comprar</b> direto do story (tamanho → sacola);
+
+- <b>fechar</b> com o “x” (o stories some até a sessão do usuário ser recriada).
+
+Os produtos <b>não são cadastrados um a um</b>. O editor informa uma <b>PDC</b> (página de categoria/coleção) e o app mostra os <b>primeiros produtos dela</b>, na ordem da própria coleção.
+
+#### 1.2 Onde aparece
+
+| Tela | Aparece quando |
+
+| --- | --- |
+
+| Home | `show_on_home` ligado |
+
+| PDC (listagem de produtos) | `show_on_pdc` ligado |
+
+| PDP (página de produto) | `show_on_pdp` ligado |
+
+As três telas leem <b>a mesma configuração</b>. Não existe cadastro por tela nem por produto.
+
+#### 1.3 Como o dado chega ao app
+
+1. O app lê a entrada de <b>Stories NV</b> (`stories-configs-nv`).
+
+2. Se a chave da tela estiver ligada e o stories estiver `active`, ele busca os produtos da PDC cadastrada.
+
+3. O app monta os stories com a <b>primeira foto</b> de cada produto, o nome e o preço.
+
+---
+
+### 2. Como o usuário vê (comportamento no app)
+
+#### 2.1 Thumbnail (minimizado)
+
+| Característica | Comportamento |
+
+| --- | --- |
+
+| Tamanho | 120 × 180 px, com cantos arredondados e sombra leve |
+
+| Posição inicial | Canto inferior direito |
+
+| Arraste | Livre até as bordas da área útil da tela (respeita a barra de status e o indicador de gestos) |
+
+| Memória da posição | Guarda onde o usuário soltou durante a sessão do app. Ao reabrir o app, volta ao canto inferior direito |
+
+| Ciclo | <b>Capa → produto 1 → produto 2 → … → capa</b>, em <i>loop</i> |
+
+| Tempo de cada slide | `seconds_per_story` (padrão <b>5 s</b>), igual para a capa e para os produtos |
+
+| Rótulo | Pílula “Em alta” na base do card (também sobre a capa) |
+
+| Botão “x” | Quadrado fosco de 32 px que fica <b>fora</b> do card, no canto superior do lado oposto à borda em que o card está encostado |
+
+| Card final | <b>Nunca</b> aparece no thumbnail. Só em tela cheia |
+
+:::tip
+
+<b>Capa:</b> o primeiro slide do thumbnail é uma imagem de capa. Ela vem do campo `cover_image` do Strapi. Se estiver vazio, o app usa uma <b>imagem padrão</b> que já vem no aplicativo.
+
+:::
+
+#### 2.2 Tela cheia
+
+Abre ao tocar no thumbnail. O story exibido continua do ponto em que o thumbnail estava: se estava no produto 3, a tela cheia abre no produto 3. Se estava na capa, abre no <b>primeiro produto</b> (a capa só existe minimizada).
+
+| Elemento | Comportamento |
+
+| --- | --- |
+
+| Imagem | Primeira foto da galeria do produto, em tela cheia |
+
+| Avanço automático | A cada `seconds_per_story` segundos (padrão 5 s). Ao fim do último, volta ao primeiro |
+
+| Barra de progresso | <b>Uma barra única</b> de 3 px rente à borda inferior. Enche durante o tempo do story e <b>zera</b> ao passar para o próximo. O card final também tem a barra |
+
+| Setas e toque lateral | Seta esquerda/direita (16 px) e toque nas laterais (30% da largura de cada lado) para voltar/avançar |
+
+| Primeiro story | Sem seta de voltar e o toque lateral esquerdo não faz nada |
+
+| Último story | Sem seta de avançar e o toque lateral direito não faz nada. O avanço automático ainda fecha o ciclo no primeiro |
+
+| Rodapé | Nome do produto, preço (e preço original riscado, em promoção) e o botão <b>Comprar</b> |
+
+| Botão de sair | Ícone no topo esquerdo. Volta ao thumbnail e o ciclo recomeça pela capa |
+
+| Barra de navegação inferior | <b>Escondida</b> enquanto o stories está em tela cheia. Volta ao sair |
+
+#### 2.3 Card final (só em tela cheia)
+
+Depois do último produto, aparece um card de convite com a imagem do último produto esmaecida ao fundo:
+
+| Elemento | Origem |
+
+| --- | --- |
+
+| Título | `end_card_title` (padrão “Quer ver mais produtos?”) |
+
+| Subtítulo | `end_card_subtitle` (opcional) |
+
+| Botão | `end_card_button_label` (padrão “Ver todos”) |
+
+| Destino do botão | `end_card_navigate_to`, se preenchido. Senão, a <b>própria PDC</b> informada em `filter_category_or_cluster` |
+
+| Liga/desliga | `end_card_enabled` (padrão ligado) |
+
+#### 2.4 Comprar pelo story
+
+1. O usuário toca em <b>Comprar</b> no rodapé. O story <b>pausa</b>.
+
+2. Abre o seletor de <b>tamanho</b> (o mesmo da PDP).
+
+3. O usuário escolhe o tamanho e adiciona o produto à sacola. Aparece a confirmação, com <b>Finalizar pedido</b> e o carrossel <b>Get the look</b> (quando o produto tem looks combinados).
+
+4. Ao fechar o modal, o story volta a rodar. Ao tocar em <b>Finalizar pedido</b>, o app vai para a sacola.
+
+#### 2.5 O “x” do thumbnail
+
+- O “x” <b>esconde</b> o stories <b>naquela tela</b> (Home, PDC e PDP são independentes).
+
+- Ele reaparece quando a <b>sessão do usuário</b> é recriada. A sessão usada é a do Firebase Analytics, que muda após cerca de <b>30 minutos de inatividade</b>.
+
+- Se o app não conseguir obter a sessão, o “x” vale só até o app ser fechado.
+
+- Não existe campo no Strapi para forçar o stories a reaparecer para quem já fechou.
+
+#### 2.6 Quando o stories NÃO aparece
+
+| Situação | Resultado |
+
+| --- | --- |
+
+| Entrada de <b>Stories NV</b> não publicada (rascunho) ou inexistente | Não aparece |
+
+| `show_on_<tela>` desligado para aquela tela | Não aparece naquela tela |
+
+| `active` desligado | Não aparece em nenhuma tela |
+
+| `filter_category_or_cluster` vazio | Não aparece |
+
+| A PDC informada não tem produtos disponíveis | Não aparece |
+
+| O usuário tocou no “x” na sessão atual | Não aparece naquela tela |
+
+| Falha de rede ao ler a configuração ou os produtos | Não aparece (não quebra a tela) |
+
+| Role <b>Public</b> sem permissão na coleção (resposta 403) | Não aparece |
+
+---
+
+### 3. Strapi — o que cadastrar
+
+#### 3.1 Onde fica
+
+- Menu <b>Content Manager</b> → coleção <b>Stories NV</b> (API: `stories-configs-nv`).
+
+- Tem <b>rascunho e publicação</b>: só a entrada <b>publicada</b> chega ao app.
+
+- Cadastre <b>uma única entrada</b>. O app usa a primeira que a API devolver.
+
+- Cada marca tem a sua coleção. Hoje só a NV foi criada.
+
+#### 3.2 Campos da entrada
+
+| Campo | Tipo | Obrigatório | Padrão | O que faz no app |
+
+| --- | --- | --- | --- | --- |
+
+| `name` | Texto | Sim | — | Nome interno para identificar a entrada. Não aparece no app |
+
+| `show_on_home` | Boolean | Não | ligado | Exibe o stories na <b>Home</b> |
+
+| `show_on_pdc` | Boolean | Não | ligado | Exibe o stories na <b>PDC</b> |
+
+| `show_on_pdp` | Boolean | Não | ligado | Exibe o stories na <b>PDP</b> |
+
+| `stories` | Grupo (componente `Product Stories`) | Sim | — | Toda a configuração do stories (tabela abaixo) |
+
+#### 3.3 Campos do grupo `stories`
+
+| Campo | Tipo | Obrigatório | Padrão | O que faz no app |
+
+| --- | --- | --- | --- | --- |
+
+| `filter_category_or_cluster` | Texto | <b>Sim</b> | — | <b>De onde vêm os produtos.</b> Rota de PDC ou id de cluster (ver 3.4). Também é o destino do botão do card final |
+
+| `stories_count` | Número inteiro (mín. 1) | Não | <b>15</b> | Quantos produtos entram nos stories. Exemplo: 6 mostra os 6 primeiros; 20, os 20 primeiros |
+
+| `seconds_per_story` | Número inteiro (mín. 1) | Não | <b>5</b> | Segundos de cada story, na capa, nos produtos e no card final |
+
+| `cover_image` | Mídia (só imagem) | Não | — | <b>Capa</b> do thumbnail minimizado. Vazio = imagem padrão do app |
+
+| `end_card_enabled` | Boolean | Não | ligado | Mostra o card final em tela cheia |
+
+| `end_card_title` | Texto | Não | “Quer ver mais produtos?” | Título do card final |
+
+| `end_card_subtitle` | Texto | Não | — | Subtítulo do card final. Vazio = não mostra |
+
+| `end_card_button_label` | Texto | Não | “Ver todos” | Texto do botão do card final |
+
+| `end_card_navigate_to` | Texto | Não | — | Rota para onde o botão leva. Vazio = vai para a PDC de `filter_category_or_cluster` |
+
+| `active` | Boolean | <b>Sim</b> | ligado | <b>Liga/desliga geral.</b> Desligado, o stories some em Home, PDC e PDP |
+
+| `banner_name` | Texto | Não | — | Nome para o <b>GA4</b>, no formato `texto///texto` (ver 3.7) |
+
+:::warning
+
+<b>Valores padrão só valem para entradas novas.</b> Uma entrada já salva antes de um campo existir fica sem valor nele. O app trata o vazio com o mesmo padrão da tabela (15 stories, 5 segundos, card final ligado).
+
+:::
+
+#### 3.4 Como preencher a PDC (`filter_category_or_cluster`)
+
+O campo aceita <b>três formatos</b>:
+
+| Formato | Exemplo | O que o app faz |
+
+| --- | --- | --- |
+
+| Rota de PDC com path e ordenação | `plp/departamento/sale?ordenacao=orderByReleaseDateDESC` | Busca `departamento/sale` ordenado por lançamento |
+
+| Rota de PDC com uma palavra | `plp/new-in` | Faz uma busca por texto `new-in` |
+
+| Id ou path de cluster/coleção | `1234` | Busca a coleção `1234`, na ordem em que ela está cadastrada |
+
+<b>Regras:</b>
+
+- É o <b>mesmo formato de rota</b> usado nos banners e links do CMS. O que funciona num banner funciona aqui.
+
+- <b>Sem</b> <b>`ordenacao`</b>, os produtos vêm na <b>ordem da própria coleção</b> (curadoria do merchandising). É o comportamento recomendado.
+
+- Com `ordenacao`, valores aceitos (sem diferenciar maiúscula/minúscula):
+
+| Valor | Significado |
+
+| --- | --- |
+
+| `orderByReleaseDateDESC` | Novidades |
+
+| `orderByTopSaleDESC` | Mais vendidos |
+
+| `orderByMostViewedDESC` | Mais vistos |
+
+| `orderByBestDiscountDESC` | Maior desconto |
+
+| `orderByPriceDESC` | Maior preço |
+
+| `orderByPriceASC` | Menor preço |
+
+| `orderByNameASC` | Nome (A–Z) |
+
+- Os <b>primeiros</b> `stories_count` produtos <b>disponíveis</b> viram stories. Produto <b>indisponível</b> (sem estoque) ou <b>sem imagem</b> é descartado, então podem aparecer <b>menos</b> produtos do que `stories_count`.
+
+- A imagem de cada story é a <b>primeira foto</b> da galeria do produto.
+
+#### 3.5 Capa (`cover_image`)
+
+| Item | Detalhe |
+
+| --- | --- |
+
+| Quando aparece | Só no <b>thumbnail minimizado</b>, como primeiro slide do ciclo. Em tela cheia a capa não aparece |
+
+| Duração | A mesma dos demais stories (`seconds_per_story`) |
+
+| Vazia | O app usa a imagem padrão que vem no aplicativo (`assets/images/stories_cover_image.png`) |
+
+| Falha ao carregar | Cai na imagem padrão |
+
+| Tipo | Somente imagem |
+
+| Proporção | O thumbnail é <b>2:3 (120 × 180)</b>. A imagem é cortada para preencher. Referência: <b>500 × 750 px</b>, com o assunto principal ao centro e sem texto perto das bordas |
+
+#### 3.6 Card final
+
+- `end_card_enabled` desligado: o ciclo em tela cheia termina no último produto e volta ao primeiro.
+
+- `end_card_navigate_to`: aceita uma rota do app (por exemplo `plp/departamento/new-in`). Se vazio, o botão abre a PDC de `filter_category_or_cluster`.
+
+- O card final <b>não</b> aparece no thumbnail.
+
+#### 3.7 `banner_name` (analytics)
+
+- Formato obrigatório quando preenchido: `texto///texto`. Exemplo: `Em///Alta`.
+
+- É o nome da promoção no evento `view_promotion` do GA4. Vazio = o app usa `product-stories`.
+
+#### 3.8 Passo a passo para cadastrar
+
+1. Acesse o Strapi do ambiente certo (<b>homologação</b> para testar, depois <b>produção</b>).
+
+2. Abra <b>Content Manager → Stories NV</b> e clique em <b>Create new entry</b>.
+
+3. Preencha <b>name</b> (por exemplo “Stories NV”).
+
+4. Marque em quais telas deve aparecer (<b>show\_on\_home</b>, <b>show\_on\_pdc</b>, <b>show\_on\_pdp</b>).
+
+5. No grupo <b>stories</b>:
+
+1. informe `filter_category_or_cluster` (por exemplo `plp/departamento/sale?ordenacao=orderByReleaseDateDESC`);
+
+2. ajuste `stories_count` e `seconds_per_story` se quiser algo diferente de 15 e 5 s;
+
+3. envie a <b>capa</b> em `cover_image` (opcional);
+
+4. configure o <b>card final</b> (título, subtítulo, botão e destino);
+
+5. confira que `active` está <b>ligado</b>.
+
+6. Clique em <b>Publish</b>. Só salvar deixa em rascunho e o app não enxerga.
+
+7. Confira a API (ver 3.10) e abra o app. <b>Feche e reabra a tela</b> (ou o app) para recarregar.
+
+#### 3.9 Receitas
+
+| Quero… | Faça |
+
+| --- | --- |
+
+| Mostrar só na Home | `show_on_home` ligado; `show_on_pdc` e `show_on_pdp` desligados |
+
+| Tirar o stories do ar em todas as telas | `active` desligado e <b>Publish</b> (ou despublique a entrada) |
+
+| Trocar a PDC | Altere `filter_category_or_cluster` e publique |
+
+| Mostrar mais ou menos produtos | Altere `stories_count` |
+
+| Deixar os stories mais rápidos ou lentos | Altere `seconds_per_story` |
+
+| Trocar a capa | Envie outra imagem em `cover_image` e publique |
+
+| Voltar para a capa padrão | Remova a imagem de `cover_image` e publique |
+
+| Esconder o card final | `end_card_enabled` desligado |
+
+| Mandar o card final para outra página | Preencha `end_card_navigate_to` |
+
+#### 3.10 Problemas comuns
+
+| Sintoma | Causa provável | O que fazer |
+
+| --- | --- | --- |
+
+| Nada aparece no app | Entrada em rascunho | Clique em <b>Publish</b> |
+
+| Nada aparece, API responde 403 | Falta permissão pública | <b>Settings → Users & Permissions → Roles → Public → Stories-config-nv</b> → marque `find` e `findOne` → salve |
+
+| API responde 404 | Deploy do ambiente não aplicou a coleção | Peça o deploy do ambiente e confira de novo |
+
+| “Stories NV” não aparece no menu do admin | Seu papel de admin não tem acesso à coleção | Em <b>Settings → Administration Panel → Roles</b>, libere a coleção para o seu papel |
+
+| Campo <b>cover\_image</b> não aparece | Deploy do Strapi ainda sem o campo | Aguarde o deploy do ambiente |
+
+| Aparece na Home mas não na PDC (ou o contrário) | Chave `show_on_<tela>` desligada, ou o usuário fechou o “x” naquela tela | Confira as chaves. Para testar, feche e reabra o app, ou limpe os dados |
+
+| O stories sumiu depois de eu fechar | O “x” esconde pela sessão do usuário | Volta quando a sessão é recriada (\~30 min de inatividade) |
+
+| Aparecem menos produtos que o `stories_count` | Produtos sem estoque ou sem imagem são descartados | Use uma PDC com mais produtos disponíveis |
+
+| Nenhum produto aparece | A PDC não tem produto disponível, ou a rota está errada | Teste a rota no app como se fosse um banner |
+
+| A capa não é a que enviei | Entrada não publicada, ou o app está em outro ambiente | Publique e confira se o app aponta para o mesmo ambiente do Strapi |
+
+| No app de teste não vejo nada | O app usa o Strapi de <b>produção</b> por padrão | Em <b>Minha conta → Configurações</b>, ligue <b>Strapi Homologação</b> (usuários liberados) |
+
+:::tip
+
+<b>Ambientes:</b> o app lê o Strapi de produção por padrão. Os usuários liberados podem ligar o Strapi de <b>homologação</b> pelo switch em <b>Minha conta → Configurações</b>. Cadastre no ambiente que você está testando.
+
+:::
+
+---
+
+### 4. Visão técnica (para desenvolvedores)
+
+#### 4.1 Responsabilidade de cada repositório
+
+| Repositório | O que contém |
+
+| --- | --- |
+
+| `soma-bus-strapi` | Coleção `stories-config-nv` e componente `product-stories.product-stories`, com todos os campos acima |
+
+| `azzas_ui` | `AdsProductStories`: UI pura (thumbnail arrastável, tela cheia, barra de progresso, card final, capa). Não busca dados nem navega |
+
+| `azzas_app_commons` | Modelos (`ProductStoriesConfig`, `ProductStoriesCmsComponent`), `CmsService.loadProductStoriesConfig()`, `ProductStoriesCubit` e `ProductStoriesStorage` (o “x” por sessão) |
+
+| `azzas_cms` | `ProductStoriesCmsWidgetDS`: junta a UI com o cubit e repassa os callbacks |
+
+| `app.flutter.nv.frontend` | `ProductStoriesHost` na Home, PDC e PDP: fluxo de compra, navegação do card final, imagem padrão da capa e a barra inferior escondida em tela cheia |
+
+Camadas do grafo de dependências: `azzas_ui` → `azzas_app_commons` → `azzas_cms` → app NV. O Strapi é independente.
+
+#### 4.2 Arquivos principais
+
+| Camada | Arquivo |
+
+| --- | --- |
+
+| Strapi | `src/components/product-stories/product-stories.json`, `src/api/stories-config-nv/` |
+
+| UI | `composition_components/ads_product_stories/ads_product_stories.dart` e a pasta `widget/` |
+
+| Commons | `lib/cms/components/azzas_product_stories/`, `lib/modules/product_stories/`, `CmsService.loadProductStoriesConfig` |
+
+| CMS | `lib/components/azzas_product_stories/product_stories_cms_widget_ds.dart` |
+
+| NV | `lib/modules/product_stories/` e `assets/images/stories_cover_image.png` |
+
+#### 4.3 Decisões de implementação
+
+- <b>Uma configuração para todas as telas.</b> O stories foi cadastrado primeiro em cada tela (Home, PDC e PDP) e depois centralizado na coleção `Stories NV`, para evitar cadastro repetido.
+
+- <b>Produtos vêm do catálogo, não do Strapi.</b> O Strapi guarda só a PDC e as regras. O app usa a busca inteligente existente, com `count = stories_count`.
+
+- <b>Ordem da coleção preservada.</b> Sem `ordenacao`, não há reordenação no app.
+
+- <b>Capa só minimizada.</b> No ciclo minimizado o índice 0 é a capa e os produtos andam +1. Ao expandir ou minimizar, o índice é remapeado para o mesmo story continuar na tela.
+
+- <b>Capa que chega depois.</b> Se a capa for informada com o widget já em uso, o índice é compensado para o slide visível não mudar.
+
+- <b>“x” por sessão.</b> O app grava em disco a sessão do Firebase em que o usuário fechou, por tela. Passa a exibir de novo quando a sessão muda.
+
+- <b>Falhas nunca derrubam a tela.</b> Todos os campos do Strapi são lidos de forma tolerante (tipo inesperado vira nulo) e qualquer erro de rede esconde o stories.
+
+#### 4.4 Eventos de analytics
+
+| Quando | Evento |
+
+| --- | --- |
+
+| Thumbnail fica visível | `view_promotion`, com `creative_name`/`promotion_name` = `banner_name` ou `product-stories`, e `region` = `home`, `pdc` ou `pdp` |
+
+| Toque em <b>Comprar</b> | `select_item`, com `item_list_name` = `product-stories` |
+
+| Toque no “x” | `select_content` = `<tela>:product-stories:close` |
+
+#### 4.5 Testes
+
+Testes unitários e de widget nas libs (UI, commons e CMS) cobrindo: parse do Strapi (valores nulos e inválidos), regras de exibição por tela, quantidade de stories, ciclo com capa, “x” por sessão, setas do primeiro e do último story e barra de progresso. O app NV não tem camada de teste automatizado: o fluxo de compra e a convivência com os demais elementos da tela são validados manualmente.
+
+---
+
+### 5. Entrega (PRs e versões)
+
+| Entrega | Repositório | PR | Versão |
+
+| --- | --- | --- | --- |
+
+| Stories de produtos | `azzas_ui` | #127 | v1.11.0 |
+
+|  | `azzas_app_commons` | #315 | v1.20.0 |
+
+|  | `azzas_cms` | #182 | v1.4.0 |
+
+|  | `app.flutter.nv.frontend` | #84 | (app) |
+
+|  | `soma-bus-strapi` (Bitbucket) | #634, #636, #639, #640 | — |
+
+| Capa do thumbnail | `soma-bus-strapi` | #647 | — |
+
+|  | `azzas_ui` | #140 | v1.19.0 |
+
+|  | `azzas_app_commons` | #391 | v1.28.0 |
+
+|  | `azzas_cms` | #218 | v1.8.0 |
+
+|  | `app.flutter.nv.frontend` | #96 | (app) |
+
+---
+
+### 6. Limitações e pontos de atenção
+
+- <b>Só NV.</b> A coleção e o app existem apenas para a NV. Outras marcas precisam da coleção própria no Strapi e do uso do componente no app delas.
+
+- <b>Uma configuração para todas as telas.</b> Não dá para ter uma PDC diferente por tela nem ligar por produto na PDP.
+
+- <b>Sem reexibição forçada.</b> Quem fechou o “x” só volta a ver quando a sessão é recriada.
+
+- <b>Sem produtos escolhidos à mão.</b> A curadoria é feita na PDC (ordem da coleção), não no Strapi.
+
+- <b>Capa fora da tela cheia.</b> A capa existe só no thumbnail minimizado.
+
+- <b>Dependência do deploy.</b> Mudanças de schema no Strapi só valem depois do deploy do ambiente. Cadastro de conteúdo reflete ao reabrir a tela ou o app.
+
+- <b>Web e desktop</b> não fazem parte desta entrega.
+
+---
+
+### 7. Perguntas frequentes
+
+<b>Preciso cadastrar o stories em cada tela?</b>
+
+Não. Cadastre uma vez em <b>Stories NV</b> e use as chaves `show_on_*` para escolher as telas.
+
+<b>Posso escolher os produtos manualmente?</b>
+
+Não diretamente. Os produtos vêm da PDC informada. Para escolher quais aparecem e em que ordem, monte uma coleção para isso.
+
+<b>Quantos produtos posso mostrar?</b>
+
+Quantos o campo `stories_count` indicar (padrão 15). Se a PDC tiver menos produtos disponíveis, aparecem só os que existem.
+
+<b>Como deixo os stories mais rápidos?</b>
+
+Reduza `seconds_per_story`. O valor vale para a capa, os produtos e o card final.
+
+<b>O que acontece se eu não enviar capa?</b>
+
+O app usa uma imagem padrão. Nada quebra.
+
+<b>Mudei no Strapi e o app não atualizou.</b>
+
+Confirme que <b>publicou</b>, que o app está no mesmo ambiente do Strapi e <b>reabra a tela ou o app</b>.
+
+---
+
+###
+

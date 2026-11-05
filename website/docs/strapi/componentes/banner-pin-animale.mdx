@@ -1,0 +1,63 @@
+---
+sidebar_position: 86
+title: "Banner PIN (Animale)"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+import DocTitle from '@site/src/components/DocTitle';
+
+<Kicker>CMS · Componente</Kicker>
+
+<DocTitle brand="Animale">Banner PIN</DocTitle>
+
+Banner de imagem com um ou mais PINs interativos posicionados livremente sobre a foto. Cada PIN é vinculado a um produto (VTEX). Ao tocar em um PIN no app, abre um modal ancorado com o preview do produto (nome e preço), que leva à PDP. Também suporta título, descrição e botão de call-to-action sobre a imagem.
+
+<Chips>
+  <Chip tone="coral">Banner PIN</Chip>
+  <Chip tone="amber">Animale</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+Exibição na home: a imagem do banner ocupa a largura total, com os PINs (marcadores concêntricos) posicionados sobre ela. Título, descrição e botão aparecem sobre a imagem, na parte inferior.<br />Regra: pode existir mais de um PIN por banner
+
+![Banner PIN (Animale) — figura 1](/img/strapi/banner-pin-animale/img-01.webp)
+
+&lt;column ratio="93.75">
+
+&lt;h3>
+
+Inputs no Strapi:
+
+&lt;/h3>
+
+Content Manager > Home
+
+![Banner PIN (Animale) — figura 2](/img/strapi/banner-pin-animale/img-02.webp)
+
+- `image` — Imagem de fundo do banner. <b>Campo  brigatório.</b>
+
+- `title` — Título exibido sobre a imagem. Campo opcional.
+
+- `subtitle` — Descrição exibida logo abaixo do título. Campo opcional.
+
+- `call_to_action` — Texto do botão exibido sobre a imagem. Campo opcional.
+
+- `call_to_action_navigate_to` — Deeplink acionado ao tocar no botão. Segue o padrão de navegação dinâmica. Campo opcional.
+
+- `banner_name_ga4` — Metadado para eventos GA4 ( promotion///creative ). Campo opcional.
+
+- `pins` — Lista de PINs posicionados sobre a imagem (custom field visual pin-picker ). <b>Pelo menos 1.</b>
+
+### Cada PIN (dentro de pins)
+
+- `position_x` / `position_y` — Posição do PIN em % (0–100), a partir da esquerda/topo. Definidas visualmente : clique na imagem para adicionar e arraste para reposicionar. <b>Obrigatório.</b>
+
+- `product_id` — ID do produto VTEX. Carrega o preview (nome e preço) e a navegação para a PDP ( `pdp/{product_id}` ). <b>Obrigatório.</b>
+
+![Banner PIN (Animale) — figura 3](/img/strapi/banner-pin-animale/img-03.webp)
+
+Cadastro no Strapi: imagem selecionada e PINs posicionados clicando sobre a foto (custom field pin-picker ).<br />
+
+&lt;column ratio="6.25">
+

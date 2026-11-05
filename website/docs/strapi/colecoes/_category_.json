@@ -1,0 +1,10 @@
+{
+  "label": "Coleções",
+  "position": 3,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "Coleções",
+    "description": "Documentos do gerenciador de conteúdo do Strapi (Home, Menu, Conteúdo do Menu e demais coleções), um tópico por página na ordem da doc oficial."
+  }
+}

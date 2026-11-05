@@ -1,5 +1,5 @@
 ---
-sidebar_position: 14
+sidebar_position: 49
 title: "Banner Clock"
 ---
 
@@ -15,27 +15,106 @@ import Chip, {Chips} from '@site/src/components/Chip';
   <Chip tone="teal">CMS</Chip>
 </Chips>
 
+## NV
 
-## Preview
+Este reloginho poderá ser usado para exibir promoção na home.
 
-![Banner Clock](/img/strapi/banner-clock/preview.webp)
+![Banner Clock — figura 1](/img/strapi/banner-clock/img-01.webp)
 
-## Inputs
+### Inputs
 
-![Inputs — Banner Clock](/img/strapi/banner-clock/inputs.webp)
+<b>title</b>: deverá ser inserido o texto que será exibido como título do reloginho. Campo obrigatório.
 
-| Campo | Descrição |
-|---|---|
-| **title** | deverá ser inserido o texto que será exibido como título do reloginho. Campo obrigatório. |
-| **deverá ser inserida a cor de fundo do botão.** | button_text_color: deverá ser inserida a cor do texto do botão. |
+<b>subtitle:</b> deverá ser inserido o texto que será exibido na home em baixo do reloginho e na pdc e pdp ele acompanha o texto na mesma linha.<br /><b>header\_color:</b> Deverá ser selecionada a cor do logo que aparecerá no topo da tela, podendo ser escura ou clara.
 
-## Exemplos
+<b>coupon:</b> deverá ser inserido o cupom que será aplicado na sacola do usuário.
 
-![Exemplo 1 — Banner Clock](/img/strapi/banner-clock/exemplo-1.webp)
+<b>navigate\_to:</b> deverá ser preenchido conforme [documento de navegação dinâmica](../navegacao-dinamica.mdx), este campo será responsável por fazer o redirecionamento quando o campo de cupom não for preenchido.
 
-![Exemplo 2 — Banner Clock](/img/strapi/banner-clock/exemplo-2.webp)
+<b>start\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser iniciado. Campo obrigatório.
 
-![Exemplo 3 — Banner Clock](/img/strapi/banner-clock/exemplo-3.webp)
+<b>end\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser encerrado. Campo obrigatório.
 
-![Exemplo 4 — Banner Clock](/img/strapi/banner-clock/exemplo-4.webp)
+:::tip
 
+Após a data e hora preenchidos no campo “fim da promoção” o reloginho irá desaparecer automaticamente da home.
+
+:::
+
+<b>text\_color:</b> deverá ser inserida a cor dos textos. Campo obrigatório.
+
+<b>background\_color:</b> deverá ser inserida a cor de fundo. Campo obrigatório.
+
+<b>button\_background\_color:</b> deverá ser inserida a cor de fundo do botão.<br /><b>button\_text\_color:</b> deverá ser inserida a cor do texto do botão.
+
+<b>backgroud\_image:</b> Imagem a ser utilizada como imagem de fundo. Campo obrigatório.
+
+### Exemplo
+
+![Banner Clock — figura 2](/img/strapi/banner-clock/img-02.webp)
+
+![Banner Clock — figura 3](/img/strapi/banner-clock/img-03.webp)
+
+### Figma
+
+[https://www.figma.com/design/RR9ssk1hdIQL0lG4fhcK4T/APP-\|-Telas-e-Fluxos?node-id=24505-24617&t=GbZerDLYOs8kHjvb-0](https://www.figma.com/design/RR9ssk1hdIQL0lG4fhcK4T/APP-%7C-Telas-e-Fluxos?node-id=24505-24617&t=GbZerDLYOs8kHjvb-0)
+
+## ANIMALE
+
+Este reloginho poderá ser usado para exibir promoção na home.
+
+![Banner Clock — figura 4](/img/strapi/banner-clock/img-04.webp)
+
+### Inputs
+
+:::tip
+
+Se não tiver texto cadastrado no título, subtítulo, cupom e texto do botão, irá mostrar apenas a imagem/vídeo de fundo com o cronômetro.
+
+:::
+
+Título: deverá ser inserido o texto que será exibido como título do reloginho. Campo opcional.
+
+<b>Subtítulo:</b> deverá ser inserido o texto que será exibido na home em baixo do reloginho e na pdc e pdp ele acompanha o texto na mesma linha. Campo opcional.
+
+<b>Cupom:</b> deverá ser inserido o cupom que será aplicado na sacola do usuário. Campo opcional.
+
+<b>Navegação:</b> deverá ser preenchido conforme [documento de navegação dinâmica](../navegacao-dinamica.mdx), este campo será responsável por fazer o redirecionamento quando o campo de cupom não for preenchido. Campo opcional.
+
+<b>start\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser iniciado. Campo obrigatório.
+
+<b>end\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser encerrado. Campo obrigatório.
+
+:::tip
+
+Após a data e hora preenchidos no campo “fim da promoção” o reloginho irá desaparecer automaticamente da home.
+
+:::
+
+<b>Cor do texto:</b> deverá ser inserida a cor dos textos. Campo obrigatório.
+
+<b>Cor de fundo do botão:</b> deverá ser inserida a cor de fundo do botão. Campo opcional.
+
+<b>Texto do botão:</b> deverá ser inserido o texto que será exibido no botão. Campo opcional.<br /><b>Cor do texto do botão:</b> deverá ser inserida a cor do texto do botão. Campo opcional.
+
+<b>Imagem:</b> Imagem a ser utilizada como imagem de fundo. Campo opcional.
+
+<b>Posição do relógio:</b> Posição em que o relógio irá aparecer. Tem 3 opções: <i>top</i> (em cima), <i>center</i> (no meio), <i>bottom</i> (embaixo). A posição padrão é <i>center</i>.
+
+<b>video\_url:</b> deverá ser inserido a url de vídeo da Vimeo. Campo Opcional.
+
+:::danger
+
+ATENÇÃO: É necessário cadastrar OU uma imagem OU uma url de vídeo. NUNCA os dois ao mesmo tempo.
+
+:::
+
+### Exemplo
+
+![Banner Clock — figura 5](/img/strapi/banner-clock/img-05.webp)
+
+![Banner Clock — figura 6](/img/strapi/banner-clock/img-06.webp)
+
+### Figma
+
+[https://www.figma.com/design/Un0v7FyLG2knx4drJSFfRx/APP--Home----Banner-clock---06-25---VERTAPP-2737---HANDOFF?node-id=1-20&p=f&t=PGkpS8yOWU12UMdJ-0](https://www.figma.com/design/Un0v7FyLG2knx4drJSFfRx/APP--Home----Banner-clock---06-25---VERTAPP-2737---HANDOFF?node-id=1-20&p=f&t=PGkpS8yOWU12UMdJ-0)

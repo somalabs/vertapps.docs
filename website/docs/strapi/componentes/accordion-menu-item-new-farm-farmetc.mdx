@@ -1,5 +1,5 @@
 ---
-sidebar_position: 11
+sidebar_position: 69
 title: "Accordion Menu Item New (Farm & FarmETC)"
 ---
 
@@ -17,19 +17,42 @@ import DocTitle from '@site/src/components/DocTitle';
   <Chip tone="teal">CMS</Chip>
 </Chips>
 
-
-## Preview
-
-![Accordion Menu Item New (Farm & FarmETC)](/img/strapi/accordion-menu-item-new-farm-farmetc/preview.webp)
-
 ## Inputs
 
-| Campo | Descrição |
-|---|---|
-| **Está ativa** | ?: Caso false, o componente não é exibido. |
-| **Cor do título** | Cor do título do menu. |
-| **Navegação dinâmica** | Conforme documentação da navegação dinâmica. |
-| **Header image** | Imagem que aparece no header do menu, quando está exibindo a listagem do campo ‘items’. (Não funciona pro MENU ETC) |
-| **Quantidade de selos** | Valor que aparecerá em formato de notificação ao lado do título do item. |
-| **Image URL (como banner)** | Quando preenchido, o componente irá ignorar quase todos os outros campos (exceto navigate_to), e usar esta imagem para renderizar um componente como o Menu Media Content. Está imagem deve ser upada previamente do bucket apropriado, e ser passada apenas a URL. Essa manobra foi necessária para não comprometer a performance do strapi, e também pra contornar a limitação de só ter um tipo de componente |
+<b>Está ativa</b>?: Caso false, o componente não é exibido.
 
+<b>Exibir tag ‘NOVO’:</b> Caso true, exibe tag semi circular na direita superior do título. Em azul em Farm e verde no Farm Etc.
+
+<b>Título:</b> Título do menu
+
+<b>Cor do título</b>: Cor do título do menu.
+
+<b>tag:</b> Configuração da tag do item. Item opcional.
+
+<b>text:</b> Texto da tag. Campo opcional.
+
+<b>text\_color:</b> Cor do texto da tag. Campo opcional.
+
+<b>border\_color:</b> Cor da borda da tag. Campo opcional.
+
+<b>background\_color:</b> Cor de fundo da tag. Campo opcional.
+
+<b>Navegação dinâmica</b>: Conforme documentação da navegação dinâmica.
+
+<b>Header image</b>: Imagem que aparece no header do menu, quando está exibindo a listagem do campo ‘items’. (Não funciona pro MENU ETC)
+
+<b>Quantidade de selos</b>: Valor que aparecerá em formato de notificação ao lado do título do item.
+
+<b>Image URL (como banner)</b>: Quando preenchido, o componente irá ignorar quase todos os outros campos (exceto navigate\_to), e usar esta imagem para renderizar um componente como o Menu Media Content. Está imagem deve ser upada previamente do bucket apropriado, e ser passada apenas a URL.
+
+Essa manobra foi necessária para não comprometer a performance do strapi, e também pra contornar a limitação de só ter um tipo de componente nesta listagem.
+
+<br /><b>Video URL (como banner):</b> Quando preenchido, o componente irá ignorar quase todos os outros campos (exceto navigate\_to), e usar esta imagem para renderizar um componente como o Menu Media Content. Está imagem deve ser upada previamente do bucket apropriado, e ser passada apenas a URL.
+
+Essa manobra foi necessária para não comprometer a performance do strapi, e também pra contornar a limitação de só ter um tipo de componente nesta listagem.
+
+## Exemplos:
+
+### No strapi
+
+![Accordion Menu Item New  (Farm & FarmETC) — figura 1](/img/strapi/accordion-menu-item-new-farm-farmetc/img-01.webp)

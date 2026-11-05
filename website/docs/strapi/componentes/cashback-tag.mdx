@@ -1,0 +1,40 @@
+---
+sidebar_position: 42
+title: "Cashback Tag"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Componente</Kicker>
+
+# Cashback Tag
+
+Componente de tag de cashback. Quando active está ativo, a tag aparece em todas as PDPs. A mesma ativação exibe automaticamente a tip bar de cashback na mochila.<br />
+
+<Chips>
+  <Chip tone="coral">Cashback Tag</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+## Preview
+
+![Cashback Tag — figura 1](/img/strapi/cashback-tag/img-01.webp)
+
+![Cashback Tag — figura 2](/img/strapi/cashback-tag/img-02.webp)
+
+## Inputs
+
+![Cashback Tag — figura 3](/img/strapi/cashback-tag/img-03.webp)
+
+<b>title:</b> texto exibido na tag da PDP. Campo obrigatório. Exemplo: Receba 10% de cashback.
+
+<b>discount\_value:</b> porcentagem de cashback. Campo obrigatório. Esse valor é usado na tip bar da mochila, no texto "Compre e receba &#123;valor&#125;% de cashback!".
+
+<b>active:</b> ativa ou desativa a tag. Campo obrigatório. Com a opção ativa, a tag aparece em todas as PDPs e a tip bar de cashback da mochila é exibida automaticamente.
+
+<b>background\_color:</b> cor de fundo da tag. Campo obrigatório. Fica dentro de colors.
+
+<b>text\_color:</b> cor do texto da tag. Campo obrigatório. Fica dentro de colors.
+
+<b>border\_color:</b> cor da borda da tag. Campo opcional. Fica dentro de colors.

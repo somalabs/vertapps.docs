@@ -1,5 +1,5 @@
 ---
-sidebar_position: 44
+sidebar_position: 45
 title: "Meus interesses com header"
 ---
 
@@ -17,27 +17,34 @@ Componente de banner de imagem que diferencia-se à depender de o usuário ter i
   <Chip tone="teal">CMS</Chip>
 </Chips>
 
-
 ## Preview
 
-![Meus interesses com header](/img/strapi/meus-interesses-com-header/preview.webp)
+![Meus interesses com header — figura 1](/img/strapi/meus-interesses-com-header/img-01.webp)
 
 ## Inputs
 
-![Inputs — Meus interesses com header](/img/strapi/meus-interesses-com-header/inputs.webp)
+<b>title:</b> título (para usuários com interesses cadastrados), deve ser inserido o título para o banner de usuários com interesses já cadastrados, que ficará sobreposto à imagem. Campo obrigatório.
 
-| Campo | Descrição |
-|---|---|
-| **título (para usuários com interesses cadastrados),** | deve ser inserido o título para o banner de usuários com interesses já cadastrados, que ficará sobreposto à imagem. Campo obrigatório. |
-| **título do CTA (para usuários com interesses cadastrados),** | deve ser inserido o título do CTA para usuários com interesses já cadastrados. Campo opcional. |
+<b>subtitle:</b> subtítulo (para usuários com interesses cadastrados), deve ser inserido o texto que será exibido abaixo do título no banner para usuários com interesses cadastrados. Campo opcional.
+
+<b>call\_to\_action:</b> título do CTA (para usuários com interesses cadastrados), deve ser inserido o título do CTA para usuários com interesses já cadastrados. Campo opcional.
+
+<b>image\_interests (para usuários com interesses cadastrados):</b> deve ser inserida uma imagem simples e sem textos para ser exibida ao fundo do banner de usuários com interesses já cadastrados. Campo obrigatório.
+
+<b>image\_no\_interests (para usuários sem interesses cadastrados):</b> deve ser inserida uma imagem com textos e informações para ser exibida como banner para usuários sem interesses cadastrados. Campo obrigatório. (A própria imagem deve conter os textos a serem exibidos).
+
+<b>header\_color:</b> Para definir a cor do header, selecione entre tema ‘claro’ e ‘escuro’, conforme a media de fundo selecionada.
 
 ## Páginas
 
-- Home
+Home
 
-## Exemplos
+## Exemplo
 
-![Exemplo 1 — Meus interesses com header](/img/strapi/meus-interesses-com-header/exemplo-1.webp)
+![Meus interesses com header — figura 2](/img/strapi/meus-interesses-com-header/img-02.webp)
 
-![Exemplo 2 — Meus interesses com header](/img/strapi/meus-interesses-com-header/exemplo-2.webp)
+![Meus interesses com header — figura 3](/img/strapi/meus-interesses-com-header/img-03.webp)
 
+Para usuários Sem interesses cadastrados, deve ser cadastrada uma imagem que já contenha os textos a serem exibidos.
+
+![Meus interesses com header — figura 4](/img/strapi/meus-interesses-com-header/img-04.webp)

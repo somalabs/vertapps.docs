@@ -1,0 +1,91 @@
+---
+sidebar_position: 31
+title: "Roleta (Farm)"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+import DocTitle from '@site/src/components/DocTitle';
+
+<Kicker>CMS · Coleção</Kicker>
+
+<DocTitle brand="Farm">Roleta</DocTitle>
+
+&lt;page url="https://app.notion.com/p/3ca690e9a7e28001a264c79345067c28">
+
+<Chips>
+  <Chip tone="coral">Roleta</Chip>
+  <Chip tone="amber">Farm</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+Roleta Premiada - Documentação
+
+&lt;/page>
+
+1. <b>Visão Geral</b><br />A Roleta Premiada é uma funcionalidade interativa exclusiva do aplicativo da Farm, criada para engajar usuários e incentivar conversões por meio de gamificação. Ao girar a roleta, o usuário ganha prêmios ou descontos.<br />O grande diferencial técnico desta feature é a aplicação silenciosa do cupom: ao resgatar o prêmio, o código promocional é injetado automaticamente no carrinho (sacola) do usuário, mesmo que ele ainda não tenha selecionado nenhum produto. Após o resgate, ele é redirecionado de forma fluida para uma vitrine estratégica para iniciar suas compras<br />.
+
+2. <b>Jornada do Usuário (User Flow)</b><br />•	Descoberta: O usuário visualiza o acesso à roleta de duas formas:<br />•	Um Pop-up Animado (GIF) na tela inicial (Home). Esse pop-up possui inteligência de sessão e só é exibido se o usuário for elegível a um novo giro.<br />•	Um Item fixo no Menu do aplicativo.<br />•	Interação: Ao clicar, o usuário é direcionado à tela do jogo.<br />•	Gamificação: O usuário clica no botão para girar, e o aplicativo sorteia um prêmio baseado nas probabilidades matemáticas recebidas do backend.<br />•	Resgate: Uma tela de celebração aparece com confetes e o botão para aplicar o desconto.<br />•	Conversão: O cupom é salvo na sessão. O usuário é redirecionado para a tela designada e ao adicionar qualquer item à mochila, o desconto já estará validado.<br />
+
+3. <b>Configuração dos Pontos de Acesso</b>
+
+Para que os pop-ups ou itens de menu direcionem corretamente para a roleta, é preciso cadastrar o componente dinâmico no Strapi com a seguinte regra de redirecionamento:<br />•	Campo Ação / Rota (navigate\_to): Preencher com roleta ou roulette<br />Prints de exemplo do pop-up e do item de menu cadastrados no painel:<br />
+
+1. <b>Gerenciamento da roleta (Endpoint Strapi)</b>
+
+A interface, as regras e as probabilidades são 100% controladas de forma dinâmica via CMS (Endpoint: roulette-wheels-farm).<br />
+
+<b><br />4.1. Configurações Visuais e da Tela</b>
+
+Estes campos definem a aparência primária da tela do jogo:
+
+- <b>active</b> (Booleano): Liga ou desliga a funcionalidade no app.
+
+- <b>title</b> (Texto): Título principal do cabeçalho (ex: Gire a roleta e ganhe descontos).
+
+- <b>couponsQuantity</b> (Texto): Informação visual da disponibilidade de cupons (ex: 4, 6).
+
+- <b>ctaText</b> (Texto): Texto do botão de ação antes do giro (ex: Girar a roleta).
+
+- <b>ctaBackground</b> (Cor Hexadecimal): Cor de fundo do botão principal (ex: #FF5733).
+
+- <b>backgroundImage</b> (Imagem, opcional): Imagem de fundo da tela. Se omitida, uma arte nativa do app será assumida automaticamente.
+
+- <b>rouletteDecorationColor</b> (Cor Hexadecimal, opcional): Cor do chassi e borda externa da roleta.
+
+- <b>pointerColor</b> (Cor Hexadecimal, opcional): Cor do pino central que marca a fatia vencedora.
+
+- <b>feedbackText</b> (Texto, opcional): Mensagem de sucesso após o giro. Importante: Use \[...\] como curinga para o desconto. Ex: "Parabéns! Você ganhou \[...\] para usar hoje!". O app substituirá o curinga dinamicamente.
+
+- <b>feedbackTextColor</b> (Cor Hexadecimal, opcional): Cor da fonte da mensagem de sucesso.
+
+<b>4.2. Regras de Negócio</b>
+
+- <b>newSpinIn</b> (Número): Regra de Cooldown (tempo de espera em horas/dias). Define quanto tempo um usuário logado precisa aguardar para ter direito a girar a roleta de novo.
+
+- <b>navigate\_to</b> (Texto, opcional): A rota de destino para onde o app redireciona o usuário após ele resgatar o cupom (ex: plp/novidades-2).
+
+<b>4.3. Configuração dos Prêmios (Fatias da Roleta)</b>
+
+A roleta deve conter uma lista repetível (Componentes) representando os pedaços/prêmios. Cada fatia requer os seguintes dados:<br />
+
+- <b>avbardiscount\_text</b> (Texto): O rótulo impresso dentro da fatia (ex: 20% OFF, Frete Grátis). Esse mesmo texto substituirá o \[...\] na mensagem final.
+
+- <b>background\_discount\_text</b> (Cor Hexadecimal): Cor de fundo exclusiva daquela fatia.
+
+- <b>discount\_text\_color</b> (Cor Hexadecimal, opcional): Cor da fonte do texto da fatia.
+
+- <b>coupon\_code</b> (Texto): O código promocional real ativo na VTEX (ex: FARM20). É o código injetado silenciosamente no carrinho.
+
+- <b>probability</b> (Decimal): O peso estatístico (chance) deste prêmio sair no sorteio. (Ex: 80 representa alta frequência(80%)).
+
+## Preview
+
+![Roleta (Farm) — figura 1](/img/strapi/colecoes/roleta-farm/img-01.webp)
+
+![Roleta (Farm) — figura 2](/img/strapi/colecoes/roleta-farm/img-02.webp)
+
+![Roleta (Farm) — figura 3](/img/strapi/colecoes/roleta-farm/img-03.webp)
+
+![Roleta (Farm) — figura 4](/img/strapi/colecoes/roleta-farm/img-04.webp)
+

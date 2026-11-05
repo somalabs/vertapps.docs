@@ -1,5 +1,5 @@
 ---
-sidebar_position: 10
+sidebar_position: 18
 title: "Accordion Menu"
 ---
 
@@ -17,22 +17,44 @@ Componente de item expansível do Menu com redirecionamentos. Disponível no Men
   <Chip tone="teal">CMS</Chip>
 </Chips>
 
-
 ## Preview
 
-![Accordion Menu](/img/strapi/accordion-menu/preview.webp)
+![Accordion Menu — figura 1](/img/strapi/accordion-menu/img-01.webp)
 
 ## Inputs
 
-![Inputs — Accordion Menu](/img/strapi/accordion-menu/inputs.webp)
+![Accordion Menu — figura 2](/img/strapi/accordion-menu/img-02.webp)
 
-| Campo | Descrição |
-|---|---|
-| **banner** | seja preenchido. |
+<b>title:</b> Título do item. Campo obrigatório.
 
-## Exemplos
+<b>banner:</b> Imagem principal mostrada ao expandir o item. Campo opcional.
 
-![Exemplo 1 — Accordion Menu](/img/strapi/accordion-menu/exemplo-1.webp)
+<b>banner\_navigate\_to:</b> URL de navegação que será executada ao clicar no banner. Casp não seja informado, será usado o navigate\_to ao clicar no banner. Campo opcional. Segue o padrão de [navegação dinâmica](../navegacao-dinamica.mdx).
 
-![Exemplo 2 — Accordion Menu](/img/strapi/accordion-menu/exemplo-2.webp)
+<b>banner\_name\_ga4:</b> ID e nome da promoção usados para eventos de analytics, separados por ///. Campo obrigatório caso o campo <b>banner</b> seja preenchido.
 
+<b>navigate\_to:</b> URL de navegação que será executada ao clicar no botão geral do item. Campo opcional. Segue o padrão de [navegação dinâmica](../navegacao-dinamica.mdx).
+
+<b>call\_to\_action:</b> Texto do botão geral do item. Campo opcional.
+
+<b>tag:</b> Configuração da tag do item. Item opcional.
+
+<b>text:</b> Texto da tag. Campo opcional.
+
+<b>text\_color:</b> Cor do texto da tag. Campo opcional.
+
+<b>border\_color:</b> Cor da borda da tag. Campo opcional.
+
+<b>background\_color:</b> Cor de fundo da tag. Campo opcional.
+
+<b>items:</b> Subitems que serão exibidos ao expandir o item. (repetível)
+
+<b>title:</b> Título do item. Campo obrigatório.
+
+<b>navigate\_to:</b> URL de navegação que será executada ao clicar no subitem. Campo obrigatório. Segue o padrão de [navegação dinâmica](../navegacao-dinamica.mdx).
+
+## Exemplo
+
+![Accordion Menu — figura 3](/img/strapi/accordion-menu/img-03.webp)
+
+![Accordion Menu — figura 4](/img/strapi/accordion-menu/img-04.webp)

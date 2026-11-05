@@ -1,0 +1,68 @@
+---
+sidebar_position: 2
+title: "Menu"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Coleção</Kicker>
+
+# Menu
+
+Nota: O menu do aplicativo é dividido em dois documentos: <b>Menu</b> e <b>Conteúdo do Menu.</b> 
+
+<Chips>
+  <Chip tone="coral">Menu</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+Esse documento é utilizado para cadastrar quais tabs irão compor o menu do aplicativo. Para cadastrar o conteúdo das tabs, veja o documento [<b>Conteúdo do Menu</b>](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718#d661bb27574b420fb90b80ede683014a)<b>.</b>
+
+Cada tab contém os campos:
+
+## Farm & ETC (exclusivo)
+
+Novos campos foram adicionados no componente da TAB para o Farm e Farm ETC, sendo eles:
+
+- Exibir tag ‘novo’: Quando true, exibe a tag
+
+- Tag: Cadastro de tag que já existia anteriormente no menu, podendo definir o texto, cor do texto, cor de fundo e cor da borda.
+
+- Badge Count: Deve ser preenchido o número que deve aparecer na badge.
+
+### Exemplo de cadastro no strapi
+
+![Menu — figura 1](/img/strapi/colecoes/menu/img-01.webp)
+
+### Exemplo de como ficam os novos campos no menu:
+
+#### Menu Farm (exemplo de badge e tag ‘novo’)
+
+![Menu — figura 2](/img/strapi/colecoes/menu/img-02.webp)
+
+#### Menu Etc
+
+![Menu — figura 3](/img/strapi/colecoes/menu/img-03.webp)
+
+<br />Na coleção de Menu também está disponível um novo componente, o Menu Media Content ([documentação](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718#216690e9a7e2803c84dbc4a47e7fd17b)).
+
+- <b>is\_active:</b> Indica se a tab está ativa, isto é, se ela deve ser exibida. Campo obrigatório.
+
+- <b>title:</b> Título da tab. Campo obrigatório.
+
+- <b>title\_color:</b> Cor do título da tab. Campo opcional. Caso não seja informado, o título ficará na cor preta.
+
+- <b>content:</b> Referência ao documento de conteúdo da tab. Campo opcional.
+
+![Menu — figura 4](/img/strapi/colecoes/menu/img-04.webp)
+
+A tab não será exibida caso:
+
+- O campo <b>is\_active</b> esteja marcado como falso;
+
+- O campo <b>content</b> esteja vazio;
+
+- O documento referenciado no campo <b>content</b> não esteja publicado;
+
+- O documento referenciado no campo <b>content</b> não tenha componentes.
