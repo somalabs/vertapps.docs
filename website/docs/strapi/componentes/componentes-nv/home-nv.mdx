@@ -1,0 +1,295 @@
+---
+sidebar_position: 1
+title: "Componentes da Home (NV)"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+import DocTitle from '@site/src/components/DocTitle';
+
+<Kicker>CMS · Componente</Kicker>
+
+<DocTitle brand="NV">Componentes da Home</DocTitle>
+
+<b>fidelity\_level\_required:</b> 
+
+<Chips>
+  <Chip tone="coral">Componentes da Home</Chip>
+  <Chip tone="amber">NV</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+Este campo foi adicionado para todos os componentes da Home da NV. <br />Caso ele não seja preenchido, ou seja com o valor ‘none’, o componente irá aparecer para todos os usuários.
+
+O level do fidelidade considerado é o mínimo, portanto um usuário black irá ver todos os componentes cadastrados.
+
+Um usuário platinum verá todos os componentes, exceto os que tenham o fidelity\_level\_required cadastrados como ‘black’.<br />Um usuário platinum verá todos os componentes, exceto os que tenham o fidelity\_level\_required cadastrados como ‘black’ ou ‘platinum’.
+
+## Media List (Home NV)
+
+![Componentes da Home (NV) — figura 1](/img/strapi/componentes-nv/home-nv/img-01.webp)
+
+### Inputs
+
+<b>title:</b> Texto que aparece acima do botão (Caso não preenchido não exibe).<br /><b>button\_color:</b> define a cor do botão.<b><br />text\_color: </b>define a cor dos textos.
+
+<b>Media</b>: corresponde a cada item a ser renderizados.
+
+<b>image\_background</b>: imagem de fundo. Quando não preenchida exibe o video\_background.
+
+<b>video\_background</b>: url do vídeo a ser exibido.
+
+:::warning
+
+Para vídeo, sugere-se que possuam até 3MB para que seja minimizado o risco de problemas com a experiência do usuário em seu dispositivo, que vão desde fluidez corrompida dos vídeos à fechamento inesperado da aplicação.
+
+:::
+
+<b>call\_to\_action</b>: Texto que aparece dentro do botão. Caso o “navigate\_to” não esteja preenchido, ou o call\_to\_action, o botão não aparece.
+
+<b>banner\_name\_ga4:</b> ID e nome da promoção usados para eventos de analytics, separados por ///. Campo obrigatório.
+
+<b>header\_color:</b> Para definir a cor do header, selecione entre tema ‘claro’ e ‘escuro’, conforme a media de fundo selecionada.
+
+<b>navigate\_to:</b>  Link de redirecionamento ao clicar no botão (Campo obrigatório). Deve seguir [o padrão de redirecionamento da navegação dinâmica](../../navegacao-dinamica.mdx). <br />Exemplo: “<b>external-link/</b>https://www.bynv.com.br/new-in”<br />
+
+### Páginas
+
+Home
+
+### Exemplo
+
+![Componentes da Home (NV) — figura 2](/img/strapi/componentes-nv/home-nv/img-02.webp)
+
+![Componentes da Home (NV) — figura 3](/img/strapi/componentes-nv/home-nv/img-03.webp)
+
+## Banner Media (Home NV)
+
+![Componentes da Home (NV) — figura 4](/img/strapi/componentes-nv/home-nv/img-04.webp)
+
+### Inputs
+
+<b>title:</b> Texto que aparece no banner acima do botão (Campo obrigatório).<br /><b>button\_text:</b> Texto que aparece dentro do botão (Campo obrigatório).<br /><b>header\_color:</b> Para definir a cor do header, selecione entre tema ‘claro’ e ‘escuro’, conforme a media de fundo selecionada. <br /><b>navigate\_to:</b>  Link de redirecionamento ao clicar no botão (Campo obrigatório). Deve seguir [o padrão de redirecionamento da navegação dinâmica](../../navegacao-dinamica.mdx). <br />Exemplo: “<b>external-link/</b>https://www.bynv.com.br/new-in”<br /><b>background\_image:</b> Imagem que aparece ao fundo. (A mídia de fundo pode ser imagem ou vídeo, caso tenha imagem, não será exibido vídeo ao fundo).<br /><b>background\_video</b>: Preencher com a url do vídeo que deverá aparecer ao fundo. Limitação de 3MB. (A mídia de fundo pode ser imagem ou vídeo, caso tenha imagem, não será exibido vídeo ao fundo).
+
+:::warning
+
+Para vídeo, sugere-se que possuam até 5MB para que seja minimizado o risco de problemas com a experiência do usuário em seu dispositivo, que vão desde fluidez corrompida dos vídeos à fechamento inesperado da aplicação.
+
+:::
+
+### Páginas
+
+Home NV
+
+### Exemplos
+
+Com imagem de fundo:
+
+![Componentes da Home (NV) — figura 5](/img/strapi/componentes-nv/home-nv/img-05.webp)
+
+![Componentes da Home (NV) — figura 6](/img/strapi/componentes-nv/home-nv/img-06.webp)
+
+Com vídeo de fundo:
+
+![Componentes da Home (NV) — figura 7](/img/strapi/componentes-nv/home-nv/img-07.webp)
+
+![Componentes da Home (NV) — figura 8](/img/strapi/componentes-nv/home-nv/img-08.webp)
+
+## Content Area (Home NV)
+
+Componente para exibir saudações e banners de redirecionamento externo.
+
+![Componentes da Home (NV) — figura 9](/img/strapi/componentes-nv/home-nv/img-09.webp)
+
+### Inputs
+
+<b>title\_logged\_in</b>: Título para usuário logado. Deve ser inserido o título que será exibido na saudação para o usuário logado. Campo obrigatório.<br /><b>description\_logged\_in:</b> Deve ser inserida a descrição que será exibida na saudação para o usuário logado. Campo obrigatório.<br /><b>title\_not\_logged\_in:</b> Deve ser inserido o título que será exibido na saudação para o usuário não logado. Campo obrigatório.<br /><b>description\_not\_logged\_in:</b> Deve ser inserida a descrição que será exibida na saudação para o usuário não  logado. Campo obrigatório.<br /><b>shortcut\_first:</b> Primeiro atalho exibido para o usuário logado, um deve ser selecionado entre as opções. Campo obrigatório.<br />shortcut\_second: Segundo atalho exibido para o usuário logado, pode ser selecionado “Nenhum” para que não haja segundo atalho.<b><br />shortcut\_third</b>: Terceiro atalho exibido para o usuário logado, pode ser selecionado “Nenhum” para que não haja terceiro atalho.<br /><b>banner\_image:</b> Imagem exibida como banner.<br /><b>banner\_title:</b> Mensagem de título exibida acima da imagem do banner.<br /><b>navigate\_to</b>: Url de destino ao clicar na seta, para onde o usuário é redirecionado a partir do respectivo banner. (Campo obrigatório).  Deve seguir [o padrão de redirecionamento da navegação dinâmica](../../navegacao-dinamica.mdx). <br />Exemplo: “<b>external-link/</b>[https://www.bynv.com.br/quemsomos](https://www.bynv.com.br/quemsomos)”
+
+### Páginas
+
+Home (NV)
+
+### Exemplo
+
+![Componentes da Home (NV) — figura 10](/img/strapi/componentes-nv/home-nv/img-10.webp)
+
+![Componentes da Home (NV) — figura 11](/img/strapi/componentes-nv/home-nv/img-11.webp)
+
+![Componentes da Home (NV) — figura 12](/img/strapi/componentes-nv/home-nv/img-12.webp)
+
+![Componentes da Home (NV) — figura 13](/img/strapi/componentes-nv/home-nv/img-13.webp)
+
+## Video Banner (Home NV)
+
+### Inputs
+
+![Componentes da Home (NV) — figura 14](/img/strapi/componentes-nv/home-nv/img-14.webp)
+
+<b>Url de vídeo de fundo:</b> Preencher com a url do vídeo que deverá aparecer ao fundo (Campo obrigatório).
+
+:::warning
+
+Para vídeo, sugere-se que possuam até 3MB para que seja minimizado o risco de problemas com a experiência do usuário em seu dispositivo, que vão desde fluidez corrompida dos vídeos à fechamento inesperado da aplicação.
+
+:::
+
+<b>Título:</b> Texto que aparece no banner (Campo opcional).
+
+<b>Texto do call to action:</b>  Texto que aparece dentro do botão (Campo obrigatório).
+
+<b>Filtro de categorias ou coleções:</b> Categoria ou coleção para qual o usuário será redirecionado (Campo obrigatório).
+
+<b>Cor do texto</b>: Cor do texto que aparecerá na tela, caso não tenha, será considerado a cor branca da marca (Campo opcional).
+
+<b>Cor do dos botões</b>: Cor dos botões de call to action e de pause, caso não tenha, será considerado a cor branca da marca (Campo opcional).
+
+### Páginas
+
+Home
+
+### Exemplos
+
+![Componentes da Home (NV) — figura 15](/img/strapi/componentes-nv/home-nv/img-15.webp)
+
+![Componentes da Home (NV) — figura 16](/img/strapi/componentes-nv/home-nv/img-16.webp)
+
+![Componentes da Home (NV) — figura 17](/img/strapi/componentes-nv/home-nv/img-17.webp)
+
+Alterando cor de texto e de botões
+
+![Componentes da Home (NV) — figura 18](/img/strapi/componentes-nv/home-nv/img-18.webp)
+
+## Products Mosaic (Home NV)
+
+![Componentes da Home (NV) — figura 19](/img/strapi/componentes-nv/home-nv/img-19.webp)
+
+### Inputs
+
+<b>title:</b> Título opcional em texto que deve ser preenchido caso o usuário do Prismic opte por não utilizar uma imagem como título. (Opcional)
+
+<b>subtitle:</b> Texto que poderá ser utilizado como subtítulo do componente (Opcional).<br />i<b>mage\_title:</b> Imagem que poderá ser utilizada como um título, caso o usuário do Prismic opte por não utilizar um texto como título. (Opcional)<br /><b>call\_to\_action</b>:  Texto que será utilizado no botão de redirecionamento (CTA) (Opcional)<br /><b>filter\_category\_or\_cluster</b>: Filtragem da coleção/categoria que será utilizada ao usuario clicar no botão de redirecionamento (CTA), essa filtragem será aplicada a pesquisa.
+
+<b>filter\_color</b>: Filtragem por cores da coleção definida no campo ‘filter\_category\_or\_cluster’. Deve ser preechido assim “rosa” ou “azul, vermelho” (separados por vírgula quando tem mais do que um.
+
+<b>filter\_size</b>: Filtragem por tamanho da coleção definida no campo ‘filter\_category\_or\_cluster’. Deve ser preechido assim “p” ou “g,gg” (separados por vírgula quando tem mais do que um.
+
+### Página
+
+Home NV
+
+### Exemplo
+
+Com imagem de título:
+
+![Componentes da Home (NV) — figura 20](/img/strapi/componentes-nv/home-nv/img-20.webp)
+
+![Componentes da Home (NV) — figura 21](/img/strapi/componentes-nv/home-nv/img-21.webp)
+
+Com título, sem imagem:<br />
+
+![Componentes da Home (NV) — figura 22](/img/strapi/componentes-nv/home-nv/img-22.webp)
+
+![Componentes da Home (NV) — figura 23](/img/strapi/componentes-nv/home-nv/img-23.webp)
+
+## Personal Showcase (Home NV)
+
+Componente de vitrines customizadas para o usuário.
+
+![Componentes da Home (NV) — figura 24](/img/strapi/componentes-nv/home-nv/img-24.webp)
+
+### Inputs
+
+<b>Título</b>: Título que a vitrine customizada terá. (Campo opcional)<br /><br /><b>Subtítulo</b>: Subtítulo da vitrine customizada. Aparecerá logo abaixo do título. (Campo opcional)<br /><br /><b>Call-to-Action:  Conteúdo do texto do botão de CTA. (Campo opcional)<br /><br />Filtro de cor</b>: Filtragem por cores da coleção definida no campo ‘filter\_category\_or\_cluster’. Deve ser preechido assim “rosa” ou “azul, vermelho” (separados por vírgula quando tem mais do que um.
+
+<b>Filtro de tamanho</b>: Filtragem por tamanho da coleção definida no campo ‘filter\_category\_or\_cluster’. Deve ser preechido assim “p” ou “g,gg” (separados por vírgula quando tem mais do que um.<b><br /><br />Filtro de categoria ou coleção: </b>Preencha com a categoria/coleção (Campo opcional). <b>Obs</b>: Nos tipos de vitrine <b>LastPurchasedCategoryProducts e NewReleases</b> é importante que esse campo seja preenchido, pois será essa a categoria/coleção que os produtos da vitrine terão caso o usuário esteja deslogado. No tipo <b>LastSeenProducts,</b> é também importante que ele seja preenchido, pois será a partir desse campo que será feita a <b>busca</b> ao clicar no <b>CTA.<br /><br />Ordenação</b>: Preencha com o tipo que os produtos da vitrine ou os resultados da busca no clique do <b>CTA</b> deverão ser ordenados. (Campo opcional).<br /><b>Obs</b><b>:</b> Apenas nos tipos de vitrine <b>LastPurchasedCategoryProducts e NewReleases</b>, com o usuário <b>deslogado</b><b>,</b> que esse campo terá algum efeito de ordenação nos produtos da vitrine. Caso o tipo de vitrine seja <b>LastSeenProducts,</b> é possível ordenar os resultados da <b>busca efetuada</b> ao clicar no CTA.<br /><br /><b>Tipo de vitrine</b>: Deve ser selecionado o tipo de vitrine. (Campo obrigatório)<br />Entre os tipos disponíveis, temos:
+
+- <b>LastSeenProducts</b>: Vitrine de produtos vistos por último pelo usuário. (Apenas usuários <b>logados</b> poderão ver essa vitrine)
+- <b>WishlistProducts</b>: Vitrine de produtos que estão na lista de desejos do usuário. (Apenas usuários logados poderão ver essa vitrine)
+- <b>MyInterests</b>: Vitrine que exibe os produtos de "Meus Interesses" do usuário. (Apenas usuários logados poderão ver essa vitrine)
+- <b>LastSeenProductsRecommendations</b>: Vitrine que exibe uma lista de recomendações de produtos baseada nos produtos vistos por último pelo usuário. (Disponível para todos os usuários)
+- <b>LastPurchasedCategoryProducts</b>: Vitrine que exibe uma lista de produtos da mesma categoria do último produto comprado pelo usuário.<br />  - Caso o usuário não esteja logado, a vitrine exibirá os produtos cadastrados no campo <b>Filtro de Categoria ou Coleção</b>, por isso é <b>importante</b> que esse campo seja preenchido caso esse tipo seja selecionado.<br />  - Caso o usuário nunca tenha comprado no app, ela exibirá os <b>últimos produtos vistos</b>.
+- <b>NewReleases</b>: Vitrine que exibe produtos que foram adicionados recentemente da ultima categoria comprada pelo usuário.<br />   - Caso o usuário não esteja logado, a vitrine exibirá os produtos cadastrados no campo <b>Filtro de Categoria ou Coleção</b>, por isso é <b>importante</b> que esse campo seja preenchido caso esse tipo seja selecionado<br />   - Caso o usuário esteja logado e nunca tenha comprado no app, ela exibirá os produtos que chegaram recentemente da <b>categoria do último produto visto</b><b>.</b>
+
+### Páginas
+
+Home (NV)
+
+Wishlist Vazia (NV)
+
+### Exemplos
+
+<b>Vitrine com tipo “WishlistProducts” (Apenas usuários logados)</b>
+
+![Componentes da Home (NV) — figura 25](/img/strapi/componentes-nv/home-nv/img-25.webp)
+
+![Componentes da Home (NV) — figura 26](/img/strapi/componentes-nv/home-nv/img-26.webp)
+
+<b><br />Vitrine com tipo “MyInterests” (Apenas usuários logados)</b>
+
+![Componentes da Home (NV) — figura 27](/img/strapi/componentes-nv/home-nv/img-27.webp)
+
+![Componentes da Home (NV) — figura 28](/img/strapi/componentes-nv/home-nv/img-28.webp)
+
+<br />Vitrine com tipo “<b>LastSeenProducts</b>” (Apenas usuários logados)
+
+![Componentes da Home (NV) — figura 29](/img/strapi/componentes-nv/home-nv/img-29.webp)
+
+![Componentes da Home (NV) — figura 30](/img/strapi/componentes-nv/home-nv/img-30.webp)
+
+<br />Vitrine com tipo “<b>LastPurchasedCategoryProducts</b>”
+
+![Componentes da Home (NV) — figura 31](/img/strapi/componentes-nv/home-nv/img-31.webp)
+
+Vitrine com tipo “<b>LastPurchasedCategoryProducts” (</b>Versão usuário <b>logado</b> - com ao menos <b>uma compra)</b>
+
+![Componentes da Home (NV) — figura 32](/img/strapi/componentes-nv/home-nv/img-32.webp)
+
+<br />Vitrine com tipo “<b>LastPurchasedCategoryProducts” (</b>Versão usuário <b>deslogado</b> - Exibe os produtos da categoria/coleção cadastrada no campo “Filtro de categoria/coleção”  e também com a ordenação cadastrada<b>)</b>
+
+![Componentes da Home (NV) — figura 33](/img/strapi/componentes-nv/home-nv/img-33.webp)
+
+<br />Vitrine com tipo “<b>LastPurchasedCategoryProducts</b>” (Versão usuário <b>logado</b>, porém com <b>nenhuma compra,</b> ou seja<b>,</b> exibe os últimos produtos vistos)
+
+![Componentes da Home (NV) — figura 34](/img/strapi/componentes-nv/home-nv/img-34.webp)
+
+<br />Vitrine com tipo “<b>NewReleases</b>”
+
+![Componentes da Home (NV) — figura 35](/img/strapi/componentes-nv/home-nv/img-35.webp)
+
+<br />Vitrine com tipo “<b>New Releases”</b> (Versão usuário <b>logado</b> com nenhum produto comprado, ou seja exibe produtos recentemente lançados da categoria do <b>último produto visto</b>)
+
+![Componentes da Home (NV) — figura 36](/img/strapi/componentes-nv/home-nv/img-36.webp)
+
+<br />Vitrine com tipo “NewReleases” (Versão com usuário <b>logado</b> e com ao menos uma compra<b>)</b> 
+
+![Componentes da Home (NV) — figura 37](/img/strapi/componentes-nv/home-nv/img-37.webp)
+
+<br />Vitrine com tipo “<b>LastSeenProductsRecommendations</b>”<br />
+
+![Componentes da Home (NV) — figura 38](/img/strapi/componentes-nv/home-nv/img-38.webp)
+
+![Componentes da Home (NV) — figura 39](/img/strapi/componentes-nv/home-nv/img-39.webp)
+
+## Showcase Banner (inclui: Home NV)
+
+Componente de vitrine com a possibilidade de inserir um banner de fundo.<br />
+
+![Componentes da Home (NV) — figura 40](/img/strapi/componentes-nv/home-nv/img-40.webp)
+
+### Inputs
+
+<b>Imagem de fundo</b>: A imagem de fundo que a vitrine terá. (Campo obrigatório).<br /><b>Filtro de categoria ou coleção</b>: A categoria/coleção que os produtos da vitrine deverão ter. (Campo obrigatório).<br /><b>Filtro de tamanho:</b>  Selecione o tamanho que os produtos deverão ter. (Campo opcional).<br /><b>Ordenação:</b> Selecione aqui como os produtos deverão estar ordenados. (Campo opcional).<br /><b>Palavra-chave de busca:</b> Uma pesquisa com palavra-chave que poderá ser adicionada. (Campo opcional).<br /><b>Cor do header:</b> Selecione qual a cor da Logo e ícone de pesquisa o componente terá. (Campo opcional).<br /><b>Call-to-Action:</b> Insira aqui qual o conteúdo do texto do CTA. (Campo obrigatório).
+
+<b>Filtro de cor</b>: Filtragem por cores da coleção definida no campo ‘filter\_category\_or\_cluster’. Deve ser preechido assim “rosa” ou “azul, vermelho” (separados por vírgula quando tem mais do que um. (Apenas funcional na velha estrutura)
+
+<b>Filtro de tamanho:</b> Filtragem por tamanho da coleção definida no campo ‘filter\_category\_or\_cluster’. Deve ser preechido assim “p” ou “g,gg” (separados por vírgula quando tem mais do que um. (Apenas funcional na velha estrutura)
+
+### Páginas
+
+Home (NV)
+
+### Exemplos
+
+![Componentes da Home (NV) — figura 41](/img/strapi/componentes-nv/home-nv/img-41.webp)
+
+![Componentes da Home (NV) — figura 42](/img/strapi/componentes-nv/home-nv/img-42.webp)

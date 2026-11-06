@@ -1,0 +1,66 @@
+---
+sidebar_position: 6
+title: "Media kit"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Coleção</Kicker>
+
+# Media kit
+
+[página no Notion](https://app.notion.com/p/249690e9a7e280869f24d389882c87b2)
+
+<Chips>
+  <Chip tone="coral">Media kit</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+---
+
+Coleção utilizada para inserção de componentes de mídia em páginas de categoria/coleção (PDCs). Esses componentes serão inseridos entre os produtos da PDC especificada, e o intervalo entre eles poderá ser configurado.<br /><br /><b>Media kit versão</b> <b>Farm</b>
+
+<b>Nome interno:</b> Apenas um campo que servirá para identificar mais facilmente esse documento em caso de múltiplos<br /><b>Categoria/Cluster:</b> Será a categoria ou coleção onde serão inseridos os componentes do Media kit. PRECISA COMEÇAR COM ‘/’. Exemplo: “/productclusterids/123”.
+
+## Preview
+
+![Media kit — figura 1](/img/strapi/colecoes/media-kit/img-01.webp)
+
+## Componentes
+
+Media Kit Banner
+
+![Media kit — figura 2](/img/strapi/colecoes/media-kit/img-02.webp)
+
+<b>Mostrar antes do produto:</b> Em qual posição o banner será mostrado (Campo obrigatório)<br /><b>Tamanho:</b> O tamanho desse banner (Campo opcional)<br /><b>Imagem:</b> Imagem do banner (Campo obrigatório)<br /><b>Navegação:</b> Navegação dinâmica que será realizada ao clique do usuário no banner. Consulte [aqui](../navegacao-dinamica.mdx) para saber mais detalhes. (Campo obrigatório)
+
+<b>video\_url:</b> campo para preencher com o link da vimeo, do video que deve ser exibido. Caso tenha imagem e video cadastrado, prioriza o video.
+
+<br /><b>Media kit versão</b> <b>NV</b>
+
+![Media kit — figura 3](/img/strapi/colecoes/media-kit/img-03.webp)
+
+<b>Nome interno:</b> Apenas um campo que servirá para identificar mais facilmente esse documento em caso de múltiplos (Campo obrigatório).<br /><b>Categoria/Cluster:</b> Será a categoria ou coleção onde serão inseridos os componentes do Media kit. (Campo obrigatório).<br /><b>Densidade da grid:</b> Escolha aqui em qual densidade da grid de produtos, os componentes do Media kit deverão aparecer (Campo obrigatório).
+
+## Componentes
+
+<b>Media kit Banner</b>
+
+![Media kit — figura 4](/img/strapi/colecoes/media-kit/img-04.webp)
+
+<b>Posição do destaque:</b> Escolha aqui a posição do destaque desse banner (Campo requerido).<br /><b>Imagem do banner:</b> A imagem do banner (Campo obrigatório).<br /><b>Navegação:</b> Navegação dinâmica que será realizada ao clique do usuário no banner. Consulte [aqui](../navegacao-dinamica.mdx) para saber mais detalhes. (Campo obrigatório)<br /><br /><b>Media kit Banner List</b>
+
+![Media kit — figura 5](/img/strapi/colecoes/media-kit/img-05.webp)
+
+<b>Posição do destaque:</b> Posição do destaque onde essa lista de banners serão mostrados. (Campo obrigatório)<br /><b>Items:</b> A lista de banners
+
+<b>Imagem do banner:</b> Imagem de um único banner. (Campo obrigatório)<br /><b>Navegação do banner:</b> Navegação dinâmica desse banner. Consulte [aqui](../navegacao-dinamica.mdx) para saber mais detalhes. (Campo obrigatório)
+
+<br /><b>Media kit Categories Mosaic</b>
+
+![Media kit — figura 6](/img/strapi/colecoes/media-kit/img-06.webp)
+
+<b>Posição do destaque:</b> Escolha aqui a posição do destaque desse Categories Mosaic (Campo requerido).<br /><b>Titulo:</b> Campo que será o título desse mosaico (Campo opcional).<br /><b>Subtitulo:</b> Campo que será o subtitulo do mosaico, aparecendo logo abaixo do titulo (Campo opcional)<br /><b>Call to Action:</b> Texto do botão de CTA (Campo opcional).<br /><b>Categoria/Cluster do call to action:</b> A categoria/coleção que será mostrada no clique do usuário no CTA.<br /><b> Items:</b>
+
+<b>Imagem:</b> Imagem do item desse mosaico<br /><b>Navegação do item:</b> Navegação dinâmica desse banner. Consulte [aqui](../navegacao-dinamica.mdx) para saber mais detalhes. (Campo obrigatório)

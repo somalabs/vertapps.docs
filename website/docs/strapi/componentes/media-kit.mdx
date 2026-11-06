@@ -1,5 +1,5 @@
 ---
-sidebar_position: 38
+sidebar_position: 30
 title: "Media Kit"
 ---
 
@@ -17,26 +17,146 @@ import Chip, {Chips} from '@site/src/components/Chip';
   <Chip tone="teal">CMS</Chip>
 </Chips>
 
+[página no Notion](https://app.notion.com/p/249690e9a7e280869f24d389882c87b2)
 
-## Preview
+---
 
-![Media Kit](/img/strapi/media-kit/preview.webp)
+## Campos do Documento do Media Kit
+
+![Media Kit — figura 1](/img/strapi/media-kit/img-01.webp)
+
+<b><br />Nome interno: </b>deve ser inserido o nome do documento, não afeta o media kit é apenas para registro. Campo obrigatório.
+
+<b>Categoria/Cluster:</b> deve ser inserido a categoria/cluster que irá mostrar os banners cadastrados. Campo obrigatório.
+
+<b>Header (FARM ETC) :</b> Componente header com várias informações, como imagens e vídeos, além de textos. Campo opcional. Preencha aqui caso queira dar um header personalizado a determinada PDC do app.<br />Documentação do Header da PDC do ETC: [Componente Header ETC PDC](https://www.notion.so/gruposoma/Strapi-CMS-8050d90e377246f5b1765cc0828a6718?source=copy_link#21f690e9a7e28095a2a9d68963bd99c5)
+
+Componente de Banner na lista de produtos (<b>Media Kit Banne</b>r).
 
 ## Inputs
 
-![Inputs — Media Kit](/img/strapi/media-kit/inputs.webp)
+![Media Kit — figura 2](/img/strapi/media-kit/img-02.webp)
+
+<b>Mostrar antes do produto:</b> deve ser inserido o valor do índice que o banner será mostrado antes desse índice. Campo obrigatório.
+
+:::tip
+
+É necessário uma atenção a mais na hora de cadastrar o banner, porque no aplicativo temos a regra que a cada 3 linhas do grid aparece um produto de destaque, o que conta como 1 linha?
+
+- 2 produtos
+- 1 produto e 1 banner cadastrado com tamanho de um produto (no strapi é 1)
+- 1 banner cadastrado com o tamanho igual a 2 ou 4 do strapi
+
+Obs: se for cadastrado um banner com tamanho 2 ou 4 (ocupando 1 linha), antes de uma linha que vai trazer um produto em destaque, o banner pode ficar com tamanho de um produto.
+
+:::
+
+<b>Tamanho:</b> deve ser inserido o tamanho do banner que será exibido no grid. Campo obrigatório.
+
+<b>Imagem:</b> deve ser inserido o imagem que será exibida como banner na grid. Campo obrigatório.
+
+<b>Navegação:</b> URL de navegação que será executada ao clicar no banner. Utiliza o padrão da [NAVEGAÇÃO DINÂMICA](../navegacao-dinamica.mdx). Campo opcional.
+
+<b>Nome do banner no GA4:</b> ID e nome da promoção usados para eventos de analytics, separados por ///. Campo obrigatório.
 
 ## Páginas
 
-- PDC
+PDC
 
-## Exemplos
+## Exemplo
 
-![Exemplo 1 — Media Kit](/img/strapi/media-kit/exemplo-1.webp)
+![Media Kit — figura 3](/img/strapi/media-kit/img-03.webp)
 
-![Exemplo 2 — Media Kit](/img/strapi/media-kit/exemplo-2.webp)
+![Media Kit — figura 4](/img/strapi/media-kit/img-04.webp)
 
-![Exemplo 3 — Media Kit](/img/strapi/media-kit/exemplo-3.webp)
+![Media Kit — figura 5](/img/strapi/media-kit/img-05.webp)
 
-![Exemplo 4 — Media Kit](/img/strapi/media-kit/exemplo-4.webp)
+![Media Kit — figura 6](/img/strapi/media-kit/img-06.webp)
 
+![Media Kit — figura 7](/img/strapi/media-kit/img-07.webp)
+
+![Media Kit — figura 8](/img/strapi/media-kit/img-08.webp)
+
+Componente de Banner Full Look (Hering).
+
+## Inputs
+
+![Media Kit — figura 9](/img/strapi/media-kit/img-09.webp)
+
+<b>Mostrar antes do produto:</b> semelhante ao banner normal, deve ser inserido o valor do índice que o banner será mostrado antes desse índice. Campo obrigatório.
+
+:::tip
+
+É necessário uma atenção a mais na hora de cadastrar o banner, porque no aplicativo temos a regra que a cada 3 linhas do grid aparece um produto de destaque, o que conta como 1 linha?
+
+- 2 produtos
+- 1 produto e 1 banner cadastrado com tamanho de um produto (no strapi é 1)
+- 1 banner cadastrado com o tamanho igual a 2 ou 4 do strapi
+
+Obs: se for cadastrado um banner com tamanho 2 ou 4 (ocupando 1 linha), antes de uma linha que vai trazer um produto em destaque, o banner pode ficar com tamanho de um produto.
+
+:::
+
+<b>Ids dos produtos:</b> Os produtos que serão exibidos no bottom sheet que será aberto ao clicar nesse banner. Campo obrigatório.<b><br />Imagem:</b> deve ser inserido o imagem que será exibida como banner na grid. Campo obrigatório.
+
+<b>Nome do banner no GA4:</b> ID e nome da promoção usados para eventos de analytics, separados por ///. Campo obrigatório.
+
+## Páginas
+
+PDC
+
+## Exemplo
+
+![Media Kit — figura 10](/img/strapi/media-kit/img-10.webp)
+
+![Media Kit — figura 11](/img/strapi/media-kit/img-11.webp)
+
+<b>Componente Product Card (Farm Etc/Farm).</b>
+
+Esse componente é utilizado na coleção de Midia Kit da Farm e Farm ETC.<br />Quando utilizado com o campo ‘ids dos Produtos’ preenchido, assume um comportamento diferente ao ser clicado:<br />Farm-Etc: Abre a página de ‘buy the look’ com os respectivos produtos.
+
+Farm: Abre o bottom sheet do compre o look.
+
+## Inputs
+
+![Media Kit — figura 12](/img/strapi/media-kit/img-12.webp)
+
+<b>Mostrar antes do produto:</b> semelhante ao banner normal, deve ser inserido o valor do índice que o banner será mostrado antes desse índice. Campo obrigatório.
+
+:::tip
+
+É necessário uma atenção a mais na hora de cadastrar o banner, porque no aplicativo temos a regra que a cada 3 linhas do grid aparece um produto de destaque, o que conta como 1 linha?
+
+- 2 produtos
+- 1 produto e 1 banner cadastrado com tamanho de um produto (no strapi é 1)
+- 1 banner cadastrado com o tamanho igual a 2 ou 4 do strapi
+
+Obs: se for cadastrado um banner com tamanho 2 ou 4 (ocupando 1 linha), antes de uma linha que vai trazer um produto em destaque, o banner pode ficar com tamanho de um produto.
+
+:::
+
+<b>Tamanho:</b> deve ser inserido o tamanho do banner que será exibido no grid. Campo obrigatório.
+
+<b>Ids dos produtos:</b> Os produtos que serão exibidos na pagina que será aberto ao clicar botão cta.<b><br />Imagem:</b> deve ser inserido o imagem que será exibida como banner na grid. Campo obrigatório.
+
+<b>Texto do botão:</b> Texto do botão que vai aparecer em cima da imagem.
+
+<b>Navegação:</b> Define o redirecionamento ao clicar na imagem. Deve ser preenchido conforme a documentação da navegação dinamica.<b><br />Cor do texto:</b> Cor aplicada ao texto do botão cta. Opcional<b>.</b>
+
+<b>Cor de fundo:</b> Cor de fundo do botão cta. Opcional<b>.</b>
+
+Cor de fundo do componente: Cor de fundo ao redor do componente (Farm apenas). Opcional.
+
+## Páginas
+
+PDC
+
+## Exemplo
+
+![Media Kit — figura 13](/img/strapi/media-kit/img-13.webp)
+
+![Media Kit — figura 14](/img/strapi/media-kit/img-14.webp)
+
+Pagina exibida ao clicar no botão:
+
+![Media Kit — figura 15](/img/strapi/media-kit/img-15.webp)

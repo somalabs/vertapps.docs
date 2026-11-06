@@ -1,0 +1,25 @@
+---
+sidebar_position: 52
+title: "Preenchimento de clusters dinâmicos"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Componente</Kicker>
+
+# Preenchimento de clusters dinâmicos
+
+O preenchimento do campo “clusters” deverá seguir algumas regras para que possa funcionar corretamente e aplicar a filtragem do componente para os clientes certos.<br /><br />Semelhante ao preechimento de navegação dinâmica, toda a filtragem será feita a partir do preenchimento de um único campo, onde deverão ser passados tanto “chaves”, como “valores". Sendo as chaves, os nomes dos campos de cluster do cliente, e os valores, como propriamente já dito, os valores dessa chave. Sendo que, os campos deverão ser separados por “?”. E os valores por “,”.<br /><br />Chaves possíveis de cluster:<br /><b>lastBrands -  Marcas das ultimas compras do cliente - (Funcionará como um “ou”)<br />lastCategories - Categorias das ultimas compras do cliente - (Funcionará como um “ou”)<br />hasOrderApp - Se o cliente já comprou pelo app. Valores possíveis: true ou false.(Funcionará como um “e”)<br />gender - Gênero do cliente. Valores possíveis: male ou female. (Funcionará como um “e”)</b><br /><br />Segue alguns exemplos:
+
+<Chips>
+  <Chip tone="coral">Preenchimento de clusters dinâmicos</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+- <b>lastCategories=Camisetas,Shorts?gender=male<br /></b>Nesse exemplo, o componente só aparecerá para clientes que suas ultimas compras contenham as categorias “Camisetas” <b>OU</b> “Shorts” <b>E</b> sejam clientes masculinos.<br />
+
+- <b>lastBrands=Hering Adulto?lastCategories=Camisetas?hasOrderApp=true<br /></b>Nesse exemplo, o componente só aparecerá para clientes que suas ultimas compras contenham a categoria <b>“Camiseta” OU</b> que faça parte da marca<b> "Hering Adulto” E</b> que esse cliente já tenha comprado pelo App.<br />
+
+- <b>lastBrands=Hering Adulto,Hering Sports?lastCategories=Camisetas?hasOrderApp=true?gender=female<br /></b>Nesse exemplo, o componente só aparecerá para clientes que suas ultimas compras contenham façam parte da marca Hering Adulto <b>OU</b> Hering Sports OU faça parte da categoria “Camisetas” <b>E</b> seja uma cliente feminina <b>E</b> já tenha comprado pelo App.<br /><br />
+

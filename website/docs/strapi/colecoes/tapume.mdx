@@ -1,0 +1,54 @@
+---
+sidebar_position: 7
+title: "Tapume"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Coleção</Kicker>
+
+# Tapume
+
+Esse documento é utilizado para cadastrar uma imagem com redirecionamento que será exibida após splash, bloqueando a navegação para o app.
+
+<Chips>
+  <Chip tone="coral">Tapume</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+O tapume tem<b> duas variações de comportamento</b>: <br />1) Abre o app, exibindo a <b>image</b> cadastrada, que ao ser clicada redirecionada o usuário para a <b>url\_redirect</b> cadastrada.
+
+2\) Abre o app, mas direto para a webview, sem exibir a imagem cadastrada. (o preenchimento da imagem segue sendo obrigatório por questões de segurança)
+
+<br />Os campos a serem preenchidos são:<br /><b>url\_redirect:</b>  deve ser preenchida com a url para onde o usuário deve ser redirecionado.
+
+:::tip
+
+Caso o comportamento esperado seja o 1, em que deve ser exibida a imagem cadastrada, que quando clicada executará o redirecionamento, o campo deve ser preenchido apenas com a url.
+
+Caso o comportamento esperado seja o 2, em que deve abrir direto a url, esse campo deve ser preenchido com o prefixo “webview/<i>url”.<br />Atenção: neste cenário (2), a webview irá ocupar a tela inteira do app, sem deixar espaço para barra de navegação, etc. (foi desenvolvido direcionado pro joguinho da Farm na blackfriday)</i>
+
+:::
+
+<b>image:</b> que é a imagem a ser exibida. Além disso, é para que o tapume seja exibido, é necessário mudar o campo <b>active</b> de false para true:
+
+<br />O tapume não será exibido caso:
+
+- <b>active</b> está false
+
+- <b>url\_redirect</b> está vazio
+
+- <b>image</b> está vazio
+
+:::tip
+
+FARM: O campo max\_discount deve carregar o valor maximo do desconto a ser aplicado no joguinho. O valor do campo não reflete no app, mas é consumido pela Luby.<br />Exemplo: 30%
+
+:::
+
+## Preview
+
+![Tapume — figura 1](/img/strapi/colecoes/tapume/img-01.webp)
+
+## Maria Filó

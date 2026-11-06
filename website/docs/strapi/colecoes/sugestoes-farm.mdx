@@ -1,0 +1,38 @@
+---
+sidebar_position: 11
+title: "Sugestões (Farm)"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+import DocTitle from '@site/src/components/DocTitle';
+
+<Kicker>CMS · Coleção</Kicker>
+
+<DocTitle brand="Farm">Sugestões</DocTitle>
+
+Este documento é responsável por gerar os componentes para a tela de "<b>Sugestões Farm</b>" uma aba nova dentro de desejos. <br />Foram criados dois components para essa tela que são os [Title](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718#2784e9f055df413986ae8b09ec519f4f) e [Cards](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718#508c4536a0c54defa8ec13172dbf58f9).
+
+<Chips>
+  <Chip tone="coral">Sugestões</Chip>
+  <Chip tone="amber">Farm</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+## Preview
+
+![Sugestões (Farm) — figura 1](/img/strapi/colecoes/sugestoes-farm/img-01.webp)
+
+![Sugestões (Farm) — figura 2](/img/strapi/colecoes/sugestoes-farm/img-02.webp)
+
+## Exemplo:
+
+![Sugestões (Farm) — figura 3](/img/strapi/colecoes/sugestoes-farm/img-03.webp)
+
+## Envio de push:
+
+<b>action</b>: O campo  deve sempre conter o texto <b>`'suggestions'`</b>, pois essa string é utilizada para que o aplicativo identifique a ação correspondente à funcionalidade de sugestões.<br /><b>indentifier</b>: O campo  deve receber o título da sugestão que se deseja direcionar.
+
+Sem quebras de linha ou caracteres especiais que possam interferir na formatação
+
+![Sugestões (Farm) — figura 4](/img/strapi/colecoes/sugestoes-farm/img-04.webp)

@@ -1,0 +1,175 @@
+---
+sidebar_position: 30
+title: "Jogo do Tucano (Farm)"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+import DocTitle from '@site/src/components/DocTitle';
+
+<Kicker>CMS · Coleção</Kicker>
+
+<DocTitle brand="Farm">Jogo do Tucano</DocTitle>
+
+## Jogo do Tucano Farm (Farm)
+
+<Chips>
+  <Chip tone="coral">Jogo do Tucano</Chip>
+  <Chip tone="amber">Farm</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+Coleção responsável por armazenar toda a configuração da campanha de gamificação do tucano no app da Farm.
+
+O jogo consiste em 4 tucanos escondidos em pontos fixos do app (2 na PDC e 2 na PDP). Ao encontrar todos, o usuário ganha um cupom de desconto, aplicado automaticamente na sacola.
+
+> ⚠️ Só existe <b>uma</b> entry publicada por vez. O app lê sempre a primeira entry publicada desta coleção.
+
+![Jogo do Tucano (Farm) — figura 1](/img/strapi/colecoes/jogo-do-tucano-farm/img-01.webp)
+
+![Jogo do Tucano (Farm) — figura 2](/img/strapi/colecoes/jogo-do-tucano-farm/img-02.webp)
+
+### EX PDC:
+
+![Jogo do Tucano (Farm) — figura 3](/img/strapi/colecoes/jogo-do-tucano-farm/img-03.webp)
+
+![Jogo do Tucano (Farm) — figura 4](/img/strapi/colecoes/jogo-do-tucano-farm/img-04.webp)
+
+![Jogo do Tucano (Farm) — figura 5](/img/strapi/colecoes/jogo-do-tucano-farm/img-05.webp)
+
+### EX PDP:
+
+![Jogo do Tucano (Farm) — figura 6](/img/strapi/colecoes/jogo-do-tucano-farm/img-06.webp)
+
+![Jogo do Tucano (Farm) — figura 7](/img/strapi/colecoes/jogo-do-tucano-farm/img-07.webp)
+
+![Jogo do Tucano (Farm) — figura 8](/img/strapi/colecoes/jogo-do-tucano-farm/img-08.webp)
+
+## Inputs
+
+<b>Ativo (</b><b>`active`</b><b>):</b> liga e desliga a campanha inteira. Quando desmarcado, nenhum tucano aparece no app e o jogo some por completo, sem precisar de deploy. Campo obrigatório.
+
+<b>Cupom (</b><b>`coupon`</b><b>):</b> código do cupom aplicado automaticamente quando o usuário encontra o quarto tucano. Campo obrigatório.
+
+<b>Título ao encontrar (</b><b>`found_title`</b><b>):</b> título do modal exibido quando o usuário encontra um tucano e <b>ainda faltam</b> outros. Campo obrigatório.
+
+<b>Subtítulo ao encontrar (</b><b>`found_subtitle`</b><b>):</b> descrição que aparece abaixo do título, no mesmo modal. Campo obrigatório.
+
+<b>Título ao completar (</b><b>`completed_title`</b><b>):</b> título do modal exibido quando o usuário encontra o <b>último</b> tucano. Campo obrigatório.
+
+<b>Subtítulo ao completar (</b><b>`completed_subtitle`</b><b>):</b> descrição que aparece abaixo do título ao completar o jogo. Campo obrigatório.
+
+<b>Texto do botão "continuar" (</b><b>`keep_searching_button_text`</b><b>):</b> texto do botão do modal enquanto ainda faltam tucanos. Esse botão apenas fecha o modal — ele não navega para lugar nenhum, tem o mesmo comportamento do "X". Campo obrigatório.
+
+<b>Texto do botão de resgate (</b><b>`redeem_button_text`</b><b>):</b> texto do botão do modal quando todos os tucanos foram encontrados. É esse botão que aplica o cupom na sacola. Campo obrigatório.
+
+<b>Texto do balão da PDC (</b><b>`pdc_tooltip_text`</b><b>):</b> balão de texto exibido ao lado do tucano da PDC. Aparece <b>somente no ponto</b> <b>`pdc_2`</b>, que é o único cujo posicionamento comporta o balão — os outros três ficam girados, espelhados ou cortados pela borda e o balão sairia torto. Deixe vazio para não exibir balão nenhum. Campo opcional.
+
+<b>Pontos (</b><b>`spots`</b><b>):</b> lista dos tucanos da campanha, usando o componente <b>Tucano Spot</b>. Campo obrigatório, <b>limitado a 4 itens</b>.
+
+## Páginas
+
+- PDC (Página de Categoria) — 2 tucanos
+
+- PDP (Página de Produto) — 2 tucanos
+
+## Como o jogo funciona
+
+1. O usuário encontra um tucano e toca nele. Abre o modal com o progresso (ex.: 2 de 4).
+
+2. Enquanto faltam tucanos, o botão apenas fecha o modal.
+
+3. Ao encontrar o quarto, o botão passa a ser o de resgate e aplica o cupom na sacola.
+
+4. O progresso fica salvo no aparelho: fechar o app não zera a contagem.
+
+5. Se a aplicação do cupom falhar (sacola vazia, cupom inválido ou expirado), o modal continua aberto com a mensagem do motivo e <b>o último tucano continua visível</b>, para o usuário tentar de novo depois. O jogo só é encerrado quando o desconto realmente entra na sacola.
+
+## Cuidados ao cadastrar
+
+<b>O cupom precisa gerar desconto de verdade.</b> O app confere o valor da sacola antes e depois de aplicar. Se o total não mudar, ele entende que o cupom não vale para aquele carrinho, remove o cupom e mostra a mensagem de inválido. Cupons restritos a certos produtos vão falhar quando a sacola não tiver nenhum item elegível — isso é esperado.
+
+<b>Não escreva o nome do cupom dentro dos textos.</b> O campo de cupom e os textos são independentes: se você escrever "use o cupom XPTO" no subtítulo e depois trocar o campo `coupon`, o texto continua com o nome antigo e o usuário vê um código diferente do que é aplicado.
+
+<b>Cada ponto só pode ser cadastrado uma vez.</b> Se repetir o mesmo `spot_id`, o Strapi bloqueia o salvamento com a mensagem "Cada tucano só pode ser cadastrado uma vez".
+
+## Exemplo
+
+| Campo | Valor |
+
+| --- | --- |
+
+| Ativo | ✅ |
+
+| Cupom | `vemproapp` |
+
+| Título ao encontrar | Você encontrou um tucano! |
+
+| Subtítulo ao encontrar | Encontre quatro escondidos pelo app e ganhe 15% de desconto no cheirinho Farm! |
+
+| Título ao completar | Você encontrou todos os tucanos! |
+
+| Subtítulo ao completar | Aproveite seu desconto especial! |
+
+| Texto do botão "continuar" | Continuar procurando |
+
+| Texto do botão de resgate | Aproveitar meu desconto! |
+
+| Texto do balão da PDC | Tem cheirinho de novidade! |
+
+---
+
+## Tucano Spot (Farm)
+
+Componente responsável por armazenar cada um dos tucanos da campanha. Usado exclusivamente dentro da coleção <b>Jogo do Tucano Farm</b>.
+
+Cada tucano ocupa uma posição fixa no app, já definida no código. O que se configura aqui é <b>em quais telas</b> aquele tucano aparece.
+
+## Inputs
+
+<b>Ponto (</b><b>`spot_id`</b><b>):</b> identifica qual dos 4 tucanos está sendo configurado. O próprio valor já define a tela — `pdc_*` são da PDC e `pdp_*` são da PDP. Campo obrigatório, e não pode repetir entre os pontos.
+
+| Valor | Onde o tucano aparece |
+
+| --- | --- |
+
+| `pdc_1` | Topo da PDC, de cabeça para baixo, saindo de trás da barra superior |
+
+| `pdc_2` | No meio da lista de produtos, colado e cortado pela borda direita. É o único que exibe o balão de texto |
+
+| `pdp_1` | Na altura da seção "Sobre a peça", espiando pela borda esquerda (só a ponta do bico) |
+
+| `pdp_2` | No fim da página do produto, colado e cortado pela borda direita |
+
+<b>Coleção (</b><b>`collection`</b><b>):</b> restringe o tucano a uma coleção específica. Campo opcional.
+
+> ⚠️ Na PDC este campo espera o <b>ID do cluster</b>, e não o nome da categoria. Cadastrar `vestidos` <b>não funciona</b>; o valor correto é o número do cluster, por exemplo `1031`. Na PDP a comparação é feita contra as categorias do produto.
+
+<b>SKU (</b><b>`sku`</b><b>):</b> restringe o tucano a um produto específico. Aceita o ID do produto ou o código de referência. Campo opcional.
+
+## Regras de exibição
+
+- <b>Coleção e SKU vazios:</b> o tucano aparece em <b>todas</b> as telas daquele tipo. É o comportamento padrão.
+
+- <b>Só um dos dois preenchido:</b> o tucano aparece apenas onde aquele valor bate.
+
+- <b>Os dois preenchidos:</b> basta <b>um</b> deles bater para o tucano aparecer.
+
+- A comparação é por "contém" e ignora maiúsculas/minúsculas.
+
+- Para informar mais de um valor, separe por vírgula.
+
+## Exemplo
+
+| Ponto | Coleção | SKU | Resultado |
+
+| --- | --- | --- | --- |
+
+| `pdc_1` | <i>(vazio)</i> | <i>(vazio)</i> | Aparece em qualquer PDC |
+
+| `pdc_2` | `1031` | <i>(vazio)</i> | Aparece só na PDC de Vestidos |
+
+| `pdp_1` | <i>(vazio)</i> | `175575` | Aparece só na PDP desse produto |
+
+| `pdp_2` | <i>(vazio)</i> | <i>(vazio)</i> | Aparece em qualquer PDP |
+

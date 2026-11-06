@@ -1,5 +1,5 @@
 ---
-sidebar_position: 19
+sidebar_position: 12
 title: "Carousel List"
 ---
 
@@ -17,26 +17,52 @@ Componente de carrossel de banners principais. Disponível na Home.
   <Chip tone="teal">CMS</Chip>
 </Chips>
 
-
 ## Preview
 
-![Carousel List](/img/strapi/carousel-list/preview.webp)
+![Carousel List — figura 1](/img/strapi/carousel-list/img-01.webp)
 
 ## Inputs
 
-![Inputs — Carousel List](/img/strapi/carousel-list/inputs.webp)
+![Carousel List — figura 2](/img/strapi/carousel-list/img-02.webp)
 
-| Campo | Descrição |
-|---|---|
-| **lista de botões** | Botões com navegação dinâmica para serem exibidos no carousel list, é permitido no máximo 3 botões. Campo opcional. |
+<b>items:</b> itens que serão exibidos no carrossel. (repetível)
 
-## Exemplos
+<b>media:</b> Imagem ou vídeo do item. Campo obrigatório.
 
-![Exemplo 1 — Carousel List](/img/strapi/carousel-list/exemplo-1.webp)
+:::warning
 
-![Exemplo 2 — Carousel List](/img/strapi/carousel-list/exemplo-2.webp)
+Para vídeo, sugere-se que possuam até 3MB para que seja minimizado o risco de problemas com a experiência do usuário em seu dispositivo, que vão desde fluidez corrompida dos vídeos à fechamento inesperado da aplicação.
 
-![Exemplo 3 — Carousel List](/img/strapi/carousel-list/exemplo-3.webp)
+:::
 
-![Exemplo 4 — Carousel List](/img/strapi/carousel-list/exemplo-4.webp)
+<b>coupon:</b> Cupom que será aplicado ao clicar no banner. Campo opcional.
 
+<b>navigate\_to:</b> URL de navegação que será executada ao clicar no banner. Campo opcional. Segue o padrão de [navegação dinâmica](../navegacao-dinamica.mdx).
+
+<b>banner\_name\_ga4:</b> ID e nome da promoção usados para eventos de analytics, separados por ///. Campo obrigatório.
+
+<b>lista de botões</b>: Botões com navegação dinâmica para serem exibidos no carousel list, é permitido no máximo 3 botões. Campo opcional.
+
+<b>clusters:</b> Campo para ser preenchido caso esse item de banner deva ser segmentado por clusters de clientes. Nota: Somente marcas onde é possivel a segmentação de componentes por clusters, isso deverá ser preenchido. Segue documentação caso haja dúvidas no seu preenchimento: [Documentação de clusters dinâmicos](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718#c97433c3891e437ba3385cf11d1d402d).
+
+<b>secondary\_media:</b> Item que deve ser preenchido caso deva ser exibido mais um banner, logo abaixo do primeiro, tendo um próprio CTA ou cupom. Campo opcional.
+
+<b>autoplay:</b> Indica se o carrossel deverá passar entre os banners automaticamente, sem que o usuário precise interagir com o componente. Campo opcional.
+
+<b>loop:</b> Indica se o carrossel deve voltar ao início após exibir o último banner. Campo opcional.
+
+<b>delay:</b> Quantidade de segundos que serão esperados antes de transicionar para o próximo banner caso o autoplay esteja ativado. Campo opcional.
+
+## Exemplo
+
+![Carousel List — figura 3](/img/strapi/carousel-list/img-03.webp)
+
+![Carousel List — figura 4](/img/strapi/carousel-list/img-04.webp)
+
+<b>Exemplo da lista de botões no carrossel:</b>
+
+![Carousel List — figura 5](/img/strapi/carousel-list/img-05.webp)
+
+![Carousel List — figura 6](/img/strapi/carousel-list/img-06.webp)
+
+![Carousel List — figura 7](/img/strapi/carousel-list/img-07.webp)

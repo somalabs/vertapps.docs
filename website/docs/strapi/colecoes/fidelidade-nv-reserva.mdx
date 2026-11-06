@@ -1,0 +1,29 @@
+---
+sidebar_position: 4
+title: "Fidelidade (NV / Reserva)"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+import DocTitle from '@site/src/components/DocTitle';
+
+<Kicker>CMS · Coleção</Kicker>
+
+<DocTitle brand="NV / Reserva">Fidelidade</DocTitle>
+
+A coleção do fidelidade possui um campo<b> ‘has\_fidelity’</b>. Esse campo tem o propósito de diferencias as duas telas do fidelidade/prime.
+
+<Chips>
+  <Chip tone="coral">Fidelidade</Chip>
+  <Chip tone="amber">NV / Reserva</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+Uma coleção deve ser cadastrada com ‘has\_fidelity’ como true, onde devem ser cadastrados os componentes a serem exibidos na tela do fidelidade para os usuários que já tem conta no fidelidade/prime. Para os usuários que não tem conta no fidelidade, será exibida a coleção que tenha o ‘has\_fidelity’ como falso.
+
+<b>Apenas NV:</b> Outro campo disponível nesta coelçaõ é ‘<b>show\_points\_on\_bag’,</b> ele é responsável por controlar a exibição do componente exibido na sacola que indica quantos pontos o usuário irá ganhar pelos produtos da mochila.
+
+<b>Apenas Reserva</b>: Os componentes de category banner cadastrados na coleção ‘has\_fidelity: false’ SEMPRE vão redirecionar pra incluir a assinatura na mochila. E não conforme o cadastro na ‘navegação dinamica’
+
+<b>É necessário cadastrar as duas coleções.</b> 
+

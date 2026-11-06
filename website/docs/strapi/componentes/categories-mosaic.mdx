@@ -1,5 +1,5 @@
 ---
-sidebar_position: 20
+sidebar_position: 15
 title: "Categories Mosaic"
 ---
 
@@ -15,29 +15,40 @@ import Chip, {Chips} from '@site/src/components/Chip';
   <Chip tone="teal">CMS</Chip>
 </Chips>
 
-
-## Preview
-
-![Categories Mosaic](/img/strapi/categories-mosaic/preview.webp)
+Componente onde é possível o cadastro de itens, cada um com sua imagem e link de redirecionamento e serão mostrados em um formato de mosaico.
 
 ## Inputs
 
-![Inputs — Categories Mosaic](/img/strapi/categories-mosaic/inputs.webp)
+![Categories Mosaic — figura 1](/img/strapi/categories-mosaic/img-01.webp)
 
-| Campo | Descrição |
-|---|---|
-| **Título do componente (Obrigatório).s** | ubtitle: Texto que poderá ser utilizado como subtítulo do componente (Opcional).call_to_action: Texto que será utilizado no botão de redirecionamento (CTA) (Opcional)cta_filter_category_or_cluster: Filtragem da coleção/categoria que será utilizada ao usuário clicar no botão de redirecionamento (CTA), essa filtragem será aplicada a pesquisa. (Obrigatório) |
-| **filter_type** | Selecione se é uma filtragem por categoria ou coleção. (obrigatório)search_id: Código da categoria ou coleção (opcional).order_by_intelligent_search: Selecione a ordenação da lista, como a ordenagem na pesquisa dos produtos será feita.filter_category_or_cluster: A filtragem de pesquisa que será feita quando o usuário clicar no item. (Obrigatório)filter_color: Filtragem de cor que será feita na pes |
+<b><br />Título: </b>Título do mosaico (Campo opcional)<br /><b>items:</b> Os itens a serem preenchidos para exibição do mosaico<br />     Mídia<b>:</b> Imagem do item de mosaico (Campo obrigatório)<br />     Navegação dinâmica<b>:</b> Navegação dinâmica que será realizada ao clique do usuário no item de mosaico. (Campo obrigatório)<br />     Nome do banner no GA4<b>:</b> Campo de identificação da promoção a ser utilizado no envio de eventos ao Analytics. Deverá ser preenchido dessa forma: PROMOTION NAME /// CREATIVE NAME. (Campo obrigatório)
+
+## Exemplo
+
+![Categories Mosaic — figura 2](/img/strapi/categories-mosaic/img-02.webp)
+
+![Categories Mosaic — figura 3](/img/strapi/categories-mosaic/img-03.webp)
+
+## Variação 2 (segunda entrada no Notion)
+
+![Categories Mosaic — figura 4](/img/strapi/categories-mosaic/img-04.webp)
+
+![Categories Mosaic — figura 5](/img/strapi/categories-mosaic/img-05.webp)
+
+## Inputs
+
+<b>title:</b> Título do componente (Obrigatório).<br />s<b>ubtitle:</b> Texto que poderá ser utilizado como subtítulo do componente (Opcional).<br />c<b>all\_to\_action</b>:  Texto que será utilizado no botão de redirecionamento (CTA) (Opcional)<br /><b>cta\_filter\_category\_or\_cluster</b>: Filtragem da coleção/categoria que será utilizada ao usuário clicar no botão de redirecionamento (CTA), essa filtragem será aplicada a pesquisa. (Obrigatório)
+
+<b>- Items:<br /></b>Cada item do mosaico poderá ter as seguintes propriedades:<br /><br /><b>image:</b> Imagem que será utilizada como "thumbnail” do quadrado do mosaico. (Obrigatório)<br /><b>filter\_type</b>: Selecione se é uma filtragem por categoria ou coleção. (obrigatório)<br />s<b>earch\_id:</b> Código da categoria ou coleção (opcional).<br /><b>order\_by\_intelligent\_search:</b> Selecione a ordenação da lista, como a ordenagem na pesquisa dos produtos será feita.<br /><b>filter\_category\_or\_cluster:</b> A filtragem de pesquisa que será feita quando o usuário clicar no item. (Obrigatório)<br /><b>filter\_color:</b> Filtragem de cor que será feita na pesquisa. (Opcional)<br /><b>filter\_size:</b> Filtragem de tamanho que será feita na pesquisa. (Opcional)<br /><b>search\_key\_words:</b> Uma palavra-chave que poderá ser adicionada a filtragem de produtos. (Opcional).
 
 ## Páginas
 
-- Home (NV)
+Home (NV)
 
-## Exemplos
+## Exemplo
 
-![Exemplo 1 — Categories Mosaic](/img/strapi/categories-mosaic/exemplo-1.webp)
+![Categories Mosaic — figura 6](/img/strapi/categories-mosaic/img-06.webp)
 
-![Exemplo 2 — Categories Mosaic](/img/strapi/categories-mosaic/exemplo-2.webp)
+![Categories Mosaic — figura 7](/img/strapi/categories-mosaic/img-07.webp)
 
-![Exemplo 3 — Categories Mosaic](/img/strapi/categories-mosaic/exemplo-3.webp)
-
+![Categories Mosaic — figura 8](/img/strapi/categories-mosaic/img-08.webp)

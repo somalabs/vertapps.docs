@@ -1,5 +1,5 @@
 ---
-sidebar_position: 51
+sidebar_position: 82
 title: "PDC Header (MF, Animale e Reserva)"
 ---
 
@@ -19,8 +19,16 @@ Consiste em um componente único (imagem), exibido no topo da PDC, que pode poss
   <Chip tone="teal">CMS</Chip>
 </Chips>
 
+## Inputs
 
-## Preview
+<b>Navegação dinâmica:</b> Navegação dinâmica realizada ao clicar na imagem<br />Ex: plp/productclusterids/11994
 
-![PDC Header (MF, Animale e Reserva)](/img/strapi/pdc-header-mf-animale-e-reserva/preview.webp)
+<b>Categoria/Cluster:</b> ID da categoria ou cluster onde a imagem sera mostrada<br />Ex: /productclusterids/11995
 
+<b>Imagem:</b> Imagem exibida no header da PDC
+
+## Exemplo
+
+![PDC Header (MF, Animale e Reserva) — figura 1](/img/strapi/pdc-header-mf-animale-e-reserva/img-01.webp)
+
+Observação: como o PDC Header ocupa a mesma posição do “reloginho”, existe uma prioridade de exibição,  o PDC Header só será exibido quando não houver reloginho na PDC em questão.

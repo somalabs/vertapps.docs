@@ -1,0 +1,32 @@
+---
+sidebar_position: 8
+title: "Combo de promoções"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Coleção</Kicker>
+
+# Combo de promoções
+
+O acesso a essa página se dá via navegação dinâmica. Em algum campo “navigate\_to” de um componente, cadastre “/combos”. Ao ser clicado será redirecionado para esta página.
+
+<Chips>
+  <Chip tone="coral">Combo de promoções</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+Referente a página de combos.
+
+Os filtros disponíveis na página (para filtrar os diferentes tipos de promoções) devem ser cadastrados na Collection no campo “page\_filters”.  Pode ser cadastrado mais do que um filtro, desde que separados por <b>;</b>   Cada item adicionado será considerado como um tipo de filtro na página. <br />Caso nenhum filtro seja cadastrado, não será exibido nada na área de filtros, e serão exibidos todos os componentes cadastrados na collection.<br />Para definir qual componente corresponde a cada filtro, nos componentes o campo “page\_filter” deve ser preenchido igual ao filtro.<br />Ou seja, se em “page\_filters”da collection um dos itens cadastrados for “Progressivo”. Apenas os componentes que tiverem um page\_filters cadastrado como “Progressivo” irão aparecer quando o filtro for selecionado.
+
+Caso um filtro cadastrado não tenha nenhum componente correspondente, ele não será exibido (pois iria ficar vazio).<br />
+
+## Exemplo
+
+Neste exemplo, a parte de baixo corresponde aos ‘page\_filters’ da própria coleção, portanto, a página terá três filtros: Todos, só no App e Progressivos.
+
+A parte superior corresponde aos page\_filters do componente. Dois filtros foram cadastrados para este componente: Todos e Só no App.<br />Portanto, o componente cadastrado irá aparecer quando os filtros “Todos” ou “Só no App” estejam selecionados.
+
+![Combo de promoções — figura 1](/img/strapi/colecoes/combo-de-promocoes/img-01.webp)

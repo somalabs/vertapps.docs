@@ -1,0 +1,44 @@
+---
+sidebar_position: 2
+title: "Image Content"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Componente</Kicker>
+
+# Image Content
+
+<Chips>
+  <Chip tone="coral">Image Content</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+## Inputs
+
+<b>media:</b> Upload da imagem (pode ser .gif, .jpg, ou .png).
+
+<b>video\_url</b>: URL do vídeo da vimeo. Para que seja exibido, o componente não pode ter o campo <i>media</i> cadastado.
+
+<b>navigate\_to:</b> Define o redirecionamento ao clicar na imagem. Deve ser preenchido conforme a documentação da navegação dinamica.
+
+<b>button text:</b> Texto do botão. (O botão só é exibido se este campo for preenchido)
+
+<b>button\_navigate\_to:</b> Define o redirecionamento ao clicar no botão. Deve ser preenchido conforme a documentação da navegação dinamica. (O botão só é exibido se este campo for preenchido)
+
+## Exemplos
+
+### Exemplo do componente no strapi (sem preenchimento)
+
+![Image Content — figura 1](/img/strapi/home-etc/image-content/img-01.webp)
+
+### Exemplo do componente no strapi (preenchido)
+
+![Image Content — figura 2](/img/strapi/home-etc/image-content/img-02.webp)
+
+### Exemplo no app
+
+obs: o botão azul ‘partes de cima’ é da imagem utilizada como exemplo mesmo.
+
+![Image Content — figura 3](/img/strapi/home-etc/image-content/img-03.webp)

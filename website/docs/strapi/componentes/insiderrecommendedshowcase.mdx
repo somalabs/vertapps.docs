@@ -1,5 +1,5 @@
 ---
-sidebar_position: 34
+sidebar_position: 43
 title: "InsiderRecommendedShowcase"
 ---
 
@@ -17,27 +17,38 @@ Componente exibe recomendações de produtos retornados pela Insider
   <Chip tone="teal">CMS</Chip>
 </Chips>
 
-
 ## Preview
 
-![InsiderRecommendedShowcase](/img/strapi/insiderrecommendedshowcase/preview.webp)
+![InsiderRecommendedShowcase — figura 1](/img/strapi/insiderrecommendedshowcase/img-01.webp)
 
-## Inputs
+## Input
 
-![Inputs — InsiderRecommendedShowcase](/img/strapi/insiderrecommendedshowcase/inputs.webp)
+<b>ID da campanha:</b> Preencher com o valor definido na plataforma Insider (Campo obrigatório)
 
-| Campo | Descrição |
-|---|---|
-| **- Algoritmos Baseados em Produto** | *o Purchased Togethero Viewed Togethero Most Valuable Products of the Categoryo New Arrivals of the Categoryo Highest Discounted of the Categoryo Trending Products in the Categoryo Most Popular Items of the Categoryo Top Sellers of the Categoryo Recently Viewed Productso Purchased with Last Purchased* |
-| **Tipo do Algoritmo** | *deve corresponder à classificação do algoritmo usado na campanha. Por exemplo, na imagem anterior, o tipo do algoritmo seria generic para a campanha de ID 1 e product-based para a campanha de ID 3. |
-| **IMPORTANTE** | As campanhas que utilizam algoritmos baseados em produto só podem ser utilizadas na PDP. |
+![InsiderRecommendedShowcase — figura 2](/img/strapi/insiderrecommendedshowcase/img-02.webp)
+
+<b>Título:</b> Texto que aparece acima dos produtos (Campo opcional \| Valor padrão: "Vitrine recomendada”).
+
+<b>Layout:</b> Permite escolher se os produtos serão apresentados em uma lista ou grid (Campo opcional \| Valor padrão: Lista).
+
+<b>Tipo do Algoritmo:</b> Preencher com o tipo de algoritmo utilizado na plataforma Insider (Campo opcional \| Valor padrão: Genérico).<b><br /><br /></b>Cada campanha Insider está associada a um algoritmo de recomendação. Por exemplo, na imagem anterior, a campanha de ID 1 utiliza o algoritmo “<i>Top Sellers</i>” enquanto a campanha de ID 3 usa o algoritmo "<i>Viewed Together</i>”.  Esses algoritmos estão agrupados da seguinte forma:
+
+<br /><b>-  Algoritmos Genéricos:</b> 
+
+<i>o Top Sellers<br />o Most Popular Items<br />o Trending Products<br />o Highest Discounted Items<br />o New Arrivals<br />o Most Valuable Products<br />o User-Based</i><br /><br /><b>- Algoritmos Baseados em Produto</b><br /><i>o Purchased Together<br />o Viewed Together<br />o Most Valuable Products of the Category<br />o New Arrivals of the Category<br />o Highest Discounted of the Category<br />o Trending Products in the Category<br />o Most Popular Items of the Category<br />o Top Sellers of the Category<br />o Recently Viewed Products<br />o Purchased with Last Purchased</i>
+
+O valor do campo <i><b>Tipo do Algoritmo</b> </i>deve corresponder à classificação do algoritmo usado na campanha. Por exemplo, na imagem anterior, o tipo do algoritmo seria <b>generic</b> para a campanha de ID 1 e <b>product-based</b> para a campanha de ID 3.
+
+<b>IMPORTANTE</b>: As campanhas que utilizam algoritmos baseados em produto só podem ser utilizadas na PDP.
 
 ## Páginas
 
-- Home
-- PDP
+Home
 
-## Exemplos
+PDP
 
-![Exemplo 1 — InsiderRecommendedShowcase](/img/strapi/insiderrecommendedshowcase/exemplo-1.webp)
+## Exemplo
 
+![InsiderRecommendedShowcase — figura 3](/img/strapi/insiderrecommendedshowcase/img-03.webp)
+
+## 

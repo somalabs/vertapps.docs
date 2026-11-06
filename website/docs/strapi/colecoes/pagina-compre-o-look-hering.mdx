@@ -1,0 +1,37 @@
+---
+sidebar_position: 13
+title: "Página Compre o look (HERING)"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+import DocTitle from '@site/src/components/DocTitle';
+
+<Kicker>CMS · Coleção</Kicker>
+
+<DocTitle brand="HERING">Página Compre o look</DocTitle>
+
+Esse documento é utilizado para cadastrar uma lista de cards de Compre o look e media kit (banners). Esses componentes vão ser mostrados na tela numa grid.
+
+<Chips>
+  <Chip tone="coral">Página Compre o look</Chip>
+  <Chip tone="amber">HERING</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+Para acessar essa página é só usar o padrão de [navegação dinâmica](../navegacao-dinamica.mdx), usando o padrão para esta página em específico [Navegação página Compre o look ](https://www.notion.so/gruposoma/NAVEGA-O-DIN-MICA-6738757a9f614279be8257ab50045262?pvs=4#1c8690e9a7e280629c5ce5e837fdff12)
+
+A página é construída com os dois componentes, o [Full Look Carousel Item](https://www.notion.so/gruposoma/Strapi-8050d90e377246f5b1765cc0828a6718?pvs=4#c747dacb2e554e138a6ad36428041641) e o [MediaKit](https://www.notion.so/gruposoma/Strapi-8050d90e377246f5b1765cc0828a6718?pvs=4#db9035f78319433abd3e72f78a6d591b). A grid segue a lógica de outras Grids no app, a cada 4 linhas aparece um Card maior.
+
+:::warning
+
+ATENÇÃO: O campo “<b>Mostrar antes do produto”</b> do Media Kit não tem nenhuma função nessa página, mas é obrigatório passar qualquer valor porque o componente foi reaproveitado da collection Media Kit.
+
+<b>O que muda na configuração da página é a ordem que os componentes são cadastrados.</b> 
+
+:::
+
+## Preview
+
+![Página Compre o look (HERING) — figura 1](/img/strapi/colecoes/pagina-compre-o-look-hering/img-01.webp)
+

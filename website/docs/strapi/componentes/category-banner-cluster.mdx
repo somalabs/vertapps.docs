@@ -1,5 +1,5 @@
 ---
-sidebar_position: 22
+sidebar_position: 14
 title: "Category Banner - Cluster"
 ---
 
@@ -17,18 +17,18 @@ Este componente é igual ao Category Banner, com um campo a mais para ser preenc
   <Chip tone="teal">CMS</Chip>
 </Chips>
 
-
-## Preview
-
-![Category Banner - Cluster](/img/strapi/category-banner-cluster/preview.webp)
-
 ## Inputs
 
-| Campo | Descrição |
-|---|---|
-| **clusters** | Este componente teve alterações para funcionar mais amplamente. Agora, deve serguir esta [documentação](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718?pvs=25#c97433c3891e437ba3385cf11d1d402d). Todos os clusters que são “boolean” continuam funcionam na filtragem implementada, basta que seja adicionado o valor apos o nome da chave, como “campo_CL”=true. |
+<b>category\_banner:</b> deve ser preenchido conforme [documentação](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718#0cb6e400da0b4540a9120efa7f51c207);
+
+<b>clusters</b>:  Este componente teve alterações para funcionar mais amplamente. Agora, deve serguir esta [documentação](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718#c97433c3891e437ba3385cf11d1d402d).  <br />Todos os clusters que são “boolean” continuam funcionam na filtragem implementada, basta que seja adicionado o valor apos o nome da chave, como “campo\_CL”=true.
+
+## Exemplos
+
+Exemplo de cadastro dos clusters no Strapi:<br />Apenas os usuários que tiverem em seu cadastro a propriedade “compradorRecorrente” como true, OU “colaboradores” como true, irão ver este componente na Home.
+
+![Category Banner - Cluster — figura 1](/img/strapi/category-banner-cluster/img-01.webp)
 
 ## Páginas
 
-- Home
-
+Home

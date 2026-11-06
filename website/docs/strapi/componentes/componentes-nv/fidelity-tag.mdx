@@ -1,0 +1,42 @@
+---
+sidebar_position: 3
+title: "Fidelity Tag"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Componente</Kicker>
+
+# Fidelity Tag
+
+Componente Tag de fidelidade mostrada na PDP.
+
+<Chips>
+  <Chip tone="coral">Fidelity Tag</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+## Preview
+
+![Fidelity Tag — figura 1](/img/strapi/componentes-nv/fidelity-tag/img-01.webp)
+
+## Inputs
+
+![Fidelity Tag — figura 2](/img/strapi/componentes-nv/fidelity-tag/img-02.webp)
+
+<b>orderBy:</b> Ordenação dos produtos na PDC quando usuário clicar na tag a partir da PDP. Campo opcional.
+
+<b>background\_color:</b> Cor do fundo da Tag. Campo obrigatório.
+
+<b>text\_color:</b> Cor do texto da Tag. Campo obrigatório.
+
+<b>border\_color:</b> Cor da borda da Tag. Campo opcional.
+
+<b>filter\_category\_or\_cluster:</b> deve ser inserido o caminho para o Intelligent Search da Vtex. Utilizado para identificar a coleção ou categoria <b>do produto</b> na qual vai aparecer a TAG.  Campo obrigatório.<br />Caso seja productClusterID, preencha apenas com o ID da coleção.<br />Caso seja productClusterName, preencha apenas com o nome da coleção.
+
+## Exemplo
+
+![Fidelity Tag — figura 3](/img/strapi/componentes-nv/fidelity-tag/img-03.webp)
+
+![Fidelity Tag — figura 4](/img/strapi/componentes-nv/fidelity-tag/img-04.webp)

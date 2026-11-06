@@ -1,5 +1,5 @@
 ---
-sidebar_position: 12
+sidebar_position: 68
 title: "Accordion Menu New (Farm & FarmETC)"
 ---
 
@@ -17,21 +17,40 @@ import DocTitle from '@site/src/components/DocTitle';
   <Chip tone="teal">CMS</Chip>
 </Chips>
 
-
-## Preview
-
-![Accordion Menu New (Farm & FarmETC)](/img/strapi/accordion-menu-new-farm-farmetc/preview.webp)
-
 ## Inputs
 
-![Inputs — Accordion Menu New (Farm & FarmETC)](/img/strapi/accordion-menu-new-farm-farmetc/inputs.webp)
+<b>Está ativa</b>?: Caso false, o componente não é exibido.
 
-| Campo | Descrição |
-|---|---|
-| **Está ativa** | ?: Caso false, o componente não é exibido. |
-| **Cor do título** | Cor do título do menu. |
-| **Navegação dinâmica** | Caso o item de menu não tenha items, ou seja, deve redirecionar ao ser clicado, e não abrir o próximo nível de menu, é neste campo que deve ser preenchido o redirecionamento esperado (conforme documentação da navegação dinâmica). |
-| **Header image** | Imagem que aparece no header do menu, quando está exibindo a listagem do campo ‘items’. (Não funciona pro MENU ETC) |
-| **Quantidade de selos** | Valor que aparecerá em formato de notificação ao lado do título do item. |
-| **Caso true, exibe um “Ver tudo \>” que navega para a mesma que a** | Navegação dinâmica. OBS: FUNCIONA APENAS NO MENU NOVO, APÓS O REDESIGN. NÃO ALTERA EM NADA NO MENU ANTIGO. |
+<b>Exibir tag ‘NOVO’:</b> Caso true, exibe tag semi circular na direita superior do título. Em azul em Farm e verde no Farm Etc.
 
+<b>Título:</b> Título do menu
+
+<b>Cor do título</b>: Cor do título do menu.
+
+<b>tag:</b> Configuração da tag do item. Item opcional.
+
+<b>text:</b> Texto da tag. Campo opcional.
+
+<b>text\_color:</b> Cor do texto da tag. Campo opcional.
+
+<b>border\_color:</b> Cor da borda da tag. Campo opcional.
+
+<b>background\_color:</b> Cor de fundo da tag. Campo opcional.
+
+<b>Navegação dinâmica</b>: Caso o item de menu não tenha items, ou seja, deve redirecionar ao ser clicado, e não abrir o próximo nível de menu, é neste campo que deve ser preenchido o redirecionamento esperado (conforme documentação da navegação dinâmica).
+
+<b>Header image</b>: Imagem que aparece no header do menu, quando está exibindo a listagem do campo ‘items’. (Não funciona pro MENU ETC)
+
+<b>Quantidade de selos</b>: Valor que aparecerá em formato de notificação ao lado do título do item.
+
+<b>items:</b> Subitems que formarão a próxima tela de listagem do menu. O componente cadastrado aqui como items do accordion menu, chamaremos ele de ‘accordion menu item’, também foi modificado, ganhando vários novos campos e regras. Veja o novo componente (documentação).
+
+<b>Exibir 'Ver tudo >" padrão:</b> Caso true, exibe um “Ver tudo >” que navega para a mesma que a<b> Navegação dinâmica. OBS:</b> FUNCIONA APENAS NO MENU NOVO, APÓS O REDESIGN. NÃO ALTERA EM NADA NO MENU ANTIGO.
+
+## Exemplos
+
+### Cadastro no Strapi
+
+![Accordion Menu New (Farm & FarmETC) — figura 1](/img/strapi/accordion-menu-new-farm-farmetc/img-01.webp)
+
+![Accordion Menu New (Farm & FarmETC) — figura 2](/img/strapi/accordion-menu-new-farm-farmetc/img-02.webp)

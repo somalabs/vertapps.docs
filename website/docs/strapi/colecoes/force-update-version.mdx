@@ -1,0 +1,40 @@
+---
+sidebar_position: 25
+title: "Force Update Version"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Coleção</Kicker>
+
+# Force Update Version
+
+Esta coleção é responsável pela tela de bloqueio de acesso ao APP para versões bloqueadas ou inferiores a versão mínima estabelecida. Quando esta tela é exibida o usuário não consegue sair dela, e portanto, não consegue navegar no app. Ela tem um botão de “Atualizar agora” que redireciona para a loja correspondente ao Sistema Operacional, na página da marca.
+
+<Chips>
+  <Chip tone="coral">Force Update Version</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+Os números de versão mínima e bloqueada são cadastrados no Firebase  > Remote Config > Feature Flag.<br />Para que a tela seja exibida para o usuário, ele precisa ter baixado no dispositivo uma versão que esteja bloqueada, ou que seja inferior a mínima, e esta coleção precisa estar publicada e ativa (campo ‘active’ como true).
+
+Inputs:<br />active: A tela só é exibida se este campo estiver marcado como true.
+
+title: O título da página
+
+description: Texto de descrição da página
+
+image\_background: Imagem de fundo da página (em algumas marcas \[Animale/CB\] a imagem de fundo precisa ser escura, nas outras, clara).
+
+## Preview
+
+![Force Update Version — figura 1](/img/strapi/colecoes/force-update-version/img-01.webp)
+
+## Exemplo do Strapi preenchido
+
+![Force Update Version — figura 2](/img/strapi/colecoes/force-update-version/img-02.webp)
+
+## Exemplo de como fica no app (figma)
+
+![Force Update Version — figura 3](/img/strapi/colecoes/force-update-version/img-03.webp)

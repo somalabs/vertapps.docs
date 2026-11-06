@@ -1,0 +1,107 @@
+---
+sidebar_position: 10
+title: "Smart Recommender | Insider"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Componente</Kicker>
+
+# Smart Recommender | Insider
+
+Documentação – SmartRecommender da Insider
+
+<Chips>
+  <Chip tone="coral">Smart Recommender | Insider</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+O <b>SmartRecommender</b> é um recurso da Insider integrado ao <b>Strapi</b> que permite a exibição dinâmica de produtos recomendados nas vitrines dentro do aplicativo (como na PDP).
+
+A configuração no Strapi define qual campanha da Insider será utilizada.
+
+---
+
+### Versão 1 - Atual
+
+Para o funcionamento correto do SmartRecommender, o campo <b>campaign\_id</b> no Strapi deve conter exatamente o mesmo <b>ID</b> da campanha configurada no painel da Insider.
+
+<b>Exemplo:</b>
+
+Se a campanha criada na Insider tiver ID 1, o campo campaign\_id no Strapi também deve ser 1.
+
+É possível configurar até 10 campanhas no painel da Insider. Basta alterar o valor do <b>campaign\_id</b> no Strapi para que o app renderize os produtos retornados pelo algoritmo da campanha.
+
+![Smart Recommender | Insider — figura 1](/img/strapi/smart-recommender-insider/img-01.webp)
+
+- O campo <b>title</b> define o nome da vitrine exibido no app. Esse nome é de uso livre da marca e não precisa coincidir com o nome da campanha na Insider.
+
+- O campo algorithm\_type indica o tipo de algoritmo utilizado. Na versão atual, apenas o valor product\_based é suportado.
+
+- Os campos <b>layout</b> e <b>position</b> não tem utilidade no momento.
+
+O tipo de algoritmo pode ser alterado, caso desejado. O algoritmo <b>Trending Product</b> é o padrão atual, mas pode ser substituído por outro, preferencialmente um indicado para uso na PDP.
+
+Para verificar os algoritmos disponíveis:
+
+![Smart Recommender | Insider — figura 2](/img/strapi/smart-recommender-insider/img-02.webp)
+
+Vai abrir uma tela com os algoritmos, ao clicar em um, tem um campo que diz onde é recomendado usar.
+
+![Smart Recommender | Insider — figura 3](/img/strapi/smart-recommender-insider/img-03.webp)
+
+Assim, caso deseje alterar o tipo de algoritmo, basta verificar se ele é compatível com a PDP.
+
+---
+
+### Versão 2 - Planejada \[Cris Barros\]
+
+A próxima versão introduzirá uma nova regra de negócio que diferencia o comportamento da vitrine de acordo com a presença do componente Complete o Look.
+
+<b>Regras de exibição:</b>
+
+Se existir o componente "Complete o Look", os produtos serão obtidos via: <b>getSmartRecommendationWithID</b>.
+
+Se não existir, os produtos serão obtidos via: <b>getSmartRecommendationWithProduct</b>.
+
+Se não houver, buscaremos os produtos através do método <b>getSmartRecommendationWithProduct</b>.
+
+Para suportar essa lógica, será criado um novo componente no Strapi, por exemplo:
+
+<b>insider\_showcase\_complete\_look</b>.
+
+Esse novo componente permitirá ao app identificar, em tempo real, qual tipo de vitrine deve ser renderizada, já que cada uma poderá ter algoritmos e títulos diferentes.
+
+Resumo
+
+- Sempre haverá ao menos <b>uma vitrine Insider</b> exibindo recomendações.
+
+- O <b>conteúdo recomendado</b> (produtos, algoritmo e título) poderá variar conforme:
+
+- A presença ou não do <b>Complete o Look</b>.
+
+- A configuração dos componentes e campanhas no <b>Strapi</b>.
+
+### Justificativa da Versão 2
+
+A complexidade vem da necessidade de incluir um <b>segundo componente no Strapi</b>.
+
+Cenário atual:
+
+No Strapi, é cadastrado o <b>ID da campanha</b> e o <b>algoritmo (product\_based)</b>.
+
+O app usa essas informações para renderizar a vitrine em telas <b>sem</b> o “Compre o Look”.
+
+Até aqui, tudo funciona corretamente.
+
+Quando há o “Complete o Look”:
+
+Nesse caso, é necessário usar <b>outro algoritmo de recomendação</b>.
+
+Como o Strapi atualmente só recebe um algoritmo, vamos precisar deixar o segundo (o que vai ser utilizado quando o produto já tem o compre o look), de forma fixa no código.
+
+Sem o novo componente, alterar o ID no Strapi atual causaria inconsistências entre produtos que <b>têm ou não</b> o “Compre o Look”.
+
+Por outro lado, manter tudo fixo no código tornaria o sistema <b>engessado</b>, exigindo uma <b>nova versão do app</b> a cada alteração de ID ou título.
+

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 61
+sidebar_position: 65
 title: "Search suggested products"
 ---
 
@@ -17,15 +17,12 @@ import Chip, {Chips} from '@site/src/components/Chip';
   <Chip tone="teal">CMS</Chip>
 </Chips>
 
-
-## Preview
-
-![Search suggested products](/img/strapi/search-suggested-products/preview.webp)
-
 ## Inputs
 
-| Campo | Descrição |
-|---|---|
-| **active** | Se estiver ativo exibe inicialmente estes produtos como produtos sugeridos, até o usuario iniciar a digitação de busca. Se estiver false, buscará pelo ultimo termo das buscas recentes, caso o usuário não tenha buscas recentes os produtos sugeridos serão baseados no primeiro termo dos ‘em alta’. |
-| **product_ids** | lista de ids que deverão ser exibidos como produtos sugeridos. os ids dos produtos devem ser separados por ; |
+<b>active</b>: Se estiver ativo exibe inicialmente estes produtos como produtos sugeridos, até o usuario iniciar a digitação de busca. Se estiver false, buscará pelo ultimo termo das buscas recentes, caso o usuário não tenha buscas recentes os produtos sugeridos serão baseados no primeiro termo dos ‘em alta’.
 
+<b>product\_ids</b>: lista de ids que deverão ser exibidos como produtos sugeridos. os ids dos produtos devem ser separados por ;
+
+## Exemplo
+
+![Search suggested products — figura 1](/img/strapi/search-suggested-products/img-01.webp)

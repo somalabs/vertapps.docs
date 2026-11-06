@@ -275,13 +275,13 @@ Tela de endereço do Turbo (apenas Hering). Use `/turbo`.
 
 <Details summary="Página Compre o look (Hering)">
 
-Collection Compre o look (apenas Hering). Use `/compre-o-look`.
+Redireciona para a tela de Compre o look cadastrada na collection [Compre o look](./colecoes/pagina-compre-o-look-hering.mdx) (apenas Hering). Use `/compre-o-look`.
 
 </Details>
 
 <Details summary="Transmissão Live (MF)">
 
-Collection de transmissão live (apenas Maria Filó). Use `/live`.
+Redireciona para a tela de Transmissão Live cadastrada na collection [Transmissão Live](./colecoes/transmissao-live-mf.mdx) (apenas Maria Filó). Use `/live`.
 
 </Details>
 
@@ -303,11 +303,14 @@ Farm/FarmEtc. Abre a central de notificações na aba de perfil.
 
 <Details summary="Menu_ETC (Nova arquitetura/Farm)">
 
-Menu do ETC.
+Redireciona o usuário para a página de explorar/menu do ETC.
 
 - **Identificador:** `menu_etc`
-- **Parâmetro principal:** `/nome` da Tab
+- **Parâmetro principal:** `/nome` da Tab cadastrada na Collection de menu
+- **Parâmetros nomeados:** não possui
 - **Exemplo:** `menu_etc/produtos`
+
+Observação: se a tab informada não existir, abre a primeira tab.
 
 </Details>
 
@@ -319,8 +322,12 @@ PLP do ETC — mesmos formatos da PLP, com identificador `plp_etc`.
 
 - `plp_etc/productclusternames/novidades-app`
 - `plp_etc/productclusterids/794`
+- `plp_etc/departamento/new-collection`
 - `plp_etc/departamento/new-collection/categoria/vestidos`
+- `plp_etc/productclusternames/golden-sale23?titulo=Golden Sale 2023`
 - `plp_etc/productclusterids/432?ordenacao=orderByPriceDESC`
+- `plp_etc/departamento/loja?titulo=Loja&ordenacao=orderByTopSaleDESC`
+- `plp_etc/departamento/loja?titulo=Loja&ordenacao=orderByTopSaleDESC&filtro-de-cores=azul&filtro-de-tamanhos=m&filtro-de-categorias=camisetas&filtro-de-preco=100-200`
 
 </Details>
 
@@ -348,7 +355,7 @@ PLP do ETC — mesmos formatos da PLP, com identificador `plp_etc`.
 
 - **Identificador:** `landing-page`
 - **Parâmetro principal:** nome da coleção no Strapi
-- **Formato:** `landing-page/\{Nome da coleção\}`
+- **Formato:** `landing-page/\{Nome da coleção\}` — a navegação para Landing Pages deve ser feita **exclusivamente** via navegação dinâmica
 - **Exemplo:** `landing-page/Sustentabilidade`
 
 </Details>
@@ -363,12 +370,20 @@ PLP do ETC — mesmos formatos da PLP, com identificador `plp_etc`.
 
 <Details summary="Lojas (Nova arquitetura/NV)">
 
+Redireciona o usuário para a aba de lojas no perfil.
+
+- **Identificador:** `perfil`
+- **Parâmetro principal:** `lojas`
 - **Exemplo:** `perfil/lojas`
 
 </Details>
 
 <Details summary="Pedidos (Nova arquitetura/NV)">
 
+Redireciona o usuário para a aba de pedidos no perfil.
+
+- **Identificador:** `perfil`
+- **Parâmetro principal:** `pedidos`
 - **Exemplo:** `perfil/pedidos`
 
 </Details>

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 75
+sidebar_position: 20
 title: "Video Gallery"
 ---
 
@@ -17,12 +17,32 @@ Componente de videos na home Disponível na Home.
   <Chip tone="teal">CMS</Chip>
 </Chips>
 
-
 ## Preview
 
-![Video Gallery](/img/strapi/video-gallery/preview.webp)
+![Video Gallery — figura 1](/img/strapi/video-gallery/img-01.webp)
 
 ## Inputs
 
-![Inputs — Video Gallery](/img/strapi/video-gallery/inputs.webp)
+![Video Gallery — figura 2](/img/strapi/video-gallery/img-02.webp)
 
+<b>items: Videos</b> que serão exibidos no carrossel (repetível).
+
+:::warning
+
+Para vídeo, sugere-se que possuam até 3MB para que seja minimizado o risco de problemas com a experiência do usuário em seu dispositivo, que vão desde fluidez corrompida dos vídeos à fechamento inesperado da aplicação.
+
+:::
+
+<b>image:</b> Imagem do item. Campo obrigatório.
+
+<b>title:</b> Titulo do vídeo. Campo opcional.
+
+<b>video\_url:</b> Url do vídeo a ser exibido. Campo obrigatório
+
+<b>description:</b> Descrição do vídeo. Campo opcional.
+
+<b>navigate\_to:</b> Navegação dinâmica. Campo opcional
+
+<b>title:</b> Título do carrosel de vídeos. Campo opcional.
+
+<b>subtitle:</b> Descrição do carrosel de vídeos. Campo opcional.

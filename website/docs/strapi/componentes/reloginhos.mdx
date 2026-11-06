@@ -1,5 +1,5 @@
 ---
-sidebar_position: 60
+sidebar_position: 16
 title: "Reloginhos"
 ---
 
@@ -15,32 +15,1076 @@ import Chip, {Chips} from '@site/src/components/Chip';
   <Chip tone="teal">CMS</Chip>
 </Chips>
 
+## Clock
 
-## Preview
+<b>Relógios do corpo da home.</b> <br />Atenção, não colocar como primeiro item da home. Caso queira um relógio no header, utilize o General Clock, no documento de Clock Promotions.
 
-![Reloginhos](/img/strapi/reloginhos/preview.webp)
+### ANIMALE
 
-## Inputs
+Este reloginho deverá aparecer no corpo da home, entre os componentes.
 
-![Inputs — Reloginhos](/img/strapi/reloginhos/inputs.webp)
+![Reloginhos — figura 1](/img/strapi/reloginhos/img-01.webp)
 
-| Campo | Descrição |
-|---|---|
-| **subtitle** | deverá ser inserido o texto que será exibido ao lado do reloginho. |
-| **button_text** | deverá ser inserido o texto que aparecerá no botão, levando em consideração se é um botão de cupom (exemplo: Aplicar cupom). |
-| **coupon** | ou button text não seja preenchido, o botão não irá aparecer.Caso tenha um cupom, e esteja aplicado, o texto do botão muda automaticamente. |
+#### Inputs
 
-## Páginas
+<b>is\_active:</b> deverá ser escolhida a opção de ativar ou desativar o reloginho. O reloginho só será exibido caso a opção “true” esteja selecionada. Campo obrigatório. Default “false”.
 
-- - Home
+<b>subtitle</b>: deverá ser inserido o texto que será exibido ao lado do reloginho.
 
-## Exemplos
+<b>coupon:</b> deverá ser inserido o cupom que será aplicado na sacola do usuário.
 
-![Exemplo 1 — Reloginhos](/img/strapi/reloginhos/exemplo-1.webp)
+<b>button\_text</b>: deverá ser inserido o texto que aparecerá no botão, levando em consideração se é um botão de cupom (exemplo: Aplicar cupom).
 
-![Exemplo 2 — Reloginhos](/img/strapi/reloginhos/exemplo-2.webp)
+:::tip
 
-![Exemplo 3 — Reloginhos](/img/strapi/reloginhos/exemplo-3.webp)
+Caso o campo <b>coupon</b> ou <b>button text</b> não seja preenchido, o botão não irá aparecer.<br />Caso tenha um cupom, e esteja aplicado, o texto do botão muda automaticamente.
 
-![Exemplo 4 — Reloginhos](/img/strapi/reloginhos/exemplo-4.webp)
+:::
 
+<b>navigate\_to:</b> deverá ser preenchido conforme [documento de navegação dinâmica](../navegacao-dinamica.mdx), este campo será responsável por fazer o redirecionamento quando o campo de cupom não for preenchido.
+
+:::tip
+
+Ao ser clicado no relógio em sí, efetua o redirecionamento
+
+:::
+
+<b>start\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser iniciado. Campo obrigatório.
+
+<b>end\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser encerrado. Campo obrigatório.
+
+:::tip
+
+Após a data e hora preenchidos no campo “fim da promoção” o reloginho irá desaparecer automaticamente da home.
+
+:::
+
+<b>cor do texto:</b> deverá ser inserida a cor dos textos. Campo obrigatório.
+
+<b>cor de fundo:</b> deverá ser inserida a cor de fundo. Campo obrigatório.
+
+#### Páginas
+
+- Home
+
+#### Exemplo
+
+![Reloginhos — figura 2](/img/strapi/reloginhos/img-02.webp)
+
+![Reloginhos — figura 3](/img/strapi/reloginhos/img-03.webp)
+
+### FARM
+
+Este reloginho deverá aparecer no corpo da home, entre os componentes.
+
+![Reloginhos — figura 4](/img/strapi/reloginhos/img-04.webp)
+
+#### Inputs
+
+<b>is\_active:</b> deverá ser escolhida a opção de ativar ou desativar o reloginho. O reloginho só será exibido caso a opção “true” esteja selecionada. Campo obrigatório. Default “false”.
+
+<b>subtitle</b>: deverá ser inserido o texto que será exibido ao lado do reloginho.
+
+<b>coupon:</b> deverá ser inserido o cupom que será aplicado na sacola do usuário.
+
+<b>button\_text</b>: deverá ser inserido o texto que aparecerá no botão, levando em consideração que é um botão de cupom (exemplo: Aplicar cupom).
+
+:::tip
+
+Caso o campo <b>button\_text</b> ou<b> coupon</b> não seja preenchido, o botão não irá aparecer.<br />Caso tenha um cupom, e esteja aplicado, o texto do botão muda automaticamente.
+
+:::
+
+<b>button\_position</b>: esse campo não funcionará para reloginho do corpo da home.
+
+<b>start\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser iniciado. Campo obrigatório.
+
+<b>end\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser encerrado. Campo obrigatório.
+
+:::tip
+
+Após a data e hora preenchidos no campo “fim da promoção” o reloginho irá desaparecer automaticamente da home.
+
+---
+
+:::
+
+<b>cor do texto:</b> deverá ser inserida a cor dos textos. Campo obrigatório.
+
+<b>cor de fundo:</b> deverá ser inserida a cor de fundo. Campo obrigatório.
+
+#### Páginas
+
+- Home
+
+#### Exemplo
+
+![Reloginhos — figura 5](/img/strapi/reloginhos/img-05.webp)
+
+![Reloginhos — figura 6](/img/strapi/reloginhos/img-06.webp)
+
+### HERING
+
+Este reloginho deverá aparecer no corpo da home, entre os componentes.
+
+![Reloginhos — figura 7](/img/strapi/reloginhos/img-07.webp)
+
+#### Inputs
+
+<b>is\_active:</b> deverá ser escolhida a opção de ativar ou desativar o reloginho. O reloginho só será exibido caso a opção “true” esteja selecionada. Campo obrigatório. Default “false”.
+
+<b>subtitle:</b> não se aplica ao relógio do corpo da home.
+
+<b>title</b>: deverá ser inserido o texto que será exibido como título do reloginho. Campo obrigatório.
+
+<b>coupon:</b> deverá ser inserido o cupom que será aplicado na sacola do usuário.
+
+<b>button\_text</b>: deverá ser inserido o texto que aparecerá no botão, levando em consideração se é um botão de cupom (exemplo: Aplicar cupom) ou de redirecionamento (exemplo: Explorar produtos).
+
+:::tip
+
+Caso o campo não seja preenchido, o botão não irá aparecer.<br />Caso tenha um cupom, e esteja aplicado, o texto do botão muda automaticamente.
+
+:::
+
+<b>navigate\_to:</b> deverá ser preenchido conforme [documento de navegação dinâmica](../navegacao-dinamica.mdx), este campo será responsável por fazer o redirecionamento quando o campo de cupom não for preenchido.
+
+:::tip
+
+Quando não tem cupom, e tem button\_text, exibe um botão com funcionalidade de redirecionamento para este navigate\_to. <br />Caso tenha cupom, o botão passa a aplica-lo, e o redirecionamento acontece ao clicar no título do relógio.
+
+:::
+
+<b>rules\_button\_text:</b> deverá ser preenchido com o texto que ficará como responsável por abrir as informações das regras de participação da campanha.
+
+<b>rules\_description:</b> deverá ser inserido o texto que será exibido no modal de regras de participação da campanha. Caso o campo não seja preenchido, o botão de 'regras da promoção’ será ocultado.
+
+:::tip
+
+Caso <b>rules\_button\_text</b>  ou <b>rules\_description</b> não estejam preenchidos, não aparecerá o rules\_button\_text.
+
+:::
+
+<b>start\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser iniciado. Campo obrigatório.
+
+<b>end\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser encerrado. Campo obrigatório.
+
+:::tip
+
+Após a data e hora preenchidos no campo “fim da promoção” o reloginho irá desaparecer automaticamente da home.
+
+---
+
+:::
+
+<b>cor do texto:</b> deverá ser inserida a cor dos textos. Campo obrigatório.
+
+<b>cor de fundo:</b> deverá ser inserida a cor de fundo. Campo obrigatório.
+
+<b>Nome do banner no GA4:</b> Campo de analytics. Deverá ser preenchido dessa forma: PROMOTION NAME /// CREATIVE NAME. (Campo obrigatório).
+
+#### Páginas
+
+- Home
+
+#### Exemplo
+
+![Reloginhos — figura 8](/img/strapi/reloginhos/img-08.webp)
+
+![Reloginhos — figura 9](/img/strapi/reloginhos/img-09.webp)
+
+### MARIA FILÓ
+
+Este reloginho deverá aparecer no corpo da home, entre os componentes.
+
+![Reloginhos — figura 10](/img/strapi/reloginhos/img-10.webp)
+
+#### Inputs
+
+<b>is\_active:</b> deverá ser escolhida a opção de ativar ou desativar o reloginho. O reloginho só será exibido caso a opção “true” esteja selecionada. Campo obrigatório. Default “false”.
+
+<b>title</b>: deverá ser inserido o texto que será exibido como título do reloginho. Campo obrigatório.
+
+<b>coupon:</b> deverá ser inserido o cupom que será aplicado na sacola do usuário.
+
+<b>button\_text</b>: deverá ser inserido o texto que aparecerá no botão, levando em consideração se é um botão de cupom (exemplo: Aplicar cupom).
+
+:::tip
+
+Caso o campo <b>coupon</b>  ou <b> button text</b> não estejam preenchidos, o botão não irá aparecer.<br />Caso tenha um cupom, e esteja aplicado, o texto do botão muda automaticamente.
+
+:::
+
+<b>navigate\_to:</b> deverá ser preenchido conforme [documento de navegação dinâmica](../navegacao-dinamica.mdx), este campo será responsável por fazer o redirecionamento quando o campo de cupom não for preenchido.
+
+:::tip
+
+Ao ser clicado no relógio em sí, executa o redirecionamento.
+
+:::
+
+<b>start\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser iniciado. Campo obrigatório.
+
+<b>end\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser encerrado. Campo obrigatório.
+
+:::tip
+
+Após a data e hora preenchidos no campo “fim da promoção” o reloginho irá desaparecer automaticamente da home.
+
+---
+
+:::
+
+<b>cor do texto:</b> deverá ser inserida a cor dos textos. Campo obrigatório.
+
+<b>cor de fundo:</b> deverá ser inserida a cor de fundo. Campo obrigatório.
+
+#### Páginas
+
+- Home
+
+#### Exemplo
+
+![Reloginhos — figura 11](/img/strapi/reloginhos/img-11.webp)
+
+![Reloginhos — figura 12](/img/strapi/reloginhos/img-12.webp)
+
+### OFF PREMIUM
+
+Este reloginho deverá aparecer no corpo da home, entre os componentes.
+
+![Reloginhos — figura 13](/img/strapi/reloginhos/img-13.webp)
+
+#### Inputs
+
+<b>is\_active:</b> deverá ser escolhida a opção de ativar ou desativar o reloginho. O reloginho só será exibido caso a opção “true” esteja selecionada. Campo obrigatório. Default “false”.
+
+<b>title</b>: deverá ser inserido o texto que será exibido como título do reloginho. Campo obrigatório.
+
+<b>rules\_button\_text:</b> Texto com hiperlinks que abre o alerta das descrições das regras. Exemplo: “Confira as regras”.<br /><b>rules\_description</b>: Texto de descrição das regras da promoção, exibido no alerta..
+
+:::tip
+
+Caso <b>rules\_button\_text</b> ou <b>rules\_description</b> não sejam preenchidos, o botão das regras da promoção não aparece.
+
+:::
+
+<b>navigate\_to:</b> deverá ser preenchido conforme [documento de navegação dinâmica](../navegacao-dinamica.mdx), este campo será responsável por fazer o redirecionamento quando o campo de cupom não for preenchido.
+
+:::tip
+
+Ao ser clicado no relógio em sí, executa o redirecionamento.
+
+:::
+
+<b>start\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser iniciado. Campo obrigatório.
+
+<b>end\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser encerrado. Campo obrigatório.
+
+:::tip
+
+Após a data e hora preenchidos no campo “fim da promoção” o reloginho irá desaparecer automaticamente da home.
+
+---
+
+:::
+
+<b>cor do texto:</b> deverá ser inserida a cor dos textos. Campo obrigatório.
+
+<b>cor de fundo:</b> deverá ser inserida a cor de fundo. Campo obrigatório.
+
+#### Páginas
+
+- Home
+
+#### Exemplo
+
+![Reloginhos — figura 14](/img/strapi/reloginhos/img-14.webp)
+
+![Reloginhos — figura 15](/img/strapi/reloginhos/img-15.webp)
+
+## General Clock
+
+### ANIMALE
+
+Este reloginho poderá ser mostrado no header da home, além de diferentes páginas.
+
+![Reloginhos — figura 16](/img/strapi/reloginhos/img-16.webp)
+
+#### Inputs
+
+##### clock
+
+<b>is\_active:</b> deverá ser escolhida a opção de ativar ou desativar o reloginho. O reloginho só será exibido caso a opção “true” esteja selecionada. Campo obrigatório. Default “false”.
+
+<b>subtitle</b>: deverá ser inserido o texto que será exibido ao lado do reloginho.
+
+<b>coupon:</b> deverá ser inserido o cupom que será aplicado na sacola do usuário.
+
+<b>button\_text</b>: deverá ser inserido o texto que aparecerá no botão, levando em consideração se é um botão de cupom (exemplo: Aplicar cupom) ou de redirecionamento (exemplo: Explorar produtos).
+
+:::tip
+
+Caso o campo não seja preenchido, o botão não irá aparecer.<br />Caso tenha um cupom, e esteja aplicado, o texto do botão muda automaticamente.
+
+:::
+
+<b>navigate\_to:</b> deverá ser preenchido conforme [documento de navegação dinâmica](../navegacao-dinamica.mdx), este campo será responsável por fazer o redirecionamento quando o campo de cupom não for preenchido.
+
+<b>start\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser iniciado. Campo obrigatório.
+
+<b>end\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser encerrado. Campo obrigatório.
+
+:::tip
+
+Após a data e hora preenchidos no campo “fim da promoção” o reloginho irá desaparecer automaticamente da home.
+
+:::
+
+<b>text\_color:</b> deverá ser inserida a cor dos textos. Campo obrigatório.
+
+<b>background\_color:</b> deverá ser inserida a cor de fundo. Campo obrigatório.
+
+##### pages
+
+<b>page:</b> deverá ser escolhida a opção de página dentre as disponíveis para a marca em que o reloginho deverá ser mostrado. Campo obrigatório.
+
+<b>assignment</b>: deverá ser especificado o filtro de página ou coleção em que o reloginho deverá ser mostrado, em caso de mais de uma, estas deverão ser separadas por vírgula ( , ). Se não especificado, aparecerá em todas as páginas correspondentes àquela categoria.
+
+<b>excludedAssignment</b>: Deverá ser especificado o filtro de página ou coleção em que o reloginho não deverá ser mostrado. Em caso de mais de uma, estas deverão ser separadas por vírgula ( , ). Caso o campo não seja preenchido, nenhuma página será excluída e o reloginho aparecerá em todas as páginas correspondentes àquela categoria.
+
+#### Páginas
+
+- Home
+
+- PDC
+
+- PDP
+
+- Menu
+
+- Sacola
+
+- Wishlist
+
+- Hub de conteúdo
+
+#### Exemplo
+
+Componente sendo exibido em home e PDPs da coleção “departamento/new-collection”.
+
+![Reloginhos — figura 17](/img/strapi/reloginhos/img-17.webp)
+
+![Reloginhos — figura 18](/img/strapi/reloginhos/img-18.webp)
+
+![Reloginhos — figura 19](/img/strapi/reloginhos/img-19.webp)
+
+#### Figma
+
+[Figma / referência](https://www.figma.com/file/nzWONdB1YCEf3Nf7g6v3YB/Reloginho-NOVANM-973?type=design&node-id=104-86&t=OeVRpAHlwTrEFyPQ-0)
+
+### FARM
+
+Este reloginho poderá ser mostrado no header da home, além de diferentes páginas.
+
+![Reloginhos — figura 20](/img/strapi/reloginhos/img-20.webp)
+
+#### Inputs
+
+##### clock
+
+<b>is\_active:</b> deverá ser escolhida a opção de ativar ou desativar o reloginho. O reloginho só será exibido caso a opção “true” esteja selecionada. Campo obrigatório. Default “false”.
+
+<b>subtitle</b>: deverá ser inserido o texto que será exibido ao lado do reloginho.
+
+<b>coupon:</b> deverá ser inserido o cupom que será aplicado na sacola do usuário.
+
+<b>button\_text</b>: deverá ser inserido o texto que aparecerá no botão, levando em consideração se é um botão de cupom (exemplo: Aplicar cupom) ou de redirecionamento (exemplo: Explorar produtos).
+
+<b>button\_position</b>: o botão poderá ficar em duas posições, abaixo do relógio ou depois do cupom. Caso não seja preenchido, o valor padrão é “Depois do cupom”.
+
+<b>start\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser iniciado. Campo obrigatório.
+
+<b>end\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser encerrado. Campo obrigatório.
+
+:::tip
+
+Após a data e hora preenchidos no campo “fim da promoção” o reloginho irá desaparecer automaticamente da home.
+
+:::
+
+<b>text\_color:</b> deverá ser inserida a cor dos textos. Campo obrigatório.
+
+<b>background\_color:</b> deverá ser inserida a cor de fundo. Campo obrigatório.
+
+##### pages
+
+<b>page:</b> deverá ser escolhida a opção de página dentre as disponíveis para a marca em que o reloginho deverá ser mostrado. Campo obrigatório.
+
+<b>assignment</b>: deverá ser especificado o filtro de página ou coleção em que o reloginho deverá ser mostrado, em caso de mais de uma, estas deverão ser separadas por vírgula ( , ). Se não especificado, aparecerá em todas as páginas correspondentes àquela categoria.
+
+<b>excludedAssignment</b>: Deverá ser especificado o filtro de página ou coleção em que o reloginho não deverá ser mostrado. Em caso de mais de uma, estas deverão ser separadas por vírgula ( , ). Caso o campo não seja preenchido, nenhuma página será excluída e o reloginho aparecerá em todas as páginas correspondentes àquela categoria.
+
+#### Páginas
+
+- Home
+
+- PDC
+
+- PDP
+
+#### Exemplos
+
+Registro de um relógio que, aparece em todas as pdps (pq não tem assignment)<br />
+
+![Reloginhos — figura 21](/img/strapi/reloginhos/img-21.webp)
+
+<br />Exemplo do relógio na PDP:
+
+![Reloginhos — figura 22](/img/strapi/reloginhos/img-22.webp)
+
+![Reloginhos — figura 23](/img/strapi/reloginhos/img-23.webp)
+
+![Reloginhos — figura 24](/img/strapi/reloginhos/img-24.webp)
+
+Registre outro relógio, diferente, que só deve aparecer em uma pdc especifica.<br />
+
+![Reloginhos — figura 25](/img/strapi/reloginhos/img-25.webp)
+
+![Reloginhos — figura 26](/img/strapi/reloginhos/img-26.webp)
+
+### HERING
+
+Este reloginho poderá ser mostrado no header da home, além de diferentes páginas.
+
+![Reloginhos — figura 27](/img/strapi/reloginhos/img-27.webp)
+
+![Reloginhos — figura 28](/img/strapi/reloginhos/img-28.webp)
+
+#### Inputs
+
+##### clock
+
+<b>is\_active:</b> deverá ser escolhida a opção de ativar ou desativar o reloginho. O reloginho só será exibido caso a opção “true” esteja selecionada. Campo obrigatório. Default “false”.
+
+<b>title</b>: deverá ser inserido o texto que será exibido como título do reloginho. Campo obrigatório.
+
+<b>subtitle</b>: deverá ser inserido o texto que será exibido como subtítulo do reloginho. Este campo não é exibido no relógio da Home, apenas na PDC.
+
+<b>coupon:</b> deverá ser inserido o cupom que será aplicado na sacola do usuário.
+
+<b>button\_text</b>: deverá ser inserido o texto que aparecerá no botão, levando em consideração se é um botão de cupom (exemplo: Aplicar cupom) ou de redirecionamento (exemplo: Explorar produtos).
+
+:::tip
+
+Caso o campo não seja preenchido, o botão não irá aparecer.<br />Caso tenha um cupom, e esteja aplicado, o texto do botão muda automaticamente.
+
+:::
+
+<b>navigate\_to:</b> deverá ser preenchido conforme [documento de navegação dinâmica](../navegacao-dinamica.mdx), este campo será responsável por fazer o redirecionamento quando o campo de cupom não for preenchido.
+
+<b>rules\_button\_text:</b> deverá ser preenchido com o texto que ficará como responsável por abrir as informações das regras de participação da campanha.
+
+<b>rules\_description:</b> deverá ser inserido o texto que será exibido no modal de regras de participação da campanha. Caso o campo não seja preenchido, o botão de 'regras da promoção’ será ocultado.
+
+<b>start\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser iniciado. Campo obrigatório.
+
+<b>end\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser encerrado. Campo obrigatório.
+
+:::tip
+
+Após a data e hora preenchidos no campo “fim da promoção” o reloginho irá desaparecer automaticamente da home.
+
+:::
+
+<b>text\_color:</b> deverá ser inserida a cor dos textos. Campo obrigatório.
+
+<b>background\_color:</b> deverá ser inserida a cor de fundo. Campo obrigatório.
+
+<b>Nome do banner no GA4:</b> Campo de analytics. Deverá ser preenchido dessa forma: PROMOTION NAME /// CREATIVE NAME. (Campo obrigatório).
+
+##### pages
+
+<b>page:</b> deverá ser escolhida a opção de página dentre as disponíveis para a marca em que o reloginho deverá ser mostrado. Campo obrigatório.
+
+<b>assignment</b>: deverá ser especificado o filtro de página ou coleção em que o reloginho deverá ser mostrado, em caso de mais de uma, estas deverão ser separadas por vírgula ( , ). Se não especificado, aparecerá em todas as páginas correspondentes àquela categoria.
+
+#### Páginas
+
+- Home
+
+#### Exemplo
+
+Componente sendo exibido em home e PDC da coleção “productclusterids/1787”.
+
+![Reloginhos — figura 29](/img/strapi/reloginhos/img-29.webp)
+
+![Reloginhos — figura 30](/img/strapi/reloginhos/img-30.webp)
+
+![Reloginhos — figura 31](/img/strapi/reloginhos/img-31.webp)
+
+![Reloginhos — figura 32](/img/strapi/reloginhos/img-32.webp)
+
+#### Figma
+
+[Figma / referência](https://www.figma.com/file/uAYaFJXDazek1YzZK6pSiZ/Relóginho--06/23--(APP)?type=design&node-id=2702-139169&mode=design&t=jjCW46uqleuMy5h4-0)
+
+### MARIA FILÓ
+
+Este reloginho poderá ser mostrado no header da home, além de diferentes páginas.
+
+![Reloginhos — figura 33](/img/strapi/reloginhos/img-33.webp)
+
+#### Inputs
+
+##### clock
+
+<b>is\_active:</b> deverá ser escolhida a opção de ativar ou desativar o reloginho. O reloginho só será exibido caso a opção “true” esteja selecionada. Campo obrigatório. Default “false”.
+
+<b>title</b>: deverá ser inserido o texto que será exibido como título do reloginho. Campo obrigatório. Este campo não é exibido no relógio da PDC.
+
+<b>coupon:</b> deverá ser inserido o cupom que será aplicado na sacola do usuário.
+
+<b>button\_text</b>: deverá ser inserido o texto que aparecerá no botão, levando em consideração se é um botão de cupom (exemplo: Aplicar cupom) ou de redirecionamento (exemplo: Explorar produtos).
+
+:::tip
+
+Caso o campo não seja preenchido, o botão não irá aparecer.<br />Caso tenha um cupom, e esteja aplicado, o texto do botão muda automaticamente.
+
+:::
+
+<b>navigate\_to:</b> deverá ser preenchido conforme [documento de navegação dinâmica](../navegacao-dinamica.mdx), este campo será responsável por fazer o redirecionamento quando o campo de cupom não for preenchido.
+
+<b>start\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser iniciado. Campo obrigatório.
+
+<b>end\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser encerrado. Campo obrigatório.
+
+:::tip
+
+Após a data e hora preenchidos no campo “fim da promoção” o reloginho irá desaparecer automaticamente da home.
+
+:::
+
+<b>text\_color:</b> deverá ser inserida a cor dos textos. Campo obrigatório.
+
+<b>background\_color:</b> deverá ser inserida a cor de fundo. Campo obrigatório.
+
+##### pages
+
+<b>page:</b> deverá ser escolhida a opção de página dentre as disponíveis para a marca em que o reloginho deverá ser mostrado. Campo obrigatório.
+
+<b>assignment</b>: deverá ser especificado o filtro de página ou coleção em que o reloginho deverá ser mostrado, em caso de mais de uma, estas deverão ser separadas por vírgula ( , ). Se não especificado, aparecerá em todas as páginas correspondentes àquela categoria.
+
+<b>excludedAssignment</b>: Deverá ser especificado o filtro de página ou coleção em que o reloginho não deverá ser mostrado. Em caso de mais de uma, estas deverão ser separadas por vírgula ( , ). Caso o campo não seja preenchido, nenhuma página será excluída e o reloginho aparecerá em todas as páginas correspondentes àquela categoria.
+
+#### Páginas
+
+- Home
+
+- PDC
+
+#### Exemplo
+
+Componente sendo exibido em home e PDC da coleção “productclusternames/novidades-da-semana”.
+
+![Reloginhos — figura 34](/img/strapi/reloginhos/img-34.webp)
+
+![Reloginhos — figura 35](/img/strapi/reloginhos/img-35.webp)
+
+![Reloginhos — figura 36](/img/strapi/reloginhos/img-36.webp)
+
+#### Figma
+
+[Figma / referência](https://www.figma.com/file/L9R8663iKCNlhjHMScRJt0/Reloginho-NOVANM-973?type=design&node-id=197-7&t=GbYFHpHMdkan2vLz-0)
+
+### OFF PREMIUM
+
+Este reloginho poderá ser mostrado no header da home e nas página de categorias.
+
+![Reloginhos — figura 37](/img/strapi/reloginhos/img-37.webp)
+
+#### Inputs
+
+##### clock
+
+<b>is\_active:</b> deverá ser escolhida a opção de ativar ou desativar o reloginho. O reloginho só será exibido caso a opção “true” esteja selecionada. Campo obrigatório. Default “false”.
+
+<b>title</b>: deverá ser inserido o texto que será exibido como título do reloginho. Campo obrigatório.
+
+<b>navigate\_to:</b> deverá ser preenchido conforme [documento de navegação dinâmica](../navegacao-dinamica.mdx), este campo será responsável por fazer o redirecionamento quando o campo de cupom não for preenchido.
+
+<b>start\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser iniciado. Campo obrigatório.
+
+<b>end\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser encerrado. Campo obrigatório.
+
+:::tip
+
+Após a data e hora preenchidos no campo “fim da promoção” o reloginho irá desaparecer automaticamente da home.
+
+:::
+
+<b>text\_color:</b> deverá ser inserida a cor dos textos. Campo obrigatório.
+
+<b>background\_color:</b> deverá ser inserida a cor de fundo. Campo obrigatório.
+
+##### pages
+
+<b>page:</b> deverá ser escolhida a opção de página dentre as disponíveis para a marca em que o reloginho deverá ser mostrado. Campo obrigatório.
+
+<b>assignment</b>: deverá ser especificado o filtro de página ou coleção em que o reloginho deverá ser mostrado, em caso de mais de uma, estas deverão ser separadas por vírgula ( , ). Se não especificado, aparecerá em todas as páginas correspondentes àquela categoria.
+
+#### Páginas
+
+- Home
+
+- PDC
+
+#### Exemplo
+
+Relógio cadastrado de forma geral, pra aparecer na home e nas PDC.
+
+![Reloginhos — figura 38](/img/strapi/reloginhos/img-38.webp)
+
+![Reloginhos — figura 39](/img/strapi/reloginhos/img-39.webp)
+
+![Reloginhos — figura 40](/img/strapi/reloginhos/img-40.webp)
+
+<b>Relógio em PDC especifica:</b>
+
+![Reloginhos — figura 41](/img/strapi/reloginhos/img-41.webp)
+
+![Reloginhos — figura 42](/img/strapi/reloginhos/img-42.webp)
+
+### NV
+
+Este reloginho poderá ser mostrado na home e nas página de categorias.
+
+![Reloginhos — figura 43](/img/strapi/reloginhos/img-43.webp)
+
+#### Inputs
+
+##### clock
+
+<b>is\_active:</b> deverá ser escolhida a opção de ativar ou desativar o reloginho. O reloginho só será exibido caso a opção “true” esteja selecionada. Campo obrigatório. Default “false”.
+
+<b>title</b>: deverá ser inserido o texto que será exibido como título do reloginho. Campo obrigatório.
+
+<b>subtitle:</b> deverá ser inserido o texto que será exibido na home em baixo do reloginho e na pdc e pdp ele acompanha o texto na mesma linha.
+
+<b>coupon:</b> deverá ser inserido o cupom que será aplicado na sacola do usuário.
+
+<b>navigate\_to:</b> deverá ser preenchido conforme [documento de navegação dinâmica](../navegacao-dinamica.mdx), este campo será responsável por fazer o redirecionamento quando o campo de cupom não for preenchido.
+
+<b>start\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser iniciado. Campo obrigatório.
+
+<b>end\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser encerrado. Campo obrigatório.
+
+:::tip
+
+Após a data e hora preenchidos no campo “fim da promoção” o reloginho irá desaparecer automaticamente da home.
+
+:::
+
+<b>text\_color:</b> deverá ser inserida a cor dos textos. Campo obrigatório.
+
+<b>background\_color:</b> deverá ser inserida a cor de fundo. Campo obrigatório.
+
+<b>button\_background\_color:</b> deverá ser inserida a cor de fundo do botão.<br /><b>button\_text\_color:</b> deverá ser inserida a cor do texto do botão.
+
+##### pages
+
+<b>page:</b> deverá ser escolhida a opção de página dentre as disponíveis para a marca em que o reloginho deverá ser mostrado. Campo obrigatório.
+
+<b>assignment</b>: deverá ser especificado o filtro de página ou coleção em que o reloginho deverá ser mostrado, em caso de mais de uma, estas deverão ser separadas por vírgula ( , ). Se não especificado, aparecerá em todas as páginas correspondentes àquela categoria.
+
+#### Páginas
+
+- Home
+
+- PDC
+
+- PDP
+
+- Sacola (ver observação e exemplo)
+
+#### Exemplo
+
+##### Relógio cadastrado de forma geral, pra aparecer na home.
+
+![Reloginhos — figura 44](/img/strapi/reloginhos/img-44.webp)
+
+![Reloginhos — figura 45](/img/strapi/reloginhos/img-45.webp)
+
+##### Relógio em PDC especifica:
+
+![Reloginhos — figura 46](/img/strapi/reloginhos/img-46.webp)
+
+![Reloginhos — figura 47](/img/strapi/reloginhos/img-47.webp)
+
+##### Relógio em PDP especifica:
+
+![Reloginhos — figura 48](/img/strapi/reloginhos/img-48.webp)
+
+![Reloginhos — figura 49](/img/strapi/reloginhos/img-49.webp)
+
+##### Sacola
+
+Esta possibilidade foi adicionada posteriormente, e se comporta mais como um cupom do que como um reloginho.
+
+Como a exibição do componente está vinculada a mesma lógica de tempo (tempo inicial/tempo) da promoção, o mesmo componente do header clock foi utilizado, basta apenas adicionar essa nova possibilidade ‘sacola’ no ‘pages’.<br />Porém, na sacola a exibição é um pouco diferente, mais compacta (como podemos ver na imagem a seguir).<br /><br />Portanto, o componente exibido na sacola ignora o campo subtitle.
+
+Outro detalhe importante (que já é assim nos reloginhos mas vale a pena reforçar): <br />O botão vai aparecer se tiver conteudo em ‘button\_text’. Se tiver cupom, e ele estiver aplicado, o texto muda automaticamente para “Aplicado”. <br />Caso o componente não seja usado com cupom, ele pode ser usado para redirecionaemnto (usando a navegação dinamica, e o button\_text pode ser ‘explorar produtos’ ou similar).<br />Clicar no componente tem a mesma ação que clicar no botão.<br />
+
+<br />Quando o button\_text não é preenchido o botão não aparece.<br />
+
+### CRIS BARROS
+
+Este reloginho poderá ser mostrado na home.
+
+![Reloginhos — figura 50](/img/strapi/reloginhos/img-50.webp)
+
+#### Inputs
+
+##### clock
+
+<b>is\_active:</b> deverá ser escolhida a opção de ativar ou desativar o reloginho. O reloginho só será exibido caso a opção “true” esteja selecionada. Campo obrigatório. Default “false”.
+
+<b>title</b>: deverá ser inserido o texto que será exibido como título do reloginho. Campo obrigatório.
+
+<b>subtitle:</b> deverá ser inserido o texto que será exibido na home em baixo do reloginho e na pdc e pdp ele acompanha o texto na mesma linha.
+
+<b>coupon:</b> deverá ser inserido o cupom que será aplicado na sacola do usuário.
+
+<b>navigate\_to:</b> deverá ser preenchido conforme [documento de navegação dinâmica](../navegacao-dinamica.mdx), este campo será responsável por fazer o redirecionamento quando o campo de cupom não for preenchido.
+
+<b>start\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser iniciado. Campo obrigatório.
+
+<b>end\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser encerrado. Campo obrigatório.
+
+:::tip
+
+Após a data e hora preenchidos no campo “fim da promoção” o reloginho irá desaparecer automaticamente da home.
+
+:::
+
+<b>text\_color:</b> deverá ser inserida a cor dos textos. Campo obrigatório.
+
+<b>background\_color:</b> deverá ser inserida a cor de fundo. Campo obrigatório.
+
+<b>button\_background\_color:</b> deverá ser inserida a cor de fundo do botão.
+
+##### pages
+
+<b>page:</b> deverá ser escolhida a opção de página dentre as disponíveis para a marca em que o reloginho deverá ser mostrado. Campo obrigatório.
+
+<b>assignment</b>: deverá ser especificado o filtro de página ou coleção em que o reloginho deverá ser mostrado, em caso de mais de uma, estas deverão ser separadas por vírgula ( , ). Se não especificado, aparecerá em todas as páginas correspondentes àquela categoria.
+
+<b>excludedAssignment</b>: Deverá ser especificado o filtro de página ou coleção em que o reloginho não deverá ser mostrado. Em caso de mais de uma, estas deverão ser separadas por vírgula ( , ). Caso o campo não seja preenchido, nenhuma página será excluída e o reloginho aparecerá em todas as páginas correspondentes àquela categoria.
+
+#### Páginas
+
+- Home
+
+- PDC (Ainda não implementado em Cris Barros)
+
+#### Exemplo
+
+##### Relógio cadastrado de forma geral, pra aparecer na home ou PDC (Ainda não implementado em Cris Barros).
+
+![Reloginhos — figura 51](/img/strapi/reloginhos/img-51.webp)
+
+![Reloginhos — figura 52](/img/strapi/reloginhos/img-52.webp)
+
+com <b>title</b> + <b>coupon</b> + <b>button\_text<br /></b>
+
+![Reloginhos — figura 53](/img/strapi/reloginhos/img-53.webp)
+
+com <b>title</b> + sem <b>coupon</b>  + <b>navigate\_to</b> + <b>button\_text</b>
+
+![Reloginhos — figura 54](/img/strapi/reloginhos/img-54.webp)
+
+sem <b>title</b> + sem <b>coupon</b>  + <b>navigate\_to</b> + <b>button\_text</b>
+
+![Reloginhos — figura 55](/img/strapi/reloginhos/img-55.webp)
+
+com  <b>title</b> + sem <b>coupon</b>  + sem <b>navigate\_to</b> <br />
+
+![Reloginhos — figura 56](/img/strapi/reloginhos/img-56.webp)
+
+sem  <b>title</b> + sem <b>coupon</b>  + sem <b>navigate\_to</b>
+
+### RESERVA
+
+Este reloginho poderá ser mostrado no header da home, além de diferentes páginas.
+
+![Reloginhos — figura 57](/img/strapi/reloginhos/img-57.webp)
+
+#### Inputs
+
+##### clock
+
+<b>is\_active:</b> deverá ser escolhida a opção de ativar ou desativar o reloginho. O reloginho só será exibido caso a opção “true” esteja selecionada. Campo obrigatório. Default “false”.
+
+<b>title</b>: deverá ser inserido o texto que será exibido ao lado do reloginho.
+
+<b>navigate\_to</b>: Deve ser preenchido com navegação dinamica. Executada ao clicar no reloginho.
+
+<b>coupon:</b> deverá ser inserido o cupom que será aplicado na sacola do usuário.
+
+<b>button\_text</b>: deverá ser inserido o texto que aparecerá no botão, levando em consideração se é um botão de cupom (exemplo: Aplicar cupom). Esse botao tem a funcionalidade de aplicar o cupom. caso nao tenha cupom adicionado fica sem ação
+
+<b>start\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser iniciado. Campo obrigatório.
+
+<b>end\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser encerrado. Campo obrigatório.
+
+:::tip
+
+Após a data e hora preenchidos no campo “fim da promoção” o reloginho irá desaparecer automaticamente da home.
+
+:::
+
+<b>text\_color:</b> deverá ser inserida a cor dos textos. Campo obrigatório.
+
+<b>background\_color:</b> deverá ser inserida a cor de fundo. Campo obrigatório.
+
+#### Pages
+
+<b>pages</b>: home, pdc;
+
+<b>assignment</b>: id da coleção onde o reloginho deve ser exibido (utilizado quando pages for pdc). Caso não seja preenchido, exibe em todas.
+
+<b>excludedAssignmen</b>t: id da coleção onde o reloginho não deve ser exibido (utilizado quando pages for pdc). <br />
+
+## General Clock - Cluster
+
+### HERING
+
+Este componente é igual ao GeneralClock comum, com um campo a mais para ser preenchido, que é o campo de “clusters”.<br />A diferença é que esse componente só será exibido para clientes que possuam os clusters passados no campo “clusters”.
+
+![Reloginhos — figura 58](/img/strapi/reloginhos/img-58.webp)
+
+#### Inputs
+
+##### clock
+
+Preencher da mesma forma que o reloginho comum. Conforme documentação<b>:</b> [Documentação](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718#4e2bea1e7cb24795abb1c5f989a37e63)
+
+##### pages
+
+Preencher da mesma forma que o campo <b>pages</b> do reloginho comum. Confome documentação:  [Documentação](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718#a61376b829074b62890f333f80cc48a0)
+
+##### clusters
+
+A filtragem por clusters que o cupom terá. Para possíveis dúvidas de como preencher, seguir essa documentação: [Documentação por clusters dinâmicos](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718#c97433c3891e437ba3385cf11d1d402d).
+
+#### Exemplo
+
+Componente sendo exibido na PDC da coleção “/productclusterids/1904”, e apenas para clientes femininas.<br />
+
+![Reloginhos — figura 59](/img/strapi/reloginhos/img-59.webp)
+
+#### Figma
+
+[Figma / referência](https://www.figma.com/file/uAYaFJXDazek1YzZK6pSiZ/Relóginho--06/23--(APP)?type=design&node-id=2702-139169&mode=design&t=jjCW46uqleuMy5h4-0)
+
+## Product Clock
+
+### FARM
+
+Este reloginho poderá ser usado para exibir promoção específicas de um produto, através do id, na PDC do produto e no card de produto na PDP.
+
+![Reloginhos — figura 60](/img/strapi/reloginhos/img-60.webp)
+
+#### Inputs
+
+<b>is\_active:</b> deverá ser escolhida a opção de ativar ou desativar o reloginho. O reloginho só será exibido caso a opção “true” esteja selecionada. Campo obrigatório. Default “false”.
+
+<b>assignment</b>: deverá ser especificado o id do produto em que o reloginho deverá ser mostrado, em caso de mais de um, estes deverão ser separados por vírgula ( , ).
+
+<b>button\_text</b>: deverá ser inserido o texto que aparecerá no botão, levando em consideração que será um botão de cupom (exemplo: Aplicar cupom).
+
+<b>coupon:</b> deverá ser inserido o cupom que será aplicado na sacola do usuário.
+
+<b>start\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser iniciado. Campo obrigatório.
+
+<b>end\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser encerrado. Campo obrigatório.
+
+:::tip
+
+Após a data e hora preenchidos no campo “fim da promoção” o reloginho irá desaparecer automaticamente da home.
+
+:::
+
+<b>text\_color:</b> deverá ser inserida a cor dos textos. Campo obrigatório.
+
+<b>background\_color:</b> deverá ser inserida a cor de fundo. Campo obrigatório.
+
+#### Páginas
+
+- PDC
+
+- PDP
+
+#### Exemplo
+
+![Reloginhos — figura 61](/img/strapi/reloginhos/img-61.webp)
+
+![Reloginhos — figura 62](/img/strapi/reloginhos/img-62.webp)
+
+![Reloginhos — figura 63](/img/strapi/reloginhos/img-63.webp)
+
+![Reloginhos — figura 64](/img/strapi/reloginhos/img-64.webp)
+
+#### Figma
+
+[Figma / referência](https://www.figma.com/file/40pOT5ds4VeUCpnED4sPMd/[APP]-reloginho?type=design&node-id=1001-7273&mode=design&t=YHNFgFzdCndPrf5C-0)
+
+### HERING
+
+Este reloginho poderá ser usado para exibir promoção específicas de um produto, através do id, na PDC do produto e no card de produto na PDP, sendo que, na PDP poderá aparecer até duas vezes, e poderá ser escolhida a posição desse reloginho.<br />
+
+![Reloginhos — figura 65](/img/strapi/reloginhos/img-65.webp)
+
+![Reloginhos — figura 66](/img/strapi/reloginhos/img-66.webp)
+
+#### Inputs
+
+<b>is\_active:</b> deverá ser escolhida a opção de ativar ou desativar o reloginho. O reloginho só será exibido caso a opção “true” esteja selecionada. Campo obrigatório. Default “false”.
+
+<b>assignment</b>: deverá ser especificada a coleção de produtos em que o reloginho deverá ser mostrado, em caso de mais de uma, estas deverão ser separados por vírgula ( , ).<br /><b>coupon:</b> deverá ser inserido o cupom que será aplicado na sacola do usuário.
+
+<b>button\_text</b>: deverá ser inserido o texto que aparecerá no botão, levando em consideração que será um botão de cupom (exemplo: Aplicar cupom).
+
+<b>start\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser iniciado. Campo obrigatório.
+
+<b>end\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser encerrado. Campo obrigatório.
+
+:::tip
+
+Após a data e hora preenchidos no campo “fim da promoção” o reloginho irá desaparecer automaticamente da home.
+
+:::
+
+<b>title:</b> texto que será exibido logo ao lado do tempo do reloginho. <b>Dica</b>: Para que sejam efetuadas quebras de linha, adicione “\\n” aonde deverá ser a quebra. Ex: “Aproveite o cupom\\n25% de desconto!”.
+
+<b>position:</b> posição onde o reloginho irá aparecer na <b>PDP</b>. Campo obrigatório.
+
+<b>text\_color:</b> deverá ser inserida a cor dos textos. Campo obrigatório.
+
+<b>background\_color:</b> deverá ser inserida a cor de fundo. Campo obrigatório.
+
+pages\_to\_show\_clock: deve ser inserida a página que irá mostrar o reloginho de produto. Como padrão já vem selecionado que vai mostrar em Ambas as páginas. As outras opções são PDC e PDP. Campo obrigatório.
+
+#### Páginas
+
+- PDC
+
+- PDP
+
+#### Exemplo
+
+![Reloginhos — figura 67](/img/strapi/reloginhos/img-67.webp)
+
+![Reloginhos — figura 68](/img/strapi/reloginhos/img-68.webp)
+
+![Reloginhos — figura 69](/img/strapi/reloginhos/img-69.webp)
+
+#### Figma
+
+[Figma / referência](https://www.figma.com/design/LQxL2pLVN860IzfLLmdFAI/Reloginho-%E2%80%A8PDC-e-PDP---07%2F24--(APP)?node-id=12797-23109&t=6yWwtjANjz54dnT3-0)
+
+### MARIA FILO
+
+Este reloginho poderá ser usado para exibir promoção específicas de um produto, através do id, na PDC do produto e no card de produto na PDP, sendo que, na PDP poderá aparecer até duas vezes, e poderá ser escolhida a posição desse reloginho.<br />
+
+![Reloginhos — figura 70](/img/strapi/reloginhos/img-70.webp)
+
+![Reloginhos — figura 71](/img/strapi/reloginhos/img-71.webp)
+
+#### Inputs
+
+<b>is\_active:</b> deverá ser escolhida a opção de ativar ou desativar o reloginho. O reloginho só será exibido caso a opção “true” esteja selecionada. Campo obrigatório. Default “false”.
+
+<b>assignment</b>: deverá ser especificada a coleção de produtos em que o reloginho deverá ser mostrado, em caso de mais de uma, estas deverão ser separados por vírgula ( , ).<br /><b>coupon:</b> deverá ser inserido o cupom que será aplicado na sacola do usuário.
+
+<b>button\_text</b>: deverá ser inserido o texto que aparecerá no botão, levando em consideração que será um botão de cupom (exemplo: Aplicar cupom).
+
+<b>start\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser iniciado. Campo obrigatório.
+
+<b>end\_time:</b> deverá ser inserida a data e a hora que o reloginho deve ser encerrado. Campo obrigatório.
+
+:::tip
+
+Após a data e hora preenchidos no campo “fim da promoção” o reloginho irá desaparecer automaticamente da home.
+
+:::
+
+<b>title:</b> texto que será exibido logo ao lado do tempo do reloginho. <b>Dica</b>: Para que sejam efetuadas quebras de linha, adicione “\\n” aonde deverá ser a quebra. Ex: “Aproveite o cupom\\n25% de desconto!”.
+
+<b>position:</b> posição onde o reloginho irá aparecer na <b>PDP</b>. Campo obrigatório.
+
+<b>text\_color:</b> deverá ser inserida a cor dos textos. Campo obrigatório.
+
+<b>background\_color:</b> deverá ser inserida a cor de fundo. Campo obrigatório.
+
+<b>pages\_to\_show\_clock</b>: deve ser inserida a página que irá mostrar o reloginho de produto. Como padrão já vem selecionado que vai mostrar em Ambas as páginas. As outras opções são PDC e PDP. Campo obrigatório.
+
+:::tip
+
+Caso você faça dois reloginhos para a mesma coleção, sendo que um deles mostra em ambas as paginas, e o outro apenas na pdp, posicione o reloginho da pdc acima do reloginho da pdp (na ordem de componentes no strapi).
+
+:::
+
+<b>subtitle</b>: Subtítulo do reloginho.
+
+<b>rules\_button\_text</b>: Texto do botão que dá acesso ao bottom sheet de regras da promoção.
+
+<b>rules\_description</b>: Conteudo do bottom sheet de descrição das regras da promoção.
+
+<b>is\_golden\_clock</b>: Quando true, aciona uma versão reduzida desse relóginho, onde apenas o ´titulo e o relógio são exibidos. Essa versão reduzida só é aplicada na PDP, na PDC continua sendo o overlay.
+
+<b>background\_image</b>: Quando aplicada, substitui o fundo do reloginho pela imagem. Caso não seja cadastrada, a cor de background\_color é definida como cor de fundo.
+
+#### Páginas
+
+- PDC
+
+- PDP
+
+#### Exemplo
+
+##### Exemplo de cadastro no Strapi
+
+##### Exemplo de exibição na PDP
+
+##### Exemplo golden product = true e com imagem de fundo
+
+![Reloginhos — figura 72](/img/strapi/reloginhos/img-72.webp)
+
+##### Exemplo golden product = false e sem imagem de fundo
+
+![Reloginhos — figura 73](/img/strapi/reloginhos/img-73.webp)
+
+##### Exemplo de exibição na PDC
+
+![Reloginhos — figura 74](/img/strapi/reloginhos/img-74.webp)
+
+#### Figma
+
+[Figma / referência](https://www.figma.com/design/LQxL2pLVN860IzfLLmdFAI/Reloginho-%E2%80%A8PDC-e-PDP---07%2F24--(APP)?node-id=12797-23109&t=6yWwtjANjz54dnT3-0)
+
+## Product Clock - Cluster
+
+### HERING
+
+Este componente é igual ao ProductClock comum, com um campo a mais para ser preenchido, que é o campo de “clusters”.<br />A diferença é que esse componente só será exibido para clientes que possuam os clusters passados no campo “clusters”.
+
+#### Inputs
+
+<b>clock -</b> Preencher da mesma forma que o reloginho comum. Conforme documentação<b>:</b> [Documentação](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718#c65f0acaacfe46d09f8c4ccb94a87a85)<br /><b>clusters -</b> A filtragem por clusters que o cupom terá. Para possíveis dúvidas de como preencher, seguir essa documentação: [Documentação por clusters dinâmicos](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718#c97433c3891e437ba3385cf11d1d402d).
+
+#### Exemplo
+
+Nesse exemplo, o reloginho aparecerá no produto de ID 7867, para clientes que tenham como ultimas categorias compradas a categoria “Regatas” e necessariamente já tenham comprado pelo app.
+
+![Reloginhos — figura 75](/img/strapi/reloginhos/img-75.webp)

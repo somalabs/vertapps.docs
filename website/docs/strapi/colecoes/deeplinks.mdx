@@ -1,0 +1,190 @@
+---
+sidebar_position: 12
+title: "Deeplinks"
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Coleção</Kicker>
+
+# Deeplinks
+
+Não precisa cadastrar os links antigos nos deeplinks do Strapi<br />Mas, vai precisar quando migrar pra nova estrutura
+
+<Chips>
+  <Chip tone="coral">Deeplinks</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+- <b>Tutorial em vídeo</b>
+
+:::note[Vídeo]
+Este trecho tem um vídeo de demonstração disponível só na [doc do Notion](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718).
+:::
+
+## Onde achar no strapi
+
+- Content manager → Collection Types → Deeplinks
+
+- A estrutura do componente é essa:
+
+![Deeplinks — figura 1](/img/strapi/colecoes/deeplinks/img-01.webp)
+
+## Nomenclaturas básicas
+
+<b>URL:</b> é o link completo
+
+<b>Exemplos</b>:
+
+https://www.crisbarros.com.br/shop-roupas?productclusterids=1073&tamanho=m&tamanho=pp&facets=productclusterids%2Ctamanho&sort=score\_desc&page=1
+
+https://www.crisbarros.com.br/shop-roupas
+
+<b>Domínio:</b> É o domínio da marca
+
+<b>Exemplo</b>: <b>www.crisbarros.com.br</b>
+
+<b>Path</b>: É o ‘caminho’ da URL, a parte que vem depois do domínio e antes da query.
+
+<b>Exemplo</b>: https://www.crisbarros.com.br/<b>shop-roupas</b>?productclusterids=1073&tamanho=m&tamanho=pp&facets=productclusterids%2Ctamanho&sort=score\_desc&page=1
+
+<b>Query</b>: É o contéudo que vem depois do ‘?’ na url.
+
+<b>Exemplo</b>: https://www.crisbarros.com.br/shop-roupas?<b>productclusterids=1073&tamanho=m&tamanho=pp&facets=productclusterids%2Ctamanho&sort=score\_desc&page=1</b>
+
+## Regras de atualização deste arquivo (para o usuário)
+
+<b>Atenção:</b>
+
+Esse <b>cache está desabilitado</b> temporariamente. Ou seja, atualmente, toda vez que o usuário abre o app, ele busca os deeplinks do CMS.
+
+<b>Lógica de cache NÃO ATIVA:</b>
+
+O conteúdo deste documento irá ficar <b>salvo no dispositivo</b> do usuário e será atualizado apenas uma vez por dia.
+
+:::warning
+
+Ficará salvo no dispositivo mesmo, portanto, não mantenha deeplinks não utilizados cadastrados como deeplinks válidos. Um arquivo muito grande pode trazer consequências ao desempenho do aplicativo e do dispositivo do usuário.
+
+:::
+
+Quando o usuário abrir um deeplink, ele irá buscar primeiramente no dispositivo do usuário, onde esse documento deverá ficar salvo. <br />Caso encontre as informações no dispositivo, e faz menos de 24 horas que elas foram salvas, ele executará o redirecionamento do deeplink baseado nessas informações.
+
+Caso façam mais de 24 horas, ou não tenham dados salvos no dispositivo, irá buscar no CMS as informações dos deeplinks, e irá salvar no dispositivo as informações atualizadas.
+
+Quando o usuário excluir o app, e os dados do app, então, ao abrir instalar e abrir novamente o app, ele irá atualizar os deeplinks \[muito útil para fins de teste\].
+
+## Regras de abertura dos deeplinks
+
+A partir da implementação do deeplink via CMS, todos os links da marca [www.marca.com.br](http://www.marca.com.br) serão interpretados como deeplinks, e irão abrir o aplicativo.
+
+O controle do direcionamento do usuário dentro do aplicativo será feito através da coleção de Deeplink no CMS, mais especificamente, pelo campo da navegação dinâmica (para deeplink válidos). Likns que o app não sabe como processar/navegar irão redirecionar o usuário para uma webview
+
+### Deeplink raiz “www.marca.com.br”
+
+Esse link não tem um redirecionamento pré definido.
+
+<b>Se o link estiver cadastrado no CMS</b>: Irá abrir o app e redirecionar conforme o o preenchimento do campo da navegação dinâmica.
+
+<b>Se o link não estiver cadastrado no CMS:</b> Vai abrir o aplicativo. Caso ele estivesse fechado, abre na home, caso o app estava aberto em segundo plano, apenas abre o aplicativo, sem redirecionar (nem pra home).
+
+#### Cris barros / nova estrutura
+
+Caso o link não esteja cadastrado no CMS irá abrir na home.
+
+O link pode ser cadastrado no CMS para redirecionamento personalizado.
+
+### Deeplinks válidos | via CMS
+
+[Documentação de preenchimento do componente no CMS](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718#ad4fcf9c64f74af6b0de4d3e1321779e)
+
+[Documentação da nomenclatura](https://app.notion.com/p/8050d90e377246f5b1765cc0828a6718) (o que é <b>URL</b> e <b>Path</b>)
+
+<b>IMPORTANTE:</b>
+
+O primeiro deeplink cadastrado como válido <b>SEMPRE</b> deve ser o deeplink raiz da marca. Sendo possível alterar a navegação dinâmica dele conforme desejado.
+
+![Deeplinks — figura 2](/img/strapi/colecoes/deeplinks/img-02.webp)
+
+O app tem três regras pra avaliar se o deeplink é valido, e ao menos uma delas precisa ser atendida.
+
+1. Irá verificar se o deeplink que fez o app abrir, é EXATAMENTE igual a alguma <b>URL</b> cadastrado no CMS como deeplink válido.
+
+#### Exemplo
+
+O deeplink cadastrado como válido:
+
+![Deeplinks — figura 3](/img/strapi/colecoes/deeplinks/img-03.webp)
+
+Se o link clicado pelo usuário foi: [https://www.farmrio.com.br/novidades](https://www.farmrio.com.br/novidades)<br />Então, o app irá comparar o link clicado e ver se é exatamente igual a alguma das ‘<b>URL</b>’ cadastradas. Se sim, irá redirecionar de acordo com o campo preenchido na ‘Navegação dinâmica’. Nesse caso, irá redirecionar para a listagem de novidades.
+
+1. O <b>path</b> do deeplink está cadastrado como parte da ‘url’ de algum deeplink cadastrado como válido. Caso sim, ele executará o redirecionamento do primeiro que encontrar cadastrado.
+
+#### Exemplo
+
+O deeplink cadastrado como válido:
+
+![Deeplinks — figura 4](/img/strapi/colecoes/deeplinks/img-04.webp)
+
+Se o link clicado pelo usuário foi: [https://www.farmrio.com.br/novidades?filter.cores-filtraveis=marrom&filter.productClusterIds=689&sort=discount%3Adesc](https://www.farmrio.com.br/novidades?filter.cores-filtraveis=marrom&filter.productClusterIds=689&sort=discount%3Adesc)<br />O app irá identificar se o <b>path</b> do link, no caso 'novidades', está contido em alguma das urls cadastradas. Nesse caso, ele irá encontrar esse deeplink válido cadastrado, pois a url dele contem “novidades”. E o redirecionamento será conforme o cadastrado na ‘Navegação dinâmica’, seu título e ordenação. Nesse caso, irá redirecionar para a listagem de novidades.
+
+1. O <b>path</b> do deeplink está cadastrado como parte da 'navegação dinamica' de algum deeplink cadastrado como válido. Caso sim, ele executará o redirecionamento do primeiro que ele encontrar cadastrado. a
+
+Atende coleções nomeadas.
+
+#### Exemplo
+
+![Deeplinks — figura 5](/img/strapi/colecoes/deeplinks/img-05.webp)
+
+Se o link clicado pelo usuário foi: [https://www.farmrio.com.br/vestidos-longos?filter.productClusterIds=689&filter.tamanho=p](https://www.farmrio.com.br/novidades?filter.productClusterIds=689&filter.tamanho=p)<br />O app irá buscar se o <b>path</b> do "/vestidos-longos" está cadastrado em algumos campos de  ‘Navegações dinamica’ (desconsiderando 'plp') cadastrada como deeplink válido.
+
+Então, como o campo da navegação dinâmica contém ‘vestido-longo’ então ele será considerado um deeplink válido e será redirecionado de acordo.
+
+Caso o link <b>seja considerado válido</b>, o app se utilizará das informações do CMS para fazer o redirecionamento, conforme o campo cadastrado como ‘Navegação dinâmica’.
+
+Caso o campo de navegação dinâmica esteja preenchido com o início de ‘plp/’ indicando uma listagem de produtos, a navegação será assim realizada.
+
+Caso não seja uma plp, o redirecionamento irá acontecer conforme a navegação dinâmica (consultar documentação).
+
+### Deeplinks de PDP
+
+Não é necessário cadastrar todos os produtos no deeplink.
+
+Os links de compartilhamento de produto (via site, ou no app em ‘compartilhar’) continuarão a funcionar da mesma forma de antes.
+
+É possível cadastrar urls personalizadas para redirecionamento pra Página de Produto, seguindo as regras da navegação dinâmica.
+
+![Deeplinks — figura 6](/img/strapi/colecoes/deeplinks/img-06.webp)
+
+### Outras URLS
+
+#### Cris Barros
+
+URLs não identificadas no CMS não terão redirecionamento, irá abrir a home do app.
+
+#### Animale | Farm | NV | Hering | Maria Filó | Off Premium
+
+O aplicativo irá primeiro procurar identificar o link dentro dos cadastros do CMS, como válido. Caso não identifique, ele seguirá a analise dos deeplinks cadastrados até então.
+
+Dessa forma, o redirecionamento segue funcionando normalmente para as telas já cadastradas, e também para as coleções.
+
+##### Exemplo:
+
+Se já havia um deeplink cadastrado anteriormente (via tabela):
+
+<b>Link</b>: “www.marca.com.br/vestidos”
+
+<b>filterCategoryOrCluster</b>: “departamento/vestidos”
+
+Com a implementação do CMS, enquanto esse mesmo link não é cadastrado no CMS, o deeplink continua funcionando como antes, redirecionando para “departamento/vestidos”.
+
+Quando esse link for cadastrado no CMS, ele irá “sobrescrever” o cadastro antigo, e executará o redirecionamento cadastrado no CMS. Nesse caso, o redirecionamento deixaria de ser de “departamento/vestidos” e seria “productclusterids/145”. <br />Permitindo assim a atualização de deeplinks antigos.
+
+![Deeplinks — figura 7](/img/strapi/colecoes/deeplinks/img-07.webp)
+
+### Ativar/desativar FARM ETC via deeplink
+
+Sempre que o deeplink executar um redirecionamento válido, ele irá avaliar o campo do navigate\_to. Caso esse contenha “etc”, como em: “home\_etc”, “menu\_etc”, “pdp\_etc”, “plp\_etc”, ele irá definir o modeEtc como true no app. Do contrário, definirá como false. (Isso para garantir que independente se o usuario já está no etc ou não, quando clicar em um deeplink do etc ele vai colocar o mode etc ativo, e caso seja um deeplink regular, como desativado.
+
+Apenas quando o redirecionamento for para ‘home\_etc’ é que o usuário irá ver a splash do ETC. Para os redirecionamentos de menu, plp e pdp a splash do ETC não será exibida, mas o modo ETC será ativo.
