@@ -1,0 +1,1571 @@
+---
+sidebar_position: 8
+title: "Firebase — Remote Config"
+description: "O que cada chave do app_config no Firebase Remote Config controla nos apps."
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>Geral · Firebase</Kicker>
+
+# Firebase — Remote Config
+
+Referência das chaves do `app_config` no Firebase Remote Config: o que cada uma liga, em quais marcas e como preencher. Abra o bloco da chave que precisa.
+
+<Chips>
+  <Chip tone="amber">Remote Config</Chip>
+  <Chip tone="teal">Feature flag</Chip>
+  <Chip>Todas as marcas</Chip>
+</Chips>
+
+:::tip[Relacionado]
+- Telas de atualização no CMS: [Force Update Version](../strapi/colecoes/force-update-version.mdx) e [Update Version](../strapi/colecoes/update-version.mdx).
+- Troca do ambiente do Strapi em runtime: [Chaveamento dinâmico do Strapi](./chaveamento-dinamico-strapi.mdx).
+- `current_market_version` e o Debug Menu: [Debug Menu](./debug-menu.mdx).
+:::
+
+Nesta documentação temos descrito a funcionalidade e o comportamento para os campos de app\_config no firebase.
+
+<details>
+<summary><b>Feature Flags</b></summary>
+
+<details>
+<summary><b>Update Version Config</b></summary>
+
+
+**Controle de Versão do App — Guia para o Time de Produto**
+
+Este documento explica como o app reage à configuração de versão cadastrada no Firebase, e o que cada campo dispara para o usuário final.
+
+**Configuração no Firebase**
+
+A chave `update_version_config` controla todo o comportamento de atualização do app:
+
+```javascript
+"update_version_config": {
+    "blocked_versions": "10.0.0",
+    "min_version": "10.0.0",
+    "latest_version": "10.0.0"
+  },
+```
+
+Cada campo tem um papel diferente — e a combinação deles define se, como e com qual urgência o usuário será avisado para atualizar.
+
+**🔴 `min_version` — Versão mínima obrigatória**
+
+> "Abaixo desta versão, o usuário não pode continuar usando o app."
+
+- É a versão mais antiga ainda aceita.
+- Se o usuário estiver em uma versão menor que essa, ele é redirecionado para uma tela bloqueante de atualização (force update), sem opção de fechar ou ignorar.
+- Use quando houver uma mudança crítica: quebra de API, bug grave, falha de segurança, feature obrigatória de compliance, etc.
+- Exemplo: `min_version = "2.0.0"` → quem está em 1.9.x trava na tela de "Atualize seu app para continuar".
+
+**🟡 `latest_version` — Versão mais recente disponível**
+
+> "Esta é a versão ideal. Quem estiver abaixo dela ganha um aviso amigável."
+
+- É a versão mais nova publicada nas lojas.
+- Se o usuário está em uma versão menor que a latest, mas igual ou maior que a min, ele vê um bottom sheet sugerindo a atualização (não bloqueante — ele pode fechar e seguir usando o app normalmente).
+- Use sempre que sair uma versão nova, mesmo sem urgência: melhorias, novas features, ajustes de UX.
+- Exemplo: `min_version = "1.0.0"` e `latest_version = "2.0.0"` → quem está em 1.5.0 vê o aviso sugerindo atualizar, mas pode dispensar.
+
+**⛔ `blocked_versions` — Lista de versões banidas**
+
+> "Estas versões específicas estão proibidas, mesmo que estejam dentro do range permitido."
+
+- É uma lista de versões separadas por vírgula (`"1.2.3, 1.2.4, 1.3.0"`).
+- Qualquer usuário que estiver exatamente em uma dessas versões é tratado como se estivesse abaixo da mínima → vai pra tela bloqueante de force update.
+- Use para banir versões específicas com problema crítico, sem precisar mexer no `min_version`.
+- Exemplo: A versão 1.4.2 foi publicada com um bug grave, mas a 1.4.1 e a 1.4.3 estão ok. Em vez de subir o `min_version` para 1.4.3 (o que afetaria todo mundo abaixo), basta colocar `blocked_versions = "1.4.2"`.
+
+**Como o app decide o que mostrar**
+
+Quando o app abre, ele faz a verificação na seguinte ordem de prioridade:
+
+**1️⃣ Usuário já está na `latest_version`?**
+
+→ Não faz nada. Nem consulta o CMS, nem mostra aviso. Experiência limpa.
+
+**2️⃣ Usuário está abaixo da `min_version` OU em uma das `blocked_versions`?**
+
+→ Tela bloqueante (Force Update).
+
+- Busca conteúdo de `force-update-version-{marca}` no CMS (imagem, textos, botão).
+- Redireciona pra rota `/force-update-version`.
+- O usuário não consegue voltar — só pode atualizar o app pela loja.
+- Importante: se o conteúdo no CMS estiver desativado (`active = false`), o redirecionamento não acontece — então o CMS funciona como uma trava de segurança extra.
+
+**3️⃣ Usuário está abaixo da `latest_version` (mas acima da mínima)?**
+
+→ Bottom sheet de sugestão.
+
+- Busca conteúdo de `update-version-{marca}` no CMS.
+- O bottom sheet aparece sugerindo atualização, mas o usuário pode fechar e continuar usando o app.
+
+**Conteúdos no CMS**
+
+O texto, imagem e botões das telas não vêm do Firebase — eles são editados no CMS, em duas chaves separadas por marca:
+
+| Chave no CMS | Quando aparece | Comportamento |
+| --- | --- | --- |
+| `force-update-version-{marca}` | Tela bloqueante | Tela cheia, sem opção de fechar |
+| `update-version-{marca}` | Bottom sheet | Aparece de baixo, pode ser fechado |
+
+> ⚠️ Se a chave do CMS estiver com `active = false`, o force update não é exibido — o usuário continua no app normalmente. Isso é proposital, para permitir desligar a tela de bloqueio remotamente em caso de erro.
+
+**Boas práticas para o time de produto**
+
+- Suba o `latest_version` toda vez que publicar uma versão nova nas lojas. Garante que usuários antigos sejam avisados.
+- Use `min_version` com cautela. Bloqueia o app — só suba quando houver motivo real (bug crítico, segurança, quebra de backend).
+- Prefira `blocked_versions` para banir versões pontuais em vez de subir a `min_version` (que afeta todo mundo abaixo).
+- Sempre revise os conteúdos do CMS antes de ativar um force update, especialmente os textos e o link/botão de atualização.
+- Lembre-se da trava de segurança: mesmo com o Firebase apontando força de atualização, o CMS com `active = false` impede a tela bloqueante — útil em emergência.
+
+<details>
+<summary><b>Exemplos práticos</b></summary>
+
+**Cenário A — Lançamento normal de feature**
+
+```json
+{ "blocked_versions": "", "min_version": "1.0.0", "latest_version": "1.5.0" }
+```
+
+→ Usuários em versões anteriores à 1.5.0 veem o bottom sheet sugerindo atualizar. Ninguém é bloqueado.
+
+**Cenário B — Bug grave numa versão específica**
+
+```json
+{ "blocked_versions": "1.4.2", "min_version": "1.0.0", "latest_version": "1.5.0" }
+```
+
+→ Quem está na 1.4.2 é forçado a atualizar. Os demais (incluindo 1.4.1 e 1.4.3) só veem o aviso de sugestão.
+
+**Cenário C — Quebra crítica de compatibilidade**
+
+```json
+{ "blocked_versions": "", "min_version": "2.0.0", "latest_version": "2.1.0" }
+```
+
+→ Quem está abaixo da 2.0.0 é forçado a atualizar. Quem está entre 2.0.0 e 2.1.0 vê só o aviso amigável.
+
+</details>
+
+</details>
+
+<details>
+<summary><b>seller\_code\_config</b> — Código do vendedor</summary>
+
+Liga/desliga a feature de <b>"Código do Vendedor"</b> no checkout — campo onde o cliente digita o código do vendedor da loja física para que a venda seja atribuída a ele (comissão).
+
+
+**Campo**
+
+
+```json
+"seller_code_config": {
+  "is_enabled": true
+}
+```
+
+<b>is\_enabled</b>: <code>true</code> mostra o campo de código do vendedor no checkout. <code>false</code> esconde o campo completamente.
+
+
+**Onde aparece**
+
+
+Na <b>sacola/checkout</b>, antes da finalização da compra. O cliente vê um campo opcional para digitar o código de uma pessoa vendedora.
+
+
+**Boas práticas**
+
+
+- <b>Manter </b><b><code>true</code></b><b> por padrão</b> nas marcas que têm canal de venda físico (vendedoras de loja).
+- <b>Use </b><b><code>false</code></b> se a marca for 100% digital ou quiser desativar comissão de venda associada via app.
+
+</details>
+
+<details>
+<summary><b>gift\_message\_config</b> — Mensagem de presente</summary>
+
+Liga/desliga a feature de <b>mensagem personalizada de presente</b> na sacola/checkout — o cliente pode escrever um recado que vai impresso/colado junto ao produto enviado.
+
+
+**Campo**
+
+
+```json
+"gift_message_config": {
+  "is_enabled": false
+}
+```
+
+<b>is\_enabled</b>: <code>true</code> exibe o campo "Mensagem de presente" no checkout. <code>false</code> esconde.
+
+⚠️ Default no parser do app: <b><code>false</code></b> (se o campo vier ausente do Firebase, a feature fica desligada).
+
+
+**Onde aparece**
+
+
+Na sacola/checkout, junto das opções de embalagem para presente.
+
+
+**Boas práticas**
+
+
+- <b>Liga só quando a operação logística estiver pronta</b> para imprimir/anexar a mensagem ao pedido.
+- <b>Combine com </b><b><code>gift_package_config</code></b> — não faz muito sentido oferecer mensagem de presente sem oferecer embalagem de presente.
+
+</details>
+
+<details>
+<summary><b>gift\_package\_config</b> — Embalagem para presente</summary>
+
+Controla <b>quando</b> a opção de embalagem para presente aparece na sacola: sempre, ou só para tipos específicos de entrega.
+
+
+**Campos**
+
+
+```json
+"gift_package_config": {
+  "show_gift_packaging_option": true,
+  "show_gift_packaging_only_when_delivery_types_selected": ["Entrega Turbo"]
+}
+```
+
+<b>show\_gift\_packaging\_option</b> (bool): se <code>true</code>, a opção de embalagem de presente aparece para <b>qualquer tipo de entrega</b>. Se <code>false</code>, depende do segundo campo.
+
+<b>show\_gift\_packaging\_only\_when\_delivery\_types\_selected</b> (lista de strings): lista de <b>tipos de entrega</b> que permitem embalagem de presente. Só faz efeito quando <code>show_gift_packaging_option = false</code>.
+
+Defaults no parser: <code>show_gift_packaging_option = true</code>, lista vazia.
+
+
+**Como o app decide**
+
+
+1. Se <code>show_gift_packaging_option = true</code> → <b>mostra sempre</b> (independente de qualquer outra coisa).
+2. Se <code>show_gift_packaging_option = false</code> <b>e</b> a lista está vazia → <b>nunca mostra</b>.
+3. Se <code>show_gift_packaging_option = false</code> <b>e</b> a lista tem tipos de entrega → <b>mostra só quando</b> o cliente selecionar um desses tipos de entrega na sacola.
+
+⚠️ <b>Cuidado:</b> se o cliente já tinha colocado embalagem de presente em um item, mas trocou a forma de entrega para uma que <b>não</b> está na lista, o app <b>remove automaticamente</b> a embalagem de presente do item.
+
+
+**Exemplos**
+
+
+<b>Cenário A — Embalagem sempre disponível:</b>
+
+```json
+{ "show_gift_packaging_option": true, "show_gift_packaging_only_when_delivery_types_selected": [] }
+```
+
+→ Opção aparece para qualquer entrega.
+
+<b>Cenário B — Embalagem só para Entrega Turbo:</b>
+
+```json
+{ "show_gift_packaging_option": false, "show_gift_packaging_only_when_delivery_types_selected": ["Entrega Turbo"] }
+```
+
+→ Opção aparece <b>apenas</b> quando o cliente seleciona "Entrega Turbo". Se trocar para "Entrega Padrão", a embalagem é removida.
+
+<b>Cenário C — Feature desligada:</b>
+
+```json
+{ "show_gift_packaging_option": false, "show_gift_packaging_only_when_delivery_types_selected": [] }
+```
+
+→ Opção nunca aparece.
+
+</details>
+
+<details>
+<summary><b>enable\_home\_order</b> — Card de pedido na home</summary>
+
+Liga/desliga o <b>card de status do pedido na home</b> — um card fixo na parte de baixo da tela inicial mostrando "Seu pedido está a caminho" / "Foi entregue" / etc.
+
+
+**Campo**
+
+
+```json
+"enable_home_order": true
+```
+
+Valor: booleano direto (não é objeto). Default no parser: <b><code>false</code></b> (se ausente, fica desligado).
+
+
+**Quando aparece**
+
+
+O card aparece <b>apenas quando todas essas condições forem verdadeiras</b>:
+
+1. <code>enable_home_order = true</code> no Firebase.
+2. O <b>usuário está logado</b>.
+3. Existe um <b>pedido em andamento</b> do usuário (que ainda não foi entregue/cancelado).
+
+Se alguma dessas condições falhar, o card não aparece.
+
+
+**Boas práticas**
+
+
+- <b>Manter </b><b><code>true</code></b> — é uma feature de engajamento que ajuda o cliente a acompanhar pedidos sem sair da home.
+- <b>Desligar (</b><b><code>false</code></b><b>)</b> se houver bug no card ou se o backend de status de pedido estiver instável (evitar mostrar status errado ao cliente).
+
+</details>
+
+<details>
+<summary><b>enable\_clarity</b> — Microsoft Clarity (analytics de sessão) — <i>Animale, NV, Maria Filó, Reserva, Farm, Cris Barros</i></summary>
+
+Liga/desliga o <b>Microsoft Clarity</b> no app — ferramenta de gravação de sessão e mapa de calor que permite ao time de produto/UX assistir como os usuários navegam (sem dados pessoais sensíveis).
+
+
+**Campo**
+
+
+```json
+"enable_clarity": true
+```
+
+Valor: booleano direto. Default no parser: <b><code>true</code></b> (se ausente, Clarity fica ligado).
+
+
+**Como funciona**
+
+
+- Quando <code>true</code> <b>e</b> o app está em build de produção → o app é envolto pelo <code>ClarityWidget</code> que captura sessão.
+- Quando <code>false</code> → Clarity não é inicializado, nenhuma sessão é gravada.
+- Em builds de <b>debug/desenvolvimento</b>, o Clarity é <b>sempre desligado</b>, independente do que o Firebase diga. Isso evita poluir o painel do Clarity com sessões de QA/desenvolvimento.
+
+
+**Boas práticas**
+
+
+- <b>Manter </b><b><code>true</code></b><b> em produção</b> — sem isso, o time perde visibilidade do comportamento real do usuário.
+- <b>Desligar temporariamente (</b><b><code>false</code></b><b>)</b> se houver suspeita de impacto em performance ou se precisar fazer alguma investigação isolada.
+
+⚠️ <b>Hering NÃO usa esta chave.</b> O app da Hering tem sua própria flag de Clarity chamada <code>implement_clarity</code> (também boolean direto), documentada abaixo. As chaves não são intercambiáveis.
+
+</details>
+
+<details>
+<summary><b>logs\_elastic\_search\_kibana</b> — Log de logout no Kibana</summary>
+
+Liga/desliga o envio de <b>logs de logout do usuário para o Elasticsearch/Kibana</b> — usado pelo time de dados/segurança para monitorar sessões.
+
+
+**Campo**
+
+
+```json
+"logs_elastic_search_kibana": {
+  "log_logout_user": true
+}
+```
+
+<b>log\_logout\_user</b>: <code>true</code> envia um evento ao Kibana sempre que o usuário faz logout (com brand, dados de campanha UTM, etc.). <code>false</code> não envia nada.
+
+
+**Boas práticas**
+
+
+- <b>Manter </b><b><code>true</code></b> se o time de dados/segurança ainda usa esse log para análise.
+- <b>Desligar (</b><b><code>false</code></b><b>)</b> se o pipeline do Kibana estiver fora do ar ou se quiser parar de gerar custo de armazenamento de logs.
+
+⚠️ Mesmo com a flag <code>true</code>, se a chamada HTTP para o Kibana falhar o erro é silencioso — não impacta a UX do logout.
+
+</details>
+
+<details>
+<summary><b>error\_screen</b> — Tela genérica de erro</summary>
+
+Liga/desliga o <b>redirecionamento automático para a tela genérica de erro</b> (<code>/generic_error</code>) quando ocorre um erro não tratado no Flutter.
+
+
+**Campo**
+
+
+```json
+"error_screen": true
+```
+
+Valor: booleano direto.
+
+
+**Como funciona**
+
+
+- Quando <code>true</code> → todo erro não capturado dispara <code>Modular.to.pushReplacementNamed('/generic_error')</code>, levando o usuário para uma tela amigável de "Ops, algo deu errado".
+- Quando <code>false</code> → o erro continua sendo enviado pro Crashlytics, mas o usuário <b>não é redirecionado</b> para a tela de erro (a tela atual pode ficar travada/em branco dependendo do tipo de erro).
+
+
+**Boas práticas**
+
+
+- <b>Manter </b><b><code>true</code></b><b> em produção</b> — evita que o usuário fique preso em uma tela quebrada sem feedback.
+- <b>Desligar (</b><b><code>false</code></b><b>) só em casos extremos</b> — por exemplo, se a própria tela de erro estiver com bug e gerando loop infinito de redirecionamento. Nesses casos, desligar até subir um hotfix.
+
+</details>
+
+<details>
+<summary><b>activate\_new\_icon</b> — ⚠️ Flag morta</summary>
+
+⚠️ <b>Esta flag está cadastrada no Firebase e é lida pelo app, mas NÃO é usada em lugar nenhum do código.</b> Mudar o valor (<code>true</code> ou <code>false</code>) não tem efeito visual ou funcional algum.
+
+
+**Campo**
+
+
+```json
+"activate_new_icon": true
+```
+
+
+**Status**
+
+
+Provavelmente é um remanescente de uma feature antiga que foi removida ou nunca foi implementada por completo. <b>Pode ser removida do Firebase com segurança</b> (após validar com o time de tech que ninguém vai resgatar essa feature).
+
+Enquanto não for removida, <b>mantenha o campo presente</b> no JSON (com qualquer valor booleano) — o parser do app exige o campo, e removê-lo do Firebase sem antes remover do app causaria crash na inicialização.
+
+</details>
+
+<details>
+<summary><b>enable\_yuno\_flow</b> — Fluxo de pagamento Yuno <i>(todas as marcas: Animale, NV, Maria Filó, Reserva, Farm, Hering, Cris Barros)</i></summary>
+
+Liga/desliga o <b>gateway de pagamentos Yuno</b> no checkout. Quando ativo, o fluxo de pagamento usa a integração Yuno em vez do fluxo padrão.
+
+
+**Campo**
+
+
+```json
+"enable_yuno_flow": false
+```
+
+Valor: booleano direto. Default no parser: <b><code>false</code></b> (se ausente, fica desligado).
+
+
+**Boas práticas**
+
+
+- Manter <code>false</code> em produção até a integração com Yuno estar 100% validada por marca.
+- Acionar com cuidado: mudança altera o fluxo de pagamento — testar em todas as formas de pagamento antes de publicar.
+
+</details>
+
+<details>
+<summary><b>sales\_channel</b> — Canal de vendas do app <i>(Animale, NV, Maria Filó, Reserva, Farm, Cris Barros — Hering não usa)</i></summary>
+
+Define o <b>canal de vendas (sales channel, "sc")</b> padrão usado pelo app nas requisições ao backend (catálogo, checkout, etc). Cada marca tem o seu sc próprio na infra Soma.
+
+
+**Campo**
+
+
+```json
+"sales_channel": "4"
+```
+
+Valor: <b>string</b> no Firebase, parseada como <code>int?</code> pelo app via <code>int.tryParse(json['sales_channel'] ?? '')</code>. Se vier ausente ou inválido → <code>null</code>.
+
+⚠️ <b>NV (BynV)</b> tem um comportamento adicional: o deeplink com <code>sc=5</code> muta o <code>defaultSalesChannel</code> em runtime (para VIP/Exclusive). O valor do Firebase é apenas o canal <b>padrão</b> de inicialização.
+
+
+**Boas práticas**
+
+
+- Manter o sc correto da marca (Animale=4, etc) — alterar muda <b>todas</b> as chamadas ao Soma Bus.
+- Não usar caracteres não-numéricos — o parse falha silenciosamente e cai para <code>null</code>.
+
+</details>
+
+<details>
+<summary><b>prime\_config</b> — Produto Prime (assinatura) <i>(NV, Reserva)</i></summary>
+
+Carrega os <b>IDs e textos do produto Prime</b> (assinatura) usado em PDP, sacola e order review. Quando <code>null</code>, o app entende que a marca <b>não tem Prime</b> e a feature fica desligada (<code>primeConfig != null</code> é o gate da feature).
+
+
+**Campo**
+
+
+```json
+"prime_config": {
+  "installment_price": "12x de R$ 9,90",
+  "sku_id": "1234567",
+  "product_prime_identifier": "prime-assinatura"
+}
+```
+
+<b>installment\_price</b> (string): texto formatado de preço/parcelamento exibido no card Prime.
+
+<b>sku\_id</b> (string): SKU do produto Prime no VTEX — usado para identificar o item Prime na sacola.
+
+<b>product\_prime\_identifier</b> (string): identificador único do produto Prime no catálogo.
+
+Default no parser: <b><code>null</code></b> (se ausente ou objeto inteiro ausente, feature Prime desligada).
+
+
+**Onde é usado**
+
+
+- Card Prime na PDP/home (Reserva: <code>reserva_app_flutter/lib/modules/prime/widgets/prime_card.dart</code>).
+- <code>azzas_app_commons/lib/modules/prime/prime_cubit.dart</code> — checagem de SKU Prime na sacola.
+- <code>vertapps_checkout_whitelabel/.../digital_product_widget.dart</code> — exibição do preço Prime no order review.
+- <code>order_form_product.dart</code> — identifica o item Prime na sacola pelo <code>primeSkuId</code>.
+
+
+**Boas práticas**
+
+
+- Para <b>desligar a feature Prime sem remover o campo</b>, basta remover/omitir o objeto inteiro do Firebase (não preencher os filhos com string vazia).
+- O <code>sku_id</code> precisa <b>bater exatamente</b> com o SKU cadastrado no VTEX — qualquer divergência faz o app não reconhecer o item Prime na sacola.
+
+</details>
+
+<details>
+<summary><b>show\_product\_card\_discount</b> — Tag de desconto no card de produto <i>(NV, Reserva)</i></summary>
+
+Liga/desliga a <b>exibição da tag de desconto</b> (ex.: "-30%") no card de produto exibido na PLP, vitrines e buscas.
+
+
+**Campo**
+
+
+```json
+"show_product_card_discount": false
+```
+
+Valor: booleano direto. Default no parser: <b><code>false</code></b> (se ausente, tag não aparece).
+
+
+**Onde é usado**
+
+
+- <code>bynv_app_flutter/lib/modules/pdc/widgets/product_card.dart</code> — condicional na renderização da tag.
+
+
+**Boas práticas**
+
+
+- Ativar (<code>true</code>) durante campanhas de desconto para destacar visualmente a redução de preço.
+- Desligar (<code>false</code>) em períodos sem promoções relevantes ou quando o cálculo de desconto da campanha estiver com problema (evita exibir "-0%" ou descontos inflados).
+
+</details>
+
+<details>
+<summary><b>show\_livelo</b> — Integração Livelo no checkout <i>(NV, Reserva)</i></summary>
+
+Liga/desliga a <b>integração com o programa de pontos Livelo</b> no checkout. Quando ativo, exibe opções de acúmulo/uso de pontos Livelo na tela de pagamento.
+
+
+**Campo**
+
+
+```json
+"show_livelo": true
+```
+
+Valor: <code>bool?</code> (nullable). Default no parser: <b><code>null</code></b>. No consumo, o app só monta o widget Livelo quando o valor é <code>== true</code> (qualquer outro valor — <code>null</code> ou <code>false</code> — desliga).
+
+
+**Onde é usado**
+
+
+- <code>vertapps_checkout_whitelabel/lib/presenter/payment/payment_page.dart</code> — bloco <code>liveloConfig</code> é injetado no template apenas se <code>featureFlag.showLivelo == true</code>.
+
+
+**Boas práticas**
+
+
+- Manter desligado em marcas sem parceria ativa com Livelo.
+- Ao ligar, garantir que o backend já está retornando as opções Livelo válidas — caso contrário a UI aparece vazia/quebrada.
+
+</details>
+
+<details>
+<summary><b>show\_social\_login</b> — Login social <i>(NV, Reserva)</i></summary>
+
+Liga/desliga a <b>exibição dos botões de login social</b> (Google, Apple, etc) no fluxo de autenticação. Quando <code>false</code>, força o usuário a logar por e-mail/telefone.
+
+
+**Campo**
+
+
+```json
+"show_social_login": true
+```
+
+Valor: <code>bool?</code> (nullable). Default no parser: <b><code>null</code></b>. Lógica no consumo: a UI esconde os botões <b>apenas quando explicitamente</b> <code>false</code> (<code>null</code> e <code>true</code> mantêm visível).
+
+
+**Onde é usado**
+
+
+- <code>vertapps_checkout_whitelabel/.../cds_login_template.dart</code> — condicional <code>if (config.showSocialLogin != false) \{ ... \}</code> exibe os botões.
+
+
+**Boas práticas**
+
+
+- Desligar (<code>false</code>) se houver instabilidade nas credenciais OAuth (Google/Apple) — evita usuários travados num botão que dá erro.
+- Em produção normal, manter <code>null</code> ou <code>true</code>.
+
+</details>
+
+<details>
+<summary><b>show\_secret\_friend</b> — Módulo Amigo Secreto <i>(Farm)</i></summary>
+
+Liga/desliga o <b>módulo Amigo Secreto</b> na Farm — fluxo onde o usuário cadastra preferências para receber sugestões de presentes de outras pessoas.
+
+
+**Campo**
+
+
+```json
+"show_secret_friend": false
+```
+
+Valor: booleano direto. Default no parser: <b><code>false</code></b> (se ausente, módulo fica oculto).
+
+
+**Onde é usado**
+
+
+- <code>farm_app_flutter/lib/modules/account/my_account/my_account_page.dart</code> — esconde/mostra o item de menu "Amigo Secreto".
+- <code>farm_app_flutter/lib/config/utils/favorite_utils.dart</code> — condiciona ações de wishlist relacionadas a amigo secreto.
+- Quando ativo, usa <code>empty_bag_navigation</code> como <b>fallback</b> se o usuário não tiver preferências cadastradas (já documentado em <code>empty_bag_navigation</code>).
+
+
+**Boas práticas**
+
+
+- Ligar <code>true</code> em períodos sazonais (fim de ano, dia das mães) quando a campanha de Amigo Secreto está rodando.
+- Desligar em períodos sem campanha — evita expor a feature sem suporte de marketing/conteúdo.
+- <b>Específico da Farm.</b> As outras marcas não têm essa flag no parser e ignoram o campo.
+
+</details>
+
+<details>
+<summary><b>delivery\_promises\_config</b> — Promessas de entrega <i>(Hering)</i></summary>
+
+Liga/desliga as <b>promessas/prazos de entrega</b> (mensagens tipo "chega em até X dias") exibidas na PDP e no fluxo de compra.
+
+
+**Campo**
+
+
+```json
+"delivery_promises_config": {
+  "is_enabled": true
+}
+```
+
+<b>is\_enabled</b> (bool): <code>true</code> exibe as promessas de entrega; <code>false</code> esconde. Default no parser: <b><code>true</code></b> (se ausente, fica ligado).
+
+⚠️ <b>Default diferente das outras </b><b><code>*_config</code></b><b> que usam </b><b><code>is_enabled</code></b> (como <code>gift_message_config</code>, que tem default <code>false</code>). Aqui o default é <code>true</code> — esquecer de cadastrar no Firebase <b>mantém</b> a feature ligada.
+
+
+**Boas práticas**
+
+
+- Manter <code>true</code> em produção — é informação relevante para conversão.
+- Desligar (<code>false</code>) apenas se o backend de promessas estiver instável ou retornando prazos errados (evitar quebrar expectativa do cliente).
+- <b>Específico da Hering.</b> As outras marcas não usam essa chave.
+
+</details>
+
+<details>
+<summary><b>images\_still\_pdp\_config</b> — Prioriza imagens "still" na PDP <i>(Hering)</i></summary>
+
+Quando ligado, faz a PDP exibir <b>imagens "still"</b> (fundo branco, sem modelo) em vez das <b>imagens editoriais</b> padrão — em todos os contextos que mostram fotos de produto: galeria da PDP, seletor de cor, vitrines e bottom sheets.
+
+
+**Campo**
+
+
+```json
+"images_still_pdp_config": {
+  "is_enabled": true
+}
+```
+
+<b>is\_enabled</b> (bool): <code>true</code> prioriza imagens still; <code>false</code> mantém imagens editoriais. Default no parser: <b><code>false</code></b> (se ausente, mostra editoriais).
+
+
+**Onde é usado**
+
+
+- <code>hering_app_flutter/lib/config/hrg_feature_flags.dart</code> — define <code>isStillImageEnabled</code>, que é o nome consumido pelo resto do app.
+- Galeria da PDP, seletor de cor, vitrines, bottom sheets de produto.
+
+
+**Boas práticas**
+
+
+- Decisão de marca/visual — alinhar com o time de design antes de virar.
+- <b>Específico da Hering.</b> As outras marcas não usam essa chave.
+
+</details>
+
+<details>
+<summary><b>implement\_clarity</b> — Microsoft Clarity (Hering) <i>(Hering)</i></summary>
+
+Equivalente da Hering ao <code>enable_clarity</code> das outras marcas — liga/desliga o <b>Microsoft Clarity</b> (gravação de sessão, mapa de calor).
+
+⚠️ <b>Atenção:</b> Hering usa <b><code>implement_clarity</code></b> em vez de <b><code>enable_clarity</code></b>. As chaves <b>não são intercambiáveis</b> — preencher <code>enable_clarity</code> no Firebase da Hering não tem efeito, e vice-versa.
+
+
+**Campo**
+
+
+```json
+"implement_clarity": true
+```
+
+Valor: booleano direto. Default no parser: <b><code>false</code></b> (diferente do <code>enable_clarity</code> das outras marcas, que tem default <code>true</code>).
+
+
+**Como funciona**
+
+
+- Quando <code>true</code> <b>e</b> o app está em build de produção (<code>!kDebugMode</code>) → o app é envolto pelo <code>ClarityWidget</code> que captura sessão.
+- Em builds de <b>debug</b>, Clarity é sempre desligado, independentemente da flag.
+- Implementação em <code>hering_app_flutter/lib/application.dart</code> e <code>hering_app_flutter/lib/config/services/clarity/conditional_clarity_mask.dart</code>.
+
+
+**Boas práticas**
+
+
+- Subir para <code>true</code> em produção da Hering — sem isso, o Clarity não captura nada.
+- Não confundir com <code>enable_clarity</code> (que existe em outras marcas mas é ignorado pela Hering).
+
+</details>
+
+<details>
+<summary><b>nemu\_config</b> — Nemu Tracking SDK <i>(Hering)</i></summary>
+
+Liga/desliga a <b>inicialização do SDK Nemu</b> — ferramenta de tracking/analytics de eventos customizados usada pela Hering.
+
+
+**Campo**
+
+
+```json
+"nemu_config": false
+```
+
+Valor: booleano direto. Default no parser: <b><code>false</code></b> (se ausente, SDK não é inicializado).
+
+
+**Como funciona**
+
+
+- Quando <code>true</code> → o <code>AppInitializer</code> chama <code>NemuTracking.instance.init(...)</code> no startup, com api key, tracking ID e URI scheme da Hering.
+- Quando <code>false</code> → SDK não é inicializado; nenhum evento é enviado ao Nemu.
+- Implementação em <code>hering_app_flutter/lib/app_initializer.dart</code> (método <code>_initializeNemu</code>).
+- Falha de inicialização é silenciosa (catch + log), não impacta a UX.
+
+
+**Boas práticas**
+
+
+- Manter <code>true</code> em produção se a Hering ainda usa Nemu para análise.
+- Desligar (<code>false</code>) se o pipeline Nemu estiver fora ou se quiser parar de gerar dados/custos.
+- <b>Específico da Hering.</b> As outras marcas não usam essa chave.
+
+</details>
+
+</details>
+
+<details>
+<summary><b>cms\_config</b></summary>
+
+É o parâmetro do Firebase que diz para o app <b>qual CMS consumir</b> (produção ou homologação) e <b>com qual token de acesso</b>.
+
+O app lê esse parâmetro no startup e usa essas informações para chamar a API do CMS.
+
+<details>
+<summary><b>Resumo</b></summary>
+
+- O que é o <code>cms_config</code> e o formato do JSON (<code>base_url</code> + <code>access_token</code>)
+- Os 3 valores possíveis (default = produção, condições iOS/Android = homolog)
+- A lógica de versão (<code>versão do app > versão cadastrada</code> → homolog) e o porquê dela existir
+- O alerta crítico de <b>atualizar a versão no Firebase a cada release</b> com explicação do risco (usuários reais caindo no CMS de homolog)
+- Diagrama de fluxo e checklist de release
+
+</details>
+
+<details>
+<summary><b>Como o parâmetro está organizado</b></summary>
+
+<b>base\_url</b>: URL base da API do CMS que o app vai consumir.
+
+<b>access\_token</b>: Token de autenticação usado nas requisições.
+
+```javascript
+{
+  "base_url": "https://cms-animale.somalabs.com.br/api/",
+  "access_token": "<token omitido — pedir ao time>"
+}
+```
+
+O `cms_config` tem 3 valores diferentes que o Firebase entrega dependendo da situação:
+
+1. Default value → CMS de Produção (é o que vai pra todo mundo por padrão)
+2. Condição `IOS HOMOLOG` → CMS de Homologação (para builds de teste no iOS)
+3. Condição `ANDROID HOMOLOG` → CMS de Homologação (para builds de teste no Android)
+
+> As condições de iOS e Android são basicamente iguais, mudam apenas plataforma (iOS / Android) e a versão de corte.
+
+</details>
+
+<details>
+<summary>🚨⚠️ <b>Regra da versão </b>⚠️ 🚨</summary>
+
+<b>Se a versão do app for MAIOR que a versão cadastrada na condição, o app recebe o CMS de HOMOLOG. </b>Se for MENOR ou IGUAL, o app recebe o CMS de PRODUÇÃO (default).
+
+Isso existe porque versões maiores que a publicada na loja só existem em ambiente de teste / build interno (TestFlight, builds de QA, etc). Então essa é a forma do Firebase identificar que aquele app rodando é uma build de teste e não uma versão pública.
+
+</details>
+
+<details>
+<summary><b>Atualizando a versão</b></summary>
+
+<b>Toda vez que sobe uma nova versão do app para a loja, é obrigatório atualizar o número da versão nas condições do Firebase.</b>
+
+
+**Por quê?**
+
+
+Porque a regra é "versão maior que X = homolog". Se a versão de loja passa a ser igual ou maior que o X cadastrado, <b>os usuários reais começam a receber o CMS de homologação por engano.</b>
+
+
+**O que fazer ao subir uma versão**
+
+
+1. App vai subir da `5.6.0` para `5.7.0` na loja
+2. Antes/durante a publicação, abrir o Firebase Remote Config
+3. Editar as duas condições (`IOS HOMOLOG` e `ANDROID HOMOLOG`)
+4. Atualizar o critério de versão para `> 5.7.0`
+5. Publicar as alterações no Remote Config
+
+</details>
+
+<details>
+<summary><b>Exemplos</b></summary>
+
+- Versão atual publicada na App Store: `5.6.0`
+- Condição cadastrada no Firebase: `versão > 5.6.0`
+- Resultado:
+- Usuário com app `5.6.0` baixado da loja → recebe PRODUÇÃO ✅
+- QA com build `5.7.0-internal` → recebe HOMOLOG ✅
+
+</details>
+
+</details>
+
+<details>
+<summary><b>soma\_bus\_config</b></summary>
+
+Define <b>como o app NV conversa com o backend do Barramento Soma</b> (Soma Bus / Kong).
+
+<details>
+<summary><b>Definição dos campos</b></summary>
+
+⚠️ Os dois campos são obrigatórios. Se algum vier ausente ou `null`, o app não consegue inicializar essa configuração.
+
+pos\_soma: Token (base64) que identifica o canal/marca no backend Soma. É enviado em todas as requisições como header HTTP `possoma`. Cada ambiente (produção/homologação) e cada marca tem o seu próprio.
+
+base\_url: URL base do Barramento Soma (Kong). Todas as requisições do app são construídas a partir dessa URL.
+
+</details>
+
+<details>
+<summary><b>Onde é utilizado</b></summary>
+
+<b>Catálogo / PLP / PDP -</b> URL e identificação do canal nas buscas de produtos
+
+<b>Login / Autenticação</b> - URL do `/auth/refresh-token` e identificação do canal
+
+<b>Wishlist / Minhas Listas</b> - URL e header de identificação
+
+<b>Minha Conta / Pedidos -</b> URL e header de identificação
+
+<b>Checkout (Vertapps) -</b> URL base do barramento + `possoma`
+
+<b>Conta Corrente -</b> URL e header de identificação
+
+Em outras palavras: praticamente TODA chamada de rede do app passa por aqui.\
+
+</details>
+
+</details>
+
+<details>
+<summary><b>recaptcha\_config</b></summary>
+
+Define as <b>chaves do Google reCAPTCHA Enterprise</b> usadas pelo app da marca para validar transações no <b>checkout</b>.
+
+ℹ️ Para obter as site keys reais, é preciso acessar o Google Cloud Console → Security → reCAPTCHA Enterprise do projeto da Soma. Pedir acesso ao time de Backend/Infra.
+
+<details>
+<summary><b>Campos</b></summary>
+
+android\_key - Site key do reCAPTCHA Enterprise (Google Cloud) configurada para o app Android da marca.
+
+ios\_key - Site key do reCAPTCHA Enterprise configurada para o app iOS da marca.
+
+⚠️ As keys são diferentes por plataforma (iOS ≠ Android) porque o reCAPTCHA Enterprise registra cada bundle/package separadamente no Google Cloud.
+
+</details>
+
+<details>
+<summary><b>📍 Onde isso é usado no app</b></summary>
+
+Toda chamada de finalização de pagamento no checkout passa por aqui:
+
+| Ação                       | Action enviada ao reCAPTCHA   | Arquivo |
+
+| Pagamento com cartão       | `credit_card_transaction`     | \[order\_review\_page.dart:920\](../../vertapps\_checkout\_whitelabel/lib/presenter/order\_review/order\_review\_page.dart#L920) |
+
+| Pagamento com Pix          | `pix_transaction`             | \[order\_review\_page.dart:617\](../../vertapps\_checkout\_whitelabel/lib/presenter/order\_review/order\_review\_page.dart#L617) |
+
+| Pagamento com Gift Card    | `gift_card_transaction`       | \[order\_review\_page.dart:564\](../../vertapps\_checkout\_whitelabel/lib/presenter/order\_review/order\_review\_page.dart#L564) |
+
+⚠️<b> Em outras palavras: se a key estiver errada, NENHUM usuário fecha pedido no app.</b>
+
+</details>
+
+</details>
+
+<details>
+<summary><b>max\_discount\_config</b></summary>
+
+É o parâmetro do Firebase que define <b>um teto de desconto permitido na sacola</b> e uma <b>lista de SKUs proibidos</b> de serem comprados pelo app.
+
+Serve como uma <b>trava de segurança no checkout</b>: se algum produto cair na sacola com desconto absurdo (erro de precificação, bug de promoção, exploit de cupom, etc) ou se for um SKU que não pode ser vendido pelo app, o item é <b>removido automaticamente da sacola</b> antes do usuário conseguir finalizar a compra.
+
+<details>
+<summary><b>Formato do valor</b></summary>
+
+<table>
+<colgroup>
+<col />
+<col />
+</colgroup>
+<tr>
+<td>
+Campo
+</td>
+<td>
+O que é
+</td>
+</tr>
+<tr>
+<td>
+<code>max_discount</code>
+</td>
+<td>
+Percentual máximo de desconto permitido na sacola (número inteiro, ex.: <code>85</code> = 85%)
+</td>
+</tr>
+<tr>
+<td>
+<code>forbidden_sku_ids</code>
+</td>
+<td>
+Lista de IDs de produtos que <b>não podem</b> ser vendidos pelo app, independente do preço
+</td>
+</tr>
+<tr>
+<td>
+<code>allowed_domain</code>
+</td>
+<td>
+Lista de domínios de e-mail que ficam <b>isentos</b> dessas regras (ex.: time interno)
+</td>
+</tr>
+</table>
+
+```json
+{
+  "max_discount": 85,
+  "forbidden_sku_ids": [],
+  "allowed_domain": []
+}
+```
+
+</details>
+
+<details>
+<summary>Como funciona cada campo:</summary>
+
+<details>
+<summary>🎯 <code>max_discount</code> — Teto de desconto permitido</summary>
+
+> "Nenhum produto pode estar com desconto <b>maior ou igual</b> a esse percentual na sacola."
+
+- É um número inteiro representando <b>porcentagem</b> (<code>85</code> = 85%).
+- O app calcula o desconto de cada item comparando o <b>preço de venda</b> (<code>sellingPrice</code>) com o <b>preço cheio</b> (<code>listPrice</code>).
+- Se o desconto calculado <b>for igual ou maior</b> que o <code>max_discount</code>, o item é <b>removido da sacola automaticamente</b>.
+
+<b>Exemplo:</b> <code>max_discount = 85</code>
+
+- Produto com preço cheio R\$ 100 e preço de venda R\$ 20 → desconto de 80% → <b>fica na sacola</b> ✅
+- Produto com preço cheio R\$ 100 e preço de venda R\$ 10 → desconto de 90% → <b>é removido</b> ❌
+
+> ⚠️ Sempre ajuste esse valor pensando em <b>promoções legítimas</b>. Se uma campanha real tiver 90% off, o <code>max_discount</code> precisa estar acima disso (ex.: <code>95</code>), senão os produtos da promoção serão removidos do carrinho.
+
+</details>
+
+<details>
+<summary>⛔ <code>forbidden_sku_ids</code> — Lista de produtos proibidos</summary>
+
+> "Estes produtos específicos <b>nunca</b> podem ser comprados pelo app, qualquer que seja o desconto."
+
+- É uma <b>lista de IDs de produto (productId)</b>.
+- Qualquer item na sacola que tenha um desses IDs é <b>removido automaticamente</b>, independentemente do preço ou do desconto.
+- Use para banir produtos que estão com erro de cadastro, produtos só de loja física, kits que não podem ser vendidos digitalmente, peças em recall, etc.
+
+<b>Exemplo:</b> <code>forbidden_sku_ids = ["1234567", "9876543"]</code>
+
+- Qualquer usuário que tente comprar o produto <code>1234567</code> no app vai ter o item removido da sacola na hora.
+
+> Se a lista estiver <b>vazia</b> (<code>[]</code>), nenhum produto é banido por esse critério.
+
+</details>
+
+<details>
+<summary>🟢 <code>allowed_domain</code> — Lista de isenção (whitelist por e-mail)</summary>
+
+> "Usuários com e-mail destes domínios <b>ignoram completamente</b> as regras acima."
+
+- É uma <b>lista de domínios de e-mail</b>.
+- Se o e-mail do usuário logado <b>contém</b> algum dos domínios da lista, <b>nenhuma verificação é feita</b> — nem <code>max_discount</code>, nem <code>forbidden_sku_ids</code>.
+- Use para liberar <b>time interno, QA, parcerias específicas</b> que precisam testar fluxos de desconto agressivo sem perder os itens.
+
+<b>Exemplo:</b> <code>allowed_domain = ["somagrupo.com.br", "qa-vendor.com"]</code>
+
+- Usuária <code>heloisa.hackenhaar@somagrupo.com.br</code> → <b>nenhuma trava aplicada</b>, pode comprar qualquer item com qualquer desconto.
+- Usuária <code>cliente.comum@gmail.com</code> → todas as travas aplicadas normalmente.
+
+> Se a lista estiver <b>vazia</b> (<code>[]</code>), <b>todo mundo</b> está sujeito às regras (comportamento padrão e desejado em produção).
+
+</details>
+
+</details>
+
+<details>
+<summary>Quando o app aplica essas regras</summary>
+
+A verificação acontece <b>na sacola (backpack)</b>, em dois momentos:
+
+1. <b>Ao abrir a sacola com produtos</b> → roda automaticamente para limpar itens problemáticos antes do usuário visualizar.
+2. <b>Ao clicar no botão de "Comprar"</b> → roda novamente como última checagem antes de seguir para o pagamento.
+
+Os itens removidos <b>somem da sacola sem aviso</b> — o usuário simplesmente não os encontra mais lá. Por isso, qualquer alteração nesse parâmetro impacta diretamente a experiência de quem está no checkout.
+
+<details>
+<summary>Ordem de prioridade</summary>
+
+1. <b>Primeiro</b>, o app checa se o e-mail do usuário casa com algum <code>allowed_domain</code>. Se casar → <b>encerra a verificação</b>, nada é removido.
+2. <b>Caso contrário</b>, percorre todos os itens da sacola:
+   - Calcula o desconto.
+   - Se o desconto ≥ <code>max_discount</code> <b>OU</b> se o SKU está em <code>forbidden_sku_ids</code> → marca para remoção.
+3. <b>Por fim</b>, remove todos os itens marcados de uma vez.
+
+</details>
+
+</details>
+
+<details>
+<summary>Exemplos</summary>
+
+### Cenário A — Configuração padrão de produção
+
+```json
+{ "max_discount": 85, "forbidden_sku_ids": [], "allowed_domain": [] }
+```
+
+→ Todo mundo sujeito à trava. Qualquer item com desconto ≥ 85% é removido. Nenhum SKU banido. Nenhum usuário isento.
+
+### Cenário B — Campanha Black Friday com até 80% off
+
+```json
+{ "max_discount": 90, "forbidden_sku_ids": [], "allowed_domain": [] }
+```
+
+→ Subiu o teto pra 90% para garantir que produtos legítimos da Black (até 80% off) <b>não</b> sejam removidos por engano. Margem de segurança para erros de precificação ainda existe (acima de 90%).
+
+### Cenário C — Produto com erro de cadastro identificado
+
+```json
+{ "max_discount": 85, "forbidden_sku_ids": ["1234567"], "allowed_domain": [] }
+```
+
+→ O produto <code>1234567</code> é removido da sacola de qualquer usuário, sem precisar despublicar do catálogo (útil enquanto o time de produto resolve o problema).
+
+### Cenário D — Liberando o time interno para testes
+
+```json
+{
+  "max_discount": 85,
+  "forbidden_sku_ids": ["1234567"],
+  "allowed_domain": ["somagrupo.com.br"]
+}
+```
+
+→ Trava ativa para clientes finais; time interno (@somagrupo.com.br) consegue testar qualquer fluxo de desconto e comprar produtos da lista negra para validar comportamento.
+
+</details>
+
+</details>
+
+<details>
+<summary><b>empty\_bag\_navigation</b></summary>
+
+Configura <b>para onde o botão "Explorar novidades" da sacola vazia leva o usuário</b>.
+
+Quando o cliente abre a sacola e ela está sem produtos, o app mostra a tela de "sacola vazia" com um botão chamando para uma vitrine de produtos (tipicamente a coleção nova). Esse parâmetro define <b>qual filtro de produtos</b> vai abrir e <b>qual título</b> aparece no topo dessa vitrine.
+
+<details>
+<summary><b>Como o parâmetro está organizado</b></summary>
+
+⚠️ Os dois campos são <b>obrigatórios</b>. Se algum vier ausente ou em branco, o app abre a PLP sem filtro/título, podendo mostrar uma listagem inesperada.
+
+<b>filter\_category\_or\_cluster</b>: caminho do filtro da PLP que será aplicado ao tocar no botão. Aceita os mesmos formatos usados em deeplinks de catálogo do app, por exemplo:
+
+- <code>"/productclusterids/860"</code> — abre a PLP filtrada pelo <b>cluster</b> de ID 860 (geralmente a coleção "New Collection").
+- <code>"/departamento/loja/categoria/roupas"</code> — abre a PLP filtrada por <b>categoria</b>.
+
+<b>title</b>: título exibido no topo da PLP que abrir (ex.: <code>"NEW COLLECTION"</code>, <code>"Novidades"</code>). Se vier vazio, a PLP abre sem título no header.
+
+```json
+{
+  "filter_category_or_cluster": "/productclusterids/860",
+  "title": "NEW COLLECTION"
+}
+```
+
+</details>
+
+<details>
+<summary><b>Onde é utilizado</b></summary>
+
+<b>Tela de Sacola Vazia (Backpack Empty)</b> — quando o usuário abre a sacola sem produtos, vê o botão <b>"Explorar novidades"</b>. O texto do botão é <b>fixo no app</b> (não vem do Firebase), mas a <b>navegação ao tocar nele</b> usa o <code>empty_bag_navigation</code>:
+
+1. O app navega para a rota <code>/pdc</code> (Product Display/Catalog — a PLP do app).
+2. Passa como argumento o <code>filter_category_or_cluster</code> (que define quais produtos aparecem) e o <code>title</code> (que aparece no header da PLP).
+
+<b>Módulo Amigo Secreto (Secret Friend)</b> — quando o usuário entra no fluxo de "Amigo Secreto" e ainda <b>não cadastrou preferências próprias</b>, o app usa o <code>empty_bag_navigation</code> como <b>fallback</b> para abrir uma vitrine de novidades em vez de uma PLP vazia.
+
+⚠️ <b>Em outras palavras: se esse parâmetro estiver mal configurado, o botão da sacola vazia leva o usuário para uma PLP sem produtos ou sem título — o que dá a sensação de app quebrado.</b>
+
+</details>
+
+<details>
+<summary><b>Boas práticas</b></summary>
+
+- <b>Mantenha sempre apontando para uma vitrine com estoque relevante</b> (ex.: coleção nova, best sellers). É a primeira ação sugerida ao cliente quando ele está com a sacola vazia, então o destino precisa ser atrativo.
+- <b>Atualize o </b><b><code>filter_category_or_cluster</code></b><b> toda vez que a coleção de destaque mudar.</b> Se a campanha "NEW COLLECTION" for substituída por outra, o ID do cluster precisa acompanhar.
+- <b>Combine o </b><b><code>title</code></b><b> com o conteúdo do filtro.</b> Se o filtro aponta para a coleção de inverno, o título deveria refletir isso (<code>"INVERNO 2026"</code>, por exemplo) para o usuário entender onde caiu.
+- <b>Valide o </b><b><code>filter_category_or_cluster</code></b><b> antes de publicar.</b> Um caminho inválido (cluster que não existe, categoria removida) faz a PLP abrir vazia.
+
+</details>
+
+<details>
+<summary><b>Exemplos</b></summary>
+
+### Cenário A — Coleção nova de cluster (padrão Animale)
+
+```json
+{
+  "filter_category_or_cluster": "/productclusterids/860",
+  "title": "NEW COLLECTION"
+}
+```
+
+→ Botão da sacola vazia leva para a PLP do cluster 860 com o título "NEW COLLECTION" no topo.
+
+### Cenário B — Categoria de catálogo (padrão Reserva / Maria Filó)
+
+```json
+{
+  "filter_category_or_cluster": "/departamento/loja/categoria/roupas",
+  "title": ""
+}
+```
+
+→ Botão abre a PLP de roupas, sem título customizado no header (a PLP usa o nome padrão da categoria).
+
+### Cenário C — Coleção sazonal (padrão Farm/Hering)
+
+```json
+{
+  "filter_category_or_cluster": "/productclusterids/689",
+  "title": "Novidades"
+}
+```
+
+→ Botão abre o cluster 689 com o header "Novidades".
+
+</details>
+
+</details>
+
+<details>
+<summary><b>nav\_bar\_config</b></summary>
+
+Configura <b>uma aba extra "Novidades" na barra de navegação inferior</b> do app, entre "Início" e "Menu". Define o <b>texto da aba</b> e a <b>vitrine de produtos</b> que aparece quando o usuário toca nela.
+
+⚠️ <b>Atenção: esse parâmetro NÃO é suportado por todas as marcas.</b> Hoje só funciona em <b>Animale, NV (BynV), Maria Filó e Reserva</b>. As demais marcas (Farm, Hering, Cris Barros) ignoram o parâmetro mesmo que ele esteja cadastrado no Firebase.
+
+<details>
+<summary><b>Como o parâmetro está organizado</b></summary>
+
+```json
+{
+  "navbar_news_button_text": "NOVIDADES",
+  "navbar_news_button_collection_id": "/productclusterids/860"
+}
+```
+
+<b>navbar\_news\_button\_text</b>: texto da aba que aparece na navbar inferior <b>e</b> título do header da vitrine quando o usuário toca na aba (ex.: <code>"NOVIDADES"</code>, <code>"NEW COLLECTION"</code>).
+
+<b>navbar\_news\_button\_collection\_id</b>: caminho do filtro de produtos que vai abrir ao tocar na aba. Aceita os mesmos formatos usados em deeplinks de catálogo:
+
+- <code>"/productclusterids/860"</code> — abre a vitrine do <b>cluster</b> de ID 860.
+- <code>"/departamento/new-collection"</code> — abre a vitrine de um <b>departamento</b> específico.
+- <code>"/departamento/loja/categoria/roupas"</code> — abre a vitrine de uma <b>categoria</b>.
+
+⚠️ Quando o parâmetro vier como <b>objeto vazio </b><b><code>\{\}</code></b>, a feature fica <b>desligada</b> — a aba "Novidades" some da navbar e o usuário vê apenas as abas padrão (Início, Menu, Sacola, Conta).
+
+</details>
+
+<details>
+<summary><b>Como funciona no app</b></summary>
+
+Quando o <code>nav_bar_config</code> está preenchido:
+
+1. Uma aba a mais é inserida na barra de navegação inferior, <b>na segunda posição (logo após "Início")</b>.
+2. O <b>texto da aba</b> é o valor de <code>navbar_news_button_text</code>.
+3. Ao tocar na aba, o conteúdo da tela vira uma <b>vitrine de produtos (PLP)</b> filtrada por <code>navbar_news_button_collection_id</code>.
+4. Os produtos vêm <b>ordenados do mais recente para o mais antigo</b> (release date desc) — isso é fixo do app, não é configurável.
+5. O título do header da vitrine é o mesmo <code>navbar_news_button_text</code>.
+
+⚠️ <b>Importante:</b> essa aba é uma <b>navegação interna</b> (tab swap dentro da MainPage), não um redirecionamento. O usuário continua na home — só o conteúdo principal troca pela vitrine. Por isso a tela não tem botão de voltar nem barra inferior duplicada.
+
+</details>
+
+<details>
+<summary><b>Quando usar / não usar</b></summary>
+
+<b>Use quando:</b>
+
+- A marca quer dar <b>destaque permanente</b> a uma coleção ou seção de produtos (lançamento, coleção principal, novidades).
+- A marca já tem suporte habilitado no app (Animale, NV, Maria Filó, Reserva).
+
+<b>Não use quando:</b>
+
+- A campanha for <b>temporária</b> (algumas semanas) — para isso, prefira usar banners no CMS na home, que são mais flexíveis e não exigem release.
+- A marca não está na lista de suportadas (Farm, Hering, Cris Barros) — preencher o parâmetro nessas marcas <b>não tem efeito nenhum</b>.
+
+</details>
+
+<details>
+<summary><b>Boas práticas</b></summary>
+
+- <b>Sempre preencha os dois campos</b> (<code>navbar_news_button_text</code> e <code>navbar_news_button_collection_id</code>) ao habilitar a feature. Texto em branco resulta em uma aba <b>sem nome</b> na navbar, o que confunde o usuário.
+- <b>Para desligar a feature, deixe o parâmetro como objeto vazio </b><b><code>\{\}</code></b> — não deixe os campos como string vazia.
+- <b>Valide o </b><b><code>navbar_news_button_collection_id</code></b><b> antes de publicar.</b> Um caminho inválido (cluster que não existe, categoria removida) faz a aba abrir uma vitrine vazia.
+- <b>Mantenha o texto curto.</b> A aba tem espaço limitado na navbar inferior, então prefira <code>"NOVIDADES"</code> em vez de <code>"NOVIDADES DA SEMANA"</code>.
+- <b>Atualize o </b><b><code>navbar_news_button_collection_id</code></b><b> toda vez que a coleção de destaque mudar.</b> Se "NEW COLLECTION" for substituída pela coleção de inverno, o ID do cluster precisa acompanhar.
+
+</details>
+
+<details>
+<summary><b>Exemplos</b></summary>
+
+### Cenário A — Feature habilitada com destaque para coleção nova (padrão Animale)
+
+```json
+{
+  "navbar_news_button_text": "NEW COLLECTION",
+  "navbar_news_button_collection_id": "/departamento/new-collection"
+}
+```
+
+→ Aba "NEW COLLECTION" aparece entre "Início" e "Menu". Ao tocar, abre a vitrine do departamento <code>new-collection</code>, ordenada por mais recente.
+
+### Cenário B — Feature habilitada apontando para uma categoria ampla
+
+```json
+{
+  "navbar_news_button_text": "NOVIDADES",
+  "navbar_news_button_collection_id": "/productclusterids/860"
+}
+```
+
+→ Aba "NOVIDADES" aparece na navbar. Ao tocar, abre a vitrine do cluster 860.
+
+### Cenário C — Feature desligada
+
+```json
+{}
+```
+
+→ A aba "Novidades" <b>não aparece</b> na navbar. O usuário vê apenas as abas padrão (Início, Menu, Sacola, Conta).
+
+</details>
+
+</details>
+
+<details>
+<summary><b>live\_stream\_config</b></summary>
+
+Configura a <b>funcionalidade de Live (vídeo ao vivo)</b> dentro das telas de catálogo (PLPs) do app. Define <b>onde</b> a live aparece (em quais clusters/categorias), <b>de onde</b> o vídeo é puxado e <b>qual tecnologia de player</b> é usada.
+
+⚠️ Hoje a live está habilitada em <b>Animale, NV (BynV), Maria Filó, Reserva, Farm e Cris Barros</b>. <b>Hering não usa</b> essa feature.
+
+<details>
+<summary><b>Resumo da feature</b></summary>
+
+Quando o usuário navega pela PLP (vitrine de produtos) de uma coleção/categoria configurada como "ao vivo", aparece um <b>player de vídeo ao vivo no topo da PLP</b>, com suporte a:
+
+- <b>Picture-in-Picture (PiP):</b> o vídeo encolhe num cantinho da tela conforme o usuário rola para baixo a PLP ou sai dela.
+- <b>Tela cheia.</b>
+- <b>Controle de áudio</b> (mudo / com som).
+
+A live é <b>vinculada a clusters ou categorias específicas</b> — ela só aparece quando o usuário está navegando em uma vitrine que casa com o filtro configurado.
+
+</details>
+
+<details>
+<summary><b>Como o parâmetro está organizado</b></summary>
+
+```json
+{
+  "url": "https://backend-production-user-jysqyijvoa-uc.a.run.app/stream/aovivo",
+  "category_or_cluster_regex": "1234",
+  "enabled_hls": false
+}
+```
+
+<b>url</b>: endpoint do backend antigo que entrega os dados da live (ID do Vimeo, se está ao vivo, etc.). Esse backend é o serviço legado da Soma.
+
+<b>category\_or\_cluster\_regex</b>: padrão de texto (regex) que decide <b>em qual vitrine de produtos a live aparece</b>. O app pega o caminho do filtro da PLP atual (ex.: <code>/productclusterids/1234</code>) e procura por esse padrão. Se bater, a live é carregada.
+
+- <code>"1234"</code> → casa com qualquer PLP cujo caminho contenha <code>1234</code> (ex.: <code>/productclusterids/1234</code>).
+- <code>"1138|1140"</code> → casa com PLPs que contenham <code>1138</code> <b>ou</b> <code>1140</code>.
+
+<b>enabled\_hls</b>: chave que escolhe <b>como o vídeo é tocado</b>:
+
+- <code>false</code> → caminho <b>legado</b> (default). O app chama a <code>url</code> do Firebase, recebe um ID de vídeo e toca via player do Vimeo embarcado.
+- <code>true</code> → caminho <b>novo (HLS)</b>. O app <b>ignora a </b><b><code>url</code></b><b> e o </b><b><code>category_or_cluster_regex</code></b> do Firebase e busca a live diretamente no <b>CMS</b> (<code>live-streams-pdc-\{marca\}</code>). O CMS é quem define em quais clusters a live aparece (campo <code>idCollection</code> de cada live cadastrada) e qual o ID do Vimeo.
+
+⚠️ <b>Atenção crítica:</b> mesmo quando <code>enabled_hls = true</code> (e os outros dois campos não são usados em runtime), <b><code>url</code></b><b> e </b><b><code>category_or_cluster_regex</code></b><b> continuam sendo obrigatórios</b> no JSON do Firebase. Se algum deles vier ausente ou <code>null</code>, o app <b>crasha durante a inicialização</b>. Preencha sempre, mesmo que com valores "dummy" quando não estiverem em uso.
+
+</details>
+
+<details>
+<summary><b>Os dois caminhos: </b><b><code>enabled_hls = false</code></b><b> vs </b><b><code>enabled_hls = true</code></b></summary>
+
+A feature de live tem <b>duas implementações conviventes</b> dentro do app, controladas pelo <code>enabled_hls</code>. Entender essa diferença é essencial para configurar corretamente.
+
+### 🟡 Caminho legado — <code>enabled_hls = false</code>
+
+- A live é gerenciada via <b>Firebase + backend legado</b>.
+- O <code>category_or_cluster_regex</code> do Firebase decide em quais PLPs a live aparece.
+- O app chama a <code>url</code> do Firebase para buscar metadados (está ao vivo? é reprise? qual o ID do Vimeo?).
+- Para <b>trocar a coleção/cluster</b> onde a live aparece → mexer no Firebase.
+- Para <b>trocar o vídeo</b> (ID Vimeo, ao vivo/reprise) → mexer no backend legado.
+
+### 🟢 Caminho novo — <code>enabled_hls = true</code>
+
+- A live é gerenciada <b>inteiramente pelo CMS</b> (Strapi), no documento <code>live-streams-pdc-\{marca\}</code>.
+- Cada live cadastrada no CMS tem seu próprio campo <code>idCollection</code> (regex) e seu próprio Vimeo ID.
+- O <code>category_or_cluster_regex</code> e a <code>url</code> do Firebase <b>são ignorados</b> — não importa o que estiver lá, o app não consulta.
+- Para <b>trocar onde/qual live aparece</b> → editar no CMS.
+- O player usa <b>HLS nativo</b> (<code>.m3u8</code>) resolvido a partir do ID do Vimeo, com suporte a PiP mais robusto.
+
+⚠️ Esse é o caminho <b>recomendado</b> para novas configurações — dá autonomia ao time de conteúdo via CMS e tem player mais estável.
+
+</details>
+
+<details>
+<summary><b>Onde é utilizado</b></summary>
+
+<b>PLP (Product List Page) — telas de vitrine de produtos.</b>
+
+Toda vez que o usuário entra em uma vitrine de produtos (clicando num banner, num cluster, numa categoria), o app:
+
+1. Pega o caminho do filtro da PLP (ex.: <code>/productclusterids/1234</code>).
+2. Se <code>enabled_hls = false</code> → testa esse caminho contra o <code>category_or_cluster_regex</code> do Firebase. Se bater, busca a live em <code>url</code> e exibe o player.
+3. Se <code>enabled_hls = true</code> → busca o documento <code>live-streams-pdc-\{marca\}</code> no CMS, percorre as lives cadastradas testando o <code>idCollection</code> de cada uma contra o caminho. Se bater, exibe o player HLS.
+
+A live <b>não aparece</b> em outras telas (home, PDP, sacola, conta, etc.) — é exclusivo da PLP.
+
+</details>
+
+<details>
+<summary><b>Boas práticas</b></summary>
+
+- <b>Mesmo desligando a feature</b> (sem live no momento), <b>mantenha </b><b><code>url</code></b><b> e </b><b><code>category_or_cluster_regex</code></b><b> preenchidos</b> no Firebase — o app crasha se vierem <code>null</code>. Pode usar valores antigos ou um regex que não case com nada (ex.: <code>"^never-match$"</code>).
+- <b>Padronize o </b><b><code>enabled_hls</code></b><b> da marca.</b> Se a marca já migrou para o caminho novo (CMS+HLS), deixe <code>true</code> e gerencie tudo pelo CMS daí em diante. Não fique alternando entre os dois caminhos sem necessidade.
+- <b>Sempre teste o regex antes de publicar.</b> Um regex inválido (com caracteres especiais sem escape) faz a live não aparecer mesmo quando deveria. Para "match exato" de um cluster, use o padrão completo: <code>"/productclusterids/1234"</code>. Para "qualquer cluster que contenha esse número", use só o número: <code>"1234"</code>.
+- <b>Ao desligar uma live</b>, é mais seguro <b>desativar ou remover a entrada no CMS</b> (caminho HLS) do que tentar quebrar o regex.
+- <b>Documente qual caminho a marca usa</b> (legado ou HLS) — quem for editar amanhã precisa saber onde mexer (Firebase x CMS).
+
+</details>
+
+<details>
+<summary><b>Exemplos</b></summary>
+
+### Cenário A — Caminho HLS, live ativa via CMS (padrão recomendado)
+
+```json
+{
+  "url": "https://backend-production-user-jysqyijvoa-uc.a.run.app/stream/aovivo",
+  "category_or_cluster_regex": "1234",
+  "enabled_hls": true
+}
+```
+
+→ A configuração no Firebase é apenas "placeholder" — o app vai ignorar <code>url</code> e <code>category_or_cluster_regex</code>. A live em si é gerenciada no CMS (<code>live-streams-pdc-\{marca\}</code>).
+
+### Cenário B — Caminho legado, live ativa em um cluster específico
+
+```json
+{
+  "url": "https://backend-production-user-jysqyijvoa-uc.a.run.app/stream/aovivo",
+  "category_or_cluster_regex": "1138",
+  "enabled_hls": false
+}
+```
+
+→ A live aparece em qualquer PLP cujo caminho contenha <code>1138</code> (ex.: <code>/productclusterids/1138</code>). Os dados da live vêm do backend legado.
+
+### Cenário C — Caminho legado, live ativa em múltiplos clusters
+
+```json
+{
+  "url": "https://backend-production-user-jysqyijvoa-uc.a.run.app/stream/aovivo",
+  "category_or_cluster_regex": "1138|1140|1173",
+  "enabled_hls": false
+}
+```
+
+→ A live aparece em PLPs que contenham <code>1138</code>, <code>1140</code> <b>ou</b> <code>1173</code> no caminho. Útil quando a mesma live deve aparecer em vitrines diferentes.
+
+### Cenário D — Feature desligada (sem live no momento)
+
+```json
+{
+  "url": "https://backend-production-user-jysqyijvoa-uc.a.run.app/stream/aovivo",
+  "category_or_cluster_regex": "^never-match$",
+  "enabled_hls": false
+}
+```
+
+→ Nenhuma PLP casa com o regex, então a live não aparece em lugar nenhum. Os campos seguem preenchidos para não crashar o app.
+
+</details>
+
+</details>
+
+<details>
+<summary><b>splash\_config</b> — Tela de splash <i>(Animale, NV, Maria Filó, Reserva)</i></summary>
+
+Define <b>como a tela de splash do app é renderizada</b> — tipo de animação, cor de fundo, conteúdo da animação e (na Animale) duração.
+
+
+**Campo**
+
+
+```json
+"splash_config": {
+  "splash_type": "colored",
+  "splash_bg_color": "#000000",
+  "splash": {}
+}
+```
+
+<b>splash\_type</b> (string): tipo de splash. Ex.: <code>"colored"</code> (fundo sólido + asset central), <code>"fitted"</code> (asset ocupando a tela inteira).
+
+<b>splash\_bg\_color</b> (string hex): cor de fundo da splash (ex.: <code>"#000000"</code>).
+
+<b>splash</b> (objeto): payload livre adicional usado pela splash (animação Lottie, asset path, etc) — formato varia por marca.
+
+<b>splash\_duration</b> (int, <b>apenas Animale</b>): duração em milissegundos. Demais marcas ignoram esse campo.
+
+
+**Onde é usada**
+
+
+- <code>*/lib/modules/splash/splash_page.dart</code> em cada uma das marcas que parseia. A SplashPage lê <code>splashType</code> para escolher qual widget renderizar, <code>splashBgColor</code> para a cor de fundo, e <code>splash</code> para o conteúdo da animação.
+
+
+**Boas práticas**
+
+
+- <b>Específico para Animale, NV, Maria Filó e Reserva.</b> Farm, Hering e Cris Barros não parseiam essa config — preencher no Firebase delas não tem efeito.
+- Validar a cor hex antes de publicar — formatos inválidos viram fundo preto por fallback.
+- O <code>splash_type</code> precisa <b>bater com um valor reconhecido</b> pela SplashPage — valores desconhecidos quebram a tela.
+
+</details>
+
+<details>
+<summary><b>checking\_account\_config</b> — Labels do extrato de Conta Corrente <i>(Animale, NV, Maria Filó, Reserva, Farm, Cris Barros — Hering não usa)</i></summary>
+
+Define os <b>textos (labels) exibidos no extrato de Conta Corrente</b> — usado em telas de wallet/histórico de créditos do usuário.
+
+
+**Campo**
+
+
+```json
+"checking_account_config": {
+  "credit_generated": "CRÉDITO GERADO",
+  "balance_generated": "CRÉDITO GERADO",
+  "balance_expired": "CRÉDITO EXPIRADO",
+  "balance_used": "CRÉDITO UTILIZADO",
+  "balance_update": "ATUALIZAÇÃO DE CRÉDITO",
+  "charge_back_partial": "ATUALIZAÇÃO DE CRÉDITO",
+  "charge_back_total": "ATUALIZAÇÃO DE CRÉDITO",
+  "cancel": "ATUALIZAÇÃO DE CRÉDITO"
+}
+```
+
+Todos os campos são <b>strings obrigatórias</b> — o parser não tem default. Se vierem ausentes/<code>null</code>, o app crasha ao montar o extrato.
+
+| Campo | Significado |
+| --- | --- |
+| <code>credit_generated</code> | Crédito gerado por algum motivo geral |
+| <code>balance_generated</code> | Saldo creditado (ex.: após cancelamento) |
+| <code>balance_expired</code> | Saldo expirado |
+| <code>balance_used</code> | Saldo utilizado em uma compra |
+| <code>balance_update</code> | Ajuste/atualização de saldo |
+| <code>charge_back_partial</code> | Estorno parcial |
+| <code>charge_back_total</code> | Estorno total |
+| <code>cancel</code> | Movimento de cancelamento |
+
+
+**Onde é usada**
+
+
+- <code>*/lib/modules/checking_account/widgets/transaction_card.dart</code> em cada marca — usa cada label como <code>title</code> do card de transação no extrato, conforme o tipo do movimento.
+
+
+**Boas práticas**
+
+
+- <b>Mantenha todos os 8 campos preenchidos</b> — qualquer ausência crasha a inicialização.
+- <b>Hering não usa essa config.</b> O app da Hering não tem o módulo de Conta Corrente parseado por esse caminho, então a chave é ignorada lá.
+- Manter os textos <b>em caixa alta</b> se o restante da UI seguir esse padrão (o estilo é fixo na transaction\_card).
+- Vários campos podem (e por padrão são) repetidos com o mesmo texto — não há regra que obrigue todos serem únicos.
+
+</details>

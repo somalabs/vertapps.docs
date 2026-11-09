@@ -1,0 +1,279 @@
+---
+sidebar_position: 12
+title: "Debug Menu"
+description: "Ferramenta de desenvolvimento que captura eventos de analytics, tags GTM e requisições HTTP em runtime."
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>Geral · Debug</Kicker>
+
+# Debug Menu
+
+Captura e mostra em tempo real os eventos de analytics (Firebase), as tags GTM e as requisições HTTP do app. Aparece só em builds com versão maior que a publicada na loja.
+
+<Chips>
+  <Chip tone="amber">Remote Config</Chip>
+  <Chip tone="blue">azzas_analytics</Chip>
+  <Chip tone="teal">QA</Chip>
+  <Chip>iOS + Android</Chip>
+</Chips>
+
+## Para que serve
+
+- Validar eventos de analytics antes de ir para produção.
+- Debugar integrações com SDKs de terceiros.
+- Inspecionar requisições HTTP e respostas.
+- Testar tags GTM sem ferramenta externa.
+
+**Apps suportados:** Hering, Farm, Cris Barros, Animale, Off Premium, Maria Filó.
+
+## Ativação
+
+Automática, pela flag `current_market_version` do Firebase Remote Config:
+
+```text
+isDebugMenuEnabled = (currentMarketVersion == null || currentMarketVersion.isEmpty)
+                     || (appVersion > currentMarketVersion)
+```
+
+| `current_market_version` | Versão do app | Debug Menu |
+|---|---|---|
+| vazio | qualquer | Aparece (staging) |
+| `4.6.0` | `4.7.0` | Aparece |
+| `4.6.0` | `4.5.0` | Não aparece |
+
+:::warning
+Depois de todo release em produção, atualize `current_market_version` para a versão da loja. Se esquecer, o Debug Menu aparece para usuários reais.
+:::
+
+## Arquitetura
+
+![Camadas da implementação](/img/geral/debug-menu/img-01.webp)
+
+| Camada | Componente |
+|---|---|
+| Nativa (iOS/Android) | `AnalyticsInterceptor` — swizzling do Firebase (iOS), Dynamic Proxy (Android), observers do GTM |
+| Remote Config | `RemoteFeatureFlag.currentMarketVersion` |
+| Inicialização | `AppInitializer.isDebugMenuEnabled` inicializa `NativeAnalyticsBridge` e o `DebugMenuAnalyticsInterceptor` |
+| Rede | `AppCommonsModule(enableDebugMenu:)` adiciona o `DebugNetworkInterceptor` ao Dio |
+| GTM | `GTMHandlerWrapper.wrapHandler` encapsula os handlers |
+
+## O que é capturado
+
+| Fonte | Método | Dados |
+|---|---|---|
+| Firebase Analytics | Method swizzling (iOS) / Dynamic Proxy (Android) | Nome do evento, parâmetros, origin |
+| GTM (Insider, Omnilogic, AppsFlyer, Dito) | Wrapper + observers | Nome e tipo da tag, parâmetros |
+| HTTP | Dio interceptor | URL, headers e body do request; status, body e tempo da response |
+
+O canal entre nativo e Flutter é o `MethodChannel` `com.soma.analytics_debug`.
+
+## Implementar em um app novo
+
+<details>
+<summary><b>1. Remote Config model</b></summary>
+
+```dart
+class RemoteFeatureFlag {
+  // outros campos
+  final String? currentMarketVersion;
+
+  RemoteFeatureFlag({this.currentMarketVersion});
+
+  factory RemoteFeatureFlag.fromJson(Map<String, dynamic> json) {
+    return RemoteFeatureFlag(
+      currentMarketVersion: json['current_market_version'] as String?,
+    );
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>2. AppInitializer</b></summary>
+
+```dart
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:azzas_analytics/services/gtm_handler_wrapper.dart';
+
+class AppInitializer {
+  static bool isDebugMenuEnabled = false;
+
+  static Future<void> initialize() async {
+    // ... inicializações existentes
+    isDebugMenuEnabled = await _shouldEnableDebugMenu();
+    if (isDebugMenuEnabled) {
+      await NativeAnalyticsBridge.initialize();
+      DebugAnalyticsInterceptorImpl.setInterceptor(DebugMenuAnalyticsInterceptor());
+    }
+    setGTMTagTypes();
+  }
+
+  static Future<bool> _shouldEnableDebugMenu() async {
+    try {
+      final packageInfo = await PackageInfo.fromPlatform();
+      final appVersion = packageInfo.version;
+      final marketVersion =
+          RemoteConfigManager.config.remoteFeatureFlag.currentMarketVersion;
+      if (marketVersion == null || marketVersion.isEmpty) {
+        return true; // Staging
+      }
+      return _isVersionGreater(appVersion, marketVersion);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  static bool _isVersionGreater(String version1, String version2) {
+    try {
+      final v1 = version1.split('.').map(int.parse).toList();
+      final v2 = version2.split('.').map(int.parse).toList();
+      while (v1.length < 3) v1.add(0);
+      while (v2.length < 3) v2.add(0);
+      if (v1[0] != v2[0]) return v1[0] > v2[0];
+      if (v1[1] != v2[1]) return v1[1] > v2[1];
+      return v1[2] > v2[2];
+    } catch (e) {
+      return false;
+    }
+  }
+}
+```
+
+Handlers GTM encapsulados quando o menu está ativo:
+
+```dart
+final insiderHandler = AppInitializer.isDebugMenuEnabled
+    ? GTMHandlerWrapper.wrapHandler('insider', originalHandler)
+    : originalHandler;
+```
+
+</details>
+
+<details>
+<summary><b>3. App module</b></summary>
+
+```dart
+// {app}/lib/app_module.dart
+@override
+void binds(Injector i) {
+  final appCommonsModule = AppCommonsModule(
+    appConfig: appConfig,
+    posSoma: appConfig.posSoma,
+    somaBaseUrl: appConfig.somaBaseUrl,
+    enableDebugMenu: AppInitializer.isDebugMenuEnabled,
+  );
+  appCommonsModule.binds(i);
+}
+```
+
+Dentro do `AppCommonsModule`, o interceptor de rede entra primeiro:
+
+```dart
+httpClient = DioHttpClient.fromOptions(
+  interceptors: [
+    if (hasDebugMenu) DebugNetworkInterceptor(),
+    AuthInterceptorService(baseUrl: somaBaseUrl),
+    PrettyDioLogger(requestHeader: true, responseBody: false),
+  ],
+);
+```
+
+</details>
+
+<details>
+<summary><b>4. iOS</b></summary>
+
+Copie o arquivo de referência da Farm e adicione-o ao projeto no Xcode:
+
+```bash
+cp farm_app_flutter/ios/Runner/AnalyticsInterceptor.swift {app}/ios/Runner/AnalyticsInterceptor.swift
+```
+
+No `AppDelegate.swift`:
+
+```swift
+override func application(
+  _ application: UIApplication,
+  didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+) -> Bool {
+  GeneratedPluginRegistrant.register(with: self)
+  if let controller = window?.rootViewController as? FlutterViewController {
+    AnalyticsInterceptor.shared.setup(with: controller)
+  }
+  return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+}
+```
+
+O swizzling intercepta `logEventWithOrigin:name:parameters:` e o GTM é observado pela notificação `GTMEvent`.
+
+</details>
+
+<details>
+<summary><b>5. Android</b></summary>
+
+Crie `AnalyticsInterceptor.kt` com o package do app (`br.com.apphering`, `br.com.farmrio.app`…):
+
+```kotlin
+package {package_name}
+
+import android.content.Context
+import android.os.Bundle
+// ... imports
+
+class AnalyticsInterceptor private constructor() {
+    companion object {
+        const val CHANNEL = "com.soma.analytics_debug"
+        // ...
+    }
+}
+```
+
+No `MainActivity.kt`:
+
+```kotlin
+class MainActivity : FlutterFragmentActivity() {
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        super.configureFlutterEngine(flutterEngine)
+        AnalyticsInterceptor.getInstance().setup(flutterEngine, this)
+    }
+}
+```
+
+</details>
+
+### Checklist
+
+- [ ] `currentMarketVersion` na model + valor inicial no Firebase Console
+- [ ] `package_info_plus` no `pubspec.yaml`
+- [ ] `isDebugMenuEnabled`, `_shouldEnableDebugMenu()` e `_isVersionGreater()` no `AppInitializer`
+- [ ] `NativeAnalyticsBridge` inicializado quando habilitado
+- [ ] Handlers GTM com `GTMHandlerWrapper`
+- [ ] `enableDebugMenu` passado ao `AppCommonsModule`
+- [ ] iOS: `AnalyticsInterceptor.swift` no Xcode + setup no `AppDelegate`
+- [ ] Android: `AnalyticsInterceptor.kt` + setup no `MainActivity`
+- [ ] Testes: ativa em staging (versão vazia), ativa com versão maior, desativa com versão igual/menor
+- [ ] Testes: captura de Firebase, GTM e HTTP em iOS e Android **reais**
+
+## Troubleshooting
+
+| Problema | Causa / verificação | Solução |
+|---|---|---|
+| Não aparece em staging | `currentMarketVersion` deveria estar vazio; conferir logs de `isDebugMenuEnabled` e se `AppCommonsModule` recebe a flag | Limpar o valor no Remote Config |
+| Aparece em produção | Versão do app maior que `currentMarketVersion` | Atualizar `current_market_version` para a versão da loja |
+| Eventos Firebase não aparecem | Swizzling (iOS) ou proxy (Android) não aplicado | Conferir os logs do `AnalyticsInterceptor` |
+| Tags GTM não aparecem | Handler sem `GTMHandlerWrapper` | Envolver o handler |
+| Requisições não aparecem | `DebugNetworkInterceptor` fora do Dio | Conferir `enableDebugMenu` no `AppCommonsModule` |
+| iOS: `EXC_BAD_ACCESS` no swizzle | Firebase inicializado depois do interceptor | Inicializar o Firebase antes; swizzling dentro de métodos `@objc` |
+| Android: `SecurityException` / `IllegalAccessException` | Reflection bloqueada | Regras de ProGuard; versão compatível do Firebase Analytics |
+
+## Boas práticas
+
+- Atualize `current_market_version` após todo release; use versão completa (`2.4.0`, não `2.4`).
+- Nunca commite o Debug Menu forçado como ativo nem use flag hardcoded.
+- Teste em device real e valide que a build de produção não mostra o menu.
+
+Para validar a AppsFlyer, combine com [Appsflyer: validação do SDK](./appsflyer-validacao-sdk.mdx).

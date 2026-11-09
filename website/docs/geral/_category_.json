@@ -1,0 +1,9 @@
+{
+  "label": "Documentações gerais",
+  "position": 6,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "geral/index"
+  }
+}

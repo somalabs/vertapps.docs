@@ -1,0 +1,59 @@
+---
+sidebar_position: 6
+title: "Configurações dos apps"
+description: "URLs de CMS, barramento e Lojix de cada marca em homologação e produção."
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>Geral · Ambientes</Kicker>
+
+# Configurações dos apps
+
+Endereços de CMS (Strapi), barramento (soma-bus) e Lojix (live) de cada marca, por ambiente.
+
+<Chips>
+  <Chip tone="blue">Homologação</Chip>
+  <Chip tone="amber">Produção</Chip>
+  <Chip>Por marca</Chip>
+</Chips>
+
+:::warning[Tokens não ficam aqui]
+Tokens do CMS e chaves **Pos Soma** não são publicados neste site. Pegue com o time (ou nas variáveis do Codemagic da marca). Em produção, a URL e o token do CMS vêm do `cms_config` do [Firebase Remote Config](./firebase.mdx).
+:::
+
+## Barramento (todas as marcas)
+
+| Ambiente | URL |
+|---|---|
+| Homologação | `https://soma-bus-api-gateway-homolog-kwulbm5tjq-uc.a.run.app/api` |
+| Produção | `https://soma-bus.somalabs.com.br/api` |
+
+## CMS por marca
+
+| Marca | Homologação | Produção |
+|---|---|---|
+| Animale | `https://cms-animale-homolog.somalabs.com.br/api/` | `https://cms-animale.somalabs.com.br/api/` |
+| Farm | `https://cms-farm-homolog.somalabs.com.br/api/` | `https://cms-farm.somalabs.com.br/api/` |
+| Hering | `https://cms-hering-homolog.somalabs.com.br/api/` | `https://cms-hering.somalabs.com.br/api/` |
+| Maria Filó | `https://cms-mf-homolog.somalabs.com.br/api/` | `https://cms-mf.somalabs.com.br/api/` |
+| Off Premium | `https://cms-off-homolog.somalabs.com.br/api/` | `https://cms-off.somalabs.com.br/api/` |
+| NV | `https://cms-nv-homolog.somalabs.com.br/api/` | `https://cms-nv.somalabs.com.br/api/` |
+
+Cris Barros e Reserva não estavam na página de origem.
+
+## Lojix (live commerce)
+
+| Marca | Homologação | Produção |
+|---|---|---|
+| Animale | `https://backend-production-user-jysqyijvoa-uc.a.run.app/stream/ecommerce` | `https://backend-production-user-jysqyijvoa-uc.a.run.app/stream/animale-lab` |
+| Farm | `https://backend-user-sak6ow4bvq-uc.a.run.app/stream/aovivo` (novo) · `https://backend-production-user-jysqyijvoa-uc.a.run.app/stream/ecommerce` (antigo) | `https://backend-production-user-jysqyijvoa-uc.a.run.app/stream/aovivo` |
+
+As demais marcas não usam Lojix.
+
+:::note
+Na página de origem, o barramento de homologação da Hering tinha o texto da URL acima, mas o link apontava para `https://somabus-kong-homolog.somalabs.com.br/api/`. Confirme com o time qual está em uso antes de depender dele.
+:::
+
+Para trocar o CMS entre homologação e produção em runtime, veja [Chaveamento dinâmico do Strapi](./chaveamento-dinamico-strapi.mdx).

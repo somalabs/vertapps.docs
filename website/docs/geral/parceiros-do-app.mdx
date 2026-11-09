@@ -1,0 +1,100 @@
+---
+sidebar_position: 13
+title: "Parceiros do app"
+description: "AppsFlyer, Insider, Omnilogic, Omnichat e Dito: o que cada parceiro faz no app e para quem."
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>Geral · Parceiros</Kicker>
+
+# Parceiros do app
+
+As cinco plataformas parceiras integradas aos apps, o que cada uma faz e qual time opera.
+
+<Chips>
+  <Chip tone="coral">AppsFlyer</Chip>
+  <Chip tone="teal">Insider</Chip>
+  <Chip tone="blue">Omnilogic</Chip>
+  <Chip tone="amber">Omnichat</Chip>
+  <Chip>Dito</Chip>
+</Chips>
+
+## Resumo
+
+| Ferramenta | Categoria | Foco | Impacto | Quem opera |
+|---|---|---|---|---|
+| **AppsFlyer** | Atribuição mobile | Mensuração e atribuição de mídia paga | ROI de marketing, otimização de budget de aquisição | Marketing / Performance |
+| **Insider** | Engajamento e personalização | Personalização omnichannel e jornadas automatizadas | Conversão, engajamento, ticket médio, retenção | Marketing / CX |
+| **Omnilogic** | CRM e regras de negócio | Comunicação personalizada por comportamento (ex.: e-mail de carrinho abandonado) | Agilidade comercial, personalização | Produto / Negócio |
+| **Omnichat** | Chat commerce | Vendas e atendimento por WhatsApp, Instagram, Messenger | Conversão conversacional, recuperação de carrinho | Vendas / Customer Success |
+| **Dito** | CRM e automação de marketing | Relacionamento e fidelização | LTV, retenção, recorrência | CRM / Relacionamento |
+
+No app, os eventos chegam a Insider, Omnilogic, AppsFlyer e Dito via **GTM** (ver [Arquitetura de dados](./arquitetura-de-dados-2025.mdx)); dá para conferir os disparos no [Debug Menu](./debug-menu.mdx).
+
+## AppsFlyer
+
+Plataforma de atribuição mobile: liga a ação do usuário (clique em anúncio) ao resultado (instalação, compra, cadastro).
+
+- **Instalações:** identifica o anúncio, canal ou campanha de cada download.
+- **Eventos in-app:** primeira compra, visualização de produto, add to cart, cadastro.
+- **Deep linking:** leva a campanha direto para uma tela do app ([OneLink](./appsflyer-onelink-deeplink.mdx)).
+- **Fraude:** detecta instalações e cliques inválidos.
+- **Custos:** centraliza o investimento de várias fontes de mídia.
+
+Métricas: CPI, CPA, ROAS, LTV por canal, retenção por coorte.
+
+## Insider
+
+Plataforma de engajamento com CDP: segmentação, personalização e jornadas em 12+ canais, operada pelo marketing sem fila de desenvolvimento.
+
+- Coleta comportamento (navegação, produtos vistos, abandono, preferências).
+- Segmentação dinâmica e personalização em tempo real (conteúdo, banners, recomendações).
+- Jornadas cross-channel (app, push, e-mail, SMS, WhatsApp), A/B testing e modelos preditivos (propensão a compra, churn).
+
+Métricas: conversão de campanhas, engagement rate, impacto da personalização no ticket médio. Guias: [Push por geolocalização](./push-geolocalizacao-insider.mdx) e [Smart Recommender](../strapi/componentes/smart-recommender-insider.mdx).
+
+## Omnilogic
+
+Motor de regras de negócio e decisão em tempo real. No grupo, é usado como **CRM de personalização**: automatiza comunicações por comportamento — ex.: e-mail automático para quem adiciona produto ao carrinho e não finaliza.
+
+- Avalia regras a cada evento do usuário; decide por perfil, comportamento, localização, horário.
+- Configuração no-code, priorização entre regras, A/B nativo.
+- Exemplos: desconto na primeira compra de uma categoria, banner por região, frete grátis por histórico.
+
+Métricas: taxa de ativação de regras, impacto de A/B, velocidade de implementação.
+
+## Omnichat
+
+Plataforma brasileira de chat commerce (parceira oficial da Meta desde 2021) que centraliza WhatsApp, Instagram, Messenger e webchat.
+
+- WhatsApp Business API, chatbots e agentes de IA, handoff para humano.
+- Remarketing conversacional (carrinho abandonado via WhatsApp), catálogo na conversa.
+- Histórico unificado e análise de conversas.
+
+Métricas: conversão conversacional, tempo de resposta, CSAT.
+
+## Dito
+
+CRM e automação de marketing focado em varejo: engajamento, retenção e fidelização por dados transacionais e comportamentais.
+
+- Dados de compra (categorias, ticket médio, frequência) e de uso do app (última visita, wishlist).
+- Segmentação RFM e automações de ciclo de vida (boas-vindas, reativação, pós-compra, aniversário, fidelidade).
+- E-mail, SMS, push e redes sociais.
+- Exemplos: onboarding, reativação de inativos, volta ao estoque de favoritos, NPS pós-compra.
+
+Métricas: open rate, click rate, conversão, recompra e churn.
+
+## Como se complementam
+
+| Etapa da jornada | Parceiro |
+|---|---|
+| Aquisição | AppsFlyer — de onde veio o usuário |
+| Ativação | Insider + Dito — onboarding e primeira compra |
+| Engajamento | Omnilogic — ofertas por regra no momento certo |
+| Conversão | Omnichat — dúvidas e compra pelo WhatsApp |
+| Retenção | Dito + Insider — reativação e comunicação contínua |
+| Fidelização | Omnichat + Dito — relacionamento VIP |
+
+Boas práticas: padronizar nomes de eventos, produtos e categorias entre as plataformas; coordenar os A/B tests; revisar periodicamente quais automações e regras performam.

@@ -1,0 +1,42 @@
+---
+sidebar_position: 5
+title: "Appsflyer: validação do SDK"
+description: "Registrar um dispositivo de teste e validar o SDK da AppsFlyer pelo evento de abertura."
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>Geral · Appsflyer</Kicker>
+
+# Appsflyer: validação do SDK
+
+Para confirmar que o SDK da AppsFlyer está funcionando, registre um dispositivo de teste e veja o evento de abertura chegar no painel.
+
+<Chips>
+  <Chip tone="coral">AppsFlyer</Chip>
+  <Chip tone="teal">QA</Chip>
+  <Chip>SDK</Chip>
+</Chips>
+
+## 1. Registrar o dispositivo de teste
+
+- Cadastre o device em [Test devices](https://hq1.appsflyer.com/test-devices/devices).
+- Passo a passo oficial: [Registrando dispositivos de teste](https://support.appsflyer.com/hc/pt/articles/207031996-Registrando-dispositivos-de-teste).
+
+## 2. Validar o SDK
+
+1. Com o device cadastrado, abra o **SDK integration test** do app. Exemplo da Hering: [sdk-integration-test/app/br.com.hering](https://hq1.appsflyer.com/sdk-integration-test/app/br.com.hering) (troque o bundle id para outra marca).
+2. Escolha **Eventos ativos**, selecione Android/iOS e o dispositivo de teste.
+3. Na tela de eventos, clique em **Iniciar**.
+4. Abra o app da marca no dispositivo selecionado.
+
+Na lista deve aparecer o evento **Lançar**:
+
+![Evento Lançar no teste de integração](/img/geral/appsflyer-validacao-sdk/img-01.webp)
+
+- Nos detalhes do evento, confira a **versão do app** e se o **AppsFlyer ID** aparece.
+
+:::info
+**Lançar** é o único evento exibido nesse painel. Os demais são enviados via GTM e devem ser validados pelo [Debug Menu](./debug-menu.mdx).
+:::
