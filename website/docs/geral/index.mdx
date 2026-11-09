@@ -1,0 +1,73 @@
+---
+sidebar_position: 1
+title: Documentações gerais
+slug: /geral
+description: "Guias técnicos e operacionais dos apps que não são de uma marca nem do catálogo do CMS."
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>01 · Geral</Kicker>
+
+# Documentações gerais
+
+Guias técnicos e operacionais que valem para todos os apps: deeplinks, Appsflyer, Firebase, ambientes do Strapi, ferramentas de debug, parceiros e lojas. Conteúdo migrado do Notion "Vertical de Apps".
+
+<Chips>
+  <Chip tone="coral">Deeplinks</Chip>
+  <Chip tone="amber">Firebase</Chip>
+  <Chip tone="blue">Strapi</Chip>
+  <Chip tone="teal">Parceiros</Chip>
+  <Chip tone="amber">Push</Chip>
+  <Chip>Lojas</Chip>
+</Chips>
+
+## Deeplinks e Appsflyer
+
+| Página | Conteúdo |
+|---|---|
+| [Deeplinks](./deeplinks.mdx) | Pipeline do `DeeplinkHandler`, extensão por marca, setup nativo, como testar |
+| [Upload de novos deeplinks](./upload-de-novos-deeplinks.mdx) | Subida em massa de deeplinks no Strapi via XML |
+| [Appsflyer: OneLink, deeplink e desinstalações](./appsflyer-onelink-deeplink.mdx) | Criar OneLink, valor de deep link e métrica de desinstalação |
+| [Appsflyer: validação do SDK](./appsflyer-validacao-sdk.mdx) | Registrar device de teste e validar o evento de abertura |
+
+## Configuração e ambientes
+
+| Página | Conteúdo |
+|---|---|
+| [Configurações dos apps](./configuracoes-dos-apps.mdx) | URLs de CMS, barramento e Lojix por marca e ambiente |
+| [Configurações internas do Strapi](./configuracoes-internas-strapi.mdx) | Rodar o Strapi local, criar componente/coleção, liberar acesso |
+| [Firebase — Remote Config](./firebase.mdx) | O que cada chave do `app_config` controla |
+| [Chaveamento dinâmico do Strapi](./chaveamento-dinamico-strapi.mdx) | Alternar homolog/produção em runtime para QA e devs |
+| [Bucket Google](./bucket-google.mdx) | Onde a vertical guarda arquivos importantes |
+
+## Dados, debug e parceiros
+
+| Página | Conteúdo |
+|---|---|
+| [Arquitetura de dados dos apps (2025)](./arquitetura-de-dados-2025.mdx) | Firebase + GTM Mobile + webhook VTEX → GA4 |
+| [Debug Menu](./debug-menu.mdx) | Captura de eventos, tags GTM e rede em runtime |
+| [Parceiros do app](./parceiros-do-app.mdx) | AppsFlyer, Insider, Omnilogic, Omnichat, Dito |
+
+## Push
+
+| Página | Conteúdo |
+|---|---|
+| [Push na Insider](./push-insider.mdx) | Criar push e configurar o destino com `action`/`identifier` |
+| [Push no Firebase](./push-firebase.mdx) | Criar, segmentar, programar e enviar; destino com `navigate_to` |
+| [Push por geolocalização na Insider](./push-geolocalizacao-insider.mdx) | Geofence + campanha de push |
+
+## Funcionalidades
+
+| Página | Conteúdo |
+|---|---|
+| [Busca nos apps](./busca-nos-apps.mdx) | Autocomplete, sugeridos, Em Alta, recentes, busca sem resultado |
+
+## Ícone, splash e lojas
+
+| Página | Conteúdo |
+|---|---|
+| [Alterar os ícones do app](./alterar-icones-do-app.mdx) | Gerar e importar ícones Android/iOS |
+| [Troca dinâmica de ícone e splash](./troca-dinamica-icone-splash.mdx) | Proposta técnica com Remote Config (não implementada) |
+| [Imagens e textos das lojas](./imagens-e-textos-das-lojas.mdx) | Dimensões e regras das imagens da App Store e Play Store |

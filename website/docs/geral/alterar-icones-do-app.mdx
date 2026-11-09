@@ -1,0 +1,60 @@
+---
+sidebar_position: 18
+title: "Alterar os ícones do app"
+description: "Gerar os ícones no IconKitchen e importar para Android e iOS."
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>Geral · Ícones</Kicker>
+
+# Alterar os ícones do app
+
+Gere todos os tamanhos no IconKitchen a partir de uma imagem quadrada e substitua as pastas de ícone no Android e no iOS.
+
+<Chips>
+  <Chip tone="blue">Android</Chip>
+  <Chip tone="amber">iOS</Chip>
+  <Chip>Requer release</Chip>
+</Chips>
+
+**Entrada:** imagem 1:1 de no mínimo **1024 × 1024 px**.
+
+## 1. Gerar no IconKitchen
+
+1. Acesse o [IconKitchen](https://icon.kitchen/i/H4sIAAAAAAAAA6tWKkvMKU0tVrKqVkpJLMoOyUjNTVWyKikqTa3VUcrNTynNAUlGKyXmpRTlZ6Yo6Shl5hcDyfLUJKXYWgA19PHYPwAAAA%3D%3D) e faça o upload da imagem.
+2. Configure:
+
+| Opção | Valor |
+|---|---|
+| Scaling | Crop |
+| Mask | OFF |
+| Padding | 0 |
+| Shape | **Square** |
+
+:::tip
+Use **Square**: o Android recorta o ícone em círculo de qualquer jeito. Se você já recortar aqui, o ícone fica parecendo uma bandeirinha no app.
+:::
+
+<details>
+<summary>Exemplo de configuração</summary>
+
+![Configuração no IconKitchen](/img/geral/alterar-icones-do-app/img-01.webp)
+
+</details>
+
+3. Faça o download dos ícones.
+
+## 2. Importar no projeto
+
+**Android** — `android/app/src/main/res`
+
+- Copie o conteúdo da pasta `android` baixada para este diretório, substituindo os arquivos existentes.
+
+**iOS** — `ios/Runner/Assets.xcassets/AppIcon.appiconset`
+
+- Apague todos os arquivos da pasta.
+- Copie todos os arquivos da pasta `iOS` baixada para este local.
+
+A troca só chega ao usuário com uma nova versão nas lojas. Trocar ícone sem release está em [Troca dinâmica de ícone e splash](./troca-dinamica-icone-splash.mdx).

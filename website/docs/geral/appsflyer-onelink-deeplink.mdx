@@ -1,0 +1,88 @@
+---
+sidebar_position: 4
+title: "Appsflyer: OneLink, deeplink e desinstalações"
+description: "Criar OneLink na AppsFlyer, configurar o valor de deep link e exibir desinstalações no dashboard."
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>Geral · Appsflyer</Kicker>
+
+# Appsflyer: OneLink, deeplink e desinstalações
+
+OneLinks são links com atribuição, redirecionamento e deep linking: levam o usuário de mídia própria ou paga (site, banner, social, e-mail, SMS) para o app, em qualquer dispositivo ou plataforma.
+
+<Chips>
+  <Chip tone="coral">OneLink</Chip>
+  <Chip tone="teal">Atribuição</Chip>
+  <Chip>Painel AppsFlyer</Chip>
+</Chips>
+
+## Como configurar um OneLink
+
+1. No painel da AppsFlyer, vá em **Experiências & deep linking → Gerenciamento do OneLink**.
+
+![Menu Gerenciamento do OneLink](/img/geral/appsflyer-onelink-deeplink/img-01.webp)
+
+2. Selecione o **template do OneLink** onde o link será criado.
+
+![Template do OneLink](/img/geral/appsflyer-onelink-deeplink/img-02.webp)
+
+3. Clique em **Novo link**.
+
+![Botão Novo link](/img/geral/appsflyer-onelink-deeplink/img-03.webp)
+
+4. Selecione a experiência que deseja criar (ver [Experiências disponíveis](#experiências-disponíveis)).
+
+![Escolha da experiência](/img/geral/appsflyer-onelink-deeplink/img-04.webp)
+
+5. Selecione uma fonte de mídia ou informe uma personalizada. É nela que os dados aparecem na AppsFlyer, e ela vai no link como o parâmetro `pid`.
+
+![Fonte de mídia](/img/geral/appsflyer-onelink-deeplink/img-05.webp)
+
+6. Clique em **Próximo**.
+
+![Botão Próximo](/img/geral/appsflyer-onelink-deeplink/img-06.webp)
+
+7. Em **Deep linking e redirecionamento**, preencha o campo **Valor de deep link** usando o padrão de [navegação dinâmica](../strapi/navegacao-dinamica.mdx).
+
+![Campo Valor de deep link](/img/geral/appsflyer-onelink-deeplink/img-07.webp)
+
+### Experiências disponíveis
+
+| Experiência | Uso |
+|---|---|
+| Social-to-app | Posts em redes sociais levando ao app |
+| App-to-app | Anúncios exibidos em outros apps |
+| QR-to-app | QR codes em loja física, site desktop, TV/CTV |
+| Email-to-app | Campanhas de e-mail (ESPs) |
+| Text-to-app | Campanhas de SMS e mensagens |
+| Referral-to-app | Convites de usuários ou influenciadores, compartilhamento de conteúdo in-app |
+| Link personalizado | Jornadas que não se encaixam nas anteriores |
+
+:::note[Formato antigo de redirecionamento]
+As páginas antigas "Redirecionamento PDP/PDC/Home/Favoritos/Sacola/Conta/Menu" (parâmetros `action=pdp&productId=…`, 2023) não foram migradas: o valor de deep link segue hoje a [navegação dinâmica](../strapi/navegacao-dinamica.mdx), e o tratamento no app está em [Deeplinks](./deeplinks.mdx).
+:::
+
+## Como exibir desinstalações no dashboard
+
+Faça para **as duas plataformas** (Android e iOS) de cada marca.
+
+1. Na conta da marca na AppsFlyer, selecione um dos apps.
+
+![Seleção do app](/img/geral/appsflyer-onelink-deeplink/img-08.webp)
+
+2. Role até a tabela e clique na engrenagem.
+
+![Engrenagem da tabela](/img/geral/appsflyer-onelink-deeplink/img-09.webp)
+
+3. No modal, aba **Metrics**, marque as opções de desinstalação (**Uninstall** e/ou **Uninstall Rate** — pode existir só uma delas) e aplique.
+
+![Métricas de desinstalação](/img/geral/appsflyer-onelink-deeplink/img-10.webp)
+
+4. As métricas aparecem rolando a tabela para a direita.
+
+![Métricas na tabela](/img/geral/appsflyer-onelink-deeplink/img-11.webp)
+
+Para validar se o SDK está enviando eventos, veja [Appsflyer: validação do SDK](./appsflyer-validacao-sdk.mdx).

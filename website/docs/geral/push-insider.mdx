@@ -1,0 +1,114 @@
+---
+sidebar_position: 14
+title: "Push na Insider"
+description: "Criar um push na Insider e configurar para qual tela do app ele leva (pares action/identifier)."
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>Geral · Push</Kicker>
+
+# Push na Insider
+
+Como criar um push na Insider e escolher a tela do app que abre no clique. O destino vai como **pares chave-valor** (`action`, `identifier` e opcionais), lidos pelo `AppPushHandler` de cada marca.
+
+<Chips>
+  <Chip tone="teal">Insider</Chip>
+  <Chip tone="amber">Push</Chip>
+  <Chip>Animale · Cris Barros · Farm · Maria Filó · NV · Off</Chip>
+</Chips>
+
+:::info[Quando usar Insider ou Firebase]
+Os apps recebem push pelas duas plataformas. Na **Insider** o destino vai em `action`/`identifier` (esta página); no **Firebase**, em `navigate_to` com [navegação dinâmica](../strapi/navegacao-dinamica.mdx) — ver [Push no Firebase](./push-firebase.mdx). Push por localização: [Push por geolocalização](./push-geolocalizacao-insider.mdx).
+:::
+
+## 1. Criar o push
+
+1. No menu lateral: **Experience → Message → App Push**.
+
+![Menu Experience](/img/geral/push-insider/img-01.webp)
+
+![Menu Message](/img/geral/push-insider/img-02.webp)
+
+![Opção App Push](/img/geral/push-insider/img-03.webp)
+
+2. Clique em **Create**.
+
+![Botão Create](/img/geral/push-insider/img-04.webp)
+
+3. Escolha o tipo. Para o push tradicional: **Single**.
+
+![Tipo Single](/img/geral/push-insider/img-05.webp)
+
+## 2. Configurar o destino (deep link)
+
+Na configuração do push, ative **Enable Message Deep Links**, clique em **Add New Deep Link** e escolha **Key-Value Pair**.
+
+![Enable Message Deep Links](/img/geral/push-insider/img-06.webp)
+
+![Key-Value Pair](/img/geral/push-insider/img-07.webp)
+
+Preencha as chaves conforme o destino. Sem `action`, o push só abre o app; com uma `action` que o app não conhece, vai para a Home.
+
+### Destinos
+
+| Destino | `action` | Outras chaves |
+|---|---|---|
+| Home | `home` | — |
+| Menu explorar | `explore` | — |
+| PDP | `pdp` | `identifier` = id do produto na VTEX |
+| PLP / PDC | `productList` | ver [PLP](#plp--pdc) |
+| Wishlist | `wishList` | — |
+| Sacola | `bag` | — |
+| Meus pedidos | `myOrders` | — |
+| Detalhe do pedido | `orderDetails` | `identifier` = id do pedido |
+| Perfil | `profile` | — |
+| Login | `login` | — (abre o Perfil) |
+| Dados pessoais | `userData` | — |
+| Webview | `webview` | `query` = URL a abrir |
+| Navegação dinâmica | `dynamicNavigator` | `query` = rota da [navegação dinâmica](../strapi/navegacao-dinamica.mdx) |
+
+**Só na Farm:**
+
+| Destino | `action` | Outras chaves |
+|---|---|---|
+| Carrinho abandonado | `abandonedCart` | `skus` (separados por vírgula), `quantities` e `sellers` opcionais na mesma ordem (padrão 1 e seller `1`). Sem `skus`, abre a sacola. |
+| Sugestões | `suggestions` ou `sugestoes` | `identifier` opcional |
+
+:::caution[Mudou em relação à doc antiga]
+- A PDP lê **`identifier`** em todas as marcas, inclusive NV (a página antiga da NV dizia `productId`).
+- `news` (Novidades) e `openExpressDeliveryFilter` não existem mais no `AppPushHandler` — `news` cai na Home. Use `productList` ou `dynamicNavigator`.
+:::
+
+### PDP
+
+![Exemplo de PDP](/img/geral/push-insider/img-08.webp)
+
+- `action` = `pdp`
+- `identifier` = id do produto na VTEX
+
+### PLP / PDC
+
+![Exemplo de PLP](/img/geral/push-insider/img-09.webp)
+
+- `action` = `productList`
+- `identifier` = rota de categoria/cluster para o Intelligent Search da VTEX. Varia por marca — ex.: `/productclusterids/1466/departamento/calcas`, `/departamento/new-in`.
+
+![Exemplo de PLP com opcionais](/img/geral/push-insider/img-10.webp)
+
+Opcionais:
+
+| Chave | Valor |
+|---|---|
+| `searchTitle` | Título exibido na PLP |
+| `filterColor` | Cores, separadas por vírgula (ex.: `preto,cinza,branco`) |
+| `filterSize` | Tamanhos, separados por vírgula (ex.: `PP,P,M`) |
+| `orderBy` | `orderByReleaseDateDESC`, `orderByTopSaleDESC`, `orderByPriceDESC`, `orderByPriceASC` ou `orderByBestDiscountDESC` |
+| `query` | Termo de busca |
+| `filterCategoryOrCluster` | Rota explícita (se ausente, usa o `identifier`) |
+| `searchByCollection` | `true` trata o `identifier` como id de cluster; `false`, como id de categoria |
+
+## Como o app trata
+
+O clique chega pelo callback da Insider (`InsiderCallbackHandler`, em `azzas_app_commons`) e é repassado ao `AppPushHandler.open` da marca, registrado no `app_initializer.dart`. O handler lê `params['data'] ?? params`, registra o evento (`InsiderActionTracker`) e só navega quando o app termina de abrir (`markReady`). No iOS com o app em foreground, `handleForegroundCallback` chama `FlutterInsider.Instance.handleNotification` antes.

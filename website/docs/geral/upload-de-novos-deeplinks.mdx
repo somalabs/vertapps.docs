@@ -1,0 +1,50 @@
+---
+sidebar_position: 3
+title: "Upload de novos deeplinks"
+description: "Subida em massa de deeplinks para o Strapi a partir de um XML."
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>Geral · Deeplinks</Kicker>
+
+# Upload de novos deeplinks
+
+Subida em massa de deeplinks para o Strapi: monte um XML com os links e envie pela ferramenta de conversão, usando o seu token do Strapi.
+
+<Chips>
+  <Chip tone="coral">Deeplinks</Chip>
+  <Chip tone="blue">Strapi</Chip>
+  <Chip>Em massa</Chip>
+</Chips>
+
+## 1. Montar o XML
+
+Um `<item>` por deeplink:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <item title="Vestido Longo Promo" url="https://www.farmrio.com.br/produtos/vestido-longo-promo" filterCategoryOrCluster="/productclusterids/1576" order_by_intelligent_search="null"/>
+  <item title="Vestido Midi Promo" url="https://www.farmrio.com.br/produtos/vestido-midi-promo" filterCategoryOrCluster="/productclusterids/1574" order_by_intelligent_search="null"/>
+</root>
+```
+
+## 2. Enviar pela ferramenta
+
+Acesse [xml-to-json-magic](https://preview--xml-to-json-magic.lovable.app/) e preencha:
+
+- **Token de autenticação** — o seu token do Strapi. Para pegar: abra o Strapi → Inspecionar → aba **Rede/Network** → clique em `project-type` (se não aparecer, recarregue com o inspecionar aberto) → copie o valor do header **Authorization** **depois** da palavra `Bearer`.
+
+![Header Authorization no DevTools](/img/geral/upload-de-novos-deeplinks/img-01.webp)
+
+- **URL de destino** — a URL do documento de deeplinks da marca no Strapi. Ex.: `https://cms-hering-bf.somalabs.com.br/admin/content-manager/collection-types/api::deeplinks-hering.deeplinks-hering/17`.
+
+Clique em **Enviar dados**: os deeplinks são gravados no Strapi.
+
+:::warning
+O token do header é a sua sessão no Strapi. Não cole em print, card ou canal.
+:::
+
+Os campos de cada deeplink estão descritos em [Coleção Deeplinks](../strapi/colecoes/deeplinks.mdx). O comportamento no app está em [Deeplinks](./deeplinks.mdx).

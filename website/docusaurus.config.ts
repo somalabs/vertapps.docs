@@ -117,6 +117,11 @@ const config: Config = {
           position: 'left',
         },
         {
+          to: '/docs/geral',
+          label: 'Geral',
+          position: 'left',
+        },
+        {
           href: 'https://github.com/somalabs/vertapps.docs',
           label: 'GitHub',
           position: 'right',

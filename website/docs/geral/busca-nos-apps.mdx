@@ -1,0 +1,124 @@
+---
+sidebar_position: 17
+title: "Busca nos apps"
+description: "Regras da tela de busca: autocomplete, produtos sugeridos, Em Alta, buscas recentes, coleções em destaque e busca sem resultado."
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>Geral · Funcionalidades</Kicker>
+
+# Busca nos apps
+
+Regras de negócio da tela de busca nas marcas da nova arquitetura: o que cada bloco mostra, de onde vem o dado (inteligência própria, VTEX ou Strapi) e o que muda por marca.
+
+<Chips>
+  <Chip tone="coral">Busca</Chip>
+  <Chip tone="blue">VTEX Intelligent Search</Chip>
+  <Chip tone="teal">Strapi</Chip>
+  <Chip>Farm · Animale · Cris Barros · Maria Filó · Off</Chip>
+</Chips>
+
+:::note[Escopo]
+Vale para Farm, Animale, Cris Barros, Maria Filó e Off Premium (Off estava em migração na data da doc de origem, mar/2026). A NV segue na arquitetura legado, com busca diferente, e não está coberta aqui.
+:::
+
+## Por marca
+
+| Bloco | Farm | Animale | Cris Barros | Maria Filó | Off Premium |
+|---|---|---|---|---|---|
+| Autocomplete | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Produtos sugeridos | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Em Alta (auto/manual) | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Buscas recentes | — | ✅ | ✅ | ✅ | ✅ |
+| Coleções em destaque | ✅ (exclusivo) | — | — | — | — |
+| Busca sem resultado | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+## Autocomplete
+
+Sugestões de termo em tempo real enquanto a pessoa digita. Dois níveis, nesta ordem:
+
+1. **Inteligência própria:** busca interna pelo termo; todo produto cujo **nome contém** o texto vira sugestão. Ex.: "vesti" sugere "Vestido Carla".
+2. **Fallback VTEX:** se a inteligência própria não retornar nada, usa o [autocomplete nativo da VTEX](https://developers.vtex.com/docs/apps/vtex.search/Autocomplete).
+
+- Trecho coincidente em **negrito**.
+- Loading no campo de input durante a consulta.
+- Clicar numa sugestão executa a busca.
+
+## Produtos sugeridos
+
+**Antes de digitar:**
+
+- Com buscas recentes → produtos da **busca mais recente** da pessoa.
+- Sem buscas recentes → produtos dos termos **Em Alta** da marca.
+- A marca também pode fixar produtos "prioritários" no Strapi, na coleção [Trends de busca](../strapi/colecoes/trends-de-busca.mdx) (componente [Search suggested products](../strapi/componentes/search-suggested-products.mdx)); eles carregam ao abrir a tela.
+
+**Durante a digitação:** prévia da PLP com foto, nome e preço dos produtos que batem com o termo, atualizada a cada tecla.
+
+## Em Alta
+
+Termos mais buscados, em chips clicáveis abaixo do campo. Dois modos, pelo toggle `Ativo` da coleção `search_trends`:
+
+| `Ativo` | Origem | Quando usar |
+|---|---|---|
+| `FALSE` (padrão) | API da VTEX, automática | Sempre atualizado, sem manutenção |
+| `TRUE` | Termos cadastrados no Strapi | Campanhas, ou fallback se a API da VTEX instabilizar |
+
+## Buscas recentes
+
+- Guardadas **só no device** (não sincroniza), até **10** termos.
+- Remoção individual pelo "X".
+- Só entra na lista quando a busca é **confirmada** (Enter ou clique numa sugestão do autocomplete).
+
+A **Farm não tem buscas recentes**: no lugar, mostra Coleções em destaque.
+
+## Coleções em destaque (só Farm)
+
+Coleções que a marca quer promover, abaixo do Em Alta. 100% configurado no Strapi, em dois formatos:
+
+- **Só texto:** chips no estilo do Em Alta.
+- **Com imagem:** cards com foto e título.
+
+## Busca sem resultado
+
+O estado vazio só aparece quando **todas** as condições valem: nenhum resultado, nenhuma sugestão (nem própria, nem VTEX), campo com texto e nada em loading.
+
+Antes de mostrar o vazio, o app tenta salvar a busca: tira palavras do fim do termo até achar uma versão com produtos e oferece como sugestão clicável.
+
+```text
+Não encontramos "Vestido Branco Longo Verão"
+[Pesquisar por "Vestido Branco Longo" em vez disso]
+```
+
+Em Alta e Buscas recentes (ou Coleções em destaque, na Farm) continuam visíveis. O conteúdo do estado vazio vem da coleção [Busca vazia](../strapi/colecoes/busca-vazia.mdx).
+
+## Configuração no Strapi — `search_trends`
+
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `name` | Texto | Nome da configuração |
+| `Ativo` | Boolean | `TRUE` = termos manuais do Strapi · `FALSE` = automáticos da VTEX |
+| `search_trend` | Lista | Termos manuais (usados com `Ativo = TRUE`) — componente [Search Trend](../strapi/componentes/search-trend.mdx) |
+
+Os produtos prioritários do estado inicial também ficam nessa coleção. Detalhe de cadastro: [Trends de busca](../strapi/colecoes/trends-de-busca.mdx).
+
+## Padrões de design
+
+- Loading no input durante a consulta de sugestões.
+- Trecho coincidente em negrito.
+- Mesma tipografia em todos os títulos de sugestão.
+- Estado vazio só sem resultado, sem sugestão e fora de loading.
+
+## Métricas
+
+- Uso do autocomplete (interações com sugestão ÷ total de buscas)
+- Cliques em Em Alta e em Coleções em destaque (Farm)
+- Uso de buscas recentes
+- Conversão via produtos sugeridos
+- Funil: busca → produto → sacola → compra
+
+## Referências
+
+- Jira: [VERTAPP-3052](https://gruposoma.atlassian.net/browse/VERTAPP-3052) · [VERTAPP-2868](https://gruposoma.atlassian.net/browse/VERTAPP-2868) · [VERTAPP-3008](https://gruposoma.atlassian.net/browse/VERTAPP-3008) · [VERTAPP-3320](https://gruposoma.atlassian.net/browse/VERTAPP-3320)
+- Figma por marca: nas seções "Busca" das páginas de projeto no Notion — [Farm 2.0](https://app.notion.com/p/21c690e9a7e2809bb606e24682cea45c), [Animale 2.0](https://app.notion.com/p/2a3690e9a7e280f4bc4ad81e7ac6b2d3), [Cris Barros](https://app.notion.com/p/208690e9a7e2805d94aec8ecf14e1019), [Maria Filó 2.0](https://app.notion.com/p/2ce690e9a7e28033be2ecc7016ab01b6), [Off Premium 2.0](https://app.notion.com/p/2ff690e9a7e2815ebad1cf2da30e35f9)

@@ -1,0 +1,489 @@
+---
+sidebar_position: 7
+title: "Configurações internas do Strapi"
+description: "Como rodar o soma-bus-strapi localmente, criar componentes e coleções e liberar o acesso nas marcas."
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>Geral · Strapi</Kicker>
+
+# Configurações internas do Strapi
+
+Guia de desenvolvimento do `soma-bus-strapi`: rodar local, criar token, criar componente/coleção, exportar as configurações de view e liberar o acesso nos ambientes. O catálogo de componentes e coleções fica em [Strapi / CMS](../strapi/index.mdx).
+
+<Chips>
+  <Chip tone="coral">Strapi</Chip>
+  <Chip tone="blue">Dev local</Chip>
+  <Chip>Homolog → Produção</Chip>
+</Chips>
+
+<details>
+<summary>Strapi de conteúdo das marcas</summary>
+
+<b>Marcas</b>: ANIMALE, FARM, HERING, MARIA FILO, OFF PREMIUM, NV, CRISBARROS, RESERVA
+
+<b>Repositório</b>: [https://bitbucket.org/somalabs/soma-bus-strapi/src/main/](https://bitbucket.org/somalabs/soma-bus-strapi/src/main/)
+
+<details>
+<summary><b>Resumo rapido</b></summary>
+
+<ol>
+<li>
+Clonar o repo do soma-bus-strapi
+</li>
+<li>
+Acessar a branch de homolog e criar sua nova branch a partir dela
+</li>
+<li>
+repositorio do soma-bus-strapi: npm install + npm run develop (use Node 18.20.8)
+</li>
+<li>
+Acesse o link/admin gerando quando rodar o strapi
+</li>
+<li>
+Criar seu **token de acesso**
+</li>
+<li>
+**Liberar o acesso**(no ambiente local) das APIs que voce vai utilizar (home, etc (suas coleções novas). 
+</li>
+<li>
+Alterar na marca o cms de referencia (apontar pro local e pro seu token de acesso recem criado)
+</li>
+<li>
+Importar todas as config ja criadas pro seu strapi (**Settings > interface > selecionar tudo > import**)
+</li>
+<li>
+Criar seus **novos componentes**/**collections**
+</li>
+<li>
+Fazer a **configure de view** dos componentes/collections criados/alterados 
+</li>
+<li>
+**Exportar todas as configs**criadas/alteradas  (Settings > interface > selecionar > export)
+</li>
+<li>
+Subir a branche e abrir pr apontando pra homolog
+</li>
+<li>
+Quando as alterações chegarem na branch de homolog (ou main) é preciso fazer a **liberação do acesso** (tanto das apis qnt dos usuarios). 
+</li>
+</ol>
+
+</details>
+
+<details>
+<summary><b>Rodando o strapi</b></summary>
+
+Pra começar, execute os comandos a seguir, para acessar o projeto, atualizar-lo, remover a node\_modules, instalar as dependências e rodar o projeto.
+
+```dart
+cd soma-bus-strapi 
+git pull 
+rm -rf node_modules
+npm install
+npm run develop
+```
+
+Quando rodar um link ficará disponível para acessar o painel de admin do strapi:<br />”To access the server ⚡️, go to: [http://localhost:1337](http://localhost:1337/)”.
+
+</details>
+
+<details>
+<summary><b>Ambientes do strapi</b></summary>
+
+O strapi tem três ambientes,:<br />- local: onde criamos e editamos componentes e coleções;<br />- homologação: cada marca tem seu strapi de homologação onde podem cadastrar os componentes para teste, e este ambiente também é usado para testes de desenvolvimento e QA.<br />- produção: ambiente que deve ser alterado apenas pela marca.
+
+As novas branches devem sempre sair da branch de <b>homolog.</b><br /><br />\* Caso não tenha acesso ao strapi de homologação/produção, solicite acesso a equipe de desenvolvimento.<br /><br />No código, a alteração do ambiente acessado acontece no arquivo <i>marca</i>\_config, na propriedade de CMS cofig. (para o legado)<br />Na nova arquitetura, a atribuição do ambinete do strapi é no app\_module(da marca), e redefinir as variaveis de:<br /><b>cmsStagingToken</b>:<br /><b>cmsStagingUrl</b>:<br /><br />Para rodar localmente é necessária a definição do token, e sua atribuição.
+
+</details>
+
+<details>
+<summary><b>Token</b></summary>
+
+Para usar a API do Strapi vai ser necessário criar um API Token, vocês podem fazer isso indo em Settings > API Tokens > Create new API Token. Pode-se utilizar qualquer nome, e também qualquer duração de validade do token.<br />
+
+![Figura 1](/img/geral/configuracoes-internas-strapi/img-01.webp)
+
+Crie e salve seu novo token. Ele ficará para disponível para ser copiado, copie, e leve-o para o projeto<br />
+
+![Figura 2](/img/geral/configuracoes-internas-strapi/img-02.webp)
+
+No projeto, no arquivo cms\_config, altere o valor do token:<br />
+
+![Figura 3](/img/geral/configuracoes-internas-strapi/img-03.webp)
+
+</details>
+
+<details>
+<summary><b>Plugins</b></summary>
+
+Caso esteja tendo problemas com o utils do typescript, instale-o, caso não esteja instado.
+
+```dart
+npm i @strapi/typescrip-utilsinstall
+```
+
+Caso as requisições não estejam trazendo as informações completas, instale localmente o plugin do strapi para que traga o conteúdo completo (todos os níveis de informação) ao realizar as requisições.<br />[https://www.npmjs.com/package/strapi-plugin-populate-deep](https://www.npmjs.com/package/strapi-plugin-populate-deep)
+
+```dart
+// Acesse o projeto via terminal e rode o comando de instação:
+
+npm install strapi-plugin-populate-deep
+```
+
+Caso seu strapi não esteja exibindo o campo de cor na seção “custom”, instale o plugin
+
+```dart
+	npm install @strapi/plugin-color-picker
+	yarm install @strapi/plugin-color-picker
+```
+
+</details>
+
+<details>
+<summary><b>Criação de novos componentes</b></summary>
+
+A criação de um novo componente só acontece rodando o strapi localmente, em modo de homologação não é possível criar ou alterar componentes
+
+<details>
+<summary><b>Criando componentes no Strapi</b> <b>Content-Manager</b> é o lugar em que o conteúdo é criado, onde se atribui os valores de cada campo. <b>Content-Type Builder</b> é a área de criação das collections e componentes.</summary>
+
+<br />Em Content-Type builder, crie um novo componente e selecione a category (é o nome da “pasta onde ele ficará dentro na seção de componentes (talvez seja preciso criar a categoria). Selecione um ícone apropriado, e continue.
+
+![Figura 4](/img/geral/configuracoes-internas-strapi/img-04.webp)
+
+<br />Crie cada um dos ítens que irá compor este componente (como Text para título, ou booleanos para ativo/inativo). O tipo de cor está disponível em “custom”.<br />Como nome dos items, use o padrão inglês e minúsculo. Coloque como “name” o valor correspondente em “api\_key” do prismic.<br />Acesse as “advanced settings” e configure seu item. Por fim, salve o novo componente.
+
+![Figura 5](/img/geral/configuracoes-internas-strapi/img-05.webp)
+
+<br />Acesse o content manager, selecione a collection onde seu componente deve aparecer, clique em “Create new entry”, depois defina a marca onde esse conteúdo será adicionado e clique em “Add a component to componente”. Adicione seu componente.<br />Salve e publique.<br />Ele deve passar a aparecer no seu projeto (no código).
+
+:::info
+
+Não esqueça de alterar a documentação do notion, se necessário.
+
+:::
+
+<details>
+<summary><b>Cuidados ao criar componentes</b></summary>
+
+<b>Não crie</b> atributos da collection <b>com o mesmo nome</b> de componentes, ou das propriedades dos componentes. (Isso mesmo, ajuda o Strapi a não se confundir, sério). Também não crie componentes na collection (atributos) repetíveis.
+
+<b>Não aninhe componentes repetíveis.</b><br />Por exemplo: um componente card, usa um componente já existente, de forma repetível (imagine que é para cadastrar uma lista de filtros, de strings).<br />Não crie um componente carousel, que usa o componente já existente card, de forma repetível, pois isto se configura como aninhamento de componentes repetíveis, e o front-end do react não suporta.
+
+<b>Cuidado ao forçar a criação de um componente</b><br />É possível criar o componente via strapi, e editá-lo no json, adicionando novos campos, alterando o nome das propriedades, etc.<br />Via interface do Strapi, não é possível aninhar componentes complexos, que tenham um de seus campos um componente já pré-existente. Pelo JSON é possível, mas tenha cuidado pois, na versão utilizada do Strapi, o backend suporta tal modificação, mas o front-end não. Isso pode gerar erros em homolog/produção, em que ao tentar acessar uma collection, via painel de admin, ela quebre.
+
+</details>
+
+</details>
+
+<details>
+<summary><b>Criando os componentes no código</b></summary>
+
+Após criar o seu componente no strapi, é necessário alterar o nome do componente, pois o banco de dados só aceita identificadores (de tabelas, campos, índices, etc) com até 64 caracteres.  A solução adotada foi alterar o nome das tabelas de componentes. O Strapi gera por padrão "components\_\$\{nome\_da\_pasta\}\_\$\{nome\_do\_componente\}s", o padrão foi alterado para "c\_\$\{nome\_do\_componente\}s".
+
+Quando você criar um componente novo, lembre de alterar o collectionName no arquivo JSON do componente:
+
+![Figura 6](/img/geral/configuracoes-internas-strapi/img-06.webp)
+
+&lt;image />
+
+Acesse: <i>soma\_ui/lib/cms/models/components</i>
+
+Crie um novo arquivo para o model do seu componente. O nome do arquivo deve ser padronizado “<i>nome\_componente\_cms\_component”</i>, e crie a classe como nomeComponenteCmsComponent, extendendo de CmsComponent.
+
+Exporte o seu arquivo no arquivo components.dart.
+
+Acesse: <i>soma\_ui/lib/cms/widgets/components</i>
+
+Crie um arquivo para seu novo componente, que deve retornar o widget a ser renderizados (pode ser um preexistente).<i><br /></i>
+
+Acesse:  <i>soma\_ui/lib/cms/sm\_cms\_component\_renderer.dart</i>
+
+Acesse o arquivo cms\_componente.dart, e nele adicione o seu componente no switch. Como chave, utilize o componenteType (“\_\_component”).
+
+WIDGET > sm\_cms\_component\_renderer.dart
+
+e adicione o seu componente na lista.
+
+</details>
+
+</details>
+
+<details>
+<summary><b>Criando uma nova collection</b></summary>
+
+Uma collection é como uma página repetível.<br />
+
+![Figura 7](/img/geral/configuracoes-internas-strapi/img-07.webp)
+
+<br />Clique em “Create new entry” para criar uma collection.
+
+Teremos uma collection para cada marca. Defina o display name, que será exibido no menu lateral, de forma genérica, sem especificar a marca.
+
+Adicione o api id de forma invertida (singular/plural). Atenção, não aceita “\_” no apiId, usar “-”. Depois do nome default adicione “-nomeMarca”.<br />
+
+![Figura 8](/img/geral/configuracoes-internas-strapi/img-08.webp)
+
+<br />Para a nova collection, crie o campos obrigatório de “dynamic zone”, com o nome de “components”, dentro dela serão adicionados os componentes desta collection.<br />
+
+![Figura 9](/img/geral/configuracoes-internas-strapi/img-09.webp)
+
+<br />Para que ela esteja visível  é preciso que o <b>“state” esteja como “Published”</b> e que as permissões de acesso tenham sido configuradas.<br />Para <b>configurar as permissões</b> acesse, no painel de administrador do strapi:<br />Settings > Users & Permissions plugin > Roles > Public > Selecione a collection e ative o find e findOne e salve.<br />
+
+![Figura 10](/img/geral/configuracoes-internas-strapi/img-10.webp)
+
+</details>
+
+<details>
+<summary><b>Configurações da view</b></summary>
+
+Algumas definições são armazenadas como configurações da view, como: a descrição e o placeholder dos campos, a ordem dos componentes na página, e a ordem dos campos em um componente.
+
+<details>
+<summary><b>Exportação/importação das configurações</b></summary>
+
+As informações definidas em “configure de view” ficam salvas como configurações no banco de dados, e não são incluídas no Git pelo Strapi. Pra resolver foi adicionado um plugin de exportação/importação de configurações. A exportação é feita automaticamente quando você faz um commit, já a importação é feita manualmente pela tela "Config Sync Interface" nas "Settings" do painel:<br />
+
+![Figura 11](/img/geral/configuracoes-internas-strapi/img-11.webp)
+
+No  Strapi, “acesse Settings > Config sync \| Interface" e você verá as alterações pendentes, tanto coisas que você mudou e precisam ser exportadas, quanto coisas que outras pessoas mudaram e foram exportadas. Para que acessemos as configurações que foram definidas em outras máquina/outras pessoas, em nossa maquina é preciso importa-las.<br />Acesse via strapi, selecione as configurações, e clique em “import”.
+
+No projeto, as configurações ficam salvas no soma-bus-strapi/config/sync. E são exportadas apenas quando você executa "git commit", e não são exportadas automaticamente depois de alterar.
+
+Também é importante prestar atenção pra não importarem algo que delete o que vocês fizeram, igual merge de github. Esse plugin até tem uma telinha parecida quando você clica na tag de State para ver quais são as alterações:<br />
+
+![Figura 12](/img/geral/configuracoes-internas-strapi/img-12.webp)
+
+</details>
+
+<details>
+<summary><b>Definindo placeholder/descrição dos campos</b></summary>
+
+Via content-builder acesse o componente que você deseja especificar as informações de placeholder e descrição, e clique em “configure the view”. <br />Atenção, acesse o componente base, onde os campos são definidos.
+
+![Figura 13](/img/geral/configuracoes-internas-strapi/img-13.webp)
+
+<br />Depois, selecione o ícone de editar do campo que você pretende definir as informações:<br />
+
+![Figura 14](/img/geral/configuracoes-internas-strapi/img-14.webp)
+
+</details>
+
+Não esqueça de salvar suas alterações.
+
+</details>
+
+<details>
+<summary><b>Liberando o acesso de uma nova collection nas marcas</b></summary>
+
+Após criar uma collection, ou alterar uma Collection que já estava em uso, é necessário liberar o acesso dessa nova collection. É feito da seguinte forma:
+
+Acesse o CMS de homolog/produção da marca em específico.
+
+Acesse Settings > Administration Panel > Roles
+
+![Figura 15](/img/geral/configuracoes-internas-strapi/img-15.webp)
+
+Entre na primeira opção (que é o nosso ‘role’) e selecione a collection type que irá aparecer no Content Manager dessa marca. Exemplo abaixo de NV (se scrollar pra baixo tem todos os collections types de NV selecionados):<br />
+
+![Figura 16](/img/geral/configuracoes-internas-strapi/img-16.webp)
+
+Após selecionar a collection type, salve e confira no Content Manager se está disponível para cadastro de conteúdo.
+
+Também é preciso alterar a configuração da API, que precisa ser pública pra funcionar corretamente. Para isso, acesse em “Users & Permissions Plugin”.<br />O acesso desta area é apenas para super admin (quem é admin consegue se adicionar como super admin).<br />Procure a nova collection e marque as opções “find” e “findOne”.<br />
+
+![Figura 17](/img/geral/configuracoes-internas-strapi/img-17.webp)
+
+</details>
+
+<details>
+<summary><b>Espaçamento entre os componentes</b></summary>
+
+Foi criado o SMCmsContentSpacer para adicionar o espaçamento entre os componentes, ele deve ser colocado dentro de cada um dos componentes de CMS que precisarem ter espaçamento:
+
+&lt;image />
+
+O espaçamento é padrão 40 para todos os componentes e marcas, e é adicionado acima do componente.
+
+Caso o componente não deva ter espaçamento baseado em alguma condição, pode ser usado o shouldHaveSpacing para especificar essa condição:
+
+&lt;image />
+
+Como é comum que os componentes não tenham espaçamento quando vieram após determinado componente (CouponBanner não tem espaçamento se estiver após o CarouselList, por exemplo), já existe o construtor noSpacingWhenPreviousComponentIs especifico implementando essa condição. Nele você passa o tipo do model do componente que não deve ter espaçamento:
+
+&lt;image />
+
+## Ponto de atenção
+
+Como antes lidávamos com o espaçamento abaixo do componente (vide as propriedades hasBottomSpacing que temos em vários componentes) e agora o espaçamento é acima do componente, talvez tenhamos que adaptar o cadastro de alguns componentes para essa nova forma de pensar. Caso essa nova forma seja muito problemática, acredito que teríamos que voltar a pensar no espaçamento abaixo do componente.
+
+## Motivação
+
+Com esse SMCmsContentSpacer temos duas coisas diferentes do modelo anterior: espaçamento acima ao invés de abaixo e espaçamento dentro dos componentes (dentro do build) ao invés de entre os componentes. Vou explicar um pouco dos motivos disso.
+
+O espaçamento acima me pareceu fazer mas sentido pela forma de pensar sobre componentes que não tem espaçamento em certos casos. Me pareceu mais natural pensar que "O CouponBanner não tem espaçamento quando está depois do CarouselList" do que "O CarouselList não tem espaçamento quando está antes do CouponBanner".
+
+Já sobre o espaçamento estar dentro do build dos componentes, é por conta de flexibilidade em cenários mais específicos. Por exemplo, o SpotProductClock não deve aparecer caso o tempo do reloginho tenha terminado, e o seu espaçamento também não deveria aparecer. Para fazer essa lógica, é necessário ter acesso ao estado do componente, algo que só é possível fazer dentro dele.
+
+</details>
+
+</details>
+
+<details>
+<summary>Configurações remotas</summary>
+
+Projeto responsável pelas configurações remotas.
+
+<b>Marcas</b>: ANIMALE, FARM, HERING, MARIA FILO, OFF PREMIUM, NV.
+
+<b>Strapi</b>: [https://soma-bus-cms-kwulbm5tjq-uc.a.run.app/admin/](https://soma-bus-cms-kwulbm5tjq-uc.a.run.app/admin/)
+
+<b>Repositório</b>: [https://bitbucket.org/somalabs/soma-bus-cms/src/main/](https://bitbucket.org/somalabs/soma-bus-cms/src/main/)
+
+<details>
+<summary>🪲Atenção! MODO DEBUG! 🪲</summary>
+
+Atenção, a princípio o remote config não é chamado quando rodamos em modo debug. Caso esteja tentando visualizar algo em modo debug, comente o código abaixo, no arquivo: <i>config\_loader.dart</i>.
+
+![Figura 18](/img/geral/configuracoes-internas-strapi/img-18.webp)
+
+</details>
+
+<details>
+<summary><b>Rodando localmente</b></summary>
+
+Como consegui fazer rodar, hehe:
+
+<details>
+<summary><b>Adicionar as dependências</b>:</summary>
+
+React = yarn add [react@18.0.0](mailto:react@18.0.0)
+
+React-dom = yarn add [react-dom@18.0.0](mailto:react@18.0.0)
+
+React-router-dom = yarn add [react-router-dom@5.2.0](mailto:react-router-dom@5.2.0)
+
+Styled Components = yarn add [styled-components@5.2.1](mailto:styled-components@5.2.1)
+
+SQLITE = yarn add [better-sqlite3@9.4.3](mailto:better-sqlite3@9.4.3)
+
+</details>
+
+<details>
+<summary><b>Substituir arquivo de connection</b>:</summary>
+
+Substitua o arquivo config/database.js
+
+```javascript
+module.exports = ({ env }) => ({  connection: {    client: "mysql",    connection: {      host: env("DATABASE_HOST", "127.0.0.1"),      port: env.int("DATABASE_PORT", 3306),      database: env("DATABASE_NAME", "somabus_cms"),      user: env("DATABASE_USERNAME", "somabus_dev"),      password: env("DATABASE_PASSWORD", "RtVwqgWMc2nGAjc9"),      socketPath: env("DATABASE_SOCKET"),      ssl: env.bool("DATABASE_SSL", false),    },  },});
+
+```
+
+Pelo seguinte arquivo:
+
+```javascript
+const path = require("path");
+module.exports = ({ env }) => ({  connection: {    client: "sqlite",    connection: {      filename: path.join(        __dirname,        "..",        env("DATABASE_FILENAME", ".tmp/data.db")      ),    },    useNullAsDefault: true,  },});
+
+```
+
+</details>
+
+<details>
+<summary><b>Rodar o projeto / tokens / liberação das collections</b></summary>
+
+```javascript
+yarn install
+```
+
+```javascript
+yarn run develop
+```
+
+Se não rodar, acesse o arquivo package.json e clique em ‘debug’ logo acima de ‘scripts’.
+
+Depois que rodar, acesse o link com /admin:<br />[http://localhost:1337/admin](http://localhost:1337/admin)
+
+No painel, acesse ‘<b>Settings</b>’, depois ‘<b>API tokens</b>’, e então em “<b>Create New Token”, </b>gerando um novo token, com total permissão e tempo indeterminado e salve ele.
+
+Depois, ainda em ‘<b>Settings</b>’, dentro da seção “<b>Users & Permissions plugin</b>”, acesse ‘<b>Roles</b>’. Acesse as duas variações ‘<b>Public</b>’ e ‘<b>Authenticated</b>’, e em cada uma delas, dentro de permissions, para cada collection é preciso liberar as opções de ‘<b>find</b>’ e ‘<b>findOne</b>’  (que você vai usar/quer receber o resultado). <br />Não se esqueça de liberar também quando criar uma nova (e de deixar os conteúdos publicados).
+
+</details>
+
+<details>
+<summary><b>Ajustar o código para chamar o strapi local e não o de produção</b>:</summary>
+
+1. No arquivo ‘config/config\_loader.dart’, comente o trecho de código
+
+```javascript
+if (kDebugMode) { 
+	return null; 
+}
+```
+
+2. Acesse o arquivo: soma\_core\\lib\\config\\models\\strapi\_config.dart
+   Substitua o valor de ‘<b>baseUrl</b>’ pelo seu ambiente local.
+
+   Substitua o valor de ‘<b>accessToken</b>’ pelo token que foi gerado anteriormente.
+
+   
+
+</details>
+
+</details>
+
+<details>
+<summary><b>Componentes</b></summary>
+
+<details>
+<summary><b>MaxDiscountConfig</b></summary>
+
+Esta configuração refere-se ao desconto máximo que um produto pode ter. Este valor foi pré-definido no código como 80%. E será sobrescrito pelo conteúdo definido neste arquivo de configurações remotas.
+
+<details>
+<summary>Inputs</summary>
+
+<b>max\_discount</b>: o desconto maximo que pode ser aplicado.
+
+<b>Exemplo de preenchimento</b><br />80
+
+<b>allowed\_domains</b>: lista de dominios permitidos pra comprar com desconto acima do limite. Verifica se o email do usuário contém o domínio especificado.<br />Ou seja, podemos adicionar nesta lista “farm.com.br” e "somagrupo.com.br", e caso o email do usuario contenha este texto, o produto não será removido da <br />sacola dele (Mesmo que exceda o limite de desconto).
+
+<b>Exemplo de preenchimento:</b>
+
+[somagrupo.com.br](mailto:diego.assim@somagrupo.com.br)
+
+<b>forbidden\_sku\_ids</b>: lista de skuid que estão proibidos. Caso tenha algum problema <br />específico com um produto, pode-se adicionar seu PRODUCTID, e caso ele <br />esteja na sacola do usuario, será removido.
+
+<b>Exemplo de preenchimento:</b>
+
+12345
+
+</details>
+
+</details>
+
+<details>
+<summary>LiveStreamConfig</summary>
+
+Mesmo com a url preenchida e o cluster onde a live deve ser exibida para que o valor de vimeo\_id chegue no app, e então exiba o video corretamente.
+
+</details>
+
+</details>
+
+<details>
+<summary>Configurações dos apps - Versões</summary>
+
+Aqui em configurações dos apps podemos controlar as versões que estão em produção e a versão de homolog do aplicativo das marcas.
+
+Quando a área de qualidade vai executar os testes sempre é trocada a versão para ficar diferente da versão de produção. Ex: se em produção está 1.8.0 podemos deixar a versão de homolog em 1.9.0, sempre uma versão acima para que não reflita em produção.
+
+![Figura 19](/img/geral/configuracoes-internas-strapi/img-19.webp)
+
+</details>
+
+</details>

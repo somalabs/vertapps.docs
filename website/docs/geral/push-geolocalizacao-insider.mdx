@@ -1,0 +1,67 @@
+---
+sidebar_position: 16
+title: "Push por geolocalização na Insider"
+description: "Cadastrar uma geofence e criar uma campanha de push acionada por localização na Insider."
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>Geral · Insider</Kicker>
+
+# Push por geolocalização na Insider
+
+Campanha de push enviada quando o dispositivo **entra ou sai** de uma área geográfica (geofence). São dois passos: cadastrar a geofence e criar a campanha apontando para ela. Validado na Farm.
+
+<Chips>
+  <Chip tone="teal">Insider</Chip>
+  <Chip tone="amber">Push</Chip>
+  <Chip>Geofence</Chip>
+</Chips>
+
+:::warning[Requisitos no dispositivo]
+- Permissão de localização **"Sempre"**. Com "Durante o uso", a geofence pode não ser detectada com o app em segundo plano.
+- **iOS:** manter o **Wi-Fi ligado** (mesmo sem rede conectada) — o iOS usa redes próximas para precisão de localização.
+
+Sem isso, o sistema pode atrasar ou impedir a detecção e o push não sai.
+:::
+
+## 1. Cadastrar a geofence
+
+No menu à esquerda: **Components → Geofence**.
+
+![Página de Geofences](/img/geral/push-geolocalizacao-insider/img-01.webp)
+
+Clique em **+ Create**.
+
+![Opções de criação](/img/geral/push-geolocalizacao-insider/img-02.webp)
+
+**Single Geofence** cadastra uma localização; **Multiple Geofences** importa um `.csv` (o passo a passo aparece na própria tela). Em Single: dê um nome, digite o endereço (latitude e longitude se preenchem sozinhas) e defina o raio — o mapa mostra a área.
+
+![Cadastro de uma geofence](/img/geral/push-geolocalizacao-insider/img-03.webp)
+
+Confirme. A geofence já pode ser usada em campanhas.
+
+## 2. Criar a campanha de push
+
+Aqui só os campos da geolocalização; conteúdo, título, horários e demais opções seguem o fluxo normal de push.
+
+Em **App push → Create**, selecione **Geofence**.
+
+![Tipo de campanha Geofence](/img/geral/push-geolocalizacao-insider/img-04.webp)
+
+Em **Segments**, adicione um segment do tipo **Standard** e escolha **Geofence**.
+
+![Segment de Geofence](/img/geral/push-geolocalizacao-insider/img-05.webp)
+
+Escolha a localização e o período. Nos testes, o que funcionou foi **"Usuários que entraram mais de 1 vez"** no período selecionado.
+
+Em **Rules**, selecione uma ou mais localizações e se o usuário precisa **entrar** ou **sair** delas (considera o raio cadastrado).
+
+![Rules da campanha](/img/geral/push-geolocalizacao-insider/img-06.webp)
+
+:::caution
+Use **as mesmas localizações** em Segments e em Rules.
+:::
+
+Daí em diante é o fluxo padrão de push: publicar, monitorar, analisar. Para outras localidades, cadastre novas geofences e repita o passo 2.

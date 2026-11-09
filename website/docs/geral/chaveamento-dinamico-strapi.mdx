@@ -1,0 +1,223 @@
+---
+sidebar_position: 9
+title: "Chaveamento dinâmico do Strapi"
+description: "Como QA e devs da whitelist alternam o CMS entre homologação e produção em runtime."
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>Geral · Strapi</Kicker>
+
+# Chaveamento dinâmico do Strapi
+
+O app sempre inicia apontando para o Strapi de **produção**. Usuários de uma whitelist (QA/devs) podem trocar para **homologação** em runtime por um switch em Configurações da Conta; enquanto homologação está ativa, aparece a faixa **CMS HML** no topo da tela.
+
+<Chips>
+  <Chip tone="blue">azzas_core</Chip>
+  <Chip tone="coral">azzas_cms</Chip>
+  <Chip tone="amber">Remote Config</Chip>
+  <Chip>Runtime</Chip>
+</Chips>
+
+Origem: post mortem "Strapi Homologação — build do app NV apontando para homologação" (VERTAPP-4331).
+
+## 1. Visão geral
+
+1. **Padrão de produção:** o app sempre inicia em produção, lendo o Firebase Remote Config (com fallback local). Homologação nunca é ativada por padrão em nenhuma build, inclusive no workflow `develop`.
+2. **Flexibilidade (QA/devs):** e-mails na whitelist do Remote Config alternam o conteúdo entre homologação e produção pelo switch em **Configurações da Conta**.
+3. **Indicador visual:** faixa **CMS HML** no topo sempre que homologação estiver ativa.
+
+:::info[Decisão de arquitetura]
+Não há mais validação de ambiente na pipeline do Codemagic. A variável `STRAPI_ENV` e o script `scripts/validate_strapi_env.sh` foram removidos; toda a decisão acontece em runtime, via Remote Config e whitelist. Ver [Limitações conhecidas](#7-limitações-conhecidas).
+:::
+
+## 2. Pipeline (Codemagic)
+
+A única variável necessária é o salt da whitelist:
+
+| Variável | Tipo | Descrição |
+|---|---|---|
+| `WHITELIST_SALT` | `--dart-define` | Chave privada usada para mascarar os e-mails na validação da whitelist |
+
+:::warning
+O valor de `WHITELIST_SALT` na pipeline precisa ser **idêntico** ao usado para gerar os hashes salvos no Firebase (seção 5.1). O valor atual está nos Build arguments de qualquer workflow da marca no Codemagic — **não** é publicado aqui.
+:::
+
+## 3. Resolução do ambiente (`azzas_core`)
+
+O `StrapiEnvironmentResolver` decide em runtime qual configuração usar, guarda a escolha do usuário localmente e **reseta para produção quando o app muda de versão**.
+
+```dart
+class StrapiEnvironmentResolver {
+  final StrapiConfig defaultConfig; // Produção dinâmica (Remote Config)
+  final StrapiConfig homologConfig; // Homologação fixa (staging)
+  final KeyValueStorage _storage;
+  bool? _sessionOverride;
+  final isHomologNotifier = ValueNotifier<bool>(false);
+
+  StrapiEnvironmentResolver({
+    required this.defaultConfig,
+    required this.homologConfig,
+    KeyValueStorage? storage,
+  }) : _storage = storage ?? GetKeyValueStorage() {
+    _loadFromStorage();
+    _checkVersionAndReset();
+  }
+
+  void _loadFromStorage() {
+    _sessionOverride = _storage.read<bool>('strapi_homolog_override');
+    isHomologNotifier.value = _sessionOverride ?? false;
+  }
+
+  /// Se a versão do app mudou, volta o switch para produção.
+  Future<void> _checkVersionAndReset() async {
+    try {
+      final packageInfo = await PackageInfo.fromPlatform();
+      final currentVersion = packageInfo.version;
+      final savedVersion = _storage.read<String>('strapi_app_version');
+
+      if (savedVersion != null && savedVersion != currentVersion) {
+        await _storage.write<bool>('strapi_homolog_override', false);
+        _sessionOverride = false;
+        isHomologNotifier.value = false;
+      }
+      await _storage.write<String>('strapi_app_version', currentVersion);
+    } catch (_) {
+      // Evita falhas em plataformas de testes automatizados
+    }
+  }
+
+  bool get isHomologActive => _sessionOverride ?? false;
+
+  void setOverride(bool useHomolog) {
+    _sessionOverride = useHomolog;
+    isHomologNotifier.value = useHomolog;
+    _storage.write<bool>('strapi_homolog_override', useHomolog);
+  }
+
+  void clearOverride() {
+    _sessionOverride = null;
+    isHomologNotifier.value = false;
+    _storage.remove('strapi_homolog_override');
+  }
+
+  StrapiConfig get currentConfig {
+    if (_sessionOverride == true) return homologConfig;
+    return defaultConfig;
+  }
+}
+```
+
+## 4. Injeção e fallback nas marcas (`app_module.dart`)
+
+O `defaultConfig` lê produção do Remote Config; sem Remote Config (ex.: primeiro acesso offline), usa as constantes locais da marca.
+
+```dart
+i.addSingleton<StrapiEnvironmentResolver>(
+  () => StrapiEnvironmentResolver(
+    defaultConfig: StrapiConfig(
+      baseUrl: _remoteConfig.cmsConfig.baseUrl.isNotEmpty
+          ? _remoteConfig.cmsConfig.baseUrl
+          : MinhaMarcaAppConfig.cmsProductionUrl,
+      accessToken: _remoteConfig.cmsConfig.accessToken.isNotEmpty
+          ? _remoteConfig.cmsConfig.accessToken
+          : MinhaMarcaAppConfig.cmsProductionToken,
+    ),
+    homologConfig: const StrapiConfig(
+      baseUrl: MinhaMarcaAppConfig.cmsStagingUrl,
+      accessToken: MinhaMarcaAppConfig.cmsStagingToken,
+    ),
+  ),
+);
+```
+
+## 5. Whitelist
+
+### 5.1 Gerar o hash do e-mail
+
+Os e-mails são mascarados com SHA-256 + salt. No repositório **azzascore** (`tool/generate_whitelist_hash.dart`):
+
+```bash
+dart run tool/generate_whitelist_hash.dart --salt=[SEU_SALT] email1@somagrupo.com.br email2@somagrupo.com.br
+```
+
+- Troque `[SEU_SALT]` pelo `WHITELIST_SALT` do Codemagic.
+- Dá para passar quantos e-mails quiser de uma vez.
+- Só gere hash dos e-mails **novos**; os já cadastrados continuam valendo.
+- Se alguém mudar o `WHITELIST_SALT` nos workflows, **todos** os hashes precisam ser regerados.
+
+### 5.2 Cadastrar no Firebase Remote Config
+
+Cole os hashes como array JSON na chave `strapi_toggle_whitelist`:
+
+```json
+[
+  "<hash-do-email-1>",
+  "<hash-do-email-2>"
+]
+```
+
+:::caution
+É um JSON: **acrescente** os novos hashes ao array existente, separados por vírgula. Não substitua a lista.
+:::
+
+## 6. Comportamento em runtime
+
+### 6.1 Exibição do switch
+
+Em Configurações da Conta, o switch só aparece para e-mail logado na whitelist:
+
+```dart
+void _checkWhitelist() {
+  final email = _authCubit.state.localUserInfo?.personEmail;
+  if (email != null && _authCubit.state.isLoggedIn) {
+    setState(() {
+      _isWhitelisted = _whitelistService.isWhitelisted(email);
+    });
+  }
+}
+```
+
+### 6.2 `CmsService` mutável (`azzas_cms`)
+
+Para trocar a URL sem reconstruir o container de DI, `baseUrl` e `accessToken` do `CmsService` são não-finais:
+
+```dart
+class CmsService {
+  String baseUrl;
+  String accessToken;
+  // ...
+}
+```
+
+O toggle recarrega o conteúdo:
+
+```dart
+Future<void> _toggleStrapiEnv(bool useHomolog) async {
+  _resolver.setOverride(useHomolog);
+  final cmsService = Modular.get<CmsService>();
+
+  cmsService.baseUrl = _resolver.currentConfig.baseUrl;
+  cmsService.accessToken = _resolver.currentConfig.accessToken;
+
+  final homeCubit = Modular.get<HomeCubit>();
+  await homeCubit.loadHomeComponents();
+  setState(() {});
+}
+```
+
+### 6.3 Faixa `CmsStagingBannerOverlay`
+
+Envolve a aplicação na raiz (`application.dart`) e escuta o `isHomologNotifier`. Com homologação ativa, desenha a faixa **CMS HML** no topo.
+
+## 7. Limitações conhecidas
+
+Trade-offs conscientes desta arquitetura (fluxo confirmado pela liderança em julho/2026):
+
+- **Nenhuma validação de ambiente na CI/CD.** A proteção contra build publicada apontando para homologação (motivo da VERTAPP-4331) depende do padrão do `StrapiEnvironmentResolver` (produção por padrão), não de uma checagem independente na build.
+- **Whitelist verificada só no client.** `setOverride` não valida a whitelist; a checagem de e-mail só controla a **exibição** do switch. As credenciais de homologação (`cmsStagingUrl`/`cmsStagingToken`) estão no binário de todos os usuários.
+
+## 8. Melhoria futura (não implementada)
+
+Mover a autorização para o Firebase Remote Config com **User Properties** e **Conditions**: só usuários com uma propriedade atribuída server-side (ex.: `qa_tester = true`) receberiam URL/token de homologação no fetch. Isso tira a credencial de staging do binário. Complementar com **Firebase App Check**. Sem prazo definido.

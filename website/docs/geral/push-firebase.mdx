@@ -1,0 +1,178 @@
+---
+sidebar_position: 15
+title: "Push no Firebase"
+description: "Criar, segmentar, programar e enviar um push pelo Firebase Messaging, com destino via navigate_to."
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>Geral · Push</Kicker>
+
+# Push no Firebase
+
+Push pelo **Firebase Cloud Messaging**: criar a campanha, segmentar, programar, medir e escolher a tela de destino com a chave `navigate_to`.
+
+<Chips>
+  <Chip tone="amber">Firebase Messaging</Chip>
+  <Chip tone="blue">navigate_to</Chip>
+  <Chip>Animale · Cris Barros · Farm · Maria Filó · NV · Off</Chip>
+</Chips>
+
+Prints do console da Cris Barros; o fluxo é o mesmo nas outras marcas. Para push pela Insider, ver [Push na Insider](./push-insider.mdx).
+
+## 1. Criar
+
+1. No menu lateral: **Executar → Messaging**.
+
+![Executar → Messaging](/img/geral/push-firebase/img-01.webp)
+
+2. Clique em **Nova campanha**.
+
+![Nova campanha](/img/geral/push-firebase/img-02.webp)
+
+3. Escolha **Notificações**.
+
+![Notificações](/img/geral/push-firebase/img-03.webp)
+
+## 2. Configurar
+
+<details>
+<summary><b>Passo 1 · Notificação</b></summary>
+
+A mensagem que o usuário recebe:
+
+- **Título da notificação** e **Texto da notificação**
+- **Imagem** (opcional)
+- **Nome da notificação** (opcional) — só identifica o push no Firebase, o usuário não vê
+
+![Passo 1 — Notificação](/img/geral/push-firebase/img-04.webp)
+
+</details>
+
+<details>
+<summary><b>Passo 2 · Segmentação</b></summary>
+
+Critérios combináveis: versão, idioma, país/região, **públicos-alvo** e **propriedades do usuário** (configurados pelo time de Analytics — ver [Extras](#extras)) e app (Android/iOS).
+
+![Seleção de app](/img/geral/push-firebase/img-05.webp)
+
+</details>
+
+<details>
+<summary><b>Passo 3 · Programação</b></summary>
+
+Quando enviar: **Agora**, **Programado** ou **Recorrente** (diário ou personalizado).
+
+![Programação](/img/geral/push-firebase/img-06.webp)
+
+![Programação recorrente](/img/geral/push-firebase/img-07.webp)
+
+</details>
+
+<details>
+<summary><b>Passo 4 · Eventos de conversão</b></summary>
+
+Crie **rótulos de análise** em cada push para medir envio, recebimento, impressão e abertura.
+
+![Rótulo de análise](/img/geral/push-firebase/img-08.webp)
+
+Para ver os resultados: **Messaging → Relatórios**, filtrando por rótulo e por app (Android/iOS).
+
+![Relatórios por rótulo](/img/geral/push-firebase/img-09.webp)
+
+![Performance do rótulo](/img/geral/push-firebase/img-10.webp)
+
+</details>
+
+<details open>
+<summary><b>Passo 5 · Outras opções (destino)</b></summary>
+
+- **Canal de notificações do Android** — código do canal ([documentação](https://developer.android.com/develop/ui/views/notifications/channels)).
+- **Som** — ativado ou desativado.
+- **Vencimento** — por quanto tempo a mensagem pode ser reenviada (máximo de 4 semanas).
+- **Dados personalizados** — o destino no app:
+  - Chave: **`navigate_to`**
+  - Valor: rota da [navegação dinâmica](../strapi/navegacao-dinamica.mdx)
+
+![Dados personalizados](/img/geral/push-firebase/img-11.webp)
+
+:::info
+Sem `navigate_to`, o push só abre o app (Home). Prints antigos da NV mostram a chave `action` — o correto é `navigate_to`.
+:::
+
+</details>
+
+## 3. Enviar
+
+1. Clique em **Revisar**.
+
+![Revisar](/img/geral/push-firebase/img-12.webp)
+
+2. Clique em **Publicar**.
+
+![Publicar](/img/geral/push-firebase/img-13.webp)
+
+3. Acompanhe envio e abertura no painel.
+
+![Painel do push](/img/geral/push-firebase/img-14.webp)
+
+## Enviar um push de teste
+
+1. A pessoa que vai testar faz login no app com a própria conta.
+2. No **Passo 2 · Segmentação**, adicione a plataforma do device dela (Android ou iOS).
+3. Clique no **e** no fim da linha, escolha **Propriedade do usuário → email**.
+
+![Propriedade do usuário email](/img/geral/push-firebase/img-21.webp)
+
+4. Escolha **corresponde exatamente a**.
+
+![Corresponde exatamente a](/img/geral/push-firebase/img-22.webp)
+
+5. Digite o e-mail usado no login do app.
+
+![Segmentação de teste](/img/geral/push-firebase/img-23.webp)
+
+Preencha os outros passos como num push real.
+
+## Extras
+
+<details>
+<summary><b>Criar propriedade de usuário</b></summary>
+
+1. Abra **Custom Definitions**.
+
+![Custom Definitions](/img/geral/push-firebase/img-15.webp)
+
+2. Clique em **Dimensão personalizada**.
+
+![Dimensão personalizada](/img/geral/push-firebase/img-16.webp)
+
+3. Dê nome, escopo e descrição. O **parâmetro do evento** é o que o código usa — combine a implementação com um dev da vertical.
+
+![Nova dimensão](/img/geral/push-firebase/img-17.webp)
+
+Depois dá para segmentar o push para um usuário específico (útil em teste).
+
+</details>
+
+<details>
+<summary><b>Criar público-alvo</b></summary>
+
+1. Abra **Audiences**.
+
+![Audiences](/img/geral/push-firebase/img-18.webp)
+
+2. Clique em **Novo público**.
+
+![Novo público](/img/geral/push-firebase/img-19.webp)
+
+3. Monte o público (o Firebase sugere alguns padrão).
+
+![Configuração do público](/img/geral/push-firebase/img-20.webp)
+
+</details>
+
+## Como o app trata
+
+Cada marca escuta `FirebaseMessaging.instance.getInitialMessage()` (app fechado) e `FirebaseMessaging.onMessageOpenedApp` (app em segundo plano) no `main_page.dart`. O `_handleMessage` procura `navigate_to` em `message.data` e chama `NavigatorDynamic.call(valor)`.
