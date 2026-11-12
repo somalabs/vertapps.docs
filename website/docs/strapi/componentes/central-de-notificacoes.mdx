@@ -1,6 +1,9 @@
 ---
 sidebar_position: 44
 title: "Central de Notificações"
+strapi:
+  - notification-center.expanded-notification-message
+  - notification-center.message-banner
 ---
 
 import Kicker from '@site/src/components/Kicker';
@@ -52,6 +55,8 @@ Componente Message Banner e mostrado na tela de notificações.
 <b>navigate\_to:</b>  Link de redirecionamento ao clicar no botão (opcional).
 
 Deve seguir [o padrão de redirecionamento da navegação dinâmica](../navegacao-dinamica.mdx). <br />Exemplo: “<b>external-link/</b>https://www.bynv.com.br/new-in”
+
+<b>banner\_name\_ga4:</b> Nome do banner no GA4, no formato <b>PROMOTION NAME///CREATIVE NAME</b> (exemplo: <b>campanha-natal///central-cb</b>). O app envia as duas partes como <b>promotion\_name</b> e <b>creative\_name</b> nos eventos <b>view\_promotion</b> (banner exibido) e <b>select\_promotion</b> (toque na imagem) da Central de Notificações, para atribuir a receita da campanha. Sem o campo, o banner não dispara esses eventos (opcional).
 
 #### Exemplo
 
@@ -148,6 +153,8 @@ Deve seguir [o padrão de redirecionamento da navegação dinâmica](../navegaca
 <b>Banner (Imagem):</b> Imagem a ser renderizada na bottom sheet e também na Central de Notificações.
 
 <b>Cupom:</b> Cupom a ser aplicado. O botão de aplicar somente será renderizado caso esse campo seja preenchido, al
+
+<b>banner\_name\_ga4:</b> Nome do banner no GA4, no formato <b>PROMOTION NAME///CREATIVE NAME</b> (exemplo: <b>campanha-natal///central-cb</b>). O app envia as duas partes como <b>promotion\_name</b> e <b>creative\_name</b> nos eventos <b>view\_promotion</b> (banner exibido) e <b>select\_promotion</b> (toque na imagem) da Central de Notificações, para atribuir a receita da campanha. Sem o campo, o banner não dispara esses eventos (opcional).
 
 #### Exemplo
 
