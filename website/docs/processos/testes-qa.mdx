@@ -25,7 +25,7 @@ Fluxo de testes do QA, da task individual até a aprovação para produção, co
 
 1. **Teste por task:** testar contra os critérios de aceite. Aprovou → status **Testado** + comentário "Validação [Android/iOS] OK". Reprovou → **Correção - Em Teste** + template de bug.
 2. **Correção:** dev corrige → **Corrigido - Em Teste** → QA retesta.
-3. **Homologação:** com todas as tasks aprovadas, o dev publica a build no grupo **Daily & Pronto para homologar/subir**; o QA testa o app completo pelo [roteiro de regressão](#fase-4--testes-completos-de-homologação). Bug impeditivo → @Todos no **Apps - QA**. Não impeditivo → task nova.
+3. **Homologação:** com todas as tasks aprovadas, o dev publica a build no grupo **Daily & Pronto para homologar/subir**; o QA testa o app completo pelo [roteiro de regressão](#fase-4--testes-completos-de-homologação) e roda o [smoke test](#smoke-test--cenários-críticos). Bug impeditivo → @Todos no **Apps - QA**. Não impeditivo → task nova.
 4. **Aprovação final:** **confirmar que o app aponta para produção**, testar o essencial e comunicar a aprovação no grupo.
 
 ```mermaid
@@ -263,6 +263,74 @@ Evidências: [anexos]
 Encontrado por: [QA]
 Data: [data]
 ```
+
+## Smoke test · cenários críticos
+
+Cenários que não podem falhar em nenhuma versão. Rode em iOS e Android antes de aprovar a build.
+
+### 1. Login
+
+1. Login por e-mail.
+2. Login por e-mail e senha.
+3. Login com biometria.
+4. Login com Google.
+5. Login com Face ID.
+6. Login como convidado.
+
+### 2. Deeplink
+
+1. Envio de deeplink.
+2. Abertura de deeplink.
+3. Direcionamento correto do deeplink.
+
+Como enviar e abrir um deeplink no simulador ou no device: [Deeplinks → Como testar](../geral/deeplinks.mdx#como-testar-um-deeplink).
+
+### 3. Sacola e checkout
+
+**Sacola**
+
+1. Desmarcar produtos na sacola e validar se o preço mudou.
+2. Excluir item esgotado da sacola (**pelo menos 5**).
+3. Alterar o endereço de entrega na sacola.
+4. Seguir com a compra após trocar o endereço, até a Order Placed se possível.
+5. Alterar a opção de frete.
+6. Seguir com a compra após trocar o frete, até a Order Placed se possível.
+
+**Pagamento**
+
+7. Alterar o pagamento favorito na tela de pagamento.
+8. Seguir com a compra após trocar o favorito, até a Order Placed se possível.
+9. Pedido só com retirada em loja (**usar apenas cartão fake**).
+10. Pedido com vale-crédito (*quando houver massa de teste*).
+11. Pedido com cashback (*quando houver massa de teste*).
+12. Pedido com cartão presente (*quando houver massa de teste*).
+13. Pedido com Nubank Pay (**só Reserva**).
+14. Pedido com duas ou mais entregas, até a Order Placed se possível.
+15. Pedido com cartão novo (fake).
+16. Validar se o cartão novo ficou salvo após a compra.
+17. Pagamento via Pix.
+18. Pagamento via Pix parcelado.
+
+**Order Placed**
+
+19. Alterar o pagamento favorito na Order Placed.
+20. Alterar o endereço favorito na Order Placed.
+21. Botão de acesso aos pedidos.
+22. Link de vale-crédito.
+23. Link de WhatsApp.
+24. Demais botões e links da tela.
+
+**Presente**
+
+25. Opção de embalagem para presente nos pedidos.
+26. Opção de embalagem para presente nos detalhes do pedido (**exceto Off**).
+
+### 4. Cenários por marca
+
+| Cenário | Marcas |
+|---|---|
+| Live | Todas, **exceto Off, NV e Reserva** |
+| Deeplink de PDC | **Só NV** |
 
 ## Fase 5 · Validação final em produção
 
