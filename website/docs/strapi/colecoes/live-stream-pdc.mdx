@@ -1,0 +1,71 @@
+---
+sidebar_position: 33
+title: "Live Stream PDC"
+strapi:
+  - api:live-stream-pdc
+  - live-stream.live-stream
+---
+
+import Kicker from '@site/src/components/Kicker';
+import Chip, {Chips} from '@site/src/components/Chip';
+
+<Kicker>CMS · Coleção</Kicker>
+
+# Live Stream PDC
+
+Essa coleção cadastra a live (transmissão do Vimeo) que aparece no topo do PDC (página de categoria/coleção de produtos). Cada item da zona dinâmica é uma live, ligada a um ou mais clusters/categorias pelo campo `id_collection`. Quando o usuário rola a página ou navega para o PDP/checkout, a live pode seguir em mini player (picture in picture).
+
+Existe uma coleção por marca, todas com os mesmos campos: Farm (`live-stream-pdc-farm`), NV (`live-stream-pdc-nv`), Reserva (`live-stream-pdc-reserva`), Off (`live-stream-pdc-offpremium`), Animale (`live-stream-pdc-animale`), Cris Barros (`live-stream-pdc-crisbarros`) e Maria Filó (`live-stream-pdc-mariafilo`). O app lê `/api/live-streams-pdc-<marca>`.
+
+<Chips>
+  <Chip tone="coral">Live Stream PDC</Chip>
+  <Chip tone="teal">CMS</Chip>
+</Chips>
+
+## Preview
+
+{/* documentar-strapi: pendente app */}
+:::caution[Imagem pendente]
+Print do componente no app.
+:::
+
+## Antes de cadastrar
+
+:::warning[O app lê só a primeira entrada publicada]
+Para ter várias lives ao mesmo tempo (em PDCs diferentes), cadastre vários itens na zona dinâmica de **uma** entrada. Uma segunda entrada da coleção é ignorada.
+:::
+
+- **Rascunho não aparece:** a entrada precisa estar publicada.
+- **Permissão pública é manual, por instância:** em cada ambiente (homolog e produção) e em cada CMS de marca, libere `find` e `findOne` da coleção no role **Public** (Settings > Users & Permissions > Roles > Public). Sem isso a API responde 403 e o app trata como "sem live", sem mostrar erro.
+- **Sem live que case:** se nenhum item casar com o cluster/categoria do PDC, a tela fica como sem live.
+
+## Inputs
+
+{/* documentar-strapi: pendente cadastro */}
+:::caution[Imagem pendente]
+Print do cadastro no Strapi.
+:::
+
+<b>name:</b> Nome interno da entrada, só para identificar no Strapi; o app não usa. Texto. Campo opcional.
+
+<b>components:</b> Lista das lives. Zona dinâmica. Aceita: `live-stream.live-stream`. Campo opcional.
+
+### Live Stream (`live-stream.live-stream`)
+
+<b>id\_live:</b> ID do vídeo no Vimeo (o número da URL do vídeo). O app converte esse ID na URL HLS (`.m3u8`) da transmissão. Texto. Campo opcional, mas sem ele não há vídeo.
+
+<b>is\_live:</b> Marca a transmissão como ao vivo: o player mostra o selo "Ao Vivo". Desligado, o vídeo toca sem o selo. Booleano. Campo opcional, padrão desligado.
+
+<b>id\_collection:</b> Expressão regular (regex) testada contra o cluster/categoria do PDC aberto. Ela casa com qualquer trecho, então use `^<cluster>$` para casar exato (ex.: `^123$`); para mais de um cluster, `^(123|456)$`. Os itens são testados na ordem da zona dinâmica e **o primeiro que casa vence**. Item com esse campo vazio ou com regex inválida é ignorado. Texto. Campo opcional, mas sem ele o item nunca aparece.
+
+<b>video\_title:</b> Título exibido sobre o vídeo, no canto superior esquerdo (não aparece no mini player). Texto. Campo opcional.
+
+<b>show\_picture\_in\_picture:</b> Liga o mini player: ao rolar o PDC para baixo, ou ao navegar para o PDP/checkout, a live continua em uma janela flutuante. Desligado, a live fica só no topo do PDC. Booleano. Campo opcional, padrão desligado.
+
+<b>show\_full\_screen:</b> Mostra o botão de tela cheia no player. Booleano. Campo opcional, padrão desligado.
+
+<b>video\_landscape:</b> Indica que o vídeo é horizontal; ajusta a proporção do mini player (horizontal ou vertical). Booleano. Campo opcional, padrão desligado (vertical).
+
+## Páginas
+
+- PDC (página de categoria/coleção de produtos), no topo da lista de produtos.
